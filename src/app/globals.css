@@ -44,6 +44,7 @@
   --animate-float: float 7s ease-in-out infinite;
   --animate-shine: shine 3.5s linear infinite;
   --animate-marquee: marquee 45s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 45s linear infinite;
   --animate-pulse-ring: pulseRing 2.5s ease-out infinite;
 }
 
@@ -250,34 +251,50 @@ h3 {
   mix-blend-mode: multiply;
 }
 
-/* === Custom scrollbar — red→blue slim === */
+/* === Custom scrollbar — notched / textured brand thumb ===
+   Diagonal striped pattern in red + blue gives the thumb a "khawra-khawra"
+   (notched, rugged) feel while staying strictly on-brand. */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f4fb;
+  background: #f2f4f7;
+  border-left: 1px solid #e6e9f2;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #e11924, #1847a1);
-  border-radius: 10px;
-  border: 2px solid #f1f4fb;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #e11924 0,
+    #e11924 5px,
+    #1847a1 5px,
+    #1847a1 10px
+  );
+  border-radius: 8px;
+  border: 2px solid #f2f4f7;
+  background-clip: padding-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ff4757, #3463c7);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #ff4757 0,
+    #ff4757 5px,
+    #3463c7 5px,
+    #3463c7 10px
+  );
 }
 html {
   scrollbar-width: thin;
-  scrollbar-color: #1847a1 #f1f4fb;
+  scrollbar-color: #e11924 #f2f4f7;
 }
 
-/* === WhatsApp pulse (uses brand red) === */
+/* === WhatsApp pulse — WhatsApp green === */
 .wa-pulse::before {
   content: "";
   position: absolute;
   inset: -6px;
   border-radius: 9999px;
-  border: 2px solid #e11924;
+  border: 2px solid #25d366;
   animation: pulseRing 2.5s ease-out infinite;
   pointer-events: none;
 }
@@ -338,6 +355,15 @@ html {
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 

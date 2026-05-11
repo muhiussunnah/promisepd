@@ -54,9 +54,9 @@ export default function WhatsAppFAB() {
               transition={{ duration: 0.2 }}
               className="mb-2 w-72 rounded-2xl bg-white border border-border shadow-2xl overflow-hidden"
             >
-              <div className="bg-[image:var(--grad-rb)] px-4 py-3 flex items-center gap-3">
+              <div className="bg-[#25d366] px-4 py-3 flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center">
-                  <WhatsAppIcon className="h-6 w-6 text-brand-red" />
+                  <WhatsAppIcon className="h-6 w-6 text-[#25d366]" />
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-white">
@@ -79,7 +79,7 @@ export default function WhatsAppFAB() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
-                  className="mt-3 flex items-center justify-center gap-2 w-full rounded-xl bg-[image:var(--grad-rb)] hover:scale-[1.02] px-4 py-2.5 text-sm font-semibold text-white transition-transform shadow-[var(--shadow-brand)]"
+                  className="mt-3 flex items-center justify-center gap-2 w-full rounded-xl bg-[#25d366] hover:bg-[#1ebd58] px-4 py-2.5 text-sm font-semibold text-white transition-colors"
                 >
                   <WhatsAppIcon className="h-4 w-4" />
                   চ্যাট শুরু করুন
@@ -97,7 +97,7 @@ export default function WhatsAppFAB() {
           whileTap={{ scale: 0.95 }}
           onClick={() => setOpen((o) => !o)}
           aria-label="WhatsApp চ্যাট"
-          className="relative flex items-center gap-2 h-14 rounded-full bg-[image:var(--grad-rb)] hover:scale-[1.03] px-5 text-white shadow-[var(--shadow-brand)] transition-transform wa-pulse"
+          className="relative flex items-center gap-2 h-14 rounded-full bg-[#25d366] hover:bg-[#1ebd58] px-5 text-white shadow-2xl shadow-[#25d366]/40 transition-colors wa-pulse"
         >
           <WhatsAppIcon className="h-6 w-6" />
           <span className="hidden sm:inline text-sm font-semibold">
