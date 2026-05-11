@@ -70,7 +70,7 @@ export default function Projects() {
 
                 <div className="absolute top-4 left-4 flex items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-[11px] font-semibold tracking-wide text-fg shadow-sm">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
                     {project.status}
                   </span>
                 </div>

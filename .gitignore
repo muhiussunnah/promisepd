@@ -1,20 +1,20 @@
 # Node / Next.js
-**/node_modules/
-**/.pnp
-**/.pnp.*
-**/.yarn/*
-!**/.yarn/patches
-!**/.yarn/plugins
-!**/.yarn/releases
-!**/.yarn/versions
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # Next.js build output
-**/.next/
-**/out/
-**/build/
+.next/
+out/
+build/
 
 # Testing
-**/coverage/
+coverage/
 
 # Logs
 *.log
@@ -24,9 +24,9 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # Env
-**/.env
-**/.env.local
-**/.env.*.local
+.env
+.env.local
+.env.*.local
 
 # OS
 .DS_Store
@@ -37,17 +37,17 @@ Thumbs.db
 .idea/
 *.swp
 *.tsbuildinfo
-**/next-env.d.ts
+next-env.d.ts
 
 # Cert / keys
 *.pem
 *.key
 
 # Vercel
-**/.vercel/
+.vercel/
 
 # Claude — keep launch.json, ignore per-user settings
 .claude/settings.local.json
 
 # Convex generated (recreated by `npx convex dev`)
-web/convex/_generated/
+convex/_generated/

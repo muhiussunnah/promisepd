@@ -109,7 +109,7 @@ export default function Footer() {
     { name: "YouTube", url: SITE.socials.youtube, Icon: YouTubeIcon, ring: "ring-[#FF0000]/30" },
     { name: "WhatsApp", url: SITE.socials.whatsapp, Icon: WhatsAppIcon, ring: "ring-[#25D366]/30" },
     { name: "TikTok", url: SITE.socials.tiktok, Icon: TikTokIcon, ring: "ring-fg/30" },
-    { name: "Instagram", url: SITE.socials.instagram, Icon: InstagramIcon, ring: "ring-pink-400/40" },
+    { name: "Instagram", url: SITE.socials.instagram, Icon: InstagramIcon, ring: "ring-brand-red/40" },
   ];
 
   return (
@@ -174,8 +174,8 @@ export default function Footer() {
               <Image
                 src="/logo.png"
                 alt={SITE.shortName}
-                width={640}
-                height={300}
+                width={500}
+                height={500}
                 className="h-14 w-auto shrink-0"
               />
               <div className="leading-tight">

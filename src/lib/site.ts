@@ -28,34 +28,6 @@ export const SITE = {
   },
 };
 
-export const HERO_PITCHES = [
-  {
-    name: "প্রমিজ সিটি",
-    pitch: "ভাড়ার ঘরে স্বপ্ন দেখা শেষ — এবার নিজের একটা ঠিকানা।",
-    color: "red",
-  },
-  {
-    name: "আহবাব রিয়েল এস্টেট",
-    pitch: "প্রতিটি ইট গাঁথা হয় আপনার বিশ্বাসের উপর।",
-    color: "blue",
-  },
-  {
-    name: "প্রমিজ ইন্টারন্যাশনাল",
-    pitch: "ব্যাংক টাকা রাখে — আমরা টাকাকে কাজে লাগাই।",
-    color: "indigo",
-  },
-  {
-    name: "আহবাব ট্রাভেলস",
-    pitch: "আল্লাহর ঘরে যাত্রা — আমরা পাশে হাঁটি প্রতিটি কদমে।",
-    color: "amber",
-  },
-  {
-    name: "ইন্টেরিয়র ও 3D ডিজাইন",
-    pitch: "চার দেয়ালে আপনার গল্প — আমরা শিল্প করে তুলি।",
-    color: "rose",
-  },
-];
-
 export type Division = {
   slug: string;
   nameEn: string;
@@ -66,7 +38,7 @@ export type Division = {
   description: string;
   longDescription: string;
   icon: string;
-  accent: "red" | "blue" | "rose" | "indigo" | "amber";
+  accent: "red" | "blue" | "ash" | "rb" | "ab" | "ar";
   features: { title: string; description: string }[];
   highlights: string[];
 };
@@ -173,7 +145,7 @@ export const DIVISIONS: Division[] = [
     longDescription:
       "প্রমিজ ইন্টারন্যাশনালের মাধ্যমে আমরা ব্যাংকের চেয়েও উন্নত সঞ্চয় সেবা দিই। ১০,০০০ টাকা থেকে যেকোনো অঙ্ক জমা রাখুন, ব্যাংকের মতো যেকোনো সময় তুলুন, এবং বছর শেষে লেনদেনের ভিত্তিতে লভ্যাংশ পান। ব্যাংক তো সুদ দেয়, আর সময়মতো নিজের টাকা চাইলেও আজকাল পাওয়া যায় না — আমরা সেই সমস্যার সমাধান।",
     icon: "Landmark",
-    accent: "indigo",
+    accent: "ab",
     features: [
       {
         title: "১০,০০০ টাকা থেকে শুরু",
@@ -220,7 +192,7 @@ export const DIVISIONS: Division[] = [
     longDescription:
       "আহবাব ট্রাভেলস অ্যান্ড ট্যুরস বাংলাদেশের অন্যতম নির্ভরযোগ্য হজ্জ ও উমরাহ পরিষেবা প্রদানকারী। প্রতিটি ধাপে আপনার পাশে থাকি — ভিসা প্রক্রিয়া থেকে যাত্রা, এবং সফলভাবে দেশে ফেরা পর্যন্ত। অভিজ্ঞ গাইড, প্রিমিয়াম থাকার ব্যবস্থা এবং সম্পূর্ণ সহায়তা।",
     icon: "Plane",
-    accent: "amber",
+    accent: "rb",
     features: [
       {
         title: "হজ্জ প্যাকেজ",
@@ -272,7 +244,7 @@ export const DIVISIONS: Division[] = [
     longDescription:
       "প্রমিজ গ্রুপের ইন্টেরিয়র ও 3D ডিজাইন বিভাগে আমরা আপনার বাড়ি, অফিস, দোকান — যেকোনো স্থাপনার অভ্যন্তরীণ ডিজাইন এবং 3D ভিজ্যুয়ালাইজেশন তৈরি করি। নির্মাণের আগেই দেখুন আপনার স্বপ্ন কেমন দেখাবে।",
     icon: "Palette",
-    accent: "rose",
+    accent: "ar",
     features: [
       {
         title: "আবাসিক ইন্টেরিয়র",

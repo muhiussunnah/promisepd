@@ -28,9 +28,10 @@ const ICONS: Record<string, LucideIcon> = {
 const ACCENT_BG: Record<string, string> = {
   red: "from-brand-red to-brand-red-soft",
   blue: "from-brand-blue to-brand-blue-soft",
-  rose: "from-rose-500 to-pink-600",
-  indigo: "from-indigo-500 to-brand-blue",
-  amber: "from-amber-500 to-orange-500",
+  ash: "from-brand-ash-dark to-brand-ash",
+  rb: "from-brand-red to-brand-blue",
+  ab: "from-brand-ash to-brand-blue",
+  ar: "from-brand-ash to-brand-red",
 };
 
 export async function generateStaticParams() {
@@ -154,7 +155,7 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
                     <div className="absolute inset-0 flex items-end p-5">
                       <div>
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold text-fg">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                          <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />
                           {p.status}
                         </span>
                         <h3 className="mt-2 text-xl font-bold text-white drop-shadow-md">

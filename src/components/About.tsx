@@ -82,8 +82,8 @@ export default function About() {
               <Image
                 src="/logo.png"
                 alt={SITE.shortName}
-                width={640}
-                height={300}
+                width={500}
+                height={500}
                 className="h-12 w-auto shrink-0"
               />
               <div className="leading-tight">

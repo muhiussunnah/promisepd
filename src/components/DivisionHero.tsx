@@ -25,17 +25,19 @@ const ICONS: Record<string, LucideIcon> = {
 const ACCENT_BG: Record<string, string> = {
   red: "from-brand-red to-brand-red-soft",
   blue: "from-brand-blue to-brand-blue-soft",
-  rose: "from-rose-500 to-pink-600",
-  indigo: "from-indigo-500 to-brand-blue",
-  amber: "from-amber-500 to-orange-500",
+  ash: "from-brand-ash-dark to-brand-ash",
+  rb: "from-brand-red to-brand-blue",
+  ab: "from-brand-ash to-brand-blue",
+  ar: "from-brand-ash to-brand-red",
 };
 
 const ACCENT_GRAD: Record<string, string> = {
   red: "linear-gradient(135deg, #e11d2e 0%, #ff5a6b 100%)",
-  blue: "linear-gradient(135deg, #1d4fd8 0%, #3b82f6 100%)",
-  rose: "linear-gradient(135deg, #f43f5e 0%, #db2777 100%)",
-  indigo: "linear-gradient(135deg, #6366f1 0%, #1d4fd8 100%)",
-  amber: "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
+  blue: "linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)",
+  ash: "linear-gradient(135deg, #64748b 0%, #94a3b8 100%)",
+  rb: "linear-gradient(135deg, #e11d2e 0%, #1e40af 100%)",
+  ab: "linear-gradient(135deg, #94a3b8 0%, #1e40af 100%)",
+  ar: "linear-gradient(135deg, #94a3b8 0%, #e11d2e 100%)",
 };
 
 export default function DivisionHero({ division }: { division: Division }) {

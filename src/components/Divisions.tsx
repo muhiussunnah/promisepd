@@ -25,17 +25,19 @@ const ICONS: Record<string, LucideIcon> = {
 const ACCENT_BG: Record<string, string> = {
   red: "from-brand-red to-brand-red-soft",
   blue: "from-brand-blue to-brand-blue-soft",
-  rose: "from-rose-500 to-pink-600",
-  indigo: "from-indigo-500 to-brand-blue",
-  amber: "from-amber-500 to-orange-500",
+  ash: "from-brand-ash-dark to-brand-ash",
+  rb: "from-brand-red to-brand-blue",
+  ab: "from-brand-ash to-brand-blue",
+  ar: "from-brand-ash to-brand-red",
 };
 
 const ACCENT_GLOW: Record<string, string> = {
   red: "rgba(225,29,46,0.25)",
-  blue: "rgba(29,79,216,0.25)",
-  rose: "rgba(244,63,94,0.25)",
-  indigo: "rgba(99,102,241,0.25)",
-  amber: "rgba(245,158,11,0.25)",
+  blue: "rgba(30,64,175,0.25)",
+  ash: "rgba(148,163,184,0.25)",
+  rb: "rgba(225,29,46,0.25)",
+  ab: "rgba(30,64,175,0.25)",
+  ar: "rgba(225,29,46,0.25)",
 };
 
 export default function Divisions() {

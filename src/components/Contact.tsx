@@ -232,8 +232,8 @@ export default function Contact() {
               <div
                 className={`flex items-start gap-2 rounded-xl p-3 text-sm ${
                   status.type === "ok"
-                    ? "bg-emerald-50 border border-emerald-200 text-emerald-700"
-                    : "bg-red-50 border border-red-200 text-red-700"
+                    ? "bg-brand-blue-tint border border-brand-blue/30 text-brand-blue-dark"
+                    : "bg-brand-red-tint border border-brand-red/30 text-brand-red-dark"
                 }`}
               >
                 {status.type === "ok" ? (

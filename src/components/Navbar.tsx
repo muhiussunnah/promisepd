@@ -38,9 +38,10 @@ const DIV_ICONS: Record<string, LucideIcon> = {
 const ACCENT_TO_GRAD: Record<string, string> = {
   red: "from-brand-red to-brand-red-soft",
   blue: "from-brand-blue to-brand-blue-soft",
-  rose: "from-rose-500 to-pink-600",
-  indigo: "from-indigo-500 to-brand-blue",
-  amber: "from-amber-500 to-orange-500",
+  ash: "from-brand-ash-dark to-brand-ash",
+  rb: "from-brand-red to-brand-blue",
+  ab: "from-brand-ash to-brand-blue",
+  ar: "from-brand-ash to-brand-red",
 };
 
 export default function Navbar() {
@@ -139,8 +140,8 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt={SITE.shortName}
-                width={640}
-                height={300}
+                width={500}
+                height={500}
                 priority
                 className={`shrink-0 w-auto transition-[height] duration-300 ease-out ${
                   isCondensed ? "h-10 sm:h-11" : "h-12 sm:h-14"

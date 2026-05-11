@@ -25,6 +25,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
+import TypeOnce from "./TypeOnce";
 import { DIVISIONS } from "@/lib/site";
 import { toBn } from "@/lib/bn";
 
@@ -36,28 +37,43 @@ const ICONS: Record<string, LucideIcon> = {
   Palette,
 };
 
+/** Every gradient is built from the 3 brand colors only.
+ *  red #E11D2E · blue #1E40AF · ash #94A3B8 */
 const ACCENT_GRAD: Record<string, string> = {
   red: "linear-gradient(135deg, #e11d2e 0%, #ff5a6b 100%)",
-  blue: "linear-gradient(135deg, #1d4fd8 0%, #3b82f6 100%)",
-  rose: "linear-gradient(135deg, #f43f5e 0%, #db2777 100%)",
-  indigo: "linear-gradient(135deg, #6366f1 0%, #1d4fd8 100%)",
-  amber: "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
+  blue: "linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)",
+  ash: "linear-gradient(135deg, #64748b 0%, #94a3b8 100%)",
+  rb: "linear-gradient(135deg, #e11d2e 0%, #1e40af 100%)",
+  ab: "linear-gradient(135deg, #94a3b8 0%, #1e40af 100%)",
+  ar: "linear-gradient(135deg, #94a3b8 0%, #e11d2e 100%)",
 };
 
 const ACCENT_GRAD_CLASS: Record<string, string> = {
   red: "from-brand-red to-brand-red-soft",
   blue: "from-brand-blue to-brand-blue-soft",
-  rose: "from-rose-500 to-pink-600",
-  indigo: "from-indigo-500 to-brand-blue",
-  amber: "from-amber-500 to-orange-500",
+  ash: "from-brand-ash-dark to-brand-ash",
+  rb: "from-brand-red to-brand-blue",
+  ab: "from-brand-ash to-brand-blue",
+  ar: "from-brand-ash to-brand-red",
 };
 
 const ACCENT_TEXT: Record<string, string> = {
   red: "text-brand-red",
   blue: "text-brand-blue",
-  rose: "text-rose-600",
-  indigo: "text-indigo-600",
-  amber: "text-amber-600",
+  ash: "text-brand-ash-dark",
+  rb: "text-brand-red",
+  ab: "text-brand-blue",
+  ar: "text-brand-red",
+};
+
+/** Cursor color for the typewriter on the H1 */
+const ACCENT_CURSOR: Record<string, string> = {
+  red: "#e11d2e",
+  blue: "#1e40af",
+  ash: "#64748b",
+  rb: "#e11d2e",
+  ab: "#1e40af",
+  ar: "#e11d2e",
 };
 
 export default function Hero() {
@@ -78,7 +94,7 @@ export default function Hero() {
     if (paused || reduce) return;
     const t = setInterval(
       () => setIdx((i) => (i + 1) % DIVISIONS.length),
-      6500,
+      7500,
     );
     return () => clearInterval(t);
   }, [paused, reduce]);
@@ -131,10 +147,10 @@ export default function Hero() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               >
                 {/* Service kicker */}
                 <div className="flex items-center gap-2 flex-wrap">
@@ -149,22 +165,34 @@ export default function Hero() {
                   </span>
                 </div>
 
-                {/* Big title */}
-                <h1 className="mt-5 text-[clamp(1.875rem,4.6vw,3.75rem)] font-extrabold leading-[1.15] tracking-tight text-fg max-w-[22ch]">
-                  {current.heroTitle}
+                {/* Big title — typewriter (re-types on each slide) */}
+                <h1 className="mt-5 text-[clamp(1.875rem,4.6vw,3.75rem)] font-extrabold leading-[1.15] tracking-tight text-fg max-w-[22ch] min-h-[1.5em]">
+                  <TypeOnce
+                    text={current.heroTitle}
+                    speed={45}
+                    cursorColor={ACCENT_CURSOR[current.accent]}
+                  />
                 </h1>
 
                 {/* Tagline */}
-                <p
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.4 }}
                   className={`mt-4 text-[clamp(1.05rem,1.6vw,1.375rem)] font-bold ${accentText}`}
                 >
                   {current.tagline}
-                </p>
+                </motion.p>
 
                 {/* Description */}
-                <p className="mt-3 text-[clamp(0.95rem,1.2vw,1.0625rem)] text-fg-muted leading-relaxed max-w-2xl">
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.65, duration: 0.4 }}
+                  className="mt-3 text-[clamp(0.95rem,1.2vw,1.0625rem)] text-fg-muted leading-relaxed max-w-2xl"
+                >
                   {current.description}
-                </p>
+                </motion.p>
               </motion.div>
             </AnimatePresence>
 
@@ -235,7 +263,6 @@ export default function Hero() {
           {/* RIGHT — visual showcase card */}
           <div className="lg:col-span-5">
             <div className="relative">
-              {/* Backplate / shadow ring */}
               <div className="absolute -inset-4 sm:-inset-6 rounded-[2rem] bg-gradient-to-br from-white/40 to-white/0 -z-10" />
 
               <AnimatePresence mode="wait">
