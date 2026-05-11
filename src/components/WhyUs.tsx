@@ -8,6 +8,7 @@ import {
   CreditCard,
   ShieldCheck,
   Headphones,
+  Layers,
   type LucideIcon,
 } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
@@ -20,6 +21,7 @@ const ICONS: Record<string, LucideIcon> = {
   CreditCard,
   ShieldCheck,
   Headphones,
+  Layers,
 };
 
 export default function WhyUs() {
