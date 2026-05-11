@@ -353,7 +353,7 @@ export default function Hero() {
         className="relative z-10 flex justify-center pt-4 pb-2"
       >
         <div className="flex flex-col items-center gap-1.5 text-fg-faint">
-          <span className="text-[10px] uppercase tracking-[0.3em]">স্ক্রল</span>
+          <span className="text-[10px] uppercase tracking-[0.3em]">নিচে নামুন</span>
           <div className="h-8 w-5 rounded-full border-2 border-fg-faint/40 flex justify-center p-1">
             <motion.div
               animate={{ y: [0, 10, 0] }}

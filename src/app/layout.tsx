@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     "প্রমিজ পিপিডি",
     "Real Estate Dhaka",
     "ঢাকা রিয়েল এস্টেট",
-    "ফুজলা টাওয়ার",
+    "ফুজালা টাওয়ার",
     "আহবাব প্যালেস",
     "Apartment Dhaka",
     "জমি বিক্রয় ঢাকা",

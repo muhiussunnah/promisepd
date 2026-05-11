@@ -52,7 +52,25 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PROJECTS.map((project, i) => (
+          {PROJECTS.map((project, i) => {
+            const onLight = project.accent === "ash";
+            const headerBg =
+              project.accent === "red"
+                ? "bg-brand-red"
+                : project.accent === "blue"
+                  ? "bg-brand-blue"
+                  : "bg-brand-ash";
+            const headingCls = onLight
+              ? "text-fg"
+              : "text-white drop-shadow-md";
+            const subCls = onLight ? "text-fg-muted" : "text-white/95";
+            const statusDot =
+              project.accent === "red"
+                ? "bg-brand-red"
+                : project.accent === "blue"
+                  ? "bg-brand-blue"
+                  : "bg-brand-ash-dark";
+            return (
             <motion.article
               key={`${project.name}-${i}`}
               initial={{ opacity: 0, y: 40 }}
@@ -62,26 +80,26 @@ export default function Projects() {
               whileHover={{ y: -8 }}
               className="card group relative h-full overflow-hidden"
             >
-              {/* Header band — red→blue gradient */}
-              <div className="relative h-44 overflow-hidden bg-brand-red">
+              {/* Header band — solid brand color per project */}
+              <div className={`relative h-44 overflow-hidden ${headerBg}`}>
                 <div className="absolute inset-0 opacity-30 mix-blend-overlay grid-bg" />
                 <div className="absolute -bottom-20 -right-20 h-48 w-48 rounded-full bg-white/20 blur-3xl animate-blob" />
                 <div className="absolute -top-10 -left-10 h-40 w-40 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
 
                 <div className="absolute top-4 left-4 flex items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-[11px] font-semibold tracking-wide text-fg shadow-sm">
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
+                    <span className={`h-1.5 w-1.5 rounded-full animate-pulse ${statusDot}`} />
                     {project.status}
                   </span>
                 </div>
 
                 <div className="absolute inset-0 flex items-end p-6">
                   <div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-md">
+                    <h3 className={`text-2xl sm:text-3xl font-bold ${headingCls}`}>
                       {project.name}
                     </h3>
                     {project.size && (
-                      <span className="mt-1 inline-flex items-center gap-1 text-xs text-white/95">
+                      <span className={`mt-1 inline-flex items-center gap-1 text-xs ${subCls}`}>
                         <Ruler className="h-3 w-3" />
                         {project.size}
                       </span>
@@ -133,7 +151,8 @@ export default function Projects() {
                 </a>
               </div>
             </motion.article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

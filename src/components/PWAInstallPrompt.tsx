@@ -147,7 +147,7 @@ export default function PWAInstallPrompt() {
               <div className="mt-4 flex items-center gap-2 rounded-xl bg-bg-soft border border-border px-3 py-2.5">
                 <Share className="h-4 w-4 text-brand-blue shrink-0" />
                 <span className="text-xs text-fg-muted leading-snug">
-                  নিচে Safari-র শেয়ার আইকনে ট্যাপ করুন → স্ক্রল করে{" "}
+                  Safari-র শেয়ার আইকনে ট্যাপ করুন → নিচে নেমে{" "}
                   <strong className="text-fg">Add to Home Screen</strong>
                 </span>
               </div>
