@@ -3,8 +3,9 @@
  *  Validate with https://search.google.com/test/rich-results */
 
 import { SITE, DIVISIONS } from "./site";
+import { getSiteUrl } from "./site-url";
 
-const SITE_URL = "https://promisepd.com";
+const SITE_URL = getSiteUrl();
 const LOGO_URL = `${SITE_URL}/logo.png`;
 
 const sameAs = [

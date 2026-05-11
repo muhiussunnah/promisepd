@@ -13,6 +13,7 @@ import {
   websiteSchema,
   localBusinessSchema,
 } from "@/lib/schema";
+import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 
 const bn = Noto_Sans_Bengali({
   variable: "--font-bn",
@@ -22,7 +23,8 @@ const bn = Noto_Sans_Bengali({
   preload: true,
 });
 
-const SITE_URL = "https://promisepd.com";
+const SITE_URL = getSiteUrl();
+const OG_IMAGE = absoluteUrl("/og-image.png");
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -84,7 +86,9 @@ export const metadata: Metadata = {
     siteName: "Promise PPD",
     images: [
       {
-        url: "/og-image.png",
+        url: OG_IMAGE,
+        secureUrl: OG_IMAGE,
+        type: "image/png",
         width: 1200,
         height: 630,
         alt: "Promise PPD — স্বপ্ন যেখানে বাস্তব",
@@ -93,9 +97,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@promisepd",
+    creator: "@promisepd",
     title: "Promise Proper Development Ltd.",
     description: "স্বপ্ন যেখানে বাস্তব · ঢাকার বিশ্বস্ত আবাসন অংশীদার।",
-    images: ["/og-image.png"],
+    images: [{ url: OG_IMAGE, alt: "Promise PPD" }],
   },
   appleWebApp: {
     capable: true,

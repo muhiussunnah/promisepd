@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { DIVISIONS } from "@/lib/site";
+import { getSiteUrl } from "@/lib/site-url";
 
-const SITE_URL = "https://promisepd.com";
+const SITE_URL = getSiteUrl();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
