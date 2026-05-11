@@ -86,30 +86,30 @@ export default function Navbar() {
       >
         <motion.div
           animate={{
-            paddingTop: isCondensed ? 8 : 18,
-            paddingBottom: isCondensed ? 8 : 18,
+            backgroundColor: isCondensed
+              ? "rgba(255,255,255,0.82)"
+              : "rgba(255,255,255,0)",
+            borderBottomColor: isCondensed
+              ? "rgba(229,231,235,0.9)"
+              : "rgba(229,231,235,0)",
+            boxShadow: isCondensed
+              ? "0 6px 24px -10px rgba(15,23,42,0.12)"
+              : "0 0 0 0 rgba(0,0,0,0)",
+            backdropFilter: isCondensed ? "blur(22px) saturate(180%)" : "blur(0px)",
           }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+          className="w-full border-b"
+          style={{
+            WebkitBackdropFilter: isCondensed ? "blur(22px) saturate(180%)" : "none",
+          }}
         >
           <motion.div
             animate={{
-              backgroundColor: isCondensed
-                ? "rgba(255,255,255,0.85)"
-                : "rgba(255,255,255,0)",
-              borderColor: isCondensed
-                ? "rgba(229,231,235,0.9)"
-                : "rgba(229,231,235,0)",
-              boxShadow: isCondensed
-                ? "0 10px 40px -15px rgba(15,23,42,0.18)"
-                : "0 0 0 0 rgba(0,0,0,0)",
-              backdropFilter: isCondensed ? "blur(22px) saturate(180%)" : "blur(0px)",
+              paddingTop: isCondensed ? 8 : 14,
+              paddingBottom: isCondensed ? 8 : 14,
             }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center justify-between rounded-2xl px-3 sm:px-5 border"
-            style={{
-              WebkitBackdropFilter: isCondensed ? "blur(22px) saturate(180%)" : "none",
-            }}
+            className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between"
           >
             <Link
               href="/#home"

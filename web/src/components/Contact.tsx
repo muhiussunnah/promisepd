@@ -132,7 +132,7 @@ export default function Contact() {
               {
                 icon: Clock,
                 label: "সময়",
-                value: SITE.hours,
+                value: `${SITE.hours} · ${SITE.weeklyOff}`,
               },
             ].map((item) => {
               const Wrapper = item.href ? "a" : "div";

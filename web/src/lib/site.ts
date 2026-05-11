@@ -11,10 +11,50 @@ export const SITE = {
   email: "promisegroup2023@gmail.com",
   address:
     "১২৩/১/২ কাজী টাওয়ার, দক্ষিণ যাত্রাবাড়ী, ঢাকা-১২০৪, বাংলাদেশ",
-  hours: "শনি — বৃহ · সকাল ৯টা – সন্ধ্যা ৬টা",
+  hours: "মঙ্গল – রবি · সকাল ৯টা – সন্ধ্যা ৬টা",
+  weeklyOff: "সাপ্তাহিক ছুটি: সোমবার",
   facebook: "https://www.facebook.com/profile.php?id=61557334089998",
   founded: 2010,
+  socials: {
+    facebook: "https://www.facebook.com/profile.php?id=61557334089998",
+    youtube: "https://www.youtube.com/@promisepd",
+    whatsapp: "https://wa.me/8801910065136",
+    tiktok: "https://www.tiktok.com/@promisepd",
+    instagram: "https://www.instagram.com/promisepd",
+  },
+  credit: {
+    label: "Made by Mustaqeem Billah",
+    url: "https://growthency.com/",
+  },
 };
+
+export const HERO_PITCHES = [
+  {
+    name: "প্রমিজ সিটি",
+    pitch: "ভাড়ার ঘরে স্বপ্ন দেখা শেষ — এবার নিজের একটা ঠিকানা।",
+    color: "red",
+  },
+  {
+    name: "আহবাব রিয়েল এস্টেট",
+    pitch: "প্রতিটি ইট গাঁথা হয় আপনার বিশ্বাসের উপর।",
+    color: "blue",
+  },
+  {
+    name: "প্রমিজ ইন্টারন্যাশনাল",
+    pitch: "ব্যাংক টাকা রাখে — আমরা টাকাকে কাজে লাগাই।",
+    color: "indigo",
+  },
+  {
+    name: "আহবাব ট্রাভেলস",
+    pitch: "আল্লাহর ঘরে যাত্রা — আমরা পাশে হাঁটি প্রতিটি কদমে।",
+    color: "amber",
+  },
+  {
+    name: "ইন্টেরিয়র ও 3D ডিজাইন",
+    pitch: "চার দেয়ালে আপনার গল্প — আমরা শিল্প করে তুলি।",
+    color: "rose",
+  },
+];
 
 export type Division = {
   slug: string;

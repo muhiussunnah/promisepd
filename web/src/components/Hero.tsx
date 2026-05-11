@@ -5,7 +5,8 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { useRef } from "react";
 import { ArrowRight, Play, Sparkles, ShieldCheck, Award, MapPin, Wallet } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
-import { SITE } from "@/lib/site";
+import Typewriter from "./Typewriter";
+import { SITE, HERO_PITCHES } from "@/lib/site";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -80,14 +81,23 @@ export default function Hero() {
           transition={{ delay: 0.35, duration: 0.6 }}
           className="mx-auto mt-6 max-w-2xl text-base sm:text-lg text-fg-muted leading-relaxed"
         >
-          {SITE.nameBn} — ঢাকার বিশ্বস্ত অংশীদার। প্রিমিয়াম আবাসিক, বাণিজ্যিক ও
-          বিনিয়োগযোগ্য সম্পত্তি। স্বচ্ছ, নমনীয়, এবং দীর্ঘস্থায়ী।
+          প্রমিজ গ্রুপ — ঢাকার বিশ্বস্ত অংশীদার। ৫টি বিভাগে এক ছাদের নিচে
+          সম্পূর্ণ সমাধান। স্বচ্ছ, নমনীয় এবং দীর্ঘস্থায়ী।
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
+          transition={{ delay: 0.45, duration: 0.6 }}
+          className="mt-8"
+        >
+          <Typewriter phrases={HERO_PITCHES} />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <Link
