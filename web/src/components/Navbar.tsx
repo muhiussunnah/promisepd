@@ -17,7 +17,14 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { NAV, SITE, SECTION_META, NAV_IDS, DIVISIONS } from "@/lib/site";
+import {
+  NAV,
+  SITE,
+  SECTION_META,
+  NAV_IDS,
+  DIVISIONS,
+  HOME_BRAND_CYCLES,
+} from "@/lib/site";
 import { useActiveSection } from "@/lib/useActiveSection";
 
 const DIV_ICONS: Record<string, LucideIcon> = {
@@ -41,6 +48,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileDivOpen, setMobileDivOpen] = useState(false);
+  const [homeCycle, setHomeCycle] = useState(0);
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -55,9 +63,21 @@ export default function Navbar() {
     ? DIVISIONS.find((d) => d.slug === divisionSlug)
     : null;
 
+  // Cycle brand identities only while sitting on the home section
+  useEffect(() => {
+    if (!isHome || activeSection !== "home") return;
+    const t = setInterval(
+      () => setHomeCycle((i) => (i + 1) % HOME_BRAND_CYCLES.length),
+      4500,
+    );
+    return () => clearInterval(t);
+  }, [isHome, activeSection]);
+
   const meta = currentDivision
     ? { title: currentDivision.nameBn, tagline: currentDivision.tagline }
-    : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
+    : isHome && activeSection === "home"
+      ? HOME_BRAND_CYCLES[homeCycle]
+      : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -127,16 +147,16 @@ export default function Navbar() {
                 }`}
               />
 
-              {/* Dynamic per-section meta */}
-              <div className="hidden md:flex flex-col leading-tight min-w-0">
+              {/* Dynamic per-section meta (home cycles between brand identities) */}
+              <div className="hidden sm:flex flex-col leading-tight min-w-0">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={meta.title}
                     initial={{ y: -8, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 8, opacity: 0 }}
-                    transition={{ duration: 0.25 }}
-                    className="text-sm font-bold tracking-wide text-grad-rb truncate"
+                    transition={{ duration: 0.3 }}
+                    className="text-sm sm:text-base font-bold tracking-wide text-grad-rb truncate"
                   >
                     {meta.title}
                   </motion.span>
@@ -147,23 +167,12 @@ export default function Navbar() {
                     initial={{ y: -6, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 6, opacity: 0 }}
-                    transition={{ duration: 0.25, delay: 0.05 }}
+                    transition={{ duration: 0.3, delay: 0.05 }}
                     className="text-[11px] text-fg-muted truncate"
                   >
                     {meta.tagline}
                   </motion.span>
                 </AnimatePresence>
-              </div>
-
-              {/* Separator */}
-              <div className="hidden xl:block h-9 w-px bg-border shrink-0" />
-
-              {/* Promise City branding (always shown on xl+) */}
-              <div className="hidden xl:flex flex-col leading-tight shrink-0">
-                <span className="text-sm font-bold text-grad-rb">প্রমিজ সিটি</span>
-                <span className="text-[11px] text-fg-muted">
-                  স্বপ্ন যেখানে বাস্তব
-                </span>
               </div>
             </Link>
 

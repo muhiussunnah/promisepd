@@ -331,6 +331,12 @@ export const NAV = [
 
 export const NAV_IDS = ["home", "about", "divisions", "projects", "why", "contact"];
 
+/** When on the home section, navbar cycles through these brand identities */
+export const HOME_BRAND_CYCLES = [
+  { title: "Promise PPD", tagline: SITE.tagline },
+  { title: "প্রমিজ সিটি", tagline: "স্বপ্ন যেখানে বাস্তব" },
+];
+
 /** Dynamic navbar title + tagline per section */
 export const SECTION_META: Record<
   string,
