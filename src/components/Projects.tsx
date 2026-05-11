@@ -42,7 +42,7 @@ export default function Projects() {
             </span>
           </div>
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-            যেখানে পরিবার{" "}
+            যেখানে মানুষ{" "}
             <span className="text-grad">পরবর্তী ঠিকানা গড়ছে।</span>
           </h2>
           <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
