@@ -136,7 +136,7 @@ export default function Contact() {
                 icon: Clock,
                 label: "সময়",
                 value: `${SITE.hours} · ${SITE.weeklyOff}`,
-                bg: "bg-brand-ash-dark",
+                bg: "bg-brand-ash",
               },
             ].map((item) => {
               const Wrapper = item.href ? "a" : "div";
@@ -155,7 +155,11 @@ export default function Contact() {
                   <div
                     className={`shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-xl ${item.bg} shadow-md group-hover:scale-110 transition-transform`}
                   >
-                    <item.icon className="h-5 w-5 text-white" />
+                    <item.icon
+                      className={`h-5 w-5 ${
+                        item.bg === "bg-brand-ash" ? "text-fg" : "text-white"
+                      }`}
+                    />
                   </div>
                   <div className="min-w-0">
                     <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint">

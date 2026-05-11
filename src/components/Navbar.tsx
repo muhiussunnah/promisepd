@@ -38,7 +38,7 @@ const DIV_ICONS: Record<string, LucideIcon> = {
 const ACCENT_TO_SOLID: Record<string, string> = {
   red: "bg-brand-red",
   blue: "bg-brand-blue",
-  ash: "bg-brand-ash-dark",
+  ash: "bg-brand-ash",
   rb: "bg-brand-red",
   ab: "bg-brand-blue",
   ar: "bg-brand-red",
@@ -239,7 +239,11 @@ export default function Navbar() {
                                     <div
                                       className={`shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg ${
                                         ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
-                                      } text-white shadow-md group-hover:scale-105 transition-transform`}
+                                      } shadow-md group-hover:scale-105 transition-transform ${
+                                        d.accent === "ash"
+                                          ? "text-fg"
+                                          : "text-white"
+                                      }`}
                                     >
                                       <Icon className="h-5 w-5" />
                                     </div>
@@ -370,7 +374,11 @@ export default function Navbar() {
                                       <div
                                         className={`shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-md ${
                                           ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
-                                        } text-white shadow-sm`}
+                                        } shadow-sm ${
+                                          d.accent === "ash"
+                                            ? "text-fg"
+                                            : "text-white"
+                                        }`}
                                       >
                                         <Icon className="h-4 w-4" />
                                       </div>

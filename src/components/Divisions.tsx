@@ -25,7 +25,7 @@ const ICONS: Record<string, LucideIcon> = {
 const ACCENT_SOLID: Record<string, string> = {
   red: "bg-brand-red",
   blue: "bg-brand-blue",
-  ash: "bg-brand-ash-dark",
+  ash: "bg-brand-ash",
   rb: "bg-brand-red",
   ab: "bg-brand-blue",
   ar: "bg-brand-red",
@@ -123,7 +123,13 @@ export default function Divisions() {
                         <Icon className="h-7 w-7 text-fg" />
                       </div>
                       <div className="text-right">
-                        <div className="text-[10px] uppercase tracking-[0.2em] text-white/80">
+                        <div
+                          className={`text-[10px] uppercase tracking-[0.2em] ${
+                            division.accent === "ash"
+                              ? "text-fg-soft"
+                              : "text-white/80"
+                          }`}
+                        >
                           বিভাগ {String(i + 1).padStart(2, "0")}
                         </div>
                       </div>

@@ -42,7 +42,7 @@ const ICONS: Record<string, LucideIcon> = {
 const ACCENT_SOLID_HEX: Record<string, string> = {
   red: "#e11924",
   blue: "#1847a1",
-  ash: "#7c8696",
+  ash: "#c0c7d1",
   rb: "#e11924",
   ab: "#1847a1",
   ar: "#e11924",
@@ -51,7 +51,7 @@ const ACCENT_SOLID_HEX: Record<string, string> = {
 const ACCENT_SOLID_CLASS: Record<string, string> = {
   red: "bg-brand-red",
   blue: "bg-brand-blue",
-  ash: "bg-brand-ash-dark",
+  ash: "bg-brand-ash",
   rb: "bg-brand-red",
   ab: "bg-brand-blue",
   ar: "bg-brand-red",
@@ -70,7 +70,7 @@ const ACCENT_TEXT: Record<string, string> = {
 const ACCENT_CURSOR: Record<string, string> = {
   red: "#e11924",
   blue: "#1847a1",
-  ash: "#7c8696",
+  ash: "#c0c7d1",
   rb: "#e11924",
   ab: "#1847a1",
   ar: "#e11924",
@@ -266,58 +266,79 @@ export default function Hero() {
               <div className="absolute -inset-4 sm:-inset-6 rounded-[2rem] bg-gradient-to-br from-white/40 to-white/0 -z-10" />
 
               <AnimatePresence mode="wait">
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.94, rotate: -3, y: 16 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.94, rotate: 3, y: -16 }}
-                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative rounded-[1.75rem] p-7 sm:p-9 overflow-hidden shadow-2xl"
-                  style={{ backgroundColor: ACCENT_SOLID_HEX[current.accent] }}
-                >
-                  <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-                  <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-white/25 blur-3xl animate-blob" />
-                  <div className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-white/20 blur-2xl animate-blob-slow" />
-
-                  <div className="relative">
-                    <div className="flex items-center justify-between">
-                      <div className="text-[10px] uppercase tracking-[0.25em] text-white/85 font-semibold">
-                        বিভাগ {toBn(idx + 1).padStart(2, "০")}
-                      </div>
-                      <Sparkles className="h-5 w-5 text-white/70" />
-                    </div>
-
-                    <div className="mt-7 inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl">
-                      <Icon className="h-10 w-10 sm:h-12 sm:w-12 text-fg" />
-                    </div>
-
-                    <h3 className="mt-6 text-2xl sm:text-3xl font-bold text-white drop-shadow-md leading-tight">
-                      {current.nameBn}
-                    </h3>
-                    <p className="mt-2 text-sm text-white/95 leading-relaxed">
-                      {current.tagline}
-                    </p>
-
-                    <div className="mt-7 grid grid-cols-2 gap-2.5">
-                      {current.highlights.slice(0, 4).map((h) => (
-                        <div
-                          key={h}
-                          className="rounded-xl bg-white/15 backdrop-blur-md border border-white/25 px-3 py-2.5 text-[11px] sm:text-xs font-medium text-white leading-snug"
-                        >
-                          {h}
-                        </div>
-                      ))}
-                    </div>
-
-                    <Link
-                      href={`/divisions/${current.slug}`}
-                      className="mt-7 inline-flex items-center gap-1.5 rounded-xl bg-white text-fg px-4 py-2.5 text-sm font-bold shadow-md hover:scale-[1.03] transition-transform"
+                {(() => {
+                  // Ash (#C0C7D1) is light — flip text/chips to dark for legibility.
+                  const onLight = current.accent === "ash";
+                  const labelCls = onLight ? "text-fg-soft" : "text-white/85";
+                  const headingCls = onLight
+                    ? "text-fg drop-shadow-none"
+                    : "text-white drop-shadow-md";
+                  const subCls = onLight ? "text-fg-muted" : "text-white/95";
+                  const sparkleCls = onLight ? "text-fg-muted/60" : "text-white/70";
+                  const chipCls = onLight
+                    ? "bg-fg/5 backdrop-blur-md border border-fg/15 text-fg"
+                    : "bg-white/15 backdrop-blur-md border border-white/25 text-white";
+                  return (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, scale: 0.94, rotate: -3, y: 16 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.94, rotate: 3, y: -16 }}
+                      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                      className="relative rounded-[1.75rem] p-7 sm:p-9 overflow-hidden shadow-2xl"
+                      style={{ backgroundColor: ACCENT_SOLID_HEX[current.accent] }}
                     >
-                      বিভাগটি দেখুন
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </div>
-                </motion.div>
+                      <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
+                      <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-white/25 blur-3xl animate-blob" />
+                      <div className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-white/20 blur-2xl animate-blob-slow" />
+
+                      <div className="relative">
+                        <div className="flex items-center justify-between">
+                          <div
+                            className={`text-[10px] uppercase tracking-[0.25em] font-semibold ${labelCls}`}
+                          >
+                            বিভাগ {toBn(idx + 1).padStart(2, "০")}
+                          </div>
+                          <Sparkles className={`h-5 w-5 ${sparkleCls}`} />
+                        </div>
+
+                        <div className="mt-7 inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl">
+                          <Icon className="h-10 w-10 sm:h-12 sm:w-12 text-fg" />
+                        </div>
+
+                        <h3
+                          className={`mt-6 text-2xl sm:text-3xl font-bold leading-tight ${headingCls}`}
+                        >
+                          {current.nameBn}
+                        </h3>
+                        <p
+                          className={`mt-2 text-sm leading-relaxed ${subCls}`}
+                        >
+                          {current.tagline}
+                        </p>
+
+                        <div className="mt-7 grid grid-cols-2 gap-2.5">
+                          {current.highlights.slice(0, 4).map((h) => (
+                            <div
+                              key={h}
+                              className={`rounded-xl px-3 py-2.5 text-[11px] sm:text-xs font-medium leading-snug ${chipCls}`}
+                            >
+                              {h}
+                            </div>
+                          ))}
+                        </div>
+
+                        <Link
+                          href={`/divisions/${current.slug}`}
+                          className="mt-7 inline-flex items-center gap-1.5 rounded-xl bg-white text-fg px-4 py-2.5 text-sm font-bold shadow-md hover:scale-[1.03] transition-transform"
+                        >
+                          বিভাগটি দেখুন
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </div>
+                    </motion.div>
+                  );
+                })()}
               </AnimatePresence>
             </div>
           </div>

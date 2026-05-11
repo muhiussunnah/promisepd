@@ -24,7 +24,7 @@ export default function About() {
       icon: Handshake,
       title: "প্রতিশ্রুতি রক্ষিত",
       copy: "সময়মতো মাইলস্টোন, কোনো লুকানো খরচ নেই, চাবি হস্তান্তরের পরেও কোনো চমক নেই।",
-      bg: "bg-brand-ash-dark",
+      bg: "bg-brand-ash",
     },
   ];
 
@@ -120,7 +120,11 @@ export default function About() {
                 >
                   <div className="flex gap-5">
                     <div className={`shrink-0 h-14 w-14 rounded-2xl ${p.bg} flex items-center justify-center shadow-md`}>
-                      <p.icon className="h-7 w-7 text-white" />
+                      <p.icon
+                        className={`h-7 w-7 ${
+                          p.bg === "bg-brand-ash" ? "text-fg" : "text-white"
+                        }`}
+                      />
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-fg">{p.title}</h3>

@@ -28,7 +28,7 @@ const ICONS: Record<string, LucideIcon> = {
 const ACCENT_SOLID: Record<string, string> = {
   red: "bg-brand-red",
   blue: "bg-brand-blue",
-  ash: "bg-brand-ash-dark",
+  ash: "bg-brand-ash",
   rb: "bg-brand-red",
   ab: "bg-brand-blue",
   ar: "bg-brand-red",
@@ -119,7 +119,11 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
                     ACCENT_SOLID[division.accent]
                   } shadow-md`}
                 >
-                  <Check className="h-5 w-5 text-white" />
+                  <Check
+                    className={`h-5 w-5 ${
+                      division.accent === "ash" ? "text-fg" : "text-white"
+                    }`}
+                  />
                 </div>
                 <h3 className="mt-4 text-lg font-bold text-fg">{f.title}</h3>
                 <p className="mt-1.5 text-sm text-fg-muted leading-relaxed">

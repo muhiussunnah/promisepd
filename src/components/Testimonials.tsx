@@ -28,7 +28,7 @@ export default function Testimonials() {
           className="max-w-3xl mx-auto text-center"
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-ash-dark animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-ash animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
               বাস্তব কণ্ঠ
             </span>

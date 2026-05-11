@@ -26,7 +26,7 @@ const ICONS: Record<string, LucideIcon> = {
 const ACCENT_SOLID_HEX: Record<string, string> = {
   red: "#e11924",
   blue: "#1847a1",
-  ash: "#7c8696",
+  ash: "#c0c7d1",
   rb: "#e11924",
   ab: "#1847a1",
   ar: "#e11924",
@@ -107,14 +107,21 @@ export default function DivisionHero({ division }: { division: Division }) {
                 </div>
 
                 <div className="mt-8 grid grid-cols-2 gap-3">
-                  {division.highlights.slice(0, 4).map((h) => (
-                    <div
-                      key={h}
-                      className="rounded-xl bg-white/15 backdrop-blur-md border border-white/20 px-3 py-2.5 text-xs sm:text-sm font-medium text-white"
-                    >
-                      {h}
-                    </div>
-                  ))}
+                  {division.highlights.slice(0, 4).map((h) => {
+                    const onLight = division.accent === "ash";
+                    return (
+                      <div
+                        key={h}
+                        className={`rounded-xl px-3 py-2.5 text-xs sm:text-sm font-medium backdrop-blur-md border ${
+                          onLight
+                            ? "bg-fg/5 border-fg/15 text-fg"
+                            : "bg-white/15 border-white/20 text-white"
+                        }`}
+                      >
+                        {h}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
