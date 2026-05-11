@@ -233,6 +233,8 @@ export const DIVISIONS: Division[] = [
     ],
   },
   {
+    // Interior & 3D uses ASH for an elegant, neutral design-canvas feel
+    // — balances the palette (2 red + 2 blue + 1 ash across the 5 divisions).
     slug: "interior-3d-design",
     nameEn: "Interior & 3D Design",
     nameBn: "ইন্টেরিয়র ও 3D ডিজাইন",
@@ -244,7 +246,7 @@ export const DIVISIONS: Division[] = [
     longDescription:
       "প্রমিজ গ্রুপের ইন্টেরিয়র ও 3D ডিজাইন বিভাগে আমরা আপনার বাড়ি, অফিস, দোকান — যেকোনো স্থাপনার অভ্যন্তরীণ ডিজাইন এবং 3D ভিজ্যুয়ালাইজেশন তৈরি করি। নির্মাণের আগেই দেখুন আপনার স্বপ্ন কেমন দেখাবে।",
     icon: "Palette",
-    accent: "ar",
+    accent: "ash",
     features: [
       {
         title: "আবাসিক ইন্টেরিয়র",

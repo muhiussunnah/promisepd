@@ -116,23 +116,27 @@ export default function Contact() {
                 label: "ফোন",
                 value: SITE.phoneDisplay,
                 href: `tel:${SITE.phone}`,
+                bg: "bg-brand-red",
               },
               {
                 icon: Mail,
                 label: "ইমেইল",
                 value: SITE.email,
                 href: `mailto:${SITE.email}`,
+                bg: "bg-brand-blue",
               },
               {
                 icon: MapPin,
                 label: "অফিস",
                 value: SITE.address,
                 href: "https://maps.google.com/?q=Kazi+Tower+South+Jatrabari+Dhaka",
+                bg: "bg-brand-blue",
               },
               {
                 icon: Clock,
                 label: "সময়",
                 value: `${SITE.hours} · ${SITE.weeklyOff}`,
+                bg: "bg-brand-ash-dark",
               },
             ].map((item) => {
               const Wrapper = item.href ? "a" : "div";
@@ -148,7 +152,9 @@ export default function Contact() {
                   }
                   className="card group flex items-start gap-4 p-5"
                 >
-                  <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-red shadow-md group-hover:scale-110 transition-transform">
+                  <div
+                    className={`shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-xl ${item.bg} shadow-md group-hover:scale-110 transition-transform`}
+                  >
                     <item.icon className="h-5 w-5 text-white" />
                   </div>
                   <div className="min-w-0">

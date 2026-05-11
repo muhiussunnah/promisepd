@@ -12,16 +12,19 @@ export default function About() {
       icon: Building2,
       title: "সঠিকভাবে নির্মিত",
       copy: "আমরা নিজেদের বাড়িতে যে উপাদান ব্যবহার করবো — ঠিক সেটাই। মানদণ্ড আমরা মাপি দশকে, দিনে নয়।",
+      bg: "bg-brand-red",
     },
     {
       icon: Heart,
       title: "মানুষ সবার আগে",
       copy: "ফি-এর আগে পরিবার। প্রতিটি সিদ্ধান্ত শুরু হয় সেই মানুষটিকে ভেবে — যে এখানে থাকবে।",
+      bg: "bg-brand-blue",
     },
     {
       icon: Handshake,
       title: "প্রতিশ্রুতি রক্ষিত",
       copy: "সময়মতো মাইলস্টোন, কোনো লুকানো খরচ নেই, চাবি হস্তান্তরের পরেও কোনো চমক নেই।",
+      bg: "bg-brand-ash-dark",
     },
   ];
 
@@ -116,7 +119,7 @@ export default function About() {
                   className="card group relative p-6 sm:p-7"
                 >
                   <div className="flex gap-5">
-                    <div className="shrink-0 h-14 w-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-md">
+                    <div className={`shrink-0 h-14 w-14 rounded-2xl ${p.bg} flex items-center justify-center shadow-md`}>
                       <p.icon className="h-7 w-7 text-white" />
                     </div>
                     <div>

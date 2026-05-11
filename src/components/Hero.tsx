@@ -239,10 +239,10 @@ export default function Hero() {
             {/* Trust chips */}
             <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-2xl">
               {[
-                { icon: ShieldCheck, label: "আইনি নিরাপত্তা" },
-                { icon: Award, label: "গুণগত নির্মাণ" },
-                { icon: MapPin, label: "প্রিমিয়াম এলাকা" },
-                { icon: Wallet, label: "নমনীয় কিস্তি" },
+                { icon: ShieldCheck, label: "আইনি নিরাপত্তা", color: "text-brand-blue" },
+                { icon: Award, label: "গুণগত নির্মাণ", color: "text-brand-red" },
+                { icon: MapPin, label: "প্রিমিয়াম এলাকা", color: "text-brand-blue" },
+                { icon: Wallet, label: "নমনীয় কিস্তি", color: "text-brand-red" },
               ].map((feature, i) => (
                 <motion.div
                   key={feature.label}
@@ -251,7 +251,7 @@ export default function Hero() {
                   transition={{ delay: 0.5 + i * 0.06 }}
                   className="flex items-center gap-2 rounded-xl bg-white/90 backdrop-blur-sm border border-border px-3 py-2 text-xs sm:text-sm shadow-sm"
                 >
-                  <feature.icon className="h-4 w-4 text-brand-blue shrink-0" />
+                  <feature.icon className={`h-4 w-4 shrink-0 ${feature.color}`} />
                   <span className="font-medium text-fg-soft truncate">
                     {feature.label}
                   </span>

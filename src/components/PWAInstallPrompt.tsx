@@ -122,13 +122,13 @@ export default function PWAInstallPrompt() {
             </button>
 
             <div className="flex items-start gap-4 pr-6">
-              <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-red shadow-md">
+              <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-blue shadow-md">
                 <Download className="h-6 w-6 text-white" />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5 mb-1">
-                  <Sparkles className="h-3.5 w-3.5 text-brand-red" />
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-brand-red">
+                  <Sparkles className="h-3.5 w-3.5 text-brand-blue" />
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-brand-blue">
                     নতুন · দ্রুত · অফলাইন
                   </span>
                 </div>
@@ -156,7 +156,7 @@ export default function PWAInstallPrompt() {
                 <button
                   onClick={handleInstall}
                   disabled={installing}
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-red hover:bg-brand-red-dark px-4 py-2.5 text-sm font-bold text-white shadow-md hover:scale-[1.02] transition-all disabled:opacity-70"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-blue hover:bg-brand-blue-dark px-4 py-2.5 text-sm font-bold text-white shadow-md hover:scale-[1.02] transition-all disabled:opacity-70"
                 >
                   <Download className="h-4 w-4" />
                   {installing ? "ইনস্টল হচ্ছে..." : "ইনস্টল করুন"}
