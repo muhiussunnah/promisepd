@@ -60,7 +60,7 @@ export default function Hero() {
         >
           <Sparkles className="h-3.5 w-3.5 text-brand-red" />
           <span className="font-medium tracking-wide text-fg-soft">
-            <span className="text-grad-rb font-bold">৭+ বছর</span> ধরে ঢাকার বুকে আস্থা
+            <span className="text-grad-rb font-bold">১৫+ বছর</span> ধরে ঢাকার বুকে আস্থা · ৫টি বিভাগ
           </span>
         </motion.div>
 
@@ -91,10 +91,10 @@ export default function Hero() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <Link
-            href="#projects"
+            href="#divisions"
             className="group inline-flex items-center gap-2 rounded-2xl bg-[image:var(--grad-rb)] px-7 py-4 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.03] transition-all btn-shine"
           >
-            প্রকল্প দেখুন
+            আমাদের বিভাগ দেখুন
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
           <Link

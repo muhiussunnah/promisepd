@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Services from "@/components/Services";
+import Divisions from "@/components/Divisions";
 import Projects from "@/components/Projects";
 import Stats from "@/components/Stats";
 import WhyUs from "@/components/WhyUs";
@@ -39,7 +39,7 @@ export default function Page() {
         height={120}
       />
 
-      <Services />
+      <Divisions />
 
       <WaveDivider
         variant="wave"

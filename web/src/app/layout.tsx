@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Hind_Siliguri } from "next/font/google";
+import { Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,11 +7,12 @@ import ScrollToTop from "@/components/ScrollToTop";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
 import RegisterSW from "@/components/RegisterSW";
 
-const bn = Hind_Siliguri({
+const bn = Noto_Sans_Bengali({
   variable: "--font-bn",
   subsets: ["bengali", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {

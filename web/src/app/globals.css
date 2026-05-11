@@ -19,7 +19,7 @@
   --color-brand-blue-soft: #3b82f6;
   --color-brand-blue-tint: #e0e8ff;
 
-  --font-sans: var(--font-bn), "Hind Siliguri", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: var(--font-bn), "Noto Sans Bengali", "Hind Siliguri", "Nirmala UI", "Vrinda", "SolaimanLipi", "Kalpurush", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
 
   --animate-blob: blob 24s ease-in-out infinite;
@@ -50,6 +50,18 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+  font-variant-ligatures: common-ligatures contextual;
+}
+
+/* Tighter heading rendering for Bangla */
+h1,
+h2,
+h3 {
+  font-feature-settings: "kern", "liga", "calt";
+  letter-spacing: 0;
+  line-height: 1.25;
 }
 
 ::selection {

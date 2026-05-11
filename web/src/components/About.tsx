@@ -66,14 +66,16 @@ export default function About() {
               <span className="text-grad">প্রতিশ্রুতি গড়ি।</span>
             </h2>
             <p className="mt-6 text-base sm:text-lg text-fg-muted leading-relaxed">
-              {SITE.founded} সাল থেকে {SITE.shortName} ঢাকার আবাসন খাতে নিঃশব্দে
-              একটি অবিচল শক্তি — পরিবারগুলোকে এমন বাড়িতে পৌঁছে দিচ্ছি যা তাঁদের
+              {SITE.founded} সাল থেকে প্রমিজ গ্রুপ ঢাকার মাটিতে নিঃশব্দে এক
+              অবিচল শক্তি — পরিবারগুলোকে এমন বাড়িতে পৌঁছে দিচ্ছি যা তাঁদের
               জীবন, বাজেট ও ভবিষ্যতের সাথে মেলে।
             </p>
             <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed">
-              আমরা একজন ডেভেলপার, একজন উপদেষ্টা, এবং দীর্ঘমেয়াদি প্রতিবেশী —
-              এবং প্রতিটি চাবি হস্তান্তরকে সম্পর্কের শুরু হিসেবে দেখি, বিক্রির
-              শেষ হিসেবে নয়।
+              আজ আমরা ৫টি বিভাগে কাজ করি — <strong>প্রমিজ সিটি</strong> (রিয়েল
+              এস্টেট), <strong>আহবাব রিয়েল এস্টেট</strong> (নির্মাণ),{" "}
+              <strong>প্রমিজ ইন্টারন্যাশনাল</strong> (সঞ্চয়),{" "}
+              <strong>আহবাব ট্রাভেলস</strong> (হজ্জ/উমরাহ), এবং{" "}
+              <strong>ইন্টেরিয়র ও 3D ডিজাইন</strong>।
             </p>
 
             <div className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-white border border-border p-3 pr-5 shadow-sm">
