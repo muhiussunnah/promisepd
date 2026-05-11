@@ -170,22 +170,20 @@ export default function Footer() {
 
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
-            <Link href="/#home" className="flex items-center gap-3">
-              <div className="relative h-12 w-12 rounded-xl overflow-hidden bg-white p-1 ring-1 ring-border">
-                <Image
-                  src="/logo.png"
-                  alt={SITE.shortName}
-                  fill
-                  sizes="48px"
-                  className="object-contain p-0.5"
-                />
-              </div>
+            <Link href="/#home" className="flex items-center gap-4">
+              <Image
+                src="/logo.png"
+                alt={SITE.shortName}
+                width={640}
+                height={300}
+                className="h-14 w-auto shrink-0"
+              />
               <div className="leading-tight">
                 <div className="text-base font-bold text-grad-rb">
-                  {SITE.nameBn}
+                  প্রমিজ সিটি
                 </div>
                 <div className="text-[11px] tracking-wider text-fg-muted">
-                  {SITE.tagline}
+                  স্বপ্ন যেখানে বাস্তব
                 </div>
               </div>
             </Link>

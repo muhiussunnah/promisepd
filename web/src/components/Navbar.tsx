@@ -113,27 +113,22 @@ export default function Navbar() {
           >
             <Link
               href="/#home"
-              className="flex items-center gap-3 group min-w-0 py-1.5"
+              className="flex items-center gap-3 sm:gap-4 group min-w-0 py-1.5"
               aria-label={SITE.shortName}
             >
-              <motion.div
-                animate={{
-                  width: isCondensed ? 40 : 48,
-                  height: isCondensed ? 40 : 48,
-                }}
-                transition={{ duration: 0.4 }}
-                className="relative rounded-xl overflow-hidden bg-white p-1 ring-1 ring-border shrink-0"
-              >
-                <Image
-                  src="/logo.png"
-                  alt={SITE.shortName}
-                  fill
-                  sizes="48px"
-                  className="object-contain p-0.5"
-                  priority
-                />
-              </motion.div>
-              <div className="hidden sm:flex flex-col leading-tight min-w-0">
+              <Image
+                src="/logo.png"
+                alt={SITE.shortName}
+                width={640}
+                height={300}
+                priority
+                className={`shrink-0 w-auto transition-[height] duration-300 ease-out ${
+                  isCondensed ? "h-10 sm:h-11" : "h-12 sm:h-14"
+                }`}
+              />
+
+              {/* Dynamic per-section meta */}
+              <div className="hidden md:flex flex-col leading-tight min-w-0">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={meta.title}
@@ -141,7 +136,7 @@ export default function Navbar() {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 8, opacity: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="text-sm sm:text-base font-bold tracking-wide text-grad-rb truncate"
+                    className="text-sm font-bold tracking-wide text-grad-rb truncate"
                   >
                     {meta.title}
                   </motion.span>
@@ -158,6 +153,17 @@ export default function Navbar() {
                     {meta.tagline}
                   </motion.span>
                 </AnimatePresence>
+              </div>
+
+              {/* Separator */}
+              <div className="hidden xl:block h-9 w-px bg-border shrink-0" />
+
+              {/* Promise City branding (always shown on xl+) */}
+              <div className="hidden xl:flex flex-col leading-tight shrink-0">
+                <span className="text-sm font-bold text-grad-rb">প্রমিজ সিটি</span>
+                <span className="text-[11px] text-fg-muted">
+                  স্বপ্ন যেখানে বাস্তব
+                </span>
               </div>
             </Link>
 

@@ -78,16 +78,14 @@ export default function About() {
               <strong>ইন্টেরিয়র ও 3D ডিজাইন</strong>।
             </p>
 
-            <div className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-white border border-border p-3 pr-5 shadow-sm">
-              <div className="relative h-12 w-12 rounded-xl overflow-hidden bg-white ring-1 ring-border">
-                <Image
-                  src="/logo.png"
-                  alt={SITE.shortName}
-                  fill
-                  sizes="48px"
-                  className="object-contain p-1"
-                />
-              </div>
+            <div className="mt-8 inline-flex items-center gap-4 rounded-2xl bg-white border border-border p-3 pr-5 shadow-sm">
+              <Image
+                src="/logo.png"
+                alt={SITE.shortName}
+                width={640}
+                height={300}
+                className="h-12 w-auto shrink-0"
+              />
               <div className="leading-tight">
                 <div className="text-sm font-bold text-fg">
                   {SITE.shortName}
