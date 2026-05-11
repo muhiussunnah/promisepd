@@ -1,8 +1,26 @@
 import type { MetadataRoute } from "next";
+import { DIVISIONS } from "@/lib/site";
+
+const SITE_URL = "https://promisepd.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://promisepd.com";
-  return [
-    { url: base, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
+  const now = new Date();
+
+  const entries: MetadataRoute.Sitemap = [
+    {
+      url: SITE_URL,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 1.0,
+    },
+    // Each division's inner page.
+    ...DIVISIONS.map((d) => ({
+      url: `${SITE_URL}/divisions/${d.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ];
+
+  return entries;
 }

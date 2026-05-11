@@ -16,6 +16,10 @@ import {
 } from "lucide-react";
 import { DIVISIONS, PROJECTS, SITE } from "@/lib/site";
 import DivisionHero from "@/components/DivisionHero";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema, divisionServiceSchema } from "@/lib/schema";
+
+const SITE_URL = "https://promisepd.com";
 
 const ICONS: Record<string, LucideIcon> = {
   Building2,
@@ -44,9 +48,27 @@ export async function generateMetadata(
   const { slug } = await props.params;
   const division = DIVISIONS.find((d) => d.slug === slug);
   if (!division) return { title: "বিভাগ পাওয়া যায়নি" };
+  const url = `${SITE_URL}/divisions/${division.slug}`;
+  const title = `${division.nameBn} — ${division.tagline}`;
   return {
-    title: `${division.nameBn} — ${division.tagline}`,
+    title,
     description: division.description,
+    alternates: { canonical: `/divisions/${division.slug}` },
+    openGraph: {
+      type: "website",
+      url,
+      title,
+      description: division.description,
+      siteName: "Promise PPD",
+      locale: "bn_BD",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: division.description,
+      images: ["/og-image.png"],
+    },
   };
 }
 
@@ -61,8 +83,17 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
   const prev = DIVISIONS[(currentIdx - 1 + DIVISIONS.length) % DIVISIONS.length];
   const next = DIVISIONS[(currentIdx + 1) % DIVISIONS.length];
 
+  const breadcrumb = breadcrumbSchema([
+    { name: "হোম", url: SITE_URL },
+    { name: "আমাদের বিভাগ", url: `${SITE_URL}/#divisions` },
+    { name: division.nameBn, url: `${SITE_URL}/divisions/${division.slug}` },
+  ]);
+  const service = divisionServiceSchema(division.slug);
+
   return (
     <>
+      <JsonLd data={breadcrumb} />
+      {service && <JsonLd data={service} />}
       <DivisionHero division={division} />
 
       {/* About this division */}
