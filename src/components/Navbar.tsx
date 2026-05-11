@@ -35,13 +35,13 @@ const DIV_ICONS: Record<string, LucideIcon> = {
   Palette,
 };
 
-const ACCENT_TO_GRAD: Record<string, string> = {
-  red: "from-brand-red to-brand-red-soft",
-  blue: "from-brand-blue to-brand-blue-soft",
-  ash: "from-brand-ash-dark to-brand-ash",
-  rb: "from-brand-red to-brand-blue",
-  ab: "from-brand-ash to-brand-blue",
-  ar: "from-brand-ash to-brand-red",
+const ACCENT_TO_SOLID: Record<string, string> = {
+  red: "bg-brand-red",
+  blue: "bg-brand-blue",
+  ash: "bg-brand-ash-dark",
+  rb: "bg-brand-red",
+  ab: "bg-brand-blue",
+  ar: "bg-brand-red",
 };
 
 export default function Navbar() {
@@ -223,8 +223,8 @@ export default function Navbar() {
                                     className="group flex items-start gap-3 rounded-xl p-3 hover:bg-bg-soft transition-colors"
                                   >
                                     <div
-                                      className={`shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${
-                                        ACCENT_TO_GRAD[d.accent] ?? ACCENT_TO_GRAD.red
+                                      className={`shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg ${
+                                        ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
                                       } text-white shadow-md group-hover:scale-105 transition-transform`}
                                     >
                                       <Icon className="h-5 w-5" />
@@ -265,7 +265,7 @@ export default function Navbar() {
             <div className="flex items-center gap-2 py-1">
               <a
                 href={`tel:${SITE.phone}`}
-                className="hidden md:inline-flex items-center gap-2 rounded-xl bg-[image:var(--grad-rb)] px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.03] transition-all btn-shine"
+                className="hidden md:inline-flex items-center gap-2 rounded-xl bg-brand-red px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
               >
                 <Phone className="h-4 w-4" />
                 <span>কল করুন</span>
@@ -354,8 +354,8 @@ export default function Navbar() {
                                       className="flex items-start gap-3 rounded-lg p-2.5 hover:bg-bg-soft transition-colors"
                                     >
                                       <div
-                                        className={`shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br ${
-                                          ACCENT_TO_GRAD[d.accent] ?? ACCENT_TO_GRAD.red
+                                        className={`shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-md ${
+                                          ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
                                         } text-white shadow-sm`}
                                       >
                                         <Icon className="h-4 w-4" />
@@ -390,7 +390,7 @@ export default function Navbar() {
                         onClick={() => setOpen(false)}
                         className={`group flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition-colors ${
                           isActive
-                            ? "bg-[image:var(--grad-rb)] text-white"
+                            ? "bg-brand-red text-white"
                             : "hover:bg-bg-soft text-fg"
                         }`}
                       >
@@ -411,7 +411,7 @@ export default function Navbar() {
               </nav>
               <a
                 href={`tel:${SITE.phone}`}
-                className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-[image:var(--grad-rb)] px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] btn-shine"
+                className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-brand-red px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] btn-shine"
                 onClick={() => setOpen(false)}
               >
                 <Phone className="h-4 w-4" />

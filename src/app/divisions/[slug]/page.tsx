@@ -25,13 +25,13 @@ const ICONS: Record<string, LucideIcon> = {
   Palette,
 };
 
-const ACCENT_BG: Record<string, string> = {
-  red: "from-brand-red to-brand-red-soft",
-  blue: "from-brand-blue to-brand-blue-soft",
-  ash: "from-brand-ash-dark to-brand-ash",
-  rb: "from-brand-red to-brand-blue",
-  ab: "from-brand-ash to-brand-blue",
-  ar: "from-brand-ash to-brand-red",
+const ACCENT_SOLID: Record<string, string> = {
+  red: "bg-brand-red",
+  blue: "bg-brand-blue",
+  ash: "bg-brand-ash-dark",
+  rb: "bg-brand-red",
+  ab: "bg-brand-blue",
+  ar: "bg-brand-red",
 };
 
 export async function generateStaticParams() {
@@ -115,8 +115,8 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
             {division.features.map((f) => (
               <div key={f.title} className="card p-6">
                 <div
-                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${
-                    ACCENT_BG[division.accent]
+                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${
+                    ACCENT_SOLID[division.accent]
                   } shadow-md`}
                 >
                   <Check className="h-5 w-5 text-white" />
@@ -150,7 +150,7 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {PROJECTS.map((p, i) => (
                 <article key={i} className="card overflow-hidden">
-                  <div className="relative h-40 bg-[image:var(--grad-rb)] overflow-hidden">
+                  <div className="relative h-40 bg-brand-red overflow-hidden">
                     <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
                     <div className="absolute inset-0 flex items-end p-5">
                       <div>
@@ -200,7 +200,7 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href={`tel:${SITE.phone}`}
-                className="inline-flex items-center gap-2 rounded-2xl bg-[image:var(--grad-rb)] px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.03] transition-all btn-shine"
+                className="inline-flex items-center gap-2 rounded-2xl bg-brand-red px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
               >
                 <Phone className="h-4 w-4" />
                 {SITE.phoneDisplay}

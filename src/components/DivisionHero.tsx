@@ -22,22 +22,14 @@ const ICONS: Record<string, LucideIcon> = {
   Palette,
 };
 
-const ACCENT_BG: Record<string, string> = {
-  red: "from-brand-red to-brand-red-soft",
-  blue: "from-brand-blue to-brand-blue-soft",
-  ash: "from-brand-ash-dark to-brand-ash",
-  rb: "from-brand-red to-brand-blue",
-  ab: "from-brand-ash to-brand-blue",
-  ar: "from-brand-ash to-brand-red",
-};
-
-const ACCENT_GRAD: Record<string, string> = {
-  red: "linear-gradient(135deg, #e11924 0%, #ff4757 100%)",
-  blue: "linear-gradient(135deg, #1847a1 0%, #3463c7 100%)",
-  ash: "linear-gradient(135deg, #7c8696 0%, #c0c7d1 100%)",
-  rb: "linear-gradient(135deg, #e11924 0%, #1847a1 100%)",
-  ab: "linear-gradient(135deg, #c0c7d1 0%, #1847a1 100%)",
-  ar: "linear-gradient(135deg, #c0c7d1 0%, #e11924 100%)",
+/** Solid brand color per division accent (no gradients). */
+const ACCENT_SOLID_HEX: Record<string, string> = {
+  red: "#e11924",
+  blue: "#1847a1",
+  ash: "#7c8696",
+  rb: "#e11924",
+  ab: "#1847a1",
+  ar: "#e11924",
 };
 
 export default function DivisionHero({ division }: { division: Division }) {
@@ -81,7 +73,7 @@ export default function DivisionHero({ division }: { division: Division }) {
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 rounded-2xl bg-[image:var(--grad-rb)] px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.03] transition-all btn-shine"
+                className="inline-flex items-center gap-2 rounded-2xl bg-brand-red px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
               >
                 পরামর্শ নিন
                 <ArrowRight className="h-4 w-4" />
@@ -103,7 +95,7 @@ export default function DivisionHero({ division }: { division: Division }) {
           >
             <div
               className="relative rounded-3xl p-10 sm:p-12 overflow-hidden shadow-2xl"
-              style={{ backgroundImage: ACCENT_GRAD[division.accent] }}
+              style={{ backgroundColor: ACCENT_SOLID_HEX[division.accent] }}
             >
               <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
               <div className="absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-white/20 blur-3xl animate-blob" />

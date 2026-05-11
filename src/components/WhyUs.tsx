@@ -77,9 +77,9 @@ export default function WhyUs() {
                 whileHover={{ y: -6 }}
                 className="card group relative overflow-hidden p-6 sm:p-7"
               >
-                <div className="absolute inset-0 bg-[image:var(--grad-rb)] opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-brand-red opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500" />
                 <div className="relative flex items-start gap-4">
-                  <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-bg-soft-2 group-hover:bg-[image:var(--grad-rb)] transition-colors duration-300">
+                  <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-bg-soft-2 group-hover:bg-brand-red transition-colors duration-300">
                     {Icon && (
                       <Icon className="h-5 w-5 text-brand-blue group-hover:text-white transition-colors" />
                     )}

@@ -116,7 +116,7 @@ export default function About() {
                   className="card group relative p-6 sm:p-7"
                 >
                   <div className="flex gap-5">
-                    <div className="shrink-0 h-14 w-14 rounded-2xl bg-[image:var(--grad-rb)] flex items-center justify-center shadow-md">
+                    <div className="shrink-0 h-14 w-14 rounded-2xl bg-brand-red flex items-center justify-center shadow-md">
                       <p.icon className="h-7 w-7 text-white" />
                     </div>
                     <div>

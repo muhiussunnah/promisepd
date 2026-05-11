@@ -37,24 +37,24 @@ const ICONS: Record<string, LucideIcon> = {
   Palette,
 };
 
-/** Every gradient is built from the 3 brand colors only.
- *  red #E11924 · blue #1847A1 · ash #C0C7D1 */
-const ACCENT_GRAD: Record<string, string> = {
-  red: "linear-gradient(135deg, #e11924 0%, #ff4757 100%)",
-  blue: "linear-gradient(135deg, #1847a1 0%, #3463c7 100%)",
-  ash: "linear-gradient(135deg, #7c8696 0%, #c0c7d1 100%)",
-  rb: "linear-gradient(135deg, #e11924 0%, #1847a1 100%)",
-  ab: "linear-gradient(135deg, #c0c7d1 0%, #1847a1 100%)",
-  ar: "linear-gradient(135deg, #c0c7d1 0%, #e11924 100%)",
+/** SOLID brand color per division accent (no gradients).
+ *  red/rb/ar → solid red, blue/ab → solid blue, ash → solid ash-dark */
+const ACCENT_SOLID_HEX: Record<string, string> = {
+  red: "#e11924",
+  blue: "#1847a1",
+  ash: "#7c8696",
+  rb: "#e11924",
+  ab: "#1847a1",
+  ar: "#e11924",
 };
 
-const ACCENT_GRAD_CLASS: Record<string, string> = {
-  red: "from-brand-red to-brand-red-soft",
-  blue: "from-brand-blue to-brand-blue-soft",
-  ash: "from-brand-ash-dark to-brand-ash",
-  rb: "from-brand-red to-brand-blue",
-  ab: "from-brand-ash to-brand-blue",
-  ar: "from-brand-ash to-brand-red",
+const ACCENT_SOLID_CLASS: Record<string, string> = {
+  red: "bg-brand-red",
+  blue: "bg-brand-blue",
+  ash: "bg-brand-ash-dark",
+  rb: "bg-brand-red",
+  ab: "bg-brand-blue",
+  ar: "bg-brand-red",
 };
 
 const ACCENT_TEXT: Record<string, string> = {
@@ -101,7 +101,7 @@ export default function Hero() {
 
   const current = DIVISIONS[idx];
   const Icon = ICONS[current.icon] ?? Building2;
-  const accentGradClass = ACCENT_GRAD_CLASS[current.accent];
+  const accentSolidClass = ACCENT_SOLID_CLASS[current.accent];
   const accentText = ACCENT_TEXT[current.accent];
 
   return (
@@ -155,7 +155,7 @@ export default function Hero() {
                 {/* Service kicker */}
                 <div className="flex items-center gap-2 flex-wrap">
                   <span
-                    className={`inline-flex items-center gap-2 rounded-full bg-gradient-to-r ${accentGradClass} px-3.5 py-1.5 text-[11px] sm:text-xs font-bold text-white tracking-wider shadow-md`}
+                    className={`inline-flex items-center gap-2 rounded-full ${accentSolidClass} px-3.5 py-1.5 text-[11px] sm:text-xs font-bold text-white tracking-wider shadow-md`}
                   >
                     <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
                     {toBn(idx + 1)} / ৫ · {current.nameBn}
@@ -200,7 +200,7 @@ export default function Hero() {
             <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
                 href={`/divisions/${current.slug}`}
-                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-[image:var(--grad-rb)] px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.03] transition-all btn-shine"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-red px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
               >
                 বিস্তারিত দেখুন
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -225,7 +225,7 @@ export default function Hero() {
                     aria-label={d.nameBn}
                     className={`transition-all duration-500 ease-out rounded-full ${
                       active
-                        ? `w-9 h-1.5 bg-gradient-to-r ${ACCENT_GRAD_CLASS[d.accent]}`
+                        ? `w-9 h-1.5 ${ACCENT_SOLID_CLASS[d.accent]}`
                         : "w-1.5 h-1.5 bg-fg-faint/40 hover:bg-fg-faint/70"
                     }`}
                   />
@@ -273,7 +273,7 @@ export default function Hero() {
                   exit={{ opacity: 0, scale: 0.94, rotate: 3, y: -16 }}
                   transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                   className="relative rounded-[1.75rem] p-7 sm:p-9 overflow-hidden shadow-2xl"
-                  style={{ backgroundImage: ACCENT_GRAD[current.accent] }}
+                  style={{ backgroundColor: ACCENT_SOLID_HEX[current.accent] }}
                 >
                   <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
                   <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-white/25 blur-3xl animate-blob" />
@@ -337,7 +337,7 @@ export default function Hero() {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-              className="h-1.5 w-1 rounded-full bg-[image:var(--grad-rb)]"
+              className="h-1.5 w-1 rounded-full bg-brand-red"
             />
           </div>
         </div>

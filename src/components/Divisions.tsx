@@ -22,13 +22,13 @@ const ICONS: Record<string, LucideIcon> = {
   Palette,
 };
 
-const ACCENT_BG: Record<string, string> = {
-  red: "from-brand-red to-brand-red-soft",
-  blue: "from-brand-blue to-brand-blue-soft",
-  ash: "from-brand-ash-dark to-brand-ash",
-  rb: "from-brand-red to-brand-blue",
-  ab: "from-brand-ash to-brand-blue",
-  ar: "from-brand-ash to-brand-red",
+const ACCENT_SOLID: Record<string, string> = {
+  red: "bg-brand-red",
+  blue: "bg-brand-blue",
+  ash: "bg-brand-ash-dark",
+  rb: "bg-brand-red",
+  ab: "bg-brand-blue",
+  ar: "bg-brand-red",
 };
 
 const ACCENT_GLOW: Record<string, string> = {
@@ -108,8 +108,8 @@ export default function Divisions() {
                 >
                   {/* Header gradient strip */}
                   <div
-                    className={`relative h-32 overflow-hidden bg-gradient-to-br ${
-                      ACCENT_BG[division.accent] ?? ACCENT_BG.red
+                    className={`relative h-32 overflow-hidden ${
+                      ACCENT_SOLID[division.accent] ?? ACCENT_SOLID.red
                     }`}
                   >
                     <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
@@ -150,8 +150,8 @@ export default function Divisions() {
                             className="text-xs text-fg-soft flex items-center gap-1.5"
                           >
                             <span
-                              className={`h-1.5 w-1.5 rounded-full bg-gradient-to-br ${
-                                ACCENT_BG[division.accent]
+                              className={`h-1.5 w-1.5 rounded-full ${
+                                ACCENT_SOLID[division.accent]
                               }`}
                             />
                             {h}

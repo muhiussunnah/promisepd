@@ -95,14 +95,24 @@ export default function PWAInstallPrompt() {
   return (
     <AnimatePresence>
       {show && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ type: "spring", damping: 22, stiffness: 180 }}
-          className="fixed bottom-24 left-4 right-4 sm:bottom-6 sm:right-6 sm:left-auto z-[60] w-auto sm:w-[min(420px,calc(100vw-3rem))]"
-        >
-          <div className="relative grad-border p-5 sm:p-6 shadow-2xl">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          {/* Backdrop — dismisses on click */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleDismiss}
+            className="absolute inset-0 bg-fg/30 backdrop-blur-sm"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 24 }}
+            transition={{ type: "spring", damping: 22, stiffness: 180 }}
+            className="relative w-[min(440px,100%)]"
+          >
+            <div className="relative grad-border p-5 sm:p-6 shadow-2xl bg-white">
             <button
               onClick={handleDismiss}
               aria-label="বন্ধ করুন"
@@ -112,7 +122,7 @@ export default function PWAInstallPrompt() {
             </button>
 
             <div className="flex items-start gap-4 pr-6">
-              <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[image:var(--grad-rb)] shadow-md">
+              <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-red shadow-md">
                 <Download className="h-6 w-6 text-white" />
               </div>
               <div className="min-w-0">
@@ -146,7 +156,7 @@ export default function PWAInstallPrompt() {
                 <button
                   onClick={handleInstall}
                   disabled={installing}
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[image:var(--grad-rb)] px-4 py-2.5 text-sm font-bold text-white shadow-md hover:scale-[1.02] transition-transform btn-shine disabled:opacity-70"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-red hover:bg-brand-red-dark px-4 py-2.5 text-sm font-bold text-white shadow-md hover:scale-[1.02] transition-all disabled:opacity-70"
                 >
                   <Download className="h-4 w-4" />
                   {installing ? "ইনস্টল হচ্ছে..." : "ইনস্টল করুন"}
@@ -163,8 +173,9 @@ export default function PWAInstallPrompt() {
                 ব্রাউজারের মেনু থেকে &ldquo;Install App&rdquo; অপশনটি বেছে নিন।
               </p>
             )}
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );

@@ -151,7 +151,7 @@ export default function Footer() {
               <button
                 type="submit"
                 disabled={pending || done}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[image:var(--grad-rb)] px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.03] transition-all btn-shine disabled:opacity-70"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-red px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all disabled:opacity-70"
               >
                 {done ? (
                   <>

@@ -148,7 +148,7 @@ export default function Contact() {
                   }
                   className="card group flex items-start gap-4 p-5"
                 >
-                  <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[image:var(--grad-rb)] shadow-md group-hover:scale-110 transition-transform">
+                  <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-red shadow-md group-hover:scale-110 transition-transform">
                     <item.icon className="h-5 w-5 text-white" />
                   </div>
                   <div className="min-w-0">
@@ -248,7 +248,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-[image:var(--grad-rb)] px-6 py-4 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.02] disabled:opacity-70 disabled:scale-100 transition-all btn-shine"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-red px-6 py-4 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.02] disabled:opacity-70 disabled:scale-100 transition-all btn-shine"
             >
               <Send className="h-4 w-4" />
               {pending ? "পাঠানো হচ্ছে..." : "বার্তা পাঠান"}

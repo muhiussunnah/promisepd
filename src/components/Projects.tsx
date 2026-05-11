@@ -63,7 +63,7 @@ export default function Projects() {
               className="card group relative h-full overflow-hidden"
             >
               {/* Header band — red→blue gradient */}
-              <div className="relative h-44 overflow-hidden bg-[image:var(--grad-rb)]">
+              <div className="relative h-44 overflow-hidden bg-brand-red">
                 <div className="absolute inset-0 opacity-30 mix-blend-overlay grid-bg" />
                 <div className="absolute -bottom-20 -right-20 h-48 w-48 rounded-full bg-white/20 blur-3xl animate-blob" />
                 <div className="absolute -top-10 -left-10 h-40 w-40 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
