@@ -68,12 +68,12 @@ export default function Contact() {
         blobs={[
           {
             className:
-              "left-[-10%] top-[10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(225,29,46,0.16),transparent_60%)]",
+              "left-[-10%] top-[10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(225,25,36,0.16),transparent_60%)]",
             parallax: -80,
           },
           {
             className:
-              "right-[-10%] bottom-[10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle,rgba(29,79,216,0.18),transparent_60%)]",
+              "right-[-10%] bottom-[10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle,rgba(24,71,161,0.18),transparent_60%)]",
             parallax: 100,
             delay: 4,
           },

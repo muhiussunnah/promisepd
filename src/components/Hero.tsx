@@ -38,14 +38,14 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 /** Every gradient is built from the 3 brand colors only.
- *  red #E11D2E · blue #1E40AF · ash #94A3B8 */
+ *  red #E11924 · blue #1847A1 · ash #C0C7D1 */
 const ACCENT_GRAD: Record<string, string> = {
-  red: "linear-gradient(135deg, #e11d2e 0%, #ff5a6b 100%)",
-  blue: "linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)",
-  ash: "linear-gradient(135deg, #64748b 0%, #94a3b8 100%)",
-  rb: "linear-gradient(135deg, #e11d2e 0%, #1e40af 100%)",
-  ab: "linear-gradient(135deg, #94a3b8 0%, #1e40af 100%)",
-  ar: "linear-gradient(135deg, #94a3b8 0%, #e11d2e 100%)",
+  red: "linear-gradient(135deg, #e11924 0%, #ff4757 100%)",
+  blue: "linear-gradient(135deg, #1847a1 0%, #3463c7 100%)",
+  ash: "linear-gradient(135deg, #7c8696 0%, #c0c7d1 100%)",
+  rb: "linear-gradient(135deg, #e11924 0%, #1847a1 100%)",
+  ab: "linear-gradient(135deg, #c0c7d1 0%, #1847a1 100%)",
+  ar: "linear-gradient(135deg, #c0c7d1 0%, #e11924 100%)",
 };
 
 const ACCENT_GRAD_CLASS: Record<string, string> = {
@@ -68,12 +68,12 @@ const ACCENT_TEXT: Record<string, string> = {
 
 /** Cursor color for the typewriter on the H1 */
 const ACCENT_CURSOR: Record<string, string> = {
-  red: "#e11d2e",
-  blue: "#1e40af",
-  ash: "#64748b",
-  rb: "#e11d2e",
-  ab: "#1e40af",
-  ar: "#e11d2e",
+  red: "#e11924",
+  blue: "#1847a1",
+  ash: "#7c8696",
+  rb: "#e11924",
+  ab: "#1847a1",
+  ar: "#e11924",
 };
 
 export default function Hero() {

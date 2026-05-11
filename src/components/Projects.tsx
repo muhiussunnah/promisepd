@@ -15,12 +15,12 @@ export default function Projects() {
         blobs={[
           {
             className:
-              "left-[-15%] top-[20%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(225,29,46,0.18),transparent_60%)]",
+              "left-[-15%] top-[20%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(225,25,36,0.18),transparent_60%)]",
             parallax: -120,
           },
           {
             className:
-              "right-[-10%] bottom-[20%] w-[50vw] h-[50vw] bg-[radial-gradient(circle,rgba(29,79,216,0.18),transparent_60%)]",
+              "right-[-10%] bottom-[20%] w-[50vw] h-[50vw] bg-[radial-gradient(circle,rgba(24,71,161,0.18),transparent_60%)]",
             parallax: 100,
             delay: 5,
           },

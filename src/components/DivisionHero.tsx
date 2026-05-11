@@ -32,12 +32,12 @@ const ACCENT_BG: Record<string, string> = {
 };
 
 const ACCENT_GRAD: Record<string, string> = {
-  red: "linear-gradient(135deg, #e11d2e 0%, #ff5a6b 100%)",
-  blue: "linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)",
-  ash: "linear-gradient(135deg, #64748b 0%, #94a3b8 100%)",
-  rb: "linear-gradient(135deg, #e11d2e 0%, #1e40af 100%)",
-  ab: "linear-gradient(135deg, #94a3b8 0%, #1e40af 100%)",
-  ar: "linear-gradient(135deg, #94a3b8 0%, #e11d2e 100%)",
+  red: "linear-gradient(135deg, #e11924 0%, #ff4757 100%)",
+  blue: "linear-gradient(135deg, #1847a1 0%, #3463c7 100%)",
+  ash: "linear-gradient(135deg, #7c8696 0%, #c0c7d1 100%)",
+  rb: "linear-gradient(135deg, #e11924 0%, #1847a1 100%)",
+  ab: "linear-gradient(135deg, #c0c7d1 0%, #1847a1 100%)",
+  ar: "linear-gradient(135deg, #c0c7d1 0%, #e11924 100%)",
 };
 
 export default function DivisionHero({ division }: { division: Division }) {

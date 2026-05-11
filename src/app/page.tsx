@@ -15,8 +15,8 @@ export default function Page() {
 
       <WaveDivider
         variant="blob"
-        fromColor="rgba(225,29,46,0.06)"
-        toColor="rgba(29,79,216,0.08)"
+        fromColor="rgba(225,25,36,0.06)"
+        toColor="rgba(24,71,161,0.08)"
         height={120}
       />
 
@@ -24,8 +24,8 @@ export default function Page() {
 
       <WaveDivider
         variant="wave-inverted"
-        fromColor="rgba(29,79,216,0.05)"
-        toColor="rgba(225,29,46,0.05)"
+        fromColor="rgba(24,71,161,0.05)"
+        toColor="rgba(225,25,36,0.05)"
         flip
         height={140}
       />
@@ -72,8 +72,8 @@ export default function Page() {
 
       <WaveDivider
         variant="curve"
-        fromColor="rgba(225,29,46,0.04)"
-        toColor="rgba(29,79,216,0.05)"
+        fromColor="rgba(225,25,36,0.04)"
+        toColor="rgba(24,71,161,0.05)"
         height={140}
       />
 

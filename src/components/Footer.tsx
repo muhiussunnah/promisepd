@@ -176,7 +176,7 @@ export default function Footer() {
                 alt={SITE.shortName}
                 width={500}
                 height={500}
-                className="h-14 w-auto shrink-0"
+                className="h-20 w-auto shrink-0"
               />
               <div className="leading-tight">
                 <div className="text-base font-bold text-grad-rb">

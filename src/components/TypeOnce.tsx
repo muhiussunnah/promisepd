@@ -21,7 +21,7 @@ function getGraphemes(text: string): string[] {
 export default function TypeOnce({
   text,
   speed = 50,
-  cursorColor = "#e11d2e",
+  cursorColor = "#e11924",
   cursorWidth = 3,
 }: {
   text: string;

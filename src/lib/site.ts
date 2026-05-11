@@ -2,7 +2,7 @@ export const SITE = {
   name: "Promise Proper Development Ltd.",
   nameBn: "প্রমিজ প্রপার ডেভেলপমেন্ট লিমিটেড",
   shortName: "Promise PPD",
-  tagline: "প্রতিশ্রুতি · বিশ্বাস · উন্নয়ন",
+  tagline: "স্বপ্ন যেখানে বাস্তব",
   description:
     "ঢাকায় আবাসিক, বাণিজ্যিক ও বিনিয়োগযোগ্য সম্পত্তির জন্য আপনার বিশ্বস্ত অংশীদার।",
   phone: "+8801910065136",

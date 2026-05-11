@@ -34,12 +34,12 @@ export default function About() {
         blobs={[
           {
             className:
-              "left-[-15%] top-[10%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(29,79,216,0.18),transparent_60%)]",
+              "left-[-15%] top-[10%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(24,71,161,0.18),transparent_60%)]",
             parallax: -100,
           },
           {
             className:
-              "right-[-10%] bottom-[10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(225,29,46,0.16),transparent_60%)]",
+              "right-[-10%] bottom-[10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(225,25,36,0.16),transparent_60%)]",
             parallax: 120,
             delay: 4,
           },
@@ -84,7 +84,7 @@ export default function About() {
                 alt={SITE.shortName}
                 width={500}
                 height={500}
-                className="h-12 w-auto shrink-0"
+                className="h-16 w-auto shrink-0"
               />
               <div className="leading-tight">
                 <div className="text-sm font-bold text-fg">

@@ -12,24 +12,24 @@ type Blob = {
 const DEFAULT_BLOBS: Blob[] = [
   {
     className:
-      "left-[-10%] top-[10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle_at_30%_30%,rgba(225,29,46,0.22),transparent_60%)]",
+      "left-[-10%] top-[10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle_at_30%_30%,rgba(225,25,36,0.22),transparent_60%)]",
     parallax: -120,
   },
   {
     className:
-      "right-[-15%] top-[30%] w-[50vw] h-[50vw] bg-[radial-gradient(circle_at_70%_30%,rgba(29,79,216,0.22),transparent_60%)]",
+      "right-[-15%] top-[30%] w-[50vw] h-[50vw] bg-[radial-gradient(circle_at_70%_30%,rgba(24,71,161,0.22),transparent_60%)]",
     parallax: 80,
     delay: 4,
   },
   {
     className:
-      "left-[20%] bottom-[-20%] w-[55vw] h-[55vw] bg-[radial-gradient(circle_at_50%_70%,rgba(225,29,46,0.16),transparent_60%)]",
+      "left-[20%] bottom-[-20%] w-[55vw] h-[55vw] bg-[radial-gradient(circle_at_50%_70%,rgba(225,25,36,0.16),transparent_60%)]",
     parallax: -60,
     delay: 8,
   },
   {
     className:
-      "right-[10%] bottom-[5%] w-[40vw] h-[40vw] bg-[radial-gradient(circle_at_70%_70%,rgba(29,79,216,0.18),transparent_55%)]",
+      "right-[10%] bottom-[5%] w-[40vw] h-[40vw] bg-[radial-gradient(circle_at_70%_70%,rgba(24,71,161,0.18),transparent_55%)]",
     parallax: 140,
     delay: 12,
   },

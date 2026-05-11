@@ -18,7 +18,7 @@ const bn = Noto_Sans_Bengali({
 export const metadata: Metadata = {
   metadataBase: new URL("https://promisepd.com"),
   title: {
-    default: "Promise Proper Development Ltd. — প্রতিশ্রুতি · বিশ্বাস · উন্নয়ন",
+    default: "Promise Proper Development Ltd. — স্বপ্ন যেখানে বাস্তব",
     template: "%s · Promise PPD",
   },
   description:
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Promise Proper Development Ltd.",
-    description: "প্রতিশ্রুতি · বিশ্বাস · উন্নয়ন",
+    description: "স্বপ্ন যেখানে বাস্তব",
     images: ["/logo.png"],
   },
   appleWebApp: {

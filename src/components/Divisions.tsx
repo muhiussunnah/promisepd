@@ -32,12 +32,12 @@ const ACCENT_BG: Record<string, string> = {
 };
 
 const ACCENT_GLOW: Record<string, string> = {
-  red: "rgba(225,29,46,0.25)",
-  blue: "rgba(30,64,175,0.25)",
-  ash: "rgba(148,163,184,0.25)",
-  rb: "rgba(225,29,46,0.25)",
-  ab: "rgba(30,64,175,0.25)",
-  ar: "rgba(225,29,46,0.25)",
+  red: "rgba(225,25,36,0.25)",
+  blue: "rgba(24,71,161,0.25)",
+  ash: "rgba(192,199,209,0.25)",
+  rb: "rgba(225,25,36,0.25)",
+  ab: "rgba(24,71,161,0.25)",
+  ar: "rgba(225,25,36,0.25)",
 };
 
 export default function Divisions() {
@@ -50,12 +50,12 @@ export default function Divisions() {
         blobs={[
           {
             className:
-              "left-[-10%] top-[10%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(225,29,46,0.16),transparent_60%)]",
+              "left-[-10%] top-[10%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(225,25,36,0.16),transparent_60%)]",
             parallax: -100,
           },
           {
             className:
-              "right-[-15%] bottom-[10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle,rgba(29,79,216,0.18),transparent_60%)]",
+              "right-[-15%] bottom-[10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle,rgba(24,71,161,0.18),transparent_60%)]",
             parallax: 120,
             delay: 5,
           },
