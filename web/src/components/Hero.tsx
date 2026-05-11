@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, Play, Sparkles, ShieldCheck, Award, MapPin, Wallet } from "lucide-react";
+import { ArrowRight, Play, ShieldCheck, Award, MapPin, Wallet } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
 import Typewriter from "./Typewriter";
 import { HERO_PITCHES } from "@/lib/site";
@@ -51,37 +51,14 @@ export default function Hero() {
         style={{ y }}
         className="relative z-10 flex flex-1 flex-col items-center justify-center text-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
       >
-        {/* Typewriter — moved to TOP */}
+        {/* Typewriter — sole headline element of the hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.6 }}
+          className="w-full"
         >
-          <Typewriter phrases={HERO_PITCHES} />
-        </motion.div>
-
-        {/* Heading — smaller, 2 lines */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.6 }}
-          className="mt-5 text-[clamp(1.6rem,4.2vw,3.25rem)] font-bold leading-[1.15] tracking-tight max-w-[18ch]"
-        >
-          এমন একটি বাড়ি,{" "}
-          <span className="text-grad whitespace-nowrap">যেটি আপনি সত্যিই ভালোবাসবেন।</span>
-        </motion.h1>
-
-        {/* 15+ years badge — moved to BELOW heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="mt-5 inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs sm:text-sm shadow-sm"
-        >
-          <Sparkles className="h-3.5 w-3.5 text-brand-red" />
-          <span className="font-medium tracking-wide text-fg-soft">
-            <span className="text-grad-rb font-bold">১৫+ বছর</span> ধরে ঢাকার বুকে আস্থা · ৫টি বিভাগ
-          </span>
+          <Typewriter phrases={HERO_PITCHES} size="hero" />
         </motion.div>
 
         {/* CTAs */}
@@ -89,7 +66,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3"
+          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <Link
             href="#divisions"

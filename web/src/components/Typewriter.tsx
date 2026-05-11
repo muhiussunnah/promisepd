@@ -39,11 +39,13 @@ export default function Typewriter({
   typeMs = 55,
   holdMs = 1800,
   deleteMs = 28,
+  size = "default",
 }: {
   phrases: Phrase[];
   typeMs?: number;
   holdMs?: number;
   deleteMs?: number;
+  size?: "default" | "hero";
 }) {
   const reduce = useReducedMotion();
   const [pIdx, setPIdx] = useState(0);
@@ -89,33 +91,49 @@ export default function Typewriter({
   const display = graphemes.slice(0, chIdx).join("");
   const cursorColor = COLOR_TO_CURSOR[current.color] ?? COLOR_TO_CURSOR.red;
 
+  const isHero = size === "hero";
+
   return (
-    <div className="flex flex-col items-center gap-3">
-      <AnimatePresence mode="wait">
+    <div className={`flex flex-col items-center ${isHero ? "gap-5" : "gap-3"}`}>
+      <AnimatePresence mode="popLayout">
         <motion.span
           key={pIdx}
-          initial={{ y: 8, opacity: 0, scale: 0.96 }}
+          initial={{ y: 8, opacity: 0, scale: 0.92 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: -8, opacity: 0, scale: 0.96 }}
-          transition={{ duration: 0.25 }}
+          exit={{ y: -8, opacity: 0, scale: 0.92 }}
+          transition={{ duration: 0.2 }}
           className={`inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r ${
             COLOR_TO_GRAD[current.color] ?? COLOR_TO_GRAD.red
-          } px-3.5 py-1 text-[11px] font-bold text-white tracking-wider shadow-md`}
+          } shadow-md text-white font-bold tracking-wider ${
+            isHero ? "px-5 py-1.5 text-xs sm:text-sm" : "px-3.5 py-1 text-[11px]"
+          }`}
         >
           <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
           {current.name}
         </motion.span>
       </AnimatePresence>
 
-      <div className="min-h-[2.5em] text-center px-2">
-        <span className="text-base sm:text-xl lg:text-2xl font-semibold text-fg-soft leading-snug">
+      <div
+        className={`text-center px-2 ${
+          isHero ? "min-h-[2.4em] max-w-[20ch]" : "min-h-[2.5em]"
+        }`}
+      >
+        <span
+          className={`font-bold leading-[1.2] ${
+            isHero
+              ? "text-[clamp(1.8rem,5.2vw,4rem)] text-fg"
+              : "text-base sm:text-xl lg:text-2xl font-semibold text-fg-soft leading-snug"
+          }`}
+        >
           {display}
           <span
-            className="inline-block w-[2px] sm:w-[3px] align-middle animate-pulse"
+            className={`inline-block align-middle animate-pulse ${
+              isHero ? "w-[3px] sm:w-[4px]" : "w-[2px] sm:w-[3px]"
+            }`}
             style={{
-              height: "1em",
+              height: "0.95em",
               background: cursorColor,
-              marginLeft: 2,
+              marginLeft: isHero ? 4 : 2,
               verticalAlign: "-0.15em",
             }}
             aria-hidden
