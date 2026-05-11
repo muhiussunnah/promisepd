@@ -61,7 +61,7 @@ export default function WhyUs() {
             </span>
           </div>
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-            যে কারণে পরিবার{" "}
+            যে কারণে মানুষ{" "}
             <span className="text-grad">আমাদের বেছে নেয়।</span>
           </h2>
         </motion.div>
