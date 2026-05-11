@@ -114,26 +114,26 @@ export default function Typewriter({
       </AnimatePresence>
 
       <div
-        className={`text-center px-2 ${
-          isHero ? "min-h-[2.4em] max-w-[20ch]" : "min-h-[2.5em]"
+        className={`text-center px-4 ${
+          isHero ? "min-h-[3.2em] max-w-4xl mx-auto" : "min-h-[2.5em]"
         }`}
       >
         <span
-          className={`font-bold leading-[1.2] ${
+          className={`font-bold leading-[1.25] tracking-tight ${
             isHero
-              ? "text-[clamp(1.8rem,5.2vw,4rem)] text-fg"
+              ? "text-[clamp(1.25rem,3vw,2.25rem)] text-fg"
               : "text-base sm:text-xl lg:text-2xl font-semibold text-fg-soft leading-snug"
           }`}
         >
           {display}
           <span
             className={`inline-block align-middle animate-pulse ${
-              isHero ? "w-[3px] sm:w-[4px]" : "w-[2px] sm:w-[3px]"
+              isHero ? "w-[2px] sm:w-[3px]" : "w-[2px] sm:w-[3px]"
             }`}
             style={{
               height: "0.95em",
               background: cursorColor,
-              marginLeft: isHero ? 4 : 2,
+              marginLeft: 3,
               verticalAlign: "-0.15em",
             }}
             aria-hidden
