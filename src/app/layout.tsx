@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import RegisterSW from "@/components/RegisterSW";
 
 const bn = Noto_Sans_Bengali({
@@ -78,6 +79,7 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
         <WhatsAppFAB />
+        <PWAInstallPrompt />
         <RegisterSW />
       </body>
     </html>

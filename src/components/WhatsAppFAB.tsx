@@ -97,12 +97,9 @@ export default function WhatsAppFAB() {
           whileTap={{ scale: 0.95 }}
           onClick={() => setOpen((o) => !o)}
           aria-label="WhatsApp চ্যাট"
-          className="relative flex items-center gap-2 h-14 rounded-full bg-[#25d366] hover:bg-[#1ebd58] px-5 text-white shadow-2xl shadow-[#25d366]/40 transition-colors wa-pulse"
+          className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#25d366] hover:bg-[#1ebd58] text-white shadow-2xl shadow-[#25d366]/40 transition-colors wa-pulse"
         >
-          <WhatsAppIcon className="h-6 w-6" />
-          <span className="hidden sm:inline text-sm font-semibold">
-            হোয়াটসঅ্যাপ
-          </span>
+          <WhatsAppIcon className="h-8 w-8" />
         </motion.button>
       </div>
     </div>
