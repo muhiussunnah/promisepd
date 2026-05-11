@@ -167,7 +167,7 @@ export default function Divisions() {
                     )}
 
                     <Link
-                      href={`/divisions/${division.slug}`}
+                      href={`/${division.slug}`}
                       className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-grad-rb group/btn"
                     >
                       বিস্তারিত দেখুন

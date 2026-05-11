@@ -40,22 +40,26 @@ const ACCENT_SOLID: Record<string, string> = {
   ar: "bg-brand-red",
 };
 
+/** Only pre-rendered slugs resolve — any other top-level path 404s
+ *  instead of being treated as a division. */
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return DIVISIONS.map((d) => ({ slug: d.slug }));
 }
 
 export async function generateMetadata(
-  props: PageProps<"/divisions/[slug]">,
+  props: PageProps<"/[slug]">,
 ): Promise<Metadata> {
   const { slug } = await props.params;
   const division = DIVISIONS.find((d) => d.slug === slug);
   if (!division) return { title: "বিভাগ পাওয়া যায়নি" };
-  const url = `${SITE_URL}/divisions/${division.slug}`;
+  const url = `${SITE_URL}/${division.slug}`;
   const title = `${division.nameBn} — ${division.tagline}`;
   return {
     title,
     description: division.description,
-    alternates: { canonical: `/divisions/${division.slug}` },
+    alternates: { canonical: `/${division.slug}` },
     openGraph: {
       type: "website",
       url,
@@ -83,7 +87,7 @@ export async function generateMetadata(
   };
 }
 
-export default async function DivisionPage(props: PageProps<"/divisions/[slug]">) {
+export default async function DivisionPage(props: PageProps<"/[slug]">) {
   const { slug } = await props.params;
   const division = DIVISIONS.find((d) => d.slug === slug);
   if (!division) notFound();
@@ -97,7 +101,7 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
   const breadcrumb = breadcrumbSchema([
     { name: "হোম", url: SITE_URL },
     { name: "আমাদের বিভাগ", url: `${SITE_URL}/#divisions` },
-    { name: division.nameBn, url: `${SITE_URL}/divisions/${division.slug}` },
+    { name: division.nameBn, url: `${SITE_URL}/${division.slug}` },
   ]);
   const service = divisionServiceSchema(division.slug);
 
@@ -268,7 +272,7 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 gap-4">
             <Link
-              href={`/divisions/${prev.slug}`}
+              href={`/${prev.slug}`}
               className="card group p-6 flex items-center gap-4 hover:scale-[1.01] transition-transform"
             >
               <ArrowLeft className="h-5 w-5 text-fg-muted group-hover:text-brand-red transition-colors" />
@@ -282,7 +286,7 @@ export default async function DivisionPage(props: PageProps<"/divisions/[slug]">
               </div>
             </Link>
             <Link
-              href={`/divisions/${next.slug}`}
+              href={`/${next.slug}`}
               className="card group p-6 flex items-center gap-4 sm:text-right hover:scale-[1.01] transition-transform"
             >
               <div className="min-w-0 flex-1 sm:order-1">

@@ -56,12 +56,14 @@ export default function Navbar() {
   // Only track sections on home page
   const activeSection = useActiveSection(isHome ? NAV_IDS : [], 120);
 
-  // Determine the navbar meta to display
-  const divisionSlug = pathname.startsWith("/divisions/")
-    ? pathname.split("/")[2]
+  // Determine the navbar meta to display. Division pages now live at the
+  // root (e.g. /interior-3d-design), so match the first path segment
+  // against the known division slugs rather than a /divisions/ prefix.
+  const firstSegment = pathname.startsWith("/")
+    ? pathname.slice(1).split("/")[0]
     : null;
-  const currentDivision = divisionSlug
-    ? DIVISIONS.find((d) => d.slug === divisionSlug)
+  const currentDivision = firstSegment
+    ? DIVISIONS.find((d) => d.slug === firstSegment)
     : null;
 
   // Cycle brand identities only while sitting on the home section
@@ -224,40 +226,47 @@ export default function Navbar() {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 8, scale: 0.96 }}
                             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                            className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[440px] glass-strong rounded-2xl p-3 shadow-2xl"
+                            // pt-3 keeps the 12px gap inside the hover area —
+                            // using mt-3 instead created an unreachable strip
+                            // where the cursor triggered mouseleave on the
+                            // parent and the panel closed before it could be
+                            // clicked.
+                            className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[440px]"
                           >
-                            <div className="grid gap-1">
-                              {item.dropdown.map((d) => {
-                                const Icon = DIV_ICONS[d.icon] ?? Building2;
-                                return (
-                                  <Link
-                                    key={d.slug}
-                                    href={d.href}
-                                    onClick={() => setDropdownOpen(false)}
-                                    className="group flex items-start gap-3 rounded-xl p-3 hover:bg-bg-soft transition-colors"
-                                  >
-                                    <div
-                                      className={`shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg ${
-                                        ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
-                                      } shadow-md group-hover:scale-105 transition-transform ${
-                                        d.accent === "ash"
-                                          ? "text-fg"
-                                          : "text-white"
-                                      }`}
+                            <div className="glass-strong rounded-2xl p-3 shadow-2xl">
+                              <div className="grid gap-1">
+                                {item.dropdown.map((d) => {
+                                  const Icon = DIV_ICONS[d.icon] ?? Building2;
+                                  return (
+                                    <Link
+                                      key={d.slug}
+                                      href={d.href}
+                                      onClick={() => setDropdownOpen(false)}
+                                      className="group flex items-start gap-3 rounded-xl p-3 hover:bg-bg-soft transition-colors"
                                     >
-                                      <Icon className="h-5 w-5" />
-                                    </div>
-                                    <div className="min-w-0">
-                                      <div className="text-sm font-bold text-fg leading-tight">
-                                        {d.label}
+                                      <div
+                                        className={`shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg ${
+                                          ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
+                                        } shadow-md group-hover:scale-105 transition-transform ${
+                                          d.accent === "ash"
+                                            ? "text-fg"
+                                            : "text-white"
+                                        }`}
+                                      >
+                                        <Icon className="h-5 w-5" />
                                       </div>
-                                      <div className="mt-0.5 text-xs text-fg-muted leading-snug">
-                                        {d.tagline}
+                                      <div className="min-w-0">
+                                        <div className="text-sm font-bold text-fg leading-tight">
+                                          {d.label}
+                                        </div>
+                                        <div className="mt-0.5 text-xs text-fg-muted leading-snug">
+                                          {d.tagline}
+                                        </div>
                                       </div>
-                                    </div>
-                                  </Link>
-                                );
-                              })}
+                                    </Link>
+                                  );
+                                })}
+                              </div>
                             </div>
                           </motion.div>
                         )}

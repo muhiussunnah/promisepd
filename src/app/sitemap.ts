@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     // Each division's inner page.
     ...DIVISIONS.map((d) => ({
-      url: `${SITE_URL}/divisions/${d.slug}`,
+      url: `${SITE_URL}/${d.slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,

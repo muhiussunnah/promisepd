@@ -199,7 +199,7 @@ export default function Hero() {
             {/* CTAs */}
             <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
-                href={`/divisions/${current.slug}`}
+                href={`/${current.slug}`}
                 className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-red px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
               >
                 বিস্তারিত দেখুন
@@ -329,7 +329,7 @@ export default function Hero() {
                         </div>
 
                         <Link
-                          href={`/divisions/${current.slug}`}
+                          href={`/${current.slug}`}
                           className="mt-7 inline-flex items-center gap-1.5 rounded-xl bg-white text-fg px-4 py-2.5 text-sm font-bold shadow-md hover:scale-[1.03] transition-transform"
                         >
                           বিভাগটি দেখুন

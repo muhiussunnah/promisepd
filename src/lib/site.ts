@@ -298,7 +298,7 @@ export const NAV = [
     dropdown: DIVISIONS.map((d) => ({
       label: d.nameBn,
       tagline: d.tagline,
-      href: `/divisions/${d.slug}`,
+      href: `/${d.slug}`,
       slug: d.slug,
       icon: d.icon,
       accent: d.accent,

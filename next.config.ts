@@ -25,6 +25,19 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
 
+  // Old division URLs (`/divisions/<slug>`) now live at the root.
+  // Permanent (301) so social-media unfurls, bookmarks, and existing
+  // backlinks continue to land on the right page.
+  async redirects() {
+    return [
+      {
+        source: "/divisions/:slug",
+        destination: "/:slug",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     const securityHeaders = [
       { key: "X-Content-Type-Options", value: "nosniff" },

@@ -120,7 +120,7 @@ export function divisionServiceSchema(slug: string) {
     name: d.nameEn,
     alternateName: d.nameBn,
     description: d.longDescription,
-    url: `${SITE_URL}/divisions/${d.slug}`,
+    url: `${SITE_URL}/${d.slug}`,
     provider: { "@id": `${SITE_URL}#organization` },
     areaServed: { "@type": "Country", name: "Bangladesh" },
   };
