@@ -80,7 +80,6 @@ export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const [idx, setIdx] = useState(0);
-  const [paused, setPaused] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -90,14 +89,17 @@ export default function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.5, 0]);
   const videoScale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 1.06]);
 
+  // Auto-rotate divisions every 7.5s. No pause-on-hover — hover was firing
+  // immediately on page load (cursor naturally over hero) and freezing the
+  // rotation forever. User can still jump via dot indicators below.
   useEffect(() => {
-    if (paused || reduce) return;
+    if (reduce) return;
     const t = setInterval(
       () => setIdx((i) => (i + 1) % DIVISIONS.length),
       7500,
     );
     return () => clearInterval(t);
-  }, [paused, reduce]);
+  }, [reduce]);
 
   const current = DIVISIONS[idx];
   const Icon = ICONS[current.icon] ?? Building2;
@@ -138,8 +140,6 @@ export default function Hero() {
       <motion.div
         style={{ y }}
         className="relative z-10 flex-1 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 flex items-center"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
       >
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 w-full items-center">
           {/* LEFT — content */}

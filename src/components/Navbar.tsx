@@ -133,7 +133,21 @@ export default function Navbar() {
             className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between"
           >
             <Link
-              href="/#home"
+              href="/"
+              onClick={(e) => {
+                // Smooth-scroll to top + strip any #hash from the URL bar
+                if (pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  if (window.location.hash) {
+                    window.history.replaceState(
+                      null,
+                      "",
+                      window.location.pathname + window.location.search,
+                    );
+                  }
+                }
+              }}
               className="flex items-center gap-3 sm:gap-4 group min-w-0 py-1.5"
               aria-label={SITE.shortName}
             >

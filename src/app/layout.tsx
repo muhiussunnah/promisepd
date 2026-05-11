@@ -55,10 +55,9 @@ export const metadata: Metadata = {
     title: "Promise PPD",
     statusBarStyle: "default",
   },
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-  },
+  // icons intentionally omitted — Next.js auto-discovers src/app/icon.png
+  // and src/app/apple-icon.png (cropped to the PPD mark for crisp rendering
+  // at favicon sizes).
 };
 
 export const viewport: Viewport = {
