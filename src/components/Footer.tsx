@@ -1,12 +1,7 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useTransition } from "react";
-import { Mail, Phone, MapPin, Send, Check, Clock } from "lucide-react";
-import { motion } from "framer-motion";
+import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { NAV, SITE } from "@/lib/site";
-import { subscribeNewsletter } from "@/app/actions";
 import { toBn } from "@/lib/bn";
 
 // ============= Brand-colored social icons (full color, full opacity) =============
@@ -88,22 +83,6 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  const [pending, startTransition] = useTransition();
-
-  function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    startTransition(async () => {
-      const res = await subscribeNewsletter(email);
-      if (res.ok) {
-        setDone(true);
-        setEmail("");
-        setTimeout(() => setDone(false), 4000);
-      }
-    });
-  }
-
   const SOCIALS = [
     { name: "Facebook", url: SITE.socials.facebook, Icon: FacebookIcon, ring: "ring-[#1877F2]/30" },
     { name: "YouTube", url: SITE.socials.youtube, Icon: YouTubeIcon, ring: "ring-[#FF0000]/30" },
@@ -113,61 +92,11 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative isolate overflow-hidden bg-bg-soft mt-24">
+    <footer className="relative isolate overflow-hidden bg-bg-soft">
       <div className="absolute inset-0 -z-10 mesh-bg-soft" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-blue/30 to-transparent" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="grad-border mb-16 p-8 sm:p-10"
-        >
-          <div className="grid gap-6 md:grid-cols-2 md:items-center">
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-bold">
-                <span className="text-grad">আপডেট পেতে যুক্ত থাকুন</span>
-              </h3>
-              <p className="mt-2 text-sm sm:text-base text-fg-muted">
-                নতুন প্রকল্প, কিস্তি অফার ও প্রি-লঞ্চ সুবিধার খবর সবার আগে
-                পেতে সাবস্ক্রাইব করুন।
-              </p>
-            </div>
-            <form
-              onSubmit={onSubmit}
-              className="flex flex-col sm:flex-row gap-3"
-            >
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                aria-label="ইমেইল ঠিকানা"
-                className="flex-1 rounded-xl bg-white border border-border px-4 py-3 text-sm placeholder:text-fg-faint focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/15 transition-all"
-              />
-              <button
-                type="submit"
-                disabled={pending || done}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-blue px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all disabled:opacity-70"
-              >
-                {done ? (
-                  <>
-                    <Check className="h-4 w-4" /> সাবস্ক্রাইব হয়েছে
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4" />
-                    {pending ? "পাঠানো হচ্ছে..." : "সাবস্ক্রাইব"}
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-        </motion.div>
-
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <Link href="/#home" className="flex items-center gap-4">
