@@ -32,12 +32,12 @@ const ACCENT_SOLID: Record<string, string> = {
 };
 
 const ACCENT_GLOW: Record<string, string> = {
-  red: "rgba(225,25,36,0.25)",
+  red: "rgba(225, 25, 36, 0.13)",
   blue: "rgba(24,71,161,0.25)",
   ash: "rgba(192,199,209,0.25)",
-  rb: "rgba(225,25,36,0.25)",
+  rb: "rgba(225, 25, 36, 0.13)",
   ab: "rgba(24,71,161,0.25)",
-  ar: "rgba(225,25,36,0.25)",
+  ar: "rgba(225, 25, 36, 0.13)",
 };
 
 export default function Divisions() {
@@ -50,7 +50,7 @@ export default function Divisions() {
         blobs={[
           {
             className:
-              "left-[-10%] top-[10%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(225,25,36,0.16),transparent_60%)]",
+              "left-[-10%] top-[10%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(225, 25, 36, 0.08),transparent_60%)]",
             parallax: -100,
           },
           {

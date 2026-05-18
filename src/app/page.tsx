@@ -16,7 +16,7 @@ export default function Page() {
 
       <WaveDivider
         variant="blob"
-        fromColor="rgba(225,25,36,0.06)"
+        fromColor="rgba(225, 25, 36, 0.04)"
         toColor="rgba(24,71,161,0.08)"
         height={120}
       />

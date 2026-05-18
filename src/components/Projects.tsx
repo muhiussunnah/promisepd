@@ -15,7 +15,7 @@ export default function Projects() {
         blobs={[
           {
             className:
-              "left-[-15%] top-[20%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(225,25,36,0.18),transparent_60%)]",
+              "left-[-15%] top-[20%] w-[45vw] h-[45vw] bg-[radial-gradient(circle,rgba(225, 25, 36, 0.09),transparent_60%)]",
             parallax: -120,
           },
           {

@@ -34,7 +34,7 @@ export default function WhyUs() {
         blobs={[
           {
             className:
-              "left-[10%] top-[5%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(225,25,36,0.16),transparent_60%)]",
+              "left-[10%] top-[5%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(225, 25, 36, 0.08),transparent_60%)]",
             parallax: -80,
           },
           {

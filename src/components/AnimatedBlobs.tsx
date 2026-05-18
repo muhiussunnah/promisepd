@@ -9,27 +9,32 @@ type Blob = {
   delay?: number;
 };
 
+// Default 4-blob set matches the logo's colour weighting — 3 blue
+// blobs carry the atmosphere, 1 red blob is the single accent.  Red
+// opacity is kept lower than blue so the canvas doesn't wash pink.
 const DEFAULT_BLOBS: Blob[] = [
   {
     className:
-      "left-[-10%] top-[10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle_at_30%_30%,rgba(225,25,36,0.22),transparent_60%)]",
+      "left-[-10%] top-[10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle_at_30%_30%,rgba(24,71,161,0.22),transparent_60%)]",
     parallax: -120,
   },
   {
     className:
-      "right-[-15%] top-[30%] w-[50vw] h-[50vw] bg-[radial-gradient(circle_at_70%_30%,rgba(24,71,161,0.22),transparent_60%)]",
+      "right-[-15%] top-[30%] w-[50vw] h-[50vw] bg-[radial-gradient(circle_at_70%_30%,rgba(24,71,161,0.20),transparent_60%)]",
     parallax: 80,
     delay: 4,
   },
   {
     className:
-      "left-[20%] bottom-[-20%] w-[55vw] h-[55vw] bg-[radial-gradient(circle_at_50%_70%,rgba(225,25,36,0.16),transparent_60%)]",
+      "left-[20%] bottom-[-20%] w-[55vw] h-[55vw] bg-[radial-gradient(circle_at_50%_70%,rgba(24,71,161,0.16),transparent_60%)]",
     parallax: -60,
     delay: 8,
   },
+  // Single red accent blob — kept smaller + lower opacity so it
+  // warms the corner without dominating.
   {
     className:
-      "right-[10%] bottom-[5%] w-[40vw] h-[40vw] bg-[radial-gradient(circle_at_70%_70%,rgba(24,71,161,0.18),transparent_55%)]",
+      "right-[10%] bottom-[5%] w-[36vw] h-[36vw] bg-[radial-gradient(circle_at_70%_70%,rgba(225, 25, 36, 0.06),transparent_55%)]",
     parallax: 140,
     delay: 12,
   },
