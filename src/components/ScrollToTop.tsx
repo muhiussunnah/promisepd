@@ -30,7 +30,7 @@ export default function ScrollToTop() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Ring geometry — 64×64 viewBox, stroke 4, radius 28
+  // Ring geometry — 64×64 viewBox, stroke 4, radius 28.
   const SIZE = 64;
   const STROKE = 4;
   const R = (SIZE - STROKE) / 2;
@@ -43,13 +43,26 @@ export default function ScrollToTop() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 30 }}
           transition={{ type: "spring", damping: 22, stiffness: 240 }}
+          // Percent badge now floats ABOVE the button so the FAB
+          // itself sits at the exact same vertical line as the
+          // WhatsApp button on the left edge — visually balanced.
           className="fixed bottom-6 right-6 z-40 flex flex-col items-center gap-1.5"
         >
-          {/* Button with circular progress ring around it */}
+          {/* Percent badge — above the button, neutral colours so it
+              reads as informational rather than alert. */}
+          <div className="text-[11px] font-bold tabular-nums text-fg leading-none px-2 py-0.5 rounded-full bg-white shadow-sm border border-border">
+            {toBn(percent)}%
+          </div>
+
+          {/* Button + circular progress ring */}
           <div className="relative" style={{ width: SIZE, height: SIZE }}>
+            {/* pointer-events-none stops the SVG from swallowing
+                hovers — without it the cursor never reached the
+                <button> below, so the browser kept showing the
+                default arrow instead of the hand. */}
             <svg
               viewBox={`0 0 ${SIZE} ${SIZE}`}
-              className="absolute inset-0 -rotate-90"
+              className="absolute inset-0 -rotate-90 pointer-events-none"
               aria-hidden
             >
               {/* Track */}
@@ -61,13 +74,15 @@ export default function ScrollToTop() {
                 stroke="var(--color-brand-ash-tint)"
                 strokeWidth={STROKE}
               />
-              {/* Progress fill */}
+              {/* Progress — ash sub-colour, not red.  Matches the
+                  logo's third (neutral) brand colour and keeps the
+                  FAB area calm rather than alarming. */}
               <motion.circle
                 cx={SIZE / 2}
                 cy={SIZE / 2}
                 r={R}
                 fill="none"
-                stroke="var(--color-brand-red)"
+                stroke="var(--color-brand-ash-dark)"
                 strokeWidth={STROKE}
                 strokeLinecap="round"
                 pathLength={1}
@@ -79,15 +94,10 @@ export default function ScrollToTop() {
               whileTap={{ scale: 0.92 }}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               aria-label="উপরে যান"
-              className="absolute inset-2 flex items-center justify-center rounded-full bg-brand-blue text-white shadow-lg shadow-brand-red/40 hover:bg-brand-blue-dark transition-colors"
+              className="absolute inset-2 flex items-center justify-center rounded-full bg-brand-blue text-white shadow-lg shadow-brand-blue/30 hover:bg-brand-blue-dark transition-colors cursor-pointer"
             >
               <ArrowUp className="h-5 w-5" />
             </motion.button>
-          </div>
-
-          {/* Percentage scrolled — Bangla numerals */}
-          <div className="text-[11px] font-bold tabular-nums text-brand-red leading-none px-2 py-0.5 rounded-full bg-white shadow-sm border border-brand-red-tint">
-            {toBn(percent)}%
           </div>
         </motion.div>
       )}
