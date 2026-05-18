@@ -12,7 +12,10 @@ export default function manifest(): MetadataRoute.Manifest {
     display_override: ["standalone", "minimal-ui"],
     orientation: "any",
     background_color: "#ffffff",
-    theme_color: "#E11924",
+    // Brand blue — matches the logo's primary colour.  Drives the
+    // PWA title-bar tint on Android, the iOS status-bar accent, and
+    // the new-tab card background in Chrome's tab strip.
+    theme_color: "#1847A1",
     categories: ["business", "real-estate", "lifestyle", "finance", "travel"],
     lang: "bn",
     dir: "ltr",
