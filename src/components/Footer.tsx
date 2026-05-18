@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { NAV, SITE } from "@/lib/site";
 import { toBn } from "@/lib/bn";
+import ReportToDeveloper from "./ReportToDeveloper";
 
 // ============= Brand-colored social icons (full color, full opacity) =============
 
@@ -214,6 +215,13 @@ export default function Footer() {
               {SITE.credit.label}
             </a>
           </p>
+        </div>
+
+        {/* Always-visible "report a bug to the developer" strip — so
+            visitors who spot something off don't have to dig through
+            an error page to find Inzamul's contact. */}
+        <div className="mt-6 pt-6 border-t border-border">
+          <ReportToDeveloper variant="inline" />
         </div>
       </div>
     </footer>
