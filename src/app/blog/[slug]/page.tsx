@@ -324,14 +324,14 @@ export default async function BlogPostPage(
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href={`tel:${SITE.phone}`}
-                className="inline-flex items-center gap-2 rounded-2xl bg-brand-red px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
+                className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 <Phone className="h-4 w-4" />
                 {SITE.phoneDisplay}
               </a>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-6 py-3 text-sm font-semibold text-fg hover:border-brand-red/40 hover:shadow-lg transition-all"
+                className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-6 py-3 text-sm font-semibold text-fg hover:border-brand-blue/40 hover:shadow-lg transition-all"
               >
                 <Mail className="h-4 w-4 text-brand-red" />
                 বার্তা পাঠান

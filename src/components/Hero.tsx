@@ -200,14 +200,14 @@ export default function Hero() {
             <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
                 href={`/${current.slug}`}
-                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-red px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-blue px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 বিস্তারিত দেখুন
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="#contact"
-                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-border px-6 py-3.5 text-sm sm:text-base font-semibold text-fg hover:border-brand-red/40 hover:shadow-lg transition-all"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-border px-6 py-3.5 text-sm sm:text-base font-semibold text-fg hover:border-brand-blue/40 hover:shadow-lg transition-all"
               >
                 <Play className="h-4 w-4 text-brand-red" />
                 পরামর্শ নিন

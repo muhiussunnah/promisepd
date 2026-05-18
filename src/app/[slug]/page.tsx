@@ -250,14 +250,14 @@ export default async function DivisionPage(props: PageProps<"/[slug]">) {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href={`tel:${SITE.phone}`}
-                className="inline-flex items-center gap-2 rounded-2xl bg-brand-red px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
+                className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 <Phone className="h-4 w-4" />
                 {SITE.phoneDisplay}
               </a>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-7 py-3.5 text-base font-semibold text-fg hover:border-brand-red/40 hover:shadow-lg transition-all"
+                className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-7 py-3.5 text-base font-semibold text-fg hover:border-brand-blue/40 hover:shadow-lg transition-all"
               >
                 <Mail className="h-4 w-4 text-brand-red" />
                 বার্তা পাঠান

@@ -354,7 +354,7 @@ function Pagination({
         type="button"
         onClick={() => page > 1 && onPage(page - 1)}
         disabled={page === 1}
-        className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-fg hover:border-brand-red/40 disabled:opacity-40 disabled:hover:border-border transition-colors"
+        className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-fg hover:border-brand-blue/40 disabled:opacity-40 disabled:hover:border-border transition-colors"
         aria-label="পূর্ববর্তী পৃষ্ঠা"
       >
         <ChevronLeft className="h-4 w-4" />
@@ -369,8 +369,8 @@ function Pagination({
           aria-current={p === page ? "page" : undefined}
           className={`inline-flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold transition-all ${
             p === page
-              ? "bg-brand-red text-white shadow-md scale-105"
-              : "border border-border bg-white text-fg hover:border-brand-red/40"
+              ? "bg-brand-blue text-white shadow-md scale-105"
+              : "border border-border bg-white text-fg hover:border-brand-blue/40"
           }`}
         >
           {bnNumber(p)}
@@ -381,7 +381,7 @@ function Pagination({
         type="button"
         onClick={() => page < totalPages && onPage(page + 1)}
         disabled={page === totalPages}
-        className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-fg hover:border-brand-red/40 disabled:opacity-40 disabled:hover:border-border transition-colors"
+        className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-fg hover:border-brand-blue/40 disabled:opacity-40 disabled:hover:border-border transition-colors"
         aria-label="পরবর্তী পৃষ্ঠা"
       >
         পরবর্তী
@@ -410,7 +410,7 @@ function EmptyState({ onReset }: { onReset: () => void }) {
       <button
         type="button"
         onClick={onReset}
-        className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-red px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-brand-red-dark transition-colors"
+        className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-blue px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-brand-blue-dark transition-colors"
       >
         ফিল্টার রিসেট করুন
       </button>

@@ -79,7 +79,7 @@ export default function ScrollToTop() {
               whileTap={{ scale: 0.92 }}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               aria-label="উপরে যান"
-              className="absolute inset-2 flex items-center justify-center rounded-full bg-brand-red text-white shadow-lg shadow-brand-red/40 hover:bg-brand-red-dark transition-colors"
+              className="absolute inset-2 flex items-center justify-center rounded-full bg-brand-blue text-white shadow-lg shadow-brand-red/40 hover:bg-brand-blue-dark transition-colors"
             >
               <ArrowUp className="h-5 w-5" />
             </motion.button>

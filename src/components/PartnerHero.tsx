@@ -55,7 +55,7 @@ export default function PartnerHero() {
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href="#calculator"
-                className="inline-flex items-center gap-2 rounded-2xl bg-brand-red px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
+                className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 <Calculator className="h-4 w-4" />
                 ক্যালকুলেটর খুলুন
@@ -63,7 +63,7 @@ export default function PartnerHero() {
               </Link>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-7 py-3.5 text-base font-semibold text-fg hover:border-brand-red/40 transition-all"
+                className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-7 py-3.5 text-base font-semibold text-fg hover:border-brand-blue/40 transition-all"
               >
                 পার্টনার হতে যোগাযোগ
               </Link>

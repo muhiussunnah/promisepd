@@ -134,11 +134,11 @@ export default function RootLayout({
         <JsonLd data={websiteSchema()} />
         <JsonLd data={localBusinessSchema()} />
       </head>
-      <body className="min-h-screen bg-bg text-fg antialiased selection:bg-brand-red selection:text-white">
+      <body className="min-h-screen bg-bg text-fg antialiased selection:bg-brand-blue selection:text-white">
         {/* Skip link for keyboard / screen-reader users — only visible on focus. */}
         <a
           href="#home"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-brand-red focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white focus:shadow-lg focus:outline-none"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-brand-blue focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white focus:shadow-lg focus:outline-none"
         >
           মূল কনটেন্টে যান
         </a>

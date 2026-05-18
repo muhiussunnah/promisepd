@@ -303,14 +303,14 @@ export default function Navbar() {
             <div className="flex items-center gap-2 py-1">
               <a
                 href={`tel:${SITE.phone}`}
-                className="hidden md:inline-flex items-center gap-2 rounded-xl bg-brand-red px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-red-dark hover:scale-[1.02] transition-all"
+                className="hidden md:inline-flex items-center gap-2 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 <Phone className="h-4 w-4" />
                 <span>কল করুন</span>
               </a>
               <button
                 onClick={() => setOpen(true)}
-                className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-border hover:border-brand-red/50 transition-colors"
+                className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-border hover:border-brand-blue/50 transition-colors"
                 aria-label="মেনু খুলুন"
               >
                 <Menu className="h-5 w-5" />
@@ -434,7 +434,7 @@ export default function Navbar() {
                         onClick={() => setOpen(false)}
                         className={`group flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition-colors ${
                           isActive
-                            ? "bg-brand-red text-white"
+                            ? "bg-brand-blue text-white"
                             : "hover:bg-bg-soft text-fg"
                         }`}
                       >
@@ -443,7 +443,7 @@ export default function Navbar() {
                           className={
                             isActive
                               ? "text-white"
-                              : "text-fg-faint group-hover:text-brand-red transition-colors"
+                              : "text-fg-faint group-hover:text-brand-blue transition-colors"
                           }
                         >
                           →
@@ -455,7 +455,7 @@ export default function Navbar() {
               </nav>
               <a
                 href={`tel:${SITE.phone}`}
-                className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-brand-red px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] btn-shine"
+                className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-brand-blue px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] btn-shine"
                 onClick={() => setOpen(false)}
               >
                 <Phone className="h-4 w-4" />

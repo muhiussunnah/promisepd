@@ -51,22 +51,28 @@
 :root {
   color-scheme: light;
 
-  /* Every gradient on the site uses ONE of these — all built from
-     #E11924 (red) · #1847A1 (blue) · #C0C7D1 (ash) only. */
-  --grad-rb: linear-gradient(135deg, #e11924 0%, #1847a1 100%);
-  --grad-rb-soft: linear-gradient(135deg, #ff4757 0%, #3463c7 100%);
-  --grad-br: linear-gradient(135deg, #1847a1 0%, #e11924 100%);
+  /* Every gradient on the site is built from #1847A1 (brand blue,
+     PRIMARY) · #E11924 (brand red, ACCENT) · #C0C7D1 (ash, NEUTRAL).
+     Blue leads in the default direction so the brand stays anchored
+     in its primary colour. */
+  --grad-rb: linear-gradient(135deg, #1847a1 0%, #e11924 100%);
+  --grad-rb-soft: linear-gradient(135deg, #3463c7 0%, #ff4757 100%);
+  --grad-br: linear-gradient(135deg, #e11924 0%, #1847a1 100%);
   --grad-r: linear-gradient(135deg, #e11924 0%, #ff4757 100%);
   --grad-b: linear-gradient(135deg, #1847a1 0%, #3463c7 100%);
   --grad-a: linear-gradient(135deg, #7c8696 0%, #c0c7d1 100%);
   --grad-ab: linear-gradient(135deg, #c0c7d1 0%, #1847a1 100%);
   --grad-ar: linear-gradient(135deg, #c0c7d1 0%, #e11924 100%);
 
+  /* Shadows lead with BLUE (primary brand) — the logo's dominant
+     colour — and use red only as a subtle warmth in the falloff. */
   --shadow-card: 0 2px 14px -4px rgba(15, 23, 42, 0.06),
-    0 6px 28px -10px rgba(24, 71, 161, 0.1);
-  --shadow-card-hover: 0 8px 28px -6px rgba(225, 25, 36, 0.14),
-    0 18px 48px -16px rgba(24, 71, 161, 0.2);
-  --shadow-brand: 0 12px 32px -8px rgba(225, 25, 36, 0.45),
+    0 6px 28px -10px rgba(24, 71, 161, 0.12);
+  --shadow-card-hover: 0 8px 28px -6px rgba(24, 71, 161, 0.18),
+    0 18px 48px -16px rgba(225, 25, 36, 0.12);
+  --shadow-brand: 0 14px 36px -10px rgba(24, 71, 161, 0.55),
+    0 12px 32px -16px rgba(225, 25, 36, 0.25);
+  --shadow-brand-red: 0 12px 32px -8px rgba(225, 25, 36, 0.45),
     0 12px 32px -16px rgba(24, 71, 161, 0.5);
 }
 
@@ -75,6 +81,12 @@ body {
   background: #ffffff;
   color: #0b1220;
   font-family: var(--font-sans);
+  /* Body baseline: 16px / 1.7 — Bangla benefits from a more generous
+     leading than Latin because its conjuncts and matras sit above
+     and below the baseline.  1.7 keeps long-form copy comfortably
+     readable without feeling double-spaced. */
+  font-size: 1rem;
+  line-height: 1.7;
   scroll-behavior: smooth;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -82,18 +94,52 @@ body {
   text-rendering: optimizeLegibility;
   font-feature-settings: "kern", "liga", "clig", "calt";
   font-variant-ligatures: common-ligatures contextual;
+  /* Avoid orphans / widows in body paragraphs; modern browsers only,
+     no impact on legacy. */
+  text-wrap: pretty;
 }
 
+/* Headings get tight leading + balanced wrapping so short multi-line
+   titles break visually evenly instead of leaving one word alone. */
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-feature-settings: "kern", "liga", "calt";
-  letter-spacing: 0;
-  line-height: 1.25;
+  letter-spacing: -0.005em;
+  line-height: 1.18;
+  text-wrap: balance;
 }
 
+h1 {
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+h2 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h3,
+h4 {
+  font-weight: 700;
+}
+
+/* Numbers — prices, stats, dates — use tabular figures so columns of
+   numbers don't shift width as digits change.  Also a slashed zero
+   for clear distinction from O in mixed Latin contexts. */
+.tnum,
+.font-bold,
+.font-semibold,
+[class*="text-"][class*="xl"] {
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* Selection uses BRAND BLUE (primary) — was red before; the swap
+   matches the logo where blue is dominant and red is the accent. */
 ::selection {
-  background: #e11924;
+  background: #1847a1;
   color: #fff;
 }
 
@@ -119,10 +165,10 @@ h3 {
   z-index: -1;
 }
 
-/* === Gradient text — red→blue === */
+/* === Gradient text — BLUE → red (primary leads) === */
 .text-grad,
 .text-grad-rb {
-  background: linear-gradient(135deg, #e11924 0%, #1847a1 100%);
+  background: linear-gradient(135deg, #1847a1 0%, #e11924 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -179,7 +225,7 @@ h3 {
   inset: 0;
   padding: 1.5px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #e11924, #1847a1);
+  background: linear-gradient(135deg, #1847a1, #e11924);
   background-size: 250% 250%;
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -201,7 +247,7 @@ h3 {
   bottom: -4px;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #e11924, #1847a1);
+  background: linear-gradient(90deg, #1847a1, #e11924);
   transition: width 0.3s ease;
 }
 .link-underline:hover::after,
@@ -263,12 +309,14 @@ h3 {
   border-left: 1px solid #e6e9f2;
 }
 ::-webkit-scrollbar-thumb {
+  /* Blue is the wider, dominant stripe; red is a thin accent slash
+     to keep the brand's secondary colour present without overpowering. */
   background-image: repeating-linear-gradient(
     -45deg,
-    #e11924 0,
-    #e11924 5px,
-    #1847a1 5px,
-    #1847a1 10px
+    #1847a1 0,
+    #1847a1 7px,
+    #e11924 7px,
+    #e11924 10px
   );
   border-radius: 8px;
   border: 2px solid #f2f4f7;
@@ -277,15 +325,15 @@ h3 {
 ::-webkit-scrollbar-thumb:hover {
   background-image: repeating-linear-gradient(
     -45deg,
-    #ff4757 0,
-    #ff4757 5px,
-    #3463c7 5px,
-    #3463c7 10px
+    #3463c7 0,
+    #3463c7 7px,
+    #ff4757 7px,
+    #ff4757 10px
   );
 }
 html {
   scrollbar-width: thin;
-  scrollbar-color: #e11924 #f2f4f7;
+  scrollbar-color: #1847a1 #f2f4f7;
 }
 
 /* === WhatsApp pulse — WhatsApp green === */
