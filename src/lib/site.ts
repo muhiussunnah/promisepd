@@ -290,7 +290,6 @@ export const DIVISIONS: Division[] = [
 
 export const NAV = [
   { label: "হোম", href: "/#home", id: "home" },
-  { label: "আমাদের সম্পর্কে", href: "/#about", id: "about" },
   {
     label: "আমাদের বিভাগ",
     href: "/#divisions",
@@ -305,12 +304,14 @@ export const NAV = [
     })),
   },
   { label: "প্রকল্প", href: "/#projects", id: "projects" },
-  { label: "কেন আমরা", href: "/#why", id: "why" },
   { label: "পার্টনার হোন", href: "/partner", id: "partner", standalone: true },
   { label: "ব্লগ", href: "/blog", id: "blog", standalone: true },
   { label: "যোগাযোগ", href: "/#contact", id: "contact" },
 ];
 
+// "about" + "why" left in NAV_IDS so the navbar's title/tagline still
+// flips correctly when the visitor scrolls *through* those homepage
+// sections — even though they're no longer clickable in the menu.
 export const NAV_IDS = ["home", "about", "divisions", "projects", "why", "contact"];
 
 /** When on the home section, navbar cycles through these brand identities */
