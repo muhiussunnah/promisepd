@@ -111,26 +111,26 @@ export default function Footer() {
                 alt={SITE.shortName}
                 width={500}
                 height={500}
-                className="h-12 w-auto shrink-0"
+                className="h-14 w-auto shrink-0"
               />
               <div className="leading-tight">
-                <div className="text-sm font-bold text-grad-rb">
+                <div className="text-base font-bold text-grad-rb">
                   প্রমিস সিটি
                 </div>
-                <div className="text-[10px] tracking-wider text-fg-muted">
+                <div className="text-xs tracking-wider text-fg-muted">
                   স্বপ্ন যেখানে বাস্তব
                 </div>
               </div>
             </Link>
-            <p className="mt-4 text-xs text-fg-muted leading-relaxed">
+            <p className="mt-4 text-sm text-fg-muted leading-relaxed">
               ১৫+ বছর ধরে ঢাকার মানুষকে সেবা দিয়ে আসছি — রিয়েল এস্টেট,
               নির্মাণ, সঞ্চয়, হজ্জ ও ডিজাইন।
             </p>
 
-            <div className="mt-4">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-fg-faint font-bold mb-2">
+            <div className="mt-5">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-3">
                 অনুসরণ করুন
-              </div>
+              </h4>
               <div className="flex gap-2">
                 {SOCIALS.map(({ name, url, Icon, ring }) => (
                   <a
@@ -139,7 +139,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={name}
-                    className={`inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-sm ring-1 ring-border hover:ring-2 hover:${ring} hover:scale-110 hover:-translate-y-0.5 transition-all`}
+                    className={`inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white shadow-sm ring-1 ring-border hover:ring-2 hover:${ring} hover:scale-110 hover:-translate-y-0.5 transition-all`}
                   >
                     <Icon className="h-5 w-5" />
                   </a>
@@ -150,15 +150,15 @@ export default function Footer() {
 
           {/* ── Col 2 · Quick links (curated top-5 only) ────────── */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-grad-rb mb-3">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-3">
               দ্রুত লিঙ্ক
             </h4>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2">
               {FOOTER_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-xs text-fg-muted hover:text-brand-blue transition-colors"
+                    className="text-sm text-fg-muted hover:text-brand-blue transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -169,15 +169,15 @@ export default function Footer() {
 
           {/* ── Col 3 · Contact info ────────────────────────────── */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-grad-rb mb-3">
+            <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-3">
               যোগাযোগ
             </h4>
-            <ul className="space-y-2.5 text-xs text-fg-muted">
-              <li className="flex items-start gap-2">
+            <ul className="space-y-3 text-sm text-fg-muted">
+              <li className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 mt-0.5 text-brand-red shrink-0" />
                 <span className="leading-relaxed">{SITE.address}</span>
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-brand-blue shrink-0" />
                 <a
                   href={`tel:${SITE.phone}`}
@@ -186,7 +186,7 @@ export default function Footer() {
                   {SITE.phoneDisplay}
                 </a>
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 text-brand-red shrink-0" />
                 <a
                   href={`mailto:${SITE.email}`}
@@ -195,11 +195,11 @@ export default function Footer() {
                   {SITE.email}
                 </a>
               </li>
-              <li className="flex items-start gap-2">
+              <li className="flex items-start gap-2.5">
                 <Clock className="h-4 w-4 text-brand-blue shrink-0 mt-0.5" />
                 <div className="leading-relaxed">
                   <div>{SITE.hours}</div>
-                  <div className="text-[10px] text-fg-faint mt-0.5">
+                  <div className="text-xs text-fg-faint mt-0.5">
                     {SITE.weeklyOff}
                   </div>
                 </div>
@@ -214,11 +214,11 @@ export default function Footer() {
         {/* Bottom strip — copyright + credit + report-bug, all on one
             line on desktop so we keep vertical footprint minimal. */}
         <div className="mt-8 pt-5 border-t border-border flex flex-col lg:flex-row items-center justify-between gap-3">
-          <p className="text-[11px] text-fg-muted text-center lg:text-left">
+          <p className="text-xs text-fg-muted text-center lg:text-left">
             © {toBn(new Date().getFullYear())} {SITE.name}. সর্বস্বত্ব
             সংরক্ষিত।
           </p>
-          <div className="flex items-center gap-3 text-[11px]">
+          <div className="flex items-center gap-3 text-xs">
             <ReportToDeveloper variant="inline" />
             <span className="text-fg-faint hidden sm:inline">·</span>
             <a
