@@ -206,12 +206,11 @@ export default function Hero() {
                 বিস্তারিত দেখুন
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              {/* Click → opens the promo video in a lightbox modal
-                  instead of routing the visitor off-page.  Label
-                  "বিস্তারিত" differentiates from the primary
-                  "বিস্তারিত দেখুন" CTA which goes to the division
-                  detail page — this one shows the promo in-place. */}
-              <PromoVideoButton>বিস্তারিত</PromoVideoButton>
+              {/* Click → opens the promo video in a lightbox modal.
+                  "আমাদের সম্পর্কে" pairs cleanly with the primary
+                  "বিস্তারিত দেখুন" CTA on the left — text details
+                  vs. an in-place company-overview video. */}
+              <PromoVideoButton>আমাদের সম্পর্কে</PromoVideoButton>
             </div>
 
             {/* Dot indicators */}
