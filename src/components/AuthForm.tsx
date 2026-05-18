@@ -44,10 +44,10 @@ export default function AuthForm({ mode }: { mode: Mode }) {
   const [identifier, setIdentifier] = useState("");
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  // Combined "email or username" — the input auto-routes to the
+  // right server field on submit based on whether it contains "@".
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
   const [showPw, setShowPw] = useState(false);
 
   const [status, setStatus] = useState<AuthResult | null>(null);
@@ -57,30 +57,29 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     e.preventDefault();
     setStatus(null);
 
-    if (mode === "signup" && password !== confirm) {
-      setStatus({ ok: false, error: "পাসওয়ার্ড দুটো মিলছে না।" });
-      return;
-    }
-
     startTransition(async () => {
-      const res =
-        mode === "login"
-          ? await login({ identifier, password } satisfies LoginPayload)
-          : await signup({
-              name,
-              mobile,
-              email: email || undefined,
-              username: username || undefined,
-              password,
-            } satisfies SignupPayload);
+      let res: AuthResult;
+      if (mode === "login") {
+        res = await login({ identifier, password } satisfies LoginPayload);
+      } else {
+        // Auto-detect: anything with "@" → email field, otherwise →
+        // username field.  Server-side validators still run on both.
+        const trimmed = emailOrUsername.trim();
+        const isEmail = trimmed.includes("@");
+        res = await signup({
+          name,
+          mobile,
+          email: isEmail ? trimmed : undefined,
+          username: !isEmail && trimmed ? trimmed : undefined,
+          password,
+        } satisfies SignupPayload);
+      }
       setStatus(res);
       if (res.ok && mode === "signup") {
         setName("");
         setMobile("");
-        setEmail("");
-        setUsername("");
+        setEmailOrUsername("");
         setPassword("");
-        setConfirm("");
       }
     });
   }
@@ -131,25 +130,18 @@ export default function AuthForm({ mode }: { mode: Mode }) {
       )}
 
       {mode === "signup" && (
-        <div className="grid sm:grid-cols-2 gap-4">
-          <Field
-            label="ইউজারনেম (ঐচ্ছিক)"
-            icon={AtSign}
-            value={username}
-            onChange={setUsername}
-            placeholder="যেমন: kamrul95"
-            autoComplete="username"
-          />
-          <Field
-            label="ইমেইল (ঐচ্ছিক)"
-            type="email"
-            icon={AtSign}
-            value={email}
-            onChange={setEmail}
-            placeholder="you@example.com"
-            autoComplete="email"
-          />
-        </div>
+        // Combined optional identifier — one box, two valid shapes.
+        // Auto-detects: contains "@" → goes to email, otherwise →
+        // username.  Keeps the form short and the visual rhythm
+        // tighter than two stacked optional fields.
+        <Field
+          label="ইমেইল বা ইউজারনেম (ঐচ্ছিক)"
+          icon={AtSign}
+          value={emailOrUsername}
+          onChange={setEmailOrUsername}
+          placeholder="you@example.com  অথবা  kamrul95"
+          autoComplete="email"
+        />
       )}
 
       <PasswordField
@@ -160,17 +152,6 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         onToggle={() => setShowPw((v) => !v)}
         autoComplete={mode === "login" ? "current-password" : "new-password"}
       />
-
-      {mode === "signup" && (
-        <PasswordField
-          label="পাসওয়ার্ড নিশ্চিত করুন"
-          value={confirm}
-          onChange={setConfirm}
-          showPw={showPw}
-          onToggle={() => setShowPw((v) => !v)}
-          autoComplete="new-password"
-        />
-      )}
 
       {mode === "login" && (
         <div className="flex items-center justify-between text-xs">
