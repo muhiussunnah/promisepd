@@ -316,6 +316,18 @@ export const NAV = [
 // sections — even though they're no longer clickable in the menu.
 export const NAV_IDS = ["home", "about", "divisions", "projects", "why", "contact"];
 
+/** Curated short list for the footer "দ্রুত লিঙ্ক" column.
+ *  Only the 5 highest-conversion pages — full NAV would make the
+ *  footer column much taller than the others and break the
+ *  symmetric 4-column layout. */
+export const FOOTER_QUICK_LINKS: { label: string; href: string }[] = [
+  { label: "হোম", href: "/#home" },
+  { label: "আমাদের বিভাগ", href: "/#divisions" },
+  { label: "প্রকল্প", href: "/#projects" },
+  { label: "পার্টনার হোন", href: "/partner" },
+  { label: "যোগাযোগ", href: "/contact" },
+];
+
 /** When on the home section, navbar cycles through these brand identities */
 export const HOME_BRAND_CYCLES = [
   { title: "Promise PPD", tagline: SITE.tagline },

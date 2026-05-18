@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
-import { NAV, SITE } from "@/lib/site";
+import { FOOTER_QUICK_LINKS, SITE } from "@/lib/site";
 import { toBn } from "@/lib/bn";
 import ReportToDeveloper from "./ReportToDeveloper";
 import PaymentSecurityStrip from "./PaymentSecurityStrip";
@@ -148,13 +148,13 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* ── Col 2 · Quick links ─────────────────────────────── */}
+          {/* ── Col 2 · Quick links (curated top-5 only) ────────── */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-grad-rb mb-3">
               দ্রুত লিঙ্ক
             </h4>
             <ul className="space-y-1.5">
-              {NAV.map((item) => (
+              {FOOTER_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
