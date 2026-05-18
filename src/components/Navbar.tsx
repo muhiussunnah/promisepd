@@ -66,6 +66,7 @@ export default function Navbar() {
     ? DIVISIONS.find((d) => d.slug === firstSegment)
     : null;
   const isPartner = firstSegment === "partner";
+  const isBlog = firstSegment === "blog";
 
   // Cycle brand identities only while sitting on the home section
   useEffect(() => {
@@ -81,9 +82,11 @@ export default function Navbar() {
     ? { title: currentDivision.nameBn, tagline: currentDivision.tagline }
     : isPartner
       ? { title: "পার্টনার হোন", tagline: "নিজের আয়ের লক্ষ্য নিজে ঠিক করুন" }
-      : isHome && activeSection === "home"
-        ? HOME_BRAND_CYCLES[homeCycle]
-        : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
+      : isBlog
+        ? { title: "প্রমিজ জার্নাল", tagline: "রিয়েল এস্টেট জ্ঞান, আপনার ভাষায়" }
+        : isHome && activeSection === "home"
+          ? HOME_BRAND_CYCLES[homeCycle]
+          : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -202,7 +205,8 @@ export default function Navbar() {
                 // home anchors light up via active-section tracking.
                 const isActive = item.href.startsWith("/#")
                   ? isHome && activeSection === item.id
-                  : pathname === item.href;
+                  : pathname === item.href ||
+                    pathname.startsWith(`${item.href}/`);
                 if (item.dropdown) {
                   return (
                     <div

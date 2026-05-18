@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { DIVISIONS } from "@/lib/site";
+import { BLOG_POSTS } from "@/lib/blog";
 import { getSiteUrl } from "@/lib/site-url";
 
 const SITE_URL = getSiteUrl();
@@ -27,6 +28,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    // Blog index.
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    // Each blog post — lastModified pinned to the post's own ISO date.
+    ...BLOG_POSTS.map((p) => ({
+      url: `${SITE_URL}/blog/${p.slug}`,
+      lastModified: new Date(p.iso),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
   ];
 
