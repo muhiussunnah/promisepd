@@ -1,93 +1,116 @@
-/** Payment-methods + security-trust strip used in the footer.
+/** Payment methods + security trust strip — footer column 4.
  *
- *  Stylised brand badges rather than logo files — keeps the bundle
- *  tiny (no extra HTTP requests for tiny PNGs) and gives us pixel-
- *  perfect rendering at any DPR.  Colours and wordmarks come from
- *  each provider's public brand guidelines circa 2026.
+ *  Uses real, official brand logos (downloaded + WebP-optimised via
+ *  scripts/download-payment-logos.mjs).  Visitors recognise the
+ *  actual marks — that's the trust signal a solid colour chip can't
+ *  carry.
  *
- *  When the partnership officially closes with a provider, drop the
- *  real logo into /public (run it through the WebP pipeline first)
- *  and swap the corresponding component below for an <Image>. */
+ *  All logos render at a uniform visual height inside white pill
+ *  cards so the strip reads as a tidy grid no matter how each
+ *  wordmark's aspect ratio differs. */
 
-import { ShieldCheck, Lock, BadgeCheck } from "lucide-react";
+import Image from "next/image";
+import { ShieldCheck, BadgeCheck } from "lucide-react";
 
-type PayBadge = {
-  label: string;
-  className: string;
-  textClassName?: string;
+type LogoEntry = {
+  name: string;
+  src: string;
+  /** Aspect-ratio anchor for next/image to lay out without CLS. */
+  width: number;
+  height: number;
 };
 
-const PAYMENT_METHODS: PayBadge[] = [
-  // Official 2026 brand colours.  Each chip uses its provider's
-  // signature colour so the strip reads as authentic at a glance.
-  { label: "bKash", className: "bg-[#E2136E]" },
-  { label: "Nagad", className: "bg-[#F26522]" },
-  { label: "Rocket", className: "bg-[#8C3494]" },
-  { label: "Upay", className: "bg-[#5B2D90]" },
-  { label: "Bank Transfer", className: "bg-brand-blue" },
-];
-
-const TRUST_BADGES = [
-  {
-    Icon: ShieldCheck,
-    title: "SSLCommerz",
-    sub: "Secure Gateway",
-  },
-  {
-    Icon: Lock,
-    title: "SSL Secured",
-    sub: "256-bit Encrypted",
-  },
-  {
-    Icon: BadgeCheck,
-    title: "Verified Business",
-    sub: "RAJUK Approved",
-  },
+// Mobile financial services + card networks.  Width/height pairs are
+// the cropped WebP's native dimensions at 96 px tall (computed at
+// download time) — feeding them to next/image avoids layout shift.
+const PAYMENT_LOGOS: LogoEntry[] = [
+  { name: "bKash", src: "/payments/bkash.webp", width: 200, height: 96 },
+  { name: "Nagad", src: "/payments/nagad.webp", width: 200, height: 96 },
+  { name: "Rocket / Dutch-Bangla Bank", src: "/payments/rocket.webp", width: 300, height: 96 },
+  { name: "Upay", src: "/payments/upay.webp", width: 100, height: 96 },
+  { name: "Visa", src: "/payments/visa.webp", width: 180, height: 96 },
+  { name: "Mastercard", src: "/payments/mastercard.webp", width: 130, height: 96 },
 ];
 
 export default function PaymentSecurityStrip() {
   return (
     <div className="space-y-4">
-      {/* Payment methods row */}
+      {/* ── Payment methods ────────────────────────────────────── */}
       <div>
         <div className="text-[10px] uppercase tracking-[0.18em] text-fg-faint font-bold mb-2.5">
           পেমেন্ট মেথড
         </div>
-        <div className="flex flex-wrap gap-1.5">
-          {PAYMENT_METHODS.map((p) => (
-            <span
-              key={p.label}
-              className={`inline-flex items-center rounded-md px-2.5 py-1 text-[10px] font-bold text-white shadow-sm ${p.className} ${p.textClassName ?? ""}`}
-              title={`${p.label} accepted`}
+        <div className="grid grid-cols-3 gap-1.5">
+          {PAYMENT_LOGOS.map((logo) => (
+            <div
+              key={logo.name}
+              title={`${logo.name} accepted`}
+              className="bg-white border border-border rounded-md h-10 flex items-center justify-center px-2 hover:border-brand-blue/30 transition-colors"
             >
-              {p.label}
-            </span>
+              <Image
+                src={logo.src}
+                alt={logo.name}
+                width={logo.width}
+                height={logo.height}
+                className="max-h-6 w-auto object-contain"
+              />
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Trust / security badges */}
+      {/* ── Security / trust badges ────────────────────────────── */}
       <div>
         <div className="text-[10px] uppercase tracking-[0.18em] text-fg-faint font-bold mb-2.5">
-          নিরাপত্তা ও বিশ্বস্ততা
+          সুরক্ষিত পেমেন্ট
         </div>
         <div className="space-y-1.5">
-          {TRUST_BADGES.map(({ Icon, title, sub }) => (
-            <div
-              key={title}
-              className="flex items-center gap-2 rounded-lg bg-white border border-border px-2.5 py-1.5"
-            >
-              <Icon className="h-4 w-4 text-brand-blue shrink-0" />
-              <div className="min-w-0 leading-tight">
-                <div className="text-[11px] font-bold text-fg truncate">
-                  {title}
-                </div>
-                <div className="text-[9px] text-fg-faint truncate uppercase tracking-wider">
-                  {sub}
-                </div>
+          {/* SSLCommerz gets a logo card — it's the highest-recognition
+              trust mark for online payments in Bangladesh. */}
+          <div className="flex items-center gap-2 rounded-lg bg-white border border-border px-2.5 py-1.5">
+            <div className="shrink-0 h-7 w-16 flex items-center">
+              <Image
+                src="/payments/sslcommerz.webp"
+                alt="SSLCommerz"
+                width={200}
+                height={96}
+                className="max-h-6 w-auto object-contain"
+              />
+            </div>
+            <div className="min-w-0 leading-tight">
+              <div className="text-[10px] font-bold text-fg">
+                Secure Gateway
+              </div>
+              <div className="text-[9px] text-fg-faint uppercase tracking-wider">
+                Bangladesh's #1
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* The remaining two are iconographic — SSL + Verified
+              business don't have a single recognisable wordmark. */}
+          <div className="flex items-center gap-2 rounded-lg bg-white border border-border px-2.5 py-1.5">
+            <ShieldCheck className="h-4 w-4 text-brand-blue shrink-0" />
+            <div className="min-w-0 leading-tight">
+              <div className="text-[11px] font-bold text-fg truncate">
+                SSL Secured
+              </div>
+              <div className="text-[9px] text-fg-faint truncate uppercase tracking-wider">
+                256-bit Encrypted
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 rounded-lg bg-white border border-border px-2.5 py-1.5">
+            <BadgeCheck className="h-4 w-4 text-brand-blue shrink-0" />
+            <div className="min-w-0 leading-tight">
+              <div className="text-[11px] font-bold text-fg truncate">
+                Verified Business
+              </div>
+              <div className="text-[9px] text-fg-faint truncate uppercase tracking-wider">
+                RAJUK Approved
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
