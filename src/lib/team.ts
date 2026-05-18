@@ -54,7 +54,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     slug: "mustaqeem-billah",
     name: "মুস্তাকীম বিল্লাহ",
     nameEn: "Mustaqeem Billah",
-    role: "Soft. Eng. · Strategic & Growth Partner",
+    role: "Development Support",
     bio: "এই ওয়েবসাইট ও ডিজিটাল ইকোসিস্টেমের পেছনের ইঞ্জিনিয়ার। সাইটের যেকোনো জায়গায় বাগ বা সমস্যা দেখলে সরাসরি তাঁকে রিপোর্ট করুন — দ্রুত সমাধান নিশ্চিত।",
     phone: "+8801767682381",
     email: "itsinjamul@gmail.com",

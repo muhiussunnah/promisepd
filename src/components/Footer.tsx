@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { NAV, SITE } from "@/lib/site";
 import { toBn } from "@/lib/bn";
 import ReportToDeveloper from "./ReportToDeveloper";
+import PaymentSecurityStrip from "./PaymentSecurityStrip";
 
 // ============= Brand-colored social icons (full color, full opacity) =============
 
@@ -97,36 +98,40 @@ export default function Footer() {
       <div className="absolute inset-0 -z-10 mesh-bg-soft" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-blue/30 to-transparent" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid gap-10 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <Link href="/#home" className="flex items-center gap-4">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+        {/* Four equal columns on desktop — symmetric, compact, and
+            each column intentionally sized to fit a single screen
+            without scroll on a 1280-wide viewport. */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {/* ── Col 1 · Brand + description + socials ───────────── */}
+          <div>
+            <Link href="/#home" className="flex items-center gap-3">
               <Image
                 src="/logo.png"
                 alt={SITE.shortName}
                 width={500}
                 height={500}
-                className="h-20 w-auto shrink-0"
+                className="h-12 w-auto shrink-0"
               />
               <div className="leading-tight">
-                <div className="text-base font-bold text-grad-rb">
+                <div className="text-sm font-bold text-grad-rb">
                   প্রমিস সিটি
                 </div>
-                <div className="text-[11px] tracking-wider text-fg-muted">
+                <div className="text-[10px] tracking-wider text-fg-muted">
                   স্বপ্ন যেখানে বাস্তব
                 </div>
               </div>
             </Link>
-            <p className="mt-5 text-sm text-fg-muted leading-relaxed max-w-md">
-              ১৫+ বছর ধরে ঢাকার পরিবারগুলোকে সেবা দিয়ে আসছি — রিয়েল এস্টেট,
-              নির্মাণ, সঞ্চয়, হজ্জ এবং ডিজাইন — ৫টি বিভাগ এক ছাদের নিচে।
+            <p className="mt-4 text-xs text-fg-muted leading-relaxed">
+              ১৫+ বছর ধরে ঢাকার মানুষকে সেবা দিয়ে আসছি — রিয়েল এস্টেট,
+              নির্মাণ, সঞ্চয়, হজ্জ ও ডিজাইন।
             </p>
 
-            <div className="mt-6">
-              <h5 className="text-[11px] uppercase tracking-[0.18em] text-fg-muted font-semibold mb-3">
-                আমাদের অনুসরণ করুন
-              </h5>
-              <div className="flex flex-wrap gap-3">
+            <div className="mt-4">
+              <div className="text-[10px] uppercase tracking-[0.18em] text-fg-faint font-bold mb-2">
+                অনুসরণ করুন
+              </div>
+              <div className="flex gap-2">
                 {SOCIALS.map(({ name, url, Icon, ring }) => (
                   <a
                     key={name}
@@ -134,25 +139,26 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={name}
-                    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white shadow-sm ring-1 ring-border hover:ring-2 hover:${ring} hover:scale-110 hover:-translate-y-0.5 transition-all`}
+                    className={`inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-sm ring-1 ring-border hover:ring-2 hover:${ring} hover:scale-110 hover:-translate-y-0.5 transition-all`}
                   >
-                    <Icon className="h-6 w-6" />
+                    <Icon className="h-5 w-5" />
                   </a>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="md:col-span-3">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-4">
+          {/* ── Col 2 · Quick links ─────────────────────────────── */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-grad-rb mb-3">
               দ্রুত লিঙ্ক
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1.5">
               {NAV.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-fg-muted hover:text-fg transition-colors link-underline"
+                    className="text-xs text-fg-muted hover:text-brand-blue transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -161,17 +167,18 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-4">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-4">
+          {/* ── Col 3 · Contact info ────────────────────────────── */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-grad-rb mb-3">
               যোগাযোগ
             </h4>
-            <ul className="space-y-3 text-sm text-fg-muted">
-              <li className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 mt-0.5 text-brand-red shrink-0" />
-                <span>{SITE.address}</span>
+            <ul className="space-y-2.5 text-xs text-fg-muted">
+              <li className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 mt-0.5 text-brand-red shrink-0" />
+                <span className="leading-relaxed">{SITE.address}</span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-brand-blue shrink-0" />
+              <li className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-brand-blue shrink-0" />
                 <a
                   href={`tel:${SITE.phone}`}
                   className="hover:text-fg transition-colors"
@@ -179,8 +186,8 @@ export default function Footer() {
                   {SITE.phoneDisplay}
                 </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-brand-red shrink-0" />
+              <li className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-brand-red shrink-0" />
                 <a
                   href={`mailto:${SITE.email}`}
                   className="hover:text-fg transition-colors break-all"
@@ -188,24 +195,32 @@ export default function Footer() {
                   {SITE.email}
                 </a>
               </li>
-              <li className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-brand-blue shrink-0 mt-0.5" />
-                <div>
+              <li className="flex items-start gap-2">
+                <Clock className="h-4 w-4 text-brand-blue shrink-0 mt-0.5" />
+                <div className="leading-relaxed">
                   <div>{SITE.hours}</div>
-                  <div className="text-xs text-fg-faint mt-0.5">
+                  <div className="text-[10px] text-fg-faint mt-0.5">
                     {SITE.weeklyOff}
                   </div>
                 </div>
               </li>
             </ul>
           </div>
+
+          {/* ── Col 4 · Payment + security ──────────────────────── */}
+          <PaymentSecurityStrip />
         </div>
 
-        <div className="mt-14 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-fg-muted">
-            © {toBn(new Date().getFullYear())} {SITE.name}. সর্বস্বত্ব সংরক্ষিত।
+        {/* Bottom strip — copyright + credit + report-bug, all on one
+            line on desktop so we keep vertical footprint minimal. */}
+        <div className="mt-8 pt-5 border-t border-border flex flex-col lg:flex-row items-center justify-between gap-3">
+          <p className="text-[11px] text-fg-muted text-center lg:text-left">
+            © {toBn(new Date().getFullYear())} {SITE.name}. সর্বস্বত্ব
+            সংরক্ষিত।
           </p>
-          <p className="text-xs text-fg-muted">
+          <div className="flex items-center gap-3 text-[11px]">
+            <ReportToDeveloper variant="inline" />
+            <span className="text-fg-faint hidden sm:inline">·</span>
             <a
               href={SITE.credit.url}
               target="_blank"
@@ -214,14 +229,7 @@ export default function Footer() {
             >
               {SITE.credit.label}
             </a>
-          </p>
-        </div>
-
-        {/* Always-visible "report a bug to the developer" strip — so
-            visitors who spot something off don't have to dig through
-            an error page to find Inzamul's contact. */}
-        <div className="mt-6 pt-6 border-t border-border">
-          <ReportToDeveloper variant="inline" />
+          </div>
         </div>
       </div>
     </footer>
