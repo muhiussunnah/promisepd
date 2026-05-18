@@ -14,6 +14,7 @@ import {
   Landmark,
   Plane,
   Palette,
+  LogIn,
   type LucideIcon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -310,6 +311,16 @@ export default function Navbar() {
             </nav>
 
             <div className="flex items-center gap-2 py-1">
+              {/* Login — ghost button next to the primary Call CTA.
+                  Hidden on the smallest screens; mobile users get the
+                  Login row inside the slide-out menu instead. */}
+              <Link
+                href="/login"
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-white border border-border px-3.5 py-2.5 text-sm font-semibold text-fg hover:border-brand-blue/50 hover:text-brand-blue transition-colors"
+              >
+                <LogIn className="h-4 w-4" />
+                <span>লগইন</span>
+              </Link>
               <a
                 href={`tel:${SITE.phone}`}
                 className="hidden md:inline-flex items-center gap-2 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
@@ -462,9 +473,30 @@ export default function Navbar() {
                   );
                 })}
               </nav>
+
+              {/* Auth row — small screens don't show the desktop Login
+                  chip, so we surface Login + Sign Up inside the menu. */}
+              <div className="mt-6 grid grid-cols-2 gap-2">
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-white border border-border px-4 py-3 text-sm font-semibold text-fg hover:border-brand-blue/50 transition-colors"
+                >
+                  <LogIn className="h-4 w-4" />
+                  লগইন
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-bg-soft border border-border px-4 py-3 text-sm font-semibold text-fg hover:border-brand-blue/50 transition-colors"
+                >
+                  সাইন আপ
+                </Link>
+              </div>
+
               <a
                 href={`tel:${SITE.phone}`}
-                className="mt-8 flex items-center justify-center gap-2 rounded-xl bg-brand-blue px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] btn-shine"
+                className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-brand-blue px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] btn-shine"
                 onClick={() => setOpen(false)}
               >
                 <Phone className="h-4 w-4" />

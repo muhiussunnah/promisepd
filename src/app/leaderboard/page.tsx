@@ -10,6 +10,7 @@ import {
   Plane,
 } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
+import LeaderboardControls from "@/components/LeaderboardControls";
 import { breadcrumbSchema } from "@/lib/schema";
 import { PARTNER_AWARDS, PARTNER_PERIOD } from "@/lib/partner";
 import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
@@ -148,6 +149,17 @@ export default function LeaderboardPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ── Search + time-period sort row ───────────────────────
+          Lives in the gap between the rewards strip and the rank
+          table.  Partners can type their handle to find their own
+          row, and switch between last-30d / this-year / last-year /
+          lifetime windows. */}
+      <section className="relative pb-6">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <LeaderboardControls />
         </div>
       </section>
 

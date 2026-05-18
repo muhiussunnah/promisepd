@@ -90,7 +90,7 @@ export default function TeamPage() {
           cards. */}
       <section className="relative pb-20 sm:pb-28">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl border-2 border-dashed border-border-strong bg-bg-soft p-10 text-center">
+          <div className="rounded-3xl border-2 border-dashed border-border-strong bg-bg-soft p-10 text-center cursor-default">
             <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-md">
               <Sparkles className="h-7 w-7 text-brand-blue" />
             </div>
@@ -117,7 +117,11 @@ const ACCENT_BG_HEX: Record<TeamMember["accent"], string> = {
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
-    <article className="card group overflow-hidden flex flex-col">
+    // cursor-default keeps the I-beam from showing on the card body
+    // (it has no click target — the contact links inside re-enable
+    // pointer on themselves).  Dropped the photo's scale-on-hover so
+    // the card doesn't *pretend* to be interactive when it isn't.
+    <article className="card overflow-hidden flex flex-col cursor-default">
       {/* Brand-coloured photo frame */}
       <div
         className="relative aspect-[4/3] overflow-hidden"
@@ -130,7 +134,7 @@ function MemberCard({ member }: { member: TeamMember }) {
           alt={member.name}
           fill
           sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
-          className="object-cover relative z-10 group-hover:scale-[1.03] transition-transform duration-500"
+          className="object-cover relative z-10"
         />
       </div>
 
