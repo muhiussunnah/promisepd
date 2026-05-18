@@ -306,6 +306,7 @@ export const NAV = [
   },
   { label: "প্রকল্প", href: "/#projects", id: "projects" },
   { label: "কেন আমরা", href: "/#why", id: "why" },
+  { label: "পার্টনার হোন", href: "/partner", id: "partner", standalone: true },
   { label: "যোগাযোগ", href: "/#contact", id: "contact" },
 ];
 

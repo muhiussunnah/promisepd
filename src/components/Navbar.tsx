@@ -65,6 +65,7 @@ export default function Navbar() {
   const currentDivision = firstSegment
     ? DIVISIONS.find((d) => d.slug === firstSegment)
     : null;
+  const isPartner = firstSegment === "partner";
 
   // Cycle brand identities only while sitting on the home section
   useEffect(() => {
@@ -78,9 +79,11 @@ export default function Navbar() {
 
   const meta = currentDivision
     ? { title: currentDivision.nameBn, tagline: currentDivision.tagline }
-    : isHome && activeSection === "home"
-      ? HOME_BRAND_CYCLES[homeCycle]
-      : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
+    : isPartner
+      ? { title: "পার্টনার হোন", tagline: "নিজের আয়ের লক্ষ্য নিজে ঠিক করুন" }
+      : isHome && activeSection === "home"
+        ? HOME_BRAND_CYCLES[homeCycle]
+        : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -195,7 +198,11 @@ export default function Navbar() {
 
             <nav className="hidden lg:flex items-center gap-1">
               {NAV.map((item) => {
-                const isActive = isHome && activeSection === item.id;
+                // Standalone pages (e.g. /partner) light up by URL match;
+                // home anchors light up via active-section tracking.
+                const isActive = item.href.startsWith("/#")
+                  ? isHome && activeSection === item.id
+                  : pathname === item.href;
                 if (item.dropdown) {
                   return (
                     <div
@@ -341,7 +348,9 @@ export default function Navbar() {
               </div>
               <nav className="flex flex-col gap-1">
                 {NAV.map((item, i) => {
-                  const isActive = isHome && activeSection === item.id;
+                  const isActive = item.href.startsWith("/#")
+                    ? isHome && activeSection === item.id
+                    : pathname === item.href;
                   if (item.dropdown) {
                     return (
                       <motion.div

@@ -14,6 +14,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1.0,
     },
+    // Partner program (recruitment / lead-gen page).
+    {
+      url: `${SITE_URL}/partner`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     // Each division's inner page.
     ...DIVISIONS.map((d) => ({
       url: `${SITE_URL}/${d.slug}`,
