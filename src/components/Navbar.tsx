@@ -83,7 +83,7 @@ export default function Navbar() {
     : isPartner
       ? { title: "পার্টনার হোন", tagline: "নিজের আয়ের লক্ষ্য নিজে ঠিক করুন" }
       : isBlog
-        ? { title: "প্রমিজ জার্নাল", tagline: "রিয়েল এস্টেট জ্ঞান, আপনার ভাষায়" }
+        ? { title: "প্রমিস জার্নাল", tagline: "রিয়েল এস্টেট জ্ঞান, আপনার ভাষায়" }
         : isHome && activeSection === "home"
           ? HOME_BRAND_CYCLES[homeCycle]
           : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;

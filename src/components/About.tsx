@@ -69,14 +69,14 @@ export default function About() {
               <span className="text-grad">প্রতিশ্রুতি গড়ি।</span>
             </h2>
             <p className="mt-6 text-base sm:text-lg text-fg-muted leading-relaxed">
-              {SITE.founded} সাল থেকে প্রমিজ গ্রুপ ঢাকার মাটিতে নিঃশব্দে এক
+              {SITE.founded} সাল থেকে প্রমিস গ্রুপ ঢাকার মাটিতে নিঃশব্দে এক
               অবিচল শক্তি — পরিবারগুলোকে এমন বাড়িতে পৌঁছে দিচ্ছি যা তাঁদের
               জীবন, বাজেট ও ভবিষ্যতের সাথে মেলে।
             </p>
             <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed">
-              আজ আমরা ৫টি বিভাগে কাজ করি — <strong>প্রমিজ সিটি</strong> (রিয়েল
+              আজ আমরা ৫টি বিভাগে কাজ করি — <strong>প্রমিস সিটি</strong> (রিয়েল
               এস্টেট), <strong>আহবাব রিয়েল এস্টেট</strong> (নির্মাণ),{" "}
-              <strong>প্রমিজ ইন্টারন্যাশনাল</strong> (সঞ্চয়),{" "}
+              <strong>প্রমিস ইন্টারন্যাশনাল</strong> (সঞ্চয়),{" "}
               <strong>আহবাব ট্রাভেলস</strong> (হজ্জ/উমরাহ), এবং{" "}
               <strong>ইন্টেরিয়র ও 3D ডিজাইন</strong>।
             </p>

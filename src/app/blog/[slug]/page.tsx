@@ -303,7 +303,7 @@ export default async function BlogPostPage(
               {BLOG_AUTHOR.name}
             </div>
             <p className="mt-1 text-sm text-fg-muted leading-relaxed">
-              {BLOG_AUTHOR.role}। প্রমিজ গ্রুপের মার্কেটিং, পার্টনার
+              {BLOG_AUTHOR.role}। প্রমিস গ্রুপের মার্কেটিং, পার্টনার
               অনবোর্ডিং এবং কন্টেন্ট স্ট্র্যাটেজির দায়িত্বে।
             </p>
           </div>

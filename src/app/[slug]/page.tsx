@@ -193,7 +193,7 @@ export default async function DivisionPage(props: PageProps<"/[slug]">) {
                 </span>
               </div>
               <h2 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.15]">
-                প্রমিজ সিটির <span className="text-grad">প্রকল্পসমূহ</span>
+                প্রমিস সিটির <span className="text-grad">প্রকল্পসমূহ</span>
               </h2>
             </div>
 

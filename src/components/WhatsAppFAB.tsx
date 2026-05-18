@@ -22,7 +22,7 @@ export default function WhatsAppFAB() {
   }, []);
 
   const href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
-    "আসসালামু আলাইকুম। আমি প্রমিজ PPD-এর প্রকল্প সম্পর্কে জানতে চাই।",
+    "আসসালামু আলাইকুম। আমি প্রমিস PPD-এর প্রকল্প সম্পর্কে জানতে চাই।",
   )}`;
 
   return (

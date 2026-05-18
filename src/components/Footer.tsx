@@ -109,7 +109,7 @@ export default function Footer() {
               />
               <div className="leading-tight">
                 <div className="text-base font-bold text-grad-rb">
-                  প্রমিজ সিটি
+                  প্রমিস সিটি
                 </div>
                 <div className="text-[11px] tracking-wider text-fg-muted">
                   স্বপ্ন যেখানে বাস্তব

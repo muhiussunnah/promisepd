@@ -38,8 +38,8 @@ export const metadata: Metadata = {
   keywords: [
     "Promise PPD",
     "Promise City",
-    "প্রমিজ সিটি",
-    "প্রমিজ পিপিডি",
+    "প্রমিস সিটি",
+    "প্রমিস পিপিডি",
     "Real Estate Dhaka",
     "ঢাকা রিয়েল এস্টেট",
     "ফুজালা টাওয়ার",

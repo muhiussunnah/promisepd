@@ -81,7 +81,7 @@ export default function Divisions() {
             <span className="text-grad">এক ছাদের নিচে।</span>
           </h2>
           <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
-            প্রমিজ গ্রুপের পাঁচটি মূল ব্যবসায়িক বিভাগ — রিয়েল এস্টেট, নির্মাণ,
+            প্রমিস গ্রুপের পাঁচটি মূল ব্যবসায়িক বিভাগ — রিয়েল এস্টেট, নির্মাণ,
             সঞ্চয়, হজ্জ এবং ডিজাইন। প্রতিটি বিভাগে আমরা সেরাটাই দিই।
           </p>
         </motion.div>

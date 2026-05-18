@@ -9,9 +9,9 @@ import { BLOG_AUTHOR, BLOG_POSTS } from "@/lib/blog";
 const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.png");
 
-const PAGE_TITLE = "প্রমিজ জার্নাল — রিয়েল এস্টেট গাইড, নোটিশ ও রিসোর্স";
+const PAGE_TITLE = "প্রমিস জার্নাল — রিয়েল এস্টেট গাইড, নোটিশ ও রিসোর্স";
 const PAGE_DESC =
-  "প্রমিজ গ্রুপের অফিসিয়াল ব্লগ — প্রকল্প পরিচিতি, মার্কেটিং নোটিশ, বুকিং নিয়মাবলী এবং ফ্ল্যাট/জমি কেনার সম্পূর্ণ রিসোর্স গাইড। সব Bangla-তে, কামরুল হাসান-এর কলম থেকে।";
+  "প্রমিস গ্রুপের অফিসিয়াল ব্লগ — প্রকল্প পরিচিতি, মার্কেটিং নোটিশ, বুকিং নিয়মাবলী এবং ফ্ল্যাট/জমি কেনার সম্পূর্ণ রিসোর্স গাইড। সব Bangla-তে, কামরুল হাসান-এর কলম থেকে।";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -87,7 +87,7 @@ export default function BlogPage() {
           <span className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <BookOpen className="h-3.5 w-3.5 text-brand-red" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              প্রমিজ জার্নাল
+              প্রমিস জার্নাল
             </span>
           </span>
           <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08]">

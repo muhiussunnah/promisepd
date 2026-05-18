@@ -40,8 +40,8 @@ export default function PartnerHero() {
 
             <p className="mt-5 text-lg sm:text-xl text-fg-soft leading-relaxed font-medium">
               মানুষের কাছে{" "}
-              <span className="font-bold text-brand-red">প্রমিজ সিটি</span>{" "}
-              পৌঁছে দিন — কারণ প্রমিজ সিটি মানেই{" "}
+              <span className="font-bold text-brand-red">প্রমিস সিটি</span>{" "}
+              পৌঁছে দিন — কারণ প্রমিস সিটি মানেই{" "}
               <span className="font-bold text-brand-blue">
                 আপনার স্বপ্ন যেখানে বাস্তব।
               </span>

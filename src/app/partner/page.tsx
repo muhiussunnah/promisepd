@@ -15,7 +15,7 @@ const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.png");
 
 const PAGE_TITLE = "পার্টনার হোন — নিজের আয়ের লক্ষ্য নিজে ঠিক করুন";
-const PAGE_DESC = `প্রমিজ গ্রুপের পার্টনার প্রোগ্রাম। মাত্র ${PARTNER_HEADLINE.referralsTarget} জন রেফার করে ফ্রি উমরাহ + ৳ ${PARTNER_HEADLINE.totalValueBn} টাকার পুরস্কার। ক্যালকুলেটরে আয়ের লক্ষ্য সেট করুন, প্ল্যান বানান।`;
+const PAGE_DESC = `প্রমিস গ্রুপের পার্টনার প্রোগ্রাম। মাত্র ${PARTNER_HEADLINE.referralsTarget} জন রেফার করে ফ্রি উমরাহ + ৳ ${PARTNER_HEADLINE.totalValueBn} টাকার পুরস্কার। ক্যালকুলেটরে আয়ের লক্ষ্য সেট করুন, প্ল্যান বানান।`;
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

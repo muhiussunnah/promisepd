@@ -57,7 +57,7 @@ export default function WhyUs() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-blue animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              কেন প্রমিজ PPD
+              কেন প্রমিস PPD
             </span>
           </div>
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
