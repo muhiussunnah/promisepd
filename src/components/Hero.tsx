@@ -207,9 +207,11 @@ export default function Hero() {
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               {/* Click → opens the promo video in a lightbox modal
-                  instead of routing the visitor off-page.  The button
-                  retains the same Play-icon + label styling as before. */}
-              <PromoVideoButton>পরামর্শ নিন</PromoVideoButton>
+                  instead of routing the visitor off-page.  Label
+                  "বিস্তারিত" differentiates from the primary
+                  "বিস্তারিত দেখুন" CTA which goes to the division
+                  detail page — this one shows the promo in-place. */}
+              <PromoVideoButton>বিস্তারিত</PromoVideoButton>
             </div>
 
             {/* Dot indicators */}
