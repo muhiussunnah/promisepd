@@ -150,8 +150,7 @@ export default function BlogFeatured({ post }: { post: BlogPost }) {
                 alt={BLOG_AUTHOR.name}
                 width={40}
                 height={40}
-                className="h-10 w-10 rounded-full shrink-0"
-                unoptimized
+                className="h-10 w-10 rounded-full shrink-0 object-cover"
               />
               <div className="min-w-0">
                 <div className="text-sm font-bold text-fg truncate">

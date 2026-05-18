@@ -22,6 +22,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    // Dedicated contact + leadership + leaderboard pages.
+    {
+      url: `${SITE_URL}/contact`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/team`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${SITE_URL}/leaderboard`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
     // Each division's inner page.
     ...DIVISIONS.map((d) => ({
       url: `${SITE_URL}/${d.slug}`,

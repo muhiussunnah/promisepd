@@ -67,6 +67,9 @@ export default function Navbar() {
     : null;
   const isPartner = firstSegment === "partner";
   const isBlog = firstSegment === "blog";
+  const isTeam = firstSegment === "team";
+  const isLeaderboard = firstSegment === "leaderboard";
+  const isContact = firstSegment === "contact";
 
   // Cycle brand identities only while sitting on the home section
   useEffect(() => {
@@ -84,9 +87,15 @@ export default function Navbar() {
       ? { title: "পার্টনার হোন", tagline: "নিজের আয়ের লক্ষ্য নিজে ঠিক করুন" }
       : isBlog
         ? { title: "প্রমিস জার্নাল", tagline: "রিয়েল এস্টেট জ্ঞান, আপনার ভাষায়" }
-        : isHome && activeSection === "home"
-          ? HOME_BRAND_CYCLES[homeCycle]
-          : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
+        : isTeam
+          ? { title: "আমাদের টিম", tagline: "যাঁদের কাজ আপনার স্বপ্ন গড়ে" }
+          : isLeaderboard
+            ? { title: "লিডারবোর্ড", tagline: "শীর্ষে যাঁরা — তাঁদের পুরস্কার" }
+            : isContact
+              ? { title: "যোগাযোগ", tagline: "যেকোনো প্রশ্নে আমরা পাশে" }
+              : isHome && activeSection === "home"
+                ? HOME_BRAND_CYCLES[homeCycle]
+                : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);

@@ -48,9 +48,12 @@ export type BlogPost = {
 export const BLOG_AUTHOR = {
   name: "কামরুল হাসান",
   nameEn: "Kamrul Hasan",
-  role: "চিফ মার্কেটিং অফিসার, প্রমিস গ্রুপ",
-  avatarUrl:
-    "https://api.dicebear.com/9.x/initials/svg?seed=Kamrul%20Hasan&backgroundColor=e11924,1847a1&textColor=ffffff&fontWeight=700",
+  role: "MD & CEO, Promise Group",
+  // Real headshot used on the team page; falls back to a DiceBear
+  // initials avatar in older callers that haven't been updated yet.
+  avatarUrl: "/ceo.jpeg",
+  avatarFallback:
+    "https://api.dicebear.com/9.x/initials/svg?seed=Kamrul%20Hasan&backgroundColor=1847a1,e11924&textColor=ffffff&fontWeight=700",
 };
 
 export const CATEGORY_META: Record<

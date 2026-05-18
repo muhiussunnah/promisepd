@@ -136,8 +136,7 @@ export default function BlogCard({
                 alt={BLOG_AUTHOR.name}
                 width={28}
                 height={28}
-                className="h-7 w-7 rounded-full shrink-0"
-                unoptimized
+                className="h-7 w-7 rounded-full shrink-0 object-cover"
               />
               <span className="text-xs font-semibold text-fg truncate">
                 {BLOG_AUTHOR.name}

@@ -219,8 +219,7 @@ export default async function BlogPostPage(
               alt={BLOG_AUTHOR.name}
               width={44}
               height={44}
-              className="h-11 w-11 rounded-full shrink-0"
-              unoptimized
+              className="h-11 w-11 rounded-full shrink-0 object-cover"
             />
             <div className="min-w-0">
               <div className="text-sm font-bold text-fg">
@@ -292,8 +291,7 @@ export default async function BlogPostPage(
             alt={BLOG_AUTHOR.name}
             width={64}
             height={64}
-            className="h-16 w-16 rounded-2xl shrink-0"
-            unoptimized
+            className="h-16 w-16 rounded-2xl shrink-0 object-cover"
           />
           <div className="min-w-0">
             <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint">
@@ -303,8 +301,9 @@ export default async function BlogPostPage(
               {BLOG_AUTHOR.name}
             </div>
             <p className="mt-1 text-sm text-fg-muted leading-relaxed">
-              {BLOG_AUTHOR.role}। প্রমিস গ্রুপের মার্কেটিং, পার্টনার
-              অনবোর্ডিং এবং কন্টেন্ট স্ট্র্যাটেজির দায়িত্বে।
+              {BLOG_AUTHOR.role}। প্রমিস গ্রুপের প্রতিষ্ঠাতা ও প্রধান
+              পরিচালক — ১৫+ বছরের অভিজ্ঞতায় ঢাকার রিয়েল এস্টেট
+              ইন্ডাস্ট্রিতে স্বচ্ছতা ও বিশ্বাসের নতুন মান গড়ে তুলেছেন।
             </p>
           </div>
         </div>
