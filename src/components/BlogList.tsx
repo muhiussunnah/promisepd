@@ -21,27 +21,33 @@ import {
   ChevronLeft,
   ChevronRight,
   Inbox,
+  Building2,
 } from "lucide-react";
 import BlogCard from "./BlogCard";
 import BlogFeatured from "./BlogFeatured";
 import {
   BLOG_POSTS,
+  BLOG_PROJECTS,
   CATEGORY_META,
   CATEGORY_ORDER,
   bnNumber,
   type BlogCategoryKey,
+  type BlogProjectKey,
 } from "@/lib/blog";
 
 const PAGE_SIZE = 9;
 const PAGINATION_WINDOW = 5;
 
 type CategoryFilter = "all" | BlogCategoryKey;
+type ProjectFilter = "all" | BlogProjectKey;
 
 export default function BlogList() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("all");
+  const [project, setProject] = useState<ProjectFilter>("all");
   const [page, setPage] = useState(1);
   const [catOpen, setCatOpen] = useState(false);
+  const [projOpen, setProjOpen] = useState(false);
 
   // Posts sorted newest-first.  Featured is pulled out separately.
   const allSorted = useMemo(
@@ -58,11 +64,18 @@ export default function BlogList() {
   // Filter set = everything except the featured post (which is shown
   // separately at top of page 1).  This way the featured post never
   // appears twice in the grid.
+  //
+  // Filter semantics:
+  //  - category and project are independent ANDs.
+  //  - project only meaningfully narrows the "projects" category, but
+  //    we still apply it independently so picking "ফুজালা টাওয়ার"
+  //    works even if category is "All categories".
   const filtered = useMemo(() => {
     const pool = allSorted.filter((p) => p.slug !== featuredPost?.slug);
     const q = query.trim().toLowerCase();
     return pool.filter((p) => {
       if (category !== "all" && p.category !== category) return false;
+      if (project !== "all" && p.project !== project) return false;
       if (!q) return true;
       return (
         p.title.toLowerCase().includes(q) ||
@@ -70,15 +83,19 @@ export default function BlogList() {
         CATEGORY_META[p.category].bn.includes(q)
       );
     });
-  }, [allSorted, featuredPost, category, query]);
+  }, [allSorted, featuredPost, category, project, query]);
 
   // The featured slot only appears when:
   //  - we're on page 1
   //  - no search is active
-  //  - category filter is "all"
+  //  - both filters are "all"
   // Otherwise the featured post (if matched by filter) joins the regular grid.
   const showFeaturedSlot =
-    page === 1 && !query.trim() && category === "all" && !!featuredPost;
+    page === 1 &&
+    !query.trim() &&
+    category === "all" &&
+    project === "all" &&
+    !!featuredPost;
 
   const totalCount =
     filtered.length + (showFeaturedSlot ? 1 : 0);
@@ -89,10 +106,16 @@ export default function BlogList() {
   const pageStart = (safePage - 1) * PAGE_SIZE;
   const pageItems = filtered.slice(pageStart, pageStart + PAGE_SIZE);
 
-  const onFilterChange = (next: CategoryFilter) => {
+  const onCategoryChange = (next: CategoryFilter) => {
     setCategory(next);
     setPage(1);
     setCatOpen(false);
+  };
+
+  const onProjectChange = (next: ProjectFilter) => {
+    setProject(next);
+    setPage(1);
+    setProjOpen(false);
   };
 
   const onSearchChange = (next: string) => {
@@ -103,8 +126,22 @@ export default function BlogList() {
   const reset = () => {
     setQuery("");
     setCategory("all");
+    setProject("all");
     setPage(1);
   };
+
+  const currentProjectLabel = useMemo(
+    () =>
+      project === "all"
+        ? "সকল প্রকল্প"
+        : BLOG_PROJECTS.find((p) => p.key === project)?.bn ?? "সকল প্রকল্প",
+    [project],
+  );
+
+  const projectPostCount = useMemo(
+    () => BLOG_POSTS.filter((p) => p.category === "projects").length,
+    [],
+  );
 
   return (
     <section className="relative pb-20 sm:pb-28">
@@ -138,11 +175,81 @@ export default function BlogList() {
             )}
           </div>
 
+          {/* Project dropdown — sits to the LEFT of category so visitors
+              can drill into a specific Fuzala / Ahbab unit before (or
+              instead of) filtering by content type. */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => {
+                setProjOpen((v) => !v);
+                setCatOpen(false);
+              }}
+              className="w-full sm:w-auto flex items-center justify-between gap-2 rounded-xl bg-bg-soft px-4 py-3 text-sm font-semibold text-fg hover:bg-bg-soft-2 transition-colors"
+              aria-haspopup="listbox"
+              aria-expanded={projOpen}
+            >
+              <span className="inline-flex items-center gap-2">
+                <Building2 className="h-4 w-4 text-fg-muted" />
+                {currentProjectLabel}
+              </span>
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${
+                  projOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            <AnimatePresence>
+              {projOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-20"
+                    onClick={() => setProjOpen(false)}
+                    aria-hidden
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-full sm:w-72 z-30 glass-strong rounded-2xl p-2 shadow-2xl"
+                    role="listbox"
+                  >
+                    <FilterOption
+                      label="সকল প্রকল্প"
+                      count={projectPostCount}
+                      active={project === "all"}
+                      onClick={() => onProjectChange("all")}
+                    />
+                    {BLOG_PROJECTS.map((p) => {
+                      const count = BLOG_POSTS.filter(
+                        (post) => post.project === p.key,
+                      ).length;
+                      return (
+                        <FilterOption
+                          key={p.key}
+                          label={p.bn}
+                          count={count}
+                          active={project === p.key}
+                          onClick={() => onProjectChange(p.key)}
+                          accent="blue"
+                        />
+                      );
+                    })}
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+          </div>
+
           {/* Category dropdown */}
           <div className="relative">
             <button
               type="button"
-              onClick={() => setCatOpen((v) => !v)}
+              onClick={() => {
+                setCatOpen((v) => !v);
+                setProjOpen(false);
+              }}
               className="w-full sm:w-auto flex items-center justify-between gap-2 rounded-xl bg-bg-soft px-4 py-3 text-sm font-semibold text-fg hover:bg-bg-soft-2 transition-colors"
               aria-haspopup="listbox"
               aria-expanded={catOpen}
@@ -183,7 +290,7 @@ export default function BlogList() {
                       label="সকল ক্যাটাগরি"
                       count={BLOG_POSTS.length}
                       active={category === "all"}
-                      onClick={() => onFilterChange("all")}
+                      onClick={() => onCategoryChange("all")}
                     />
                     {CATEGORY_ORDER.map((key) => {
                       const meta = CATEGORY_META[key];
@@ -196,7 +303,7 @@ export default function BlogList() {
                           label={meta.bn}
                           count={count}
                           active={category === key}
-                          onClick={() => onFilterChange(key)}
+                          onClick={() => onCategoryChange(key)}
                           accent={meta.accent}
                         />
                       );
@@ -215,6 +322,15 @@ export default function BlogList() {
               {bnNumber(totalCount)}
             </span>{" "}
             টি পোস্ট
+            {project !== "all" && (
+              <>
+                {" "}
+                · প্রকল্প{" "}
+                <span className="font-bold text-fg">
+                  {currentProjectLabel}
+                </span>
+              </>
+            )}
             {category !== "all" && (
               <>
                 {" "}
@@ -233,7 +349,7 @@ export default function BlogList() {
               </>
             )}
           </p>
-          {(query.trim() || category !== "all") && (
+          {(query.trim() || category !== "all" || project !== "all") && (
             <button
               type="button"
               onClick={reset}

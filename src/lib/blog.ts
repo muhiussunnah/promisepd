@@ -8,11 +8,24 @@
 
 export type BlogCategoryKey = "projects" | "notice" | "rules" | "resources";
 
+/** Specific project keys — used by the secondary "প্রকল্প" filter
+ *  dropdown so visitors can narrow down to one Fuzala / Ahbab unit
+ *  instead of seeing every projects-category post at once. */
+export type BlogProjectKey =
+  | "fuzala-tower"
+  | "fuzala-complex"
+  | "ahbab-palace-01"
+  | "ahbab-palace-02-1200"
+  | "ahbab-palace-02-1800";
+
 export type BlogPost = {
   slug: string;
   title: string;
   excerpt: string;
   category: BlogCategoryKey;
+  /** Only set on posts in the "projects" category — drives the
+   *  specific-project filter dropdown. */
+  project?: BlogProjectKey;
   /** Bangla-localized display date — e.g. "১৫ মে, ২০২৬". */
   date: string;
   /** ISO date for sorting + <time dateTime>. */
@@ -55,6 +68,17 @@ export const CATEGORY_ORDER: BlogCategoryKey[] = [
   "notice",
   "rules",
   "resources",
+];
+
+/** Display labels + ordering for the secondary "প্রকল্প" filter.
+ *  Order mirrors src/lib/site.ts > PROJECTS so the two surfaces
+ *  stay in sync visually. */
+export const BLOG_PROJECTS: { key: BlogProjectKey; bn: string }[] = [
+  { key: "fuzala-tower", bn: "ফুজালা টাওয়ার" },
+  { key: "fuzala-complex", bn: "ফুজালা কমপ্লেক্স" },
+  { key: "ahbab-palace-01", bn: "আহবাব প্যালেস ০১" },
+  { key: "ahbab-palace-02-1200", bn: "আহবাব প্যালেস ০২ · ১২০০ sft" },
+  { key: "ahbab-palace-02-1800", bn: "আহবাব প্যালেস ০২ · ১৮০০ sft" },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -115,6 +139,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "প্রমিস সিটির প্রাণকেন্দ্রে আধুনিক আবাসিক টাওয়ার — স্কাইলাইন ভিউ, প্রিমিয়াম অ্যামেনিটি এবং দীর্ঘমেয়াদী বিনিয়োগের সম্ভাবনা।",
     category: "projects",
+    project: "fuzala-tower",
     date: "১০ মে, ২০২৬",
     iso: "2026-05-10",
     views: 3120,
@@ -162,6 +187,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "চিন্তাশীল লেআউট, নিরাপদ কমিউনিটি, সহজ যাতায়াত — মধ্যবিত্ত পরিবারের জন্য আদর্শ আবাসন সমাধান।",
     category: "projects",
+    project: "fuzala-complex",
     date: "৩ মে, ২০২৬",
     iso: "2026-05-03",
     views: 2480,
@@ -207,6 +233,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "প্রশস্ত যাপন, প্রিমিয়াম ফিনিশিং, নিরবচ্ছিন্ন গোপনীয়তা — একটি বাড়ি যা আপনার সফলতার গল্প বলে।",
     category: "projects",
+    project: "ahbab-palace-01",
     date: "২৬ এপ্রিল, ২০২৬",
     iso: "2026-04-26",
     views: 1820,
@@ -249,6 +276,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "১২০০ বর্গফুটে খোলা রান্নাঘর, প্রশস্ত ব্যালকনি ও আধুনিক ফিটিং — ছোট পরিবারের জন্য পরিপূর্ণ ঠিকানা।",
     category: "projects",
+    project: "ahbab-palace-02-1200",
     date: "১৮ এপ্রিল, ২০২৬",
     iso: "2026-04-18",
     views: 1640,
@@ -291,6 +319,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "মাস্টার স্যুট, বড় ব্যালকনি, খোলামেলা লেআউট — পরিবার বড় হলে যে ঠিকানা সাথে বাড়ে।",
     category: "projects",
+    project: "ahbab-palace-02-1800",
     date: "১১ এপ্রিল, ২০২৬",
     iso: "2026-04-11",
     views: 1390,
