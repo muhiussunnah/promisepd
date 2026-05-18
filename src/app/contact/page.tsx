@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle, Navigation } from "lucide-react";
 import Contact from "@/components/Contact";
 import JsonLd from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -183,6 +183,68 @@ export default function ContactPage() {
               value={`${SITE.hours} · ${SITE.weeklyOff}`}
               accent="ash"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Office location · Google Map ─────────────────────────
+          Embed uses the public `maps.google.com/maps?output=embed`
+          URL — no API key, no quota, no billing surface.  The same
+          query string powers the "Open in Maps" CTA below the map
+          so visitors get one-tap turn-by-turn directions. */}
+      <section className="relative pb-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
+              <MapPin className="h-3.5 w-3.5 text-brand-red" />
+              <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
+                আমাদের অফিস
+              </span>
+            </span>
+            <h2 className="mt-4 text-2xl sm:text-3xl font-bold leading-tight">
+              ঢাকার <span className="text-grad">দক্ষিণ যাত্রাবাড়ী</span>-তে
+              আমরা।
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-fg-muted">
+              {SITE.address}
+            </p>
+          </div>
+
+          <div className="relative rounded-3xl overflow-hidden shadow-xl ring-1 ring-border bg-bg-soft">
+            {/* Aspect-ratio wrapper — 16:9 on desktop, taller (4:5) on
+                mobile so the map stays legible without dwarfing the
+                viewport. */}
+            <div className="relative aspect-[4/5] sm:aspect-[16/9]">
+              <iframe
+                title="Promise PPD office location — Kazi Tower, South Jatrabari, Dhaka"
+                src="https://maps.google.com/maps?q=Kazi+Tower+South+Jatrabari+Dhaka&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                className="absolute inset-0 w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=Kazi+Tower+South+Jatrabari+Dhaka"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
+            >
+              <Navigation className="h-4 w-4" />
+              দিকনির্দেশনা পান
+            </a>
+            <a
+              href="https://maps.google.com/?q=Kazi+Tower+South+Jatrabari+Dhaka"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-6 py-3 text-sm font-semibold text-fg hover:border-brand-blue/40 transition-colors"
+            >
+              <MapPin className="h-4 w-4 text-brand-red" />
+              Google Maps-এ খুলুন
+            </a>
           </div>
         </div>
       </section>
