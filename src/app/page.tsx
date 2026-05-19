@@ -6,7 +6,6 @@ import Stats from "@/components/Stats";
 import WhyUs from "@/components/WhyUs";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
-import Newsletter from "@/components/Newsletter";
 import WaveDivider from "@/components/WaveDivider";
 
 export default function Page() {
@@ -79,16 +78,6 @@ export default function Page() {
       />
 
       <Contact />
-
-      <WaveDivider
-        variant="wave-inverted"
-        fromColor="rgba(24,71,161,0.05)"
-        toColor="rgba(225,25,36,0.04)"
-        flip
-        height={120}
-      />
-
-      <Newsletter />
     </>
   );
 }
