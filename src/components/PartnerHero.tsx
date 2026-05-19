@@ -6,6 +6,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Trophy, Wallet, Calculator } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import AnimatedBlobs from "./AnimatedBlobs";
 import PropertyBackdrop from "./PropertyBackdrop";
@@ -102,22 +103,46 @@ export default function PartnerHero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-5"
           >
-            <div
-              className="relative rounded-3xl p-8 sm:p-10 overflow-hidden shadow-2xl bg-brand-red"
-            >
-              <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-              <div className="absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-white/20 blur-3xl animate-blob" />
-              <div className="absolute -top-12 -left-12 h-48 w-48 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+              {/* Madina golden-hour photo — Masjid an-Nabawi at
+                  sunset.  Sets the reverent tone for the "free
+                  Umrah" hook far better than a solid colour ever
+                  could. */}
+              <Image
+                src="/madina.webp"
+                alt="Masjid an-Nabawi, Madina"
+                fill
+                sizes="(min-width: 1024px) 480px, 100vw"
+                className="object-cover object-[60%_40%]"
+                priority
+              />
 
-              <div className="relative text-white">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-red">
+              {/* Overlay stack — three layers, each doing one job:
+                  1. Bottom-heavy navy gradient for content legibility
+                  2. Warm gold radial that picks up the photo's own
+                     sunset tones (top-right)
+                  3. Brand-red bloom in the lower-left to keep the
+                     card visibly Promise-branded */}
+              <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-dark/35 via-brand-blue-dark/65 to-brand-blue-dark/92" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(255,196,107,0.28),transparent_55%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_90%,rgba(225,25,36,0.30),transparent_55%)]" />
+
+              {/* Subtle dome-tone vignette to keep the photo's
+                  iconic green dome from competing with text. */}
+              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-black/15" />
+
+              {/* Content */}
+              <div className="relative p-8 sm:p-10 text-white">
+                {/* Signature offer pill — warm cream tone instead of
+                    pure white, echoes the photo's sandstone palette. */}
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#fff7e6] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-red shadow-md ring-1 ring-amber-200/50">
                   <Sparkles className="h-3 w-3" />
                   সিগনেচার অফার
                 </span>
 
-                <h2 className="mt-5 text-3xl sm:text-4xl font-bold leading-tight">
+                <h2 className="mt-5 text-3xl sm:text-4xl font-bold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                   মাত্র{" "}
-                  <span className="text-white">
+                  <span className="text-[#FFD27A]">
                     {new Intl.NumberFormat("bn-BD").format(
                       PARTNER_HEADLINE.referralsTarget,
                     )}{" "}
@@ -125,27 +150,30 @@ export default function PartnerHero() {
                   </span>{" "}
                   রেফার করে
                 </h2>
-                <div className="mt-1 text-2xl sm:text-3xl font-bold text-white/95">
-                  নিশ্চিত <span className="underline decoration-white/60">ফ্রি উমরাহ</span>
+                <div className="mt-1 text-2xl sm:text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+                  নিশ্চিত{" "}
+                  <span className="underline decoration-[#FFD27A] decoration-2 underline-offset-4">
+                    ফ্রি উমরাহ
+                  </span>
                 </div>
 
                 <div className="mt-6 grid grid-cols-2 gap-3">
-                  <div className="rounded-xl bg-white/15 border border-white/20 backdrop-blur-md px-3 py-3">
-                    <div className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-brand-red mb-2">
+                  <div className="rounded-xl bg-white/12 border border-white/25 backdrop-blur-md px-3 py-3 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
+                    <div className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#fff7e6] text-brand-red mb-2 shadow-sm">
                       <Wallet className="h-4 w-4" />
                     </div>
-                    <div className="text-[10px] uppercase tracking-wider text-white/75">
+                    <div className="text-[10px] uppercase tracking-wider text-white/80">
                       ন্যূনতম ক্যাশ
                     </div>
                     <div className="mt-0.5 text-lg font-bold text-white">
                       ৳ {PARTNER_HEADLINE.cashMinBn}
                     </div>
                   </div>
-                  <div className="rounded-xl bg-white/15 border border-white/20 backdrop-blur-md px-3 py-3">
-                    <div className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/95 text-brand-red mb-2">
+                  <div className="rounded-xl bg-white/12 border border-white/25 backdrop-blur-md px-3 py-3 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
+                    <div className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#fff7e6] text-brand-red mb-2 shadow-sm">
                       <Trophy className="h-4 w-4" />
                     </div>
-                    <div className="text-[10px] uppercase tracking-wider text-white/75">
+                    <div className="text-[10px] uppercase tracking-wider text-white/80">
                       উমরাহ ভ্যালু
                     </div>
                     <div className="mt-0.5 text-lg font-bold text-white">
@@ -154,7 +182,7 @@ export default function PartnerHero() {
                   </div>
                 </div>
 
-                <div className="mt-4 rounded-xl bg-white text-fg px-4 py-3 flex items-baseline justify-between">
+                <div className="mt-4 rounded-xl bg-white px-4 py-3 flex items-baseline justify-between shadow-lg">
                   <span className="text-xs font-semibold uppercase tracking-wider text-fg-muted">
                     মোট পুরস্কার
                   </span>
@@ -163,7 +191,7 @@ export default function PartnerHero() {
                   </span>
                 </div>
 
-                <p className="mt-4 text-[11px] leading-relaxed text-white/80">
+                <p className="mt-4 text-[11px] leading-relaxed text-white/85">
                   * বছরের সর্বোচ্চ ২৫ পয়েন্টে ফ্রি উমরাহ, ২০ পয়েন্টে ফ্রি
                   বিদেশ ট্যুর। {PARTNER_PERIOD.startBn} – {PARTNER_PERIOD.endBn}{" "}
                   পর্যন্ত।
