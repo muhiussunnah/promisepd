@@ -47,7 +47,11 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "দৈনন্দিন অপারেশন, ক্লায়েন্ট সেবা এবং অফিস সমন্বয়ের দায়িত্বে।",
     phone: "+8801910065137",
     email: "hmrashed29@gmail.com",
-    photo: "/manager.webp",
+    // Versioned filename — next.config.ts sets `Cache-Control:
+    // immutable` on all /public images, so updating in-place leaves
+    // every visitor stuck with the previous render forever.  Bump
+    // the suffix (-v2, -v3, …) whenever the headshot changes.
+    photo: "/manager-v2.webp",
     accent: "red",
   },
   {
