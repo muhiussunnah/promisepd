@@ -289,7 +289,10 @@ export const DIVISIONS: Division[] = [
 ];
 
 export const NAV = [
-  { label: "হোম", href: "/#home", id: "home" },
+  // Home points at root `/` (not `/#home`) so the URL bar stays
+  // clean — Navbar intercepts the click and scrolls to top when
+  // the user is already on the homepage.
+  { label: "হোম", href: "/", id: "home" },
   {
     label: "আমাদের বিভাগ",
     href: "/#divisions",

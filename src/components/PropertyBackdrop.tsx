@@ -2,31 +2,41 @@
 
 /** Soft architectural-photo backdrop for hero sections.
  *
- *  Goal: give each page a real-estate "luxury city" texture
- *  without overwhelming the brand colours or sacrificing text
- *  readability.  The photo sits at the very back of the stack
- *  (-z-30), behind mesh-bg / blobs / grid-bg, with three layered
- *  treatments on top:
+ *  Two modes:
+ *   - Single image: `src="/path.webp"` — same as before, no JS state.
+ *   - Slideshow: `src={["/a.webp", "/b.webp", ...]}` — auto-rotates
+ *     every `intervalMs` (default 7 s) with a smooth 1.4 s crossfade.
  *
- *   1. Brand-blue diagonal wash       — keeps the canvas anchored
- *      in primary.
- *   2. Top-to-bottom white gradient   — ensures content at the
- *      bottom of the hero sits on a clean base.
- *   3. Optional CSS blur on the photo — adds a premium bokeh
- *      feel.  Off by default so building details stay legible.
+ *  The photo always sits at the very back of the stack (-z-30),
+ *  behind any mesh-bg / blobs / grid-bg the caller stacks on top.
+ *  Three layered treatments stay constant across rotations:
  *
- *  Use this in any hero / page-header section where you'd like
- *  the existing mesh-bg + blobs to ride on top of an actual
- *  architectural photo instead of pure white. */
+ *   1. Brand-blue diagonal wash       — anchors the canvas in
+ *      primary, so the photo never reads as "stock photo".
+ *   2. Top-to-bottom white gradient   — keeps content readable.
+ *   3. Optional CSS blur on the photo — premium bokeh feel.
+ *
+ *  Respects `prefers-reduced-motion`: if the visitor opted out of
+ *  animations, the slideshow stays on its first frame. */
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
 
 export type PropertyBackdropProps = {
-  /** Path under /public — always a .webp from the optimiser. */
-  src: string;
+  /** Path under /public — always a .webp from the optimiser.
+   *  Pass an array to enable the slideshow. */
+  src: string | string[];
+  /** Slideshow tick in milliseconds.  Default 7000 (matches the
+   *  hero's rotating division cadence). */
+  intervalMs?: number;
   /** Alt text (visual-only by default — empty, role=presentation). */
   alt?: string;
-  /** Photo opacity 0-100.  Default 32 — high enough to read the
+  /** Photo opacity 0-100.  Default 34 — high enough to read the
    *  architecture, low enough that text on top still sits clean. */
   intensity?: number;
   /** object-position string ("top", "center", "right top", etc.). */
@@ -49,37 +59,65 @@ const BLUE_WASH = {
 
 export default function PropertyBackdrop({
   src,
+  intervalMs = 7000,
   alt = "",
-  intensity = 32,
+  intensity = 34,
   position = "center",
   blur = false,
   bluewash = "soft",
 }: PropertyBackdropProps) {
+  const sources = Array.isArray(src) ? src : [src];
+  const reduce = useReducedMotion();
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    // Single image, or reduced-motion preference → no rotation.
+    if (sources.length < 2 || reduce) return;
+    const t = setInterval(
+      () => setIdx((i) => (i + 1) % sources.length),
+      intervalMs,
+    );
+    return () => clearInterval(t);
+  }, [sources.length, intervalMs, reduce]);
+
+  const currentSrc = sources[idx];
+  const targetOpacity = Math.max(0, Math.min(100, intensity)) / 100;
+
   return (
     <div
       aria-hidden
       className="absolute inset-0 -z-30 overflow-hidden pointer-events-none"
     >
-      {/* The photo itself.  next/image with priority gives the LCP
-          a head start since this is hero-level content.  scale-110
-          + slight blur creates a subtle parallax / bokeh feel that
-          reads as premium real-estate photography. */}
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        priority
-        sizes="100vw"
-        className={`object-cover scale-105 ${blur ? "blur-[2px]" : ""}`}
-        style={{
-          opacity: Math.max(0, Math.min(100, intensity)) / 100,
-          objectPosition: position,
-        }}
-      />
+      {/* Crossfading photo stack.  AnimatePresence with mode=
+          "popLayout" lets the outgoing photo fade as the incoming
+          one fades in (both visible mid-transition) — smoother than
+          mode="wait" which causes a brief blank flash. */}
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={currentSrc}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: targetOpacity }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={currentSrc}
+            alt={alt}
+            fill
+            // Only the first frame is LCP — later ones load while
+            // the hero is already painted.
+            priority={idx === 0}
+            sizes="100vw"
+            className={`object-cover scale-105 ${blur ? "blur-[2px]" : ""}`}
+            style={{ objectPosition: position }}
+          />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Brand-coloured diagonal wash — anchors the photo in our
-          colour system so it never reads as "stock photo dropped
-          in". */}
+      {/* Brand-coloured diagonal wash — stays put across rotations
+          so the colour identity remains constant while the photo
+          changes underneath. */}
       <div className={`absolute inset-0 ${BLUE_WASH[bluewash]}`} />
 
       {/* Bottom-half white fade — guarantees readable text

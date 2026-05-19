@@ -114,16 +114,21 @@ export default function Hero() {
       ref={ref}
       className="relative isolate min-h-[100svh] overflow-hidden pt-24 sm:pt-28 pb-12 flex flex-col"
     >
-      {/* Architectural backdrop — Fuzala Tower, the flagship.
-          Replaces the old promo video which was 92 % white-washed
-          and barely visible anyway.  Sits at -z-30, behind the
-          mesh-bg + blobs, so the brand colours still ride on top. */}
+      {/* Architectural backdrop — slideshow of three Fuzala Tower
+          angles.  Auto-rotates every 7 s with a 1.4 s crossfade.
+          Sits at -z-30, behind the mesh-bg + blobs, so the brand
+          colours still ride on top.  Respects reduced-motion. */}
       <PropertyBackdrop
-        src="/ftpics/ftt1.webp"
+        src={[
+          "/ftpics/ftt1.webp",
+          "/ftpics/ft.webp",
+          "/ftpics/fuzala-2-0.webp",
+        ]}
         alt="Fuzala Tower — Promise City"
         intensity={38}
         position="center"
         bluewash="soft"
+        intervalMs={7000}
       />
 
       <div className="absolute inset-0 -z-10 mesh-bg" />

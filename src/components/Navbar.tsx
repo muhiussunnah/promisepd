@@ -211,12 +211,19 @@ export default function Navbar() {
 
             <nav className="hidden lg:flex items-center gap-1">
               {NAV.map((item) => {
-                // Standalone pages (e.g. /partner) light up by URL match;
-                // home anchors light up via active-section tracking.
-                const isActive = item.href.startsWith("/#")
-                  ? isHome && activeSection === item.id
-                  : pathname === item.href ||
-                    pathname.startsWith(`${item.href}/`);
+                // Home is a special case: it points at `/` but should
+                // only light up at the top of the homepage (or when the
+                // visitor has scrolled back into the home section), not
+                // on every other on-page section.  Standalone pages
+                // (e.g. /partner) match by URL.  Hash anchors track
+                // activeSection.
+                const isActive =
+                  item.id === "home"
+                    ? isHome && activeSection === "home"
+                    : item.href.startsWith("/#")
+                      ? isHome && activeSection === item.id
+                      : pathname === item.href ||
+                        pathname.startsWith(`${item.href}/`);
                 if (item.dropdown) {
                   return (
                     <div
@@ -300,6 +307,28 @@ export default function Navbar() {
                     key={item.href}
                     href={item.href}
                     data-active={isActive}
+                    onClick={
+                      // Home: when already on `/`, suppress the
+                      // navigation, scroll to top, and clear any
+                      // `#section` hash that earlier in-page links
+                      // may have left in the URL bar.
+                      item.id === "home"
+                        ? (e) => {
+                            if (pathname === "/") {
+                              e.preventDefault();
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                              if (window.location.hash) {
+                                window.history.replaceState(
+                                  null,
+                                  "",
+                                  window.location.pathname +
+                                    window.location.search,
+                                );
+                              }
+                            }
+                          }
+                        : undefined
+                    }
                     className={`link-underline px-3 py-2 text-sm font-medium transition-colors ${
                       isActive ? "text-fg" : "text-fg-soft hover:text-fg"
                     }`}
@@ -372,9 +401,15 @@ export default function Navbar() {
               </div>
               <nav className="flex flex-col gap-1">
                 {NAV.map((item, i) => {
-                  const isActive = item.href.startsWith("/#")
-                    ? isHome && activeSection === item.id
-                    : pathname === item.href;
+                  // Same special-case as desktop: Home tracks
+                  // activeSection rather than pathname so it doesn't
+                  // stay highlighted on every section of `/`.
+                  const isActive =
+                    item.id === "home"
+                      ? isHome && activeSection === "home"
+                      : item.href.startsWith("/#")
+                        ? isHome && activeSection === item.id
+                        : pathname === item.href;
                   if (item.dropdown) {
                     return (
                       <motion.div
@@ -451,7 +486,23 @@ export default function Navbar() {
                     >
                       <Link
                         href={item.href}
-                        onClick={() => setOpen(false)}
+                        onClick={(e) => {
+                          setOpen(false);
+                          // Home on `/`: suppress nav + scroll to top
+                          // + strip any leftover #hash from the URL.
+                          if (item.id === "home" && pathname === "/") {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                            if (window.location.hash) {
+                              window.history.replaceState(
+                                null,
+                                "",
+                                window.location.pathname +
+                                  window.location.search,
+                              );
+                            }
+                          }
+                        }}
                         className={`group flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium transition-colors ${
                           isActive
                             ? "bg-brand-blue text-white"
