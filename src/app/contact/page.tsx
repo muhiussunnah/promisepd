@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Navigation } from "lucide-react";
 import Contact from "@/components/Contact";
 import JsonLd from "@/components/JsonLd";
+import PropertyBackdrop from "@/components/PropertyBackdrop";
 import { breadcrumbSchema } from "@/lib/schema";
 import { SITE } from "@/lib/site";
 import { TEAM_MEMBERS } from "@/lib/team";
@@ -75,7 +76,17 @@ export default function ContactPage() {
       <JsonLd data={contactPageSchema} />
 
       {/* Header */}
-      <section className="relative pt-32 pb-12 sm:pt-36 sm:pb-16">
+      <section className="relative isolate overflow-hidden pt-32 pb-12 sm:pt-36 sm:pb-16">
+        {/* Fuzala Complex avenue — softens the "contact form page"
+            into a "welcome, come visit us" page.  Same blue-wash
+            treatment as the other heroes so the brand stays
+            anchored. */}
+        <PropertyBackdrop
+          src="/fcpics/fc2.webp"
+          alt="Promise City avenue"
+          intensity={28}
+          bluewash="soft"
+        />
         <div className="absolute inset-0 -z-10 mesh-bg-soft" />
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">

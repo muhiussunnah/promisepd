@@ -8,14 +8,24 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Trophy, Wallet, Calculator } from "lucide-react";
 import Link from "next/link";
 import AnimatedBlobs from "./AnimatedBlobs";
+import PropertyBackdrop from "./PropertyBackdrop";
 import { PARTNER_HEADLINE, PARTNER_PERIOD } from "@/lib/partner";
 
 export default function PartnerHero() {
   return (
     <section className="relative isolate flex min-h-[88svh] items-center overflow-hidden pt-28 pb-16">
+      {/* Fuzala Complex street view — the partner program funnels
+          partners into selling these homes, so it's fitting that
+          the hero shows the actual product. */}
+      <PropertyBackdrop
+        src="/fcpics/fc1.webp"
+        alt="Promise City residences"
+        intensity={28}
+        bluewash="soft"
+      />
       <div className="absolute inset-0 -z-10 mesh-bg" />
       <AnimatedBlobs />
-      <div className="absolute inset-0 -z-10 grid-bg opacity-60" />
+      <div className="absolute inset-0 -z-10 grid-bg opacity-50" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-12 gap-10 items-center">

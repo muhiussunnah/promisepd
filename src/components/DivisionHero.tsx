@@ -12,7 +12,20 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import AnimatedBlobs from "./AnimatedBlobs";
+import PropertyBackdrop from "./PropertyBackdrop";
 import type { Division } from "@/lib/site";
+
+/** Per-division architectural backdrop.  Each slug gets a different
+ *  photo so visitors flipping between divisions see distinct
+ *  scenery — keeps the "city / luxury real-estate" feel from
+ *  flattening into one repeated image. */
+const DIVISION_BACKDROP: Record<string, string | undefined> = {
+  "promise-city": "/ftpics/ft.webp",
+  "ahbab-real-estate": "/ahbab1pics/ahbab1pics.webp",
+  "promise-international": "/fcpics/fc2.webp",
+  "ahbab-travels-tours": "/ftpics/fuzala-2-0.webp",
+  "interior-3d-design": "/fcpics/fc3.webp",
+};
 
 const ICONS: Record<string, LucideIcon> = {
   Building2,
@@ -35,11 +48,21 @@ const ACCENT_SOLID_HEX: Record<string, string> = {
 export default function DivisionHero({ division }: { division: Division }) {
   const Icon = ICONS[division.icon] ?? Building2;
 
+  const backdrop = DIVISION_BACKDROP[division.slug];
+
   return (
     <section className="relative isolate flex min-h-[80svh] items-center overflow-hidden pt-28 pb-16">
+      {backdrop && (
+        <PropertyBackdrop
+          src={backdrop}
+          alt={division.nameEn}
+          intensity={30}
+          bluewash="soft"
+        />
+      )}
       <div className="absolute inset-0 -z-10 mesh-bg" />
       <AnimatedBlobs />
-      <div className="absolute inset-0 -z-10 grid-bg opacity-60" />
+      <div className="absolute inset-0 -z-10 grid-bg opacity-50" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-12 gap-10 items-center">
