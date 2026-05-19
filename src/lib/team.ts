@@ -44,7 +44,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "মো. রাশেদুল ইসলাম",
     nameEn: "Md. Rashedul Islam",
     role: "Manager",
-    bio: "দৈনন্দিন অপারেশন, ক্লায়েন্ট সেবা এবং অফিস সমন্বয়ের দায়িত্বে।",
+    bio: "দৈনন্দিন অপারেশন, ক্লায়েন্ট সেবা এবং অফিস সমন্বয়ের দায়িত্বে। প্রতিটি বুকিং, সাইট ভিজিট ও ফলো-আপ যেন নির্ভুলভাবে চলে — সেটাই তাঁর প্রধান কাজ। ক্লায়েন্টদের সাথে প্রথম যোগাযোগের বিশ্বস্ত মুখ।",
     phone: "+8801910065137",
     email: "hmrashed29@gmail.com",
     // Versioned filename — next.config.ts sets `Cache-Control:
