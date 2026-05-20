@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   motion,
   AnimatePresence,
@@ -40,7 +41,9 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 /** SOLID brand color per division accent (no gradients).
- *  red/rb/ar → solid red, blue/ab → solid blue, ash → solid ash-dark */
+ *  red/rb/ar → solid red, blue/ab → solid blue, ash → solid ash-dark.
+ *  Used as the showcase card's fallback fill until a real photo
+ *  exists for that division. */
 const ACCENT_SOLID_HEX: Record<string, string> = {
   red: "#e11924",
   blue: "#1847a1",
@@ -48,6 +51,17 @@ const ACCENT_SOLID_HEX: Record<string, string> = {
   rb: "#e11924",
   ab: "#1847a1",
   ar: "#e11924",
+};
+
+/** Real photo per division for the hero showcase card.  Two are
+ *  supplied so far; the rest fall back to the solid accent fill
+ *  above until their images land in /public. */
+const DIVISION_CARD_IMAGE: Record<string, string | undefined> = {
+  "promise-city": "/promisecity.webp",
+  "ahbab-real-estate": "/ahbab.webp",
+  // "promise-international": "/...webp",   ← coming
+  // "ahbab-travels-tours": "/...webp",     ← coming
+  // "interior-3d-design": "/...webp",      ← coming
 };
 
 const ACCENT_SOLID_CLASS: Record<string, string> = {
@@ -265,8 +279,13 @@ export default function Hero() {
 
               <AnimatePresence mode="wait">
                 {(() => {
-                  // Ash (#C0C7D1) is light — flip text/chips to dark for legibility.
-                  const onLight = current.accent === "ash";
+                  const cardImage = DIVISION_CARD_IMAGE[current.slug];
+                  const hex = ACCENT_SOLID_HEX[current.accent];
+                  // With a real photo behind it the content always sits
+                  // on a dark accent scrim → white text.  Only the
+                  // image-less ash card flips to dark text on its light
+                  // fill.
+                  const onLight = !cardImage && current.accent === "ash";
                   const labelCls = onLight ? "text-fg-soft" : "text-white/85";
                   const headingCls = onLight
                     ? "text-fg drop-shadow-none"
@@ -279,16 +298,45 @@ export default function Hero() {
                   return (
                     <motion.div
                       key={idx}
-                      initial={{ opacity: 0, scale: 0.94, rotate: -3, y: 16 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.94, rotate: 3, y: -16 }}
-                      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                      // Gentle fade + small rise only — the left column
+                      // already carries the typewriter motion, so the
+                      // right card stays calm (no zoom / rotate) and the
+                      // eye isn't pulled two ways at once.
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                       className="relative rounded-[1.75rem] p-7 sm:p-9 overflow-hidden shadow-2xl"
-                      style={{ backgroundColor: ACCENT_SOLID_HEX[current.accent] }}
+                      style={cardImage ? undefined : { backgroundColor: hex }}
                     >
-                      <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-                      <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-white/25 blur-3xl animate-blob" />
-                      <div className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-white/20 blur-2xl animate-blob-slow" />
+                      {cardImage ? (
+                        <>
+                          {/* Real division photo — fills the card. */}
+                          <Image
+                            src={cardImage}
+                            alt={current.nameBn}
+                            fill
+                            sizes="(min-width: 1024px) 440px, 100vw"
+                            className="object-cover"
+                            priority={idx === 0}
+                          />
+                          {/* Accent scrim — photo peeks through up top,
+                              deepens toward the bottom so the heading +
+                              chips + button stay perfectly readable. */}
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              background: `linear-gradient(to bottom, ${hex}30 0%, ${hex}aa 50%, ${hex}f2 100%)`,
+                            }}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
+                          <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-white/25 blur-3xl animate-blob" />
+                          <div className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-white/20 blur-2xl animate-blob-slow" />
+                        </>
+                      )}
 
                       <div className="relative">
                         <div className="flex items-center justify-between">
