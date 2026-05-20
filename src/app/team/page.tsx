@@ -184,15 +184,17 @@ function MemberCard({ member }: { member: TeamMember }) {
           src={member.photo}
           alt={member.name}
           fill
-          sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
-          // Pure transform — no `filter:` adjustments, no width, no
-          // top/left.  900 ms gives the zoom enough time to feel
-          // intentional rather than snapped.
+          // `object-contain` (not cover) shows the FULL photo at its
+          // natural aspect — no crop / zoom that would cut the head or
+          // chop the office shot.  quality 92 keeps it crisp, never
+          // hazy.  The accent-coloured frame fills the letterbox.
+          quality={92}
+          sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 100vw"
           className="
-            object-cover relative z-10
+            object-contain relative z-10
             transform-gpu transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]
             will-change-transform
-            group-hover:scale-[1.08] group-hover:rotate-[1.2deg]
+            group-hover:scale-[1.04]
           "
         />
 
