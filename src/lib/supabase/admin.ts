@@ -3,9 +3,9 @@
  *  cron jobs).  Never import this in a Client Component, and never
  *  expose the service-role key to the browser.
  *
- *  Typical use case: writing anonymous public submissions (contact
- *  form, newsletter sign-up) where the visitor isn't authenticated
- *  and we'd rather not loosen RLS to "anyone can insert". */
+ *  Typical use case: writing anonymous public submissions (the
+ *  contact form) where the visitor isn't authenticated and we'd
+ *  rather not loosen RLS to "anyone can insert". */
 
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "./types";

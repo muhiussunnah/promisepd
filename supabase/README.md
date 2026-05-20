@@ -1,15 +1,14 @@
 # Supabase setup — promisepd
 
-This site uses Supabase (PostgreSQL) for its two public-facing forms:
+This site uses Supabase (PostgreSQL) for its public contact form:
 
 | Form        | Table                       | Where it's used                    |
 | ----------- | --------------------------- | ---------------------------------- |
-| Contact     | `contact_submissions`       | `/#contact` section on the homepage |
-| Newsletter  | `newsletter_subscriptions`  | `<Newsletter />` section + footer  |
+| Contact     | `contact_submissions`       | `/#contact` + `/contact` page      |
 
-Both writes go through the **service-role key** server-side
+Writes go through the **service-role key** server-side
 (`src/lib/supabase/admin.ts`, called by `src/app/actions.ts`).
-Row Level Security is enabled on both tables — the anon key can't
+Row Level Security is enabled on the table — the anon key can't
 read or write anything. This keeps PII off the browser.
 
 ## 1. Create the project
@@ -21,7 +20,7 @@ read or write anything. This keeps PII off the browser.
 
 ## 2. Apply the schema
 
-The migration lives at `supabase/migrations/0001_contact_newsletter.sql`.
+The migration lives at `supabase/migrations/0001_contact.sql`.
 Apply it whichever way is easier:
 
 - **SQL Editor** — open the Supabase dashboard, click **SQL Editor**,
@@ -61,8 +60,8 @@ When the existing admin DB is ready to migrate over:
 2. Restore into the Supabase project's `public` schema (or a separate
    schema if you want to keep namespaces clean — just update queries
    accordingly).
-3. The two tables defined in `0001_contact_newsletter.sql` use plain
-   `snake_case` and `uuid` primary keys, matching standard Postgres
+3. The `contact_submissions` table in `0001_contact.sql` uses plain
+   `snake_case` and a `uuid` primary key, matching standard Postgres
    conventions — joins / FKs to existing tables shouldn't need any
    re-shaping.
 4. Regenerate `src/lib/supabase/types.ts` to cover the full schema:

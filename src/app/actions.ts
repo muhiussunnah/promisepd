@@ -1,13 +1,13 @@
 "use server";
 
 /** Public form Server Actions — writes flow into Supabase via the
- *  service-role admin client (RLS is enabled on both tables so the
- *  anon key cannot reach them).
+ *  service-role admin client (RLS is enabled on the table so the
+ *  anon key cannot reach it).
  *
- *  Both actions are graceful: if Supabase env vars aren't set yet
- *  (e.g. fresh dev clone, preview deploy), they still resolve `ok`
- *  and log the payload to stdout so the UI keeps working while the
- *  database is being provisioned. */
+ *  Graceful: if Supabase env vars aren't set yet (e.g. fresh dev
+ *  clone, preview deploy), the action still resolves `ok` and logs
+ *  the payload to stdout so the UI keeps working while the database
+ *  is being provisioned. */
 
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -57,37 +57,6 @@ export async function submitContact(
     return {
       ok: false,
       error: "Something went wrong saving your message. Please try again.",
-    };
-  }
-
-  return { ok: true };
-}
-
-export async function subscribeNewsletter(
-  email: string,
-): Promise<{ ok: boolean; error?: string }> {
-  if (!EMAIL_RE.test(email)) {
-    return { ok: false, error: "Please enter a valid email." };
-  }
-
-  const supabase = createAdminClient();
-  if (!supabase) {
-    console.log("[newsletter] received (Supabase not configured):", email);
-    return { ok: true };
-  }
-
-  const normalized = email.trim().toLowerCase();
-  const { error } = await supabase
-    .from("newsletter_subscriptions")
-    .insert({ email: normalized, source: "website" });
-
-  // 23505 = unique_violation.  Treat "already subscribed" as success
-  // so the UI doesn't surface a confusing error on a re-submit.
-  if (error && error.code !== "23505") {
-    console.error("[newsletter] supabase insert failed:", error);
-    return {
-      ok: false,
-      error: "Something went wrong. Please try again.",
     };
   }
 
