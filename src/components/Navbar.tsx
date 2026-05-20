@@ -48,7 +48,6 @@ const ACCENT_TO_SOLID: Record<string, string> = {
 };
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   // Which mega-dropdown is open — keyed by NAV item id ("divisions" /
   // "projects").  null = none.  Lets multiple nav items each own a
@@ -116,21 +115,17 @@ export default function Navbar() {
                   : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
 
-  // Auto-scrolled state when not on home (so inner pages always have solid navbar)
-  const isCondensed = scrolled || !isHome;
+  // Always render the solid "condensed" navbar — even at the top of the
+  // homepage.  The old transparent-over-hero state blended into the
+  // hero photo and was hard to read; a consistent solid bar everywhere
+  // (matching the inner pages) is cleaner.
+  const isCondensed = true;
 
   return (
     <>
