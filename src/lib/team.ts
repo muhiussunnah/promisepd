@@ -36,7 +36,10 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "প্রমিস গ্রুপের প্রতিষ্ঠাতা ও প্রধান পরিচালক। ১৫+ বছরের অভিজ্ঞতায় ঢাকার রিয়েল এস্টেট ইন্ডাস্ট্রিতে স্বচ্ছতা ও বিশ্বাসের নতুন মান গড়ে তুলেছেন।",
     phone: "+8801910065136",
     email: "kamrulhasanfaridi95@gmail.com",
-    photo: "/ceo.webp",
+    // Versioned filename to bust the immutable /public cache (see the
+    // manager note below).  Bump the suffix whenever the headshot
+    // changes so visitors don't stay stuck on the old render.
+    photo: "/ceo-v2.webp",
     accent: "blue",
   },
   {

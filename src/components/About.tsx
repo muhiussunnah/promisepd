@@ -87,7 +87,7 @@ export default function About() {
                 alt={SITE.shortName}
                 width={463}
                 height={482}
-                className="h-20 w-auto shrink-0"
+                className="h-16 w-auto shrink-0"
               />
               <div className="leading-tight">
                 <div className="text-sm font-bold text-fg">

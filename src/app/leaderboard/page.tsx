@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
 import LeaderboardControls from "@/components/LeaderboardControls";
+import PropertyBackdrop from "@/components/PropertyBackdrop";
 import { breadcrumbSchema } from "@/lib/schema";
 import { PARTNER_AWARDS, PARTNER_PERIOD } from "@/lib/partner";
 import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
@@ -94,7 +95,13 @@ export default function LeaderboardPage() {
       <JsonLd data={breadcrumb} />
 
       {/* Header */}
-      <section className="relative pt-32 pb-12 sm:pt-36 sm:pb-16">
+      <section className="relative isolate overflow-hidden pt-32 pb-12 sm:pt-36 sm:pb-16">
+        <PropertyBackdrop
+          src="/award.webp"
+          alt="পার্টনার পুরস্কার"
+          intensity={22}
+          bluewash="soft"
+        />
         <div className="absolute inset-0 -z-10 mesh-bg-soft" />
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">

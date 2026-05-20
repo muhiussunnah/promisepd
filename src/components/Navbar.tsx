@@ -180,7 +180,7 @@ export default function Navbar() {
                 height={482}
                 priority
                 className={`shrink-0 w-auto transition-[height] duration-300 ease-out ${
-                  isCondensed ? "h-16 sm:h-[68px]" : "h-[88px] sm:h-28"
+                  isCondensed ? "h-12 sm:h-14" : "h-16 sm:h-20"
                 }`}
               />
 
