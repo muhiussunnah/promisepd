@@ -224,8 +224,8 @@ export const PARTNER_TOTAL_COUNT = PARTNER_ROLES.reduce(
  *  agrees to.  Drives the /marketing-policy page.  Each item has a
  *  short scannable title + the full rule body, both in Bangla.
  *
- *  Rule 10 (owner may amend at any time) is intentionally last and
- *  also surfaced as a standalone callout on the page. */
+ *  The final rule (owner may amend at any time) is intentionally last
+ *  and also surfaced as a standalone callout on the page. */
 export const MARKETING_POLICY: { title: string; body: string }[] = [
   {
     title: "সমস্ত কনটেন্ট মার্কেটারদের জন্য উন্মুক্ত",
@@ -262,6 +262,10 @@ export const MARKETING_POLICY: { title: string; body: string }[] = [
   {
     title: "First visit = সেই অফিসারের ক্লায়েন্ট",
     body: "কোনো মার্কেটার যদি কোনো কাস্টমারকে প্রথম ভিজিট করান, তবে সেই কাস্টমারকে অন্য কোনো মার্কেটার ভিজিট করিয়ে রেফার হিসেবে কমিশন আর্নের সুযোগ পাবেন না — প্রথম যে অফিসার ভিজিট করিয়েছেন, কাস্টমার তাঁরই ক্লায়েন্ট হিসেবে গণ্য হবেন। তাই ভিজিটে নেওয়ার আগে জিজ্ঞেস করে নিশ্চিত হয়ে নিন, ওই কাস্টমার আগে কারো আন্ডারে প্রমিস সিটি ভিজিট করেছেন কিনা।",
+  },
+  {
+    title: "অফিসার হওয়ার শর্ত — নিজেই প্রমিসের গ্রাহক হোন",
+    body: "মার্কেটিং অফিসার হতে হলে আপনাকে অবশ্যই প্রমিসের যেকোনো একটি পণ্য নিজে কিনতে হবে। কারণ অন্যান্য কোম্পানির মতো প্রমিসের উদ্দেশ্য শুধু বড় অঙ্কের সেলস তৈরি করা নয় — আমাদের লক্ষ্য গ্রাহকের আস্থা ও বিশ্বাস অর্জন। তাই অন্যকে বিক্রির আগে নিজেই প্রমিসের একটি পণ্য কিনে আস্থা অর্জন করুন। তখনই কেবল আপনার রেফার করা কাস্টমাররাও বিশ্বাস করবেন — কারণ আপনি নিজেই যেহেতু প্রমিসের সাথে যুক্ত ও এর একজন গ্রাহক, তার মানে পণ্যটি সত্যিই ভালো; ভালো না হলে আপনি নিশ্চয়ই অন্যকে তা কিনতে পরামর্শ দিতেন না।",
   },
   {
     title: "নিয়ম পরিবর্তনের অধিকার মালিকের",
