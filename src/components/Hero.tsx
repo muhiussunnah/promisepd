@@ -51,32 +51,38 @@ const DIVISION_CARD_IMAGE: Record<string, string | undefined> = {
   // "interior-3d-design": "/...webp",      ← coming
 };
 
+// The hero now reads in ONE brand colour — blue — across every
+// division.  These maps used to vary by accent (red / ash), but the
+// client wants the whole rotation unified on blue (kicker badge,
+// tagline, dot indicators, typewriter cursor, and the showcase
+// card).  Every key resolves to the blue variant so no usage site
+// needs to change.
 const ACCENT_SOLID_CLASS: Record<string, string> = {
-  red: "bg-brand-red",
+  red: "bg-brand-blue",
   blue: "bg-brand-blue",
-  ash: "bg-brand-ash",
-  rb: "bg-brand-red",
+  ash: "bg-brand-blue",
+  rb: "bg-brand-blue",
   ab: "bg-brand-blue",
-  ar: "bg-brand-red",
+  ar: "bg-brand-blue",
 };
 
 const ACCENT_TEXT: Record<string, string> = {
-  red: "text-brand-red",
+  red: "text-brand-blue",
   blue: "text-brand-blue",
-  ash: "text-brand-ash-dark",
-  rb: "text-brand-red",
+  ash: "text-brand-blue",
+  rb: "text-brand-blue",
   ab: "text-brand-blue",
-  ar: "text-brand-red",
+  ar: "text-brand-blue",
 };
 
-/** Cursor color for the typewriter on the H1 */
+/** Cursor color for the typewriter on the H1 — blue everywhere. */
 const ACCENT_CURSOR: Record<string, string> = {
-  red: "#e11924",
+  red: "#1847a1",
   blue: "#1847a1",
-  ash: "#c0c7d1",
-  rb: "#e11924",
+  ash: "#1847a1",
+  rb: "#1847a1",
   ab: "#1847a1",
-  ar: "#e11924",
+  ar: "#1847a1",
 };
 
 export default function Hero() {
@@ -239,9 +245,9 @@ export default function Hero() {
             <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-2xl">
               {[
                 { icon: ShieldCheck, label: "আইনি নিরাপত্তা", color: "text-brand-blue" },
-                { icon: Award, label: "গুণগত নির্মাণ", color: "text-brand-red" },
+                { icon: Award, label: "গুণগত নির্মাণ", color: "text-brand-blue" },
                 { icon: MapPin, label: "প্রিমিয়াম এলাকা", color: "text-brand-blue" },
-                { icon: Wallet, label: "নমনীয় কিস্তি", color: "text-brand-red" },
+                { icon: Wallet, label: "নমনীয় কিস্তি", color: "text-brand-blue" },
               ].map((feature, i) => (
                 <motion.div
                   key={feature.label}
