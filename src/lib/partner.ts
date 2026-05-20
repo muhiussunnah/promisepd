@@ -165,6 +165,61 @@ export const PARTNER_PERIOD = {
   endBn: "৩১ ডিসেম্বর ২০২৬",
 };
 
+/** Partner role hierarchy — single source of truth for the
+ *  leaderboard's role-filter dropdown.
+ *
+ *  `count` is how many partners currently hold each role; the
+ *  dropdown shows it as a badge and "সকল ভূমিকা" shows the sum.
+ *  These are seed figures the marketing office maintains — when the
+ *  partner table lands in Supabase, replace each `count` with a live
+ *  `select count(*) … where role = …` so the badges stay accurate
+ *  automatically.
+ *
+ *  Distribution mirrors the program rules: exactly one Head of
+ *  Marketing (lifetime top seller), a handful of Directors (each
+ *  recruited 5+ officers), more Active Officers (5+ points), and the
+ *  widest tier of entry-level Officers (1–4 points). */
+export type PartnerRoleKey = "head" | "director" | "active" | "officer";
+
+export const PARTNER_ROLES: {
+  key: PartnerRoleKey;
+  bn: string;
+  sub: string;
+  count: number;
+}[] = [
+  {
+    key: "head",
+    bn: "Head of Marketing",
+    sub: "Lifetime top seller · একজন",
+    count: 1,
+  },
+  {
+    key: "director",
+    bn: "Marketing Director",
+    sub: "৫+ active officer রিক্রুট",
+    count: 6,
+  },
+  {
+    key: "active",
+    bn: "Active Marketing Officer",
+    sub: "নূন্যতম ৫ পয়েন্ট",
+    count: 28,
+  },
+  {
+    key: "officer",
+    bn: "Marketing Officer",
+    sub: "১–৪ পয়েন্ট",
+    count: 64,
+  },
+];
+
+/** Total active partners = sum of every role's count.  Computed so
+ *  the "সকল ভূমিকা" badge always equals the parts — never drifts. */
+export const PARTNER_TOTAL_COUNT = PARTNER_ROLES.reduce(
+  (sum, r) => sum + r.count,
+  0,
+);
+
 /** Headline hook for the hero — the "matro 25 jonke refer" pitch.
  *  25 active officer recruits × 20,000 = 5,00,000 in cash + free Umrah
  *  (since 25 × 2 points = 50, well above the 25-point Umrah threshold).

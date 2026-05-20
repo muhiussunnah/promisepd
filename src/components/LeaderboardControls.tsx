@@ -20,10 +20,16 @@ import {
   ChevronDown,
   Users,
 } from "lucide-react";
+import {
+  PARTNER_ROLES,
+  PARTNER_TOTAL_COUNT,
+  bnNumber,
+  type PartnerRoleKey,
+} from "@/lib/partner";
 
 type Period = "30d" | "year" | "last-year" | "lifetime";
 
-type Role = "all" | "head" | "director" | "active" | "officer";
+type Role = "all" | PartnerRoleKey;
 
 const PERIODS: { key: Period; label: string }[] = [
   { key: "30d", label: "শেষ ৩০ দিন" },
@@ -32,34 +38,28 @@ const PERIODS: { key: Period; label: string }[] = [
   { key: "lifetime", label: "সর্বকালীন" },
 ];
 
-// Role hierarchy matches the partner program rules:
-//   Head of Marketing        — exactly one, lifetime top seller.
-//   Marketing Director       — anyone who's recruited 5+ active
-//                              officers (multiple are possible).
-//   Active Marketing Officer — at least 5 points earned.
-//   Marketing Officer        — 1–4 points (entry tier).
-const ROLES: { key: Role; label: string; sub: string }[] = [
-  { key: "all", label: "সকল ভূমিকা", sub: "" },
+// Role options for the dropdown.  Built from the single source of
+// truth in src/lib/partner.ts so the per-role partner counts (the
+// badges) stay in sync with the program data.  "সকল ভূমিকা" leads
+// with the computed grand total.
+const ROLE_OPTIONS: {
+  key: Role;
+  label: string;
+  sub: string;
+  count: number;
+}[] = [
   {
-    key: "head",
-    label: "Head of Marketing",
-    sub: "Lifetime top seller · একজন",
+    key: "all",
+    label: "সকল ভূমিকা",
+    sub: "সব পার্টনার",
+    count: PARTNER_TOTAL_COUNT,
   },
-  {
-    key: "director",
-    label: "Marketing Director",
-    sub: "৫+ active officer রিক্রুট",
-  },
-  {
-    key: "active",
-    label: "Active Marketing Officer",
-    sub: "ন্যূনতম ৫ পয়েন্ট",
-  },
-  {
-    key: "officer",
-    label: "Marketing Officer",
-    sub: "১–৪ পয়েন্ট",
-  },
+  ...PARTNER_ROLES.map((r) => ({
+    key: r.key,
+    label: r.bn,
+    sub: r.sub,
+    count: r.count,
+  })),
 ];
 
 export default function LeaderboardControls() {
@@ -69,8 +69,9 @@ export default function LeaderboardControls() {
   const [roleOpen, setRoleOpen] = useState(false);
   const [periodOpen, setPeriodOpen] = useState(false);
 
-  const currentRoleLabel =
-    ROLES.find((r) => r.key === role)?.label ?? "সকল ভূমিকা";
+  const currentRole = ROLE_OPTIONS.find((r) => r.key === role);
+  const currentRoleLabel = currentRole?.label ?? "সকল ভূমিকা";
+  const currentRoleCount = currentRole?.count ?? PARTNER_TOTAL_COUNT;
   const currentPeriodLabel =
     PERIODS.find((p) => p.key === period)?.label ?? "এই বছর";
 
@@ -120,6 +121,11 @@ export default function LeaderboardControls() {
           <span className="inline-flex items-center gap-2">
             <Users className="h-4 w-4 text-fg-muted" />
             {currentRoleLabel}
+            {/* Live count for the selected role, right on the trigger
+                so it's visible without opening the menu. */}
+            <span className="inline-flex items-center justify-center min-w-[1.4rem] rounded-full bg-brand-blue/10 px-1.5 py-0.5 text-[11px] font-bold text-brand-blue">
+              {bnNumber(currentRoleCount)}
+            </span>
           </span>
           <ChevronDown
             className={`h-4 w-4 transition-transform ${
@@ -143,7 +149,7 @@ export default function LeaderboardControls() {
                 className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-full sm:w-72 z-30 glass-strong rounded-2xl p-2 shadow-2xl"
                 role="listbox"
               >
-                {ROLES.map((r) => (
+                {ROLE_OPTIONS.map((r) => (
                   <button
                     key={r.key}
                     type="button"
@@ -153,10 +159,8 @@ export default function LeaderboardControls() {
                       setRole(r.key);
                       setRoleOpen(false);
                     }}
-                    className={`w-full flex items-start justify-between gap-2 rounded-xl px-3 py-2.5 text-left transition-colors ${
-                      role === r.key
-                        ? "bg-bg-soft"
-                        : "hover:bg-bg-soft"
+                    className={`w-full flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left transition-colors ${
+                      role === r.key ? "bg-bg-soft" : "hover:bg-bg-soft"
                     }`}
                   >
                     <div className="min-w-0">
@@ -175,9 +179,18 @@ export default function LeaderboardControls() {
                         </div>
                       )}
                     </div>
-                    {role === r.key && (
-                      <span className="mt-1.5 h-2 w-2 rounded-full bg-brand-blue shrink-0" />
-                    )}
+                    {/* Per-role partner count — the "kojon under this
+                        role" badge.  Active option gets the solid
+                        brand-blue treatment, others a soft tint. */}
+                    <span
+                      className={`shrink-0 inline-flex items-center justify-center min-w-[1.6rem] rounded-full px-1.5 py-0.5 text-[11px] font-bold ${
+                        role === r.key
+                          ? "bg-brand-blue text-white"
+                          : "bg-brand-blue/10 text-brand-blue"
+                      }`}
+                    >
+                      {bnNumber(r.count)}
+                    </span>
                   </button>
                 ))}
               </motion.div>
