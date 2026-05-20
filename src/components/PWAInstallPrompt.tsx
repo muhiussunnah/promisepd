@@ -135,20 +135,44 @@ export default function PWAInstallPrompt() {
             className="relative w-[min(460px,100%)]"
           >
             <div className="relative grad-border overflow-hidden shadow-2xl bg-white">
-              {/* Brand gradient banner with logo */}
-              <div className="relative h-28 bg-[image:var(--grad-rb)] overflow-hidden">
-                <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-                <div className="absolute -bottom-12 -right-12 h-32 w-32 rounded-full bg-white/20 blur-2xl" />
-                <div className="absolute -top-10 -left-10 h-28 w-28 rounded-full bg-white/15 blur-xl" />
-                <div className="relative h-full flex items-center justify-center">
-                  <div className="rounded-2xl bg-white/95 backdrop-blur-md shadow-xl p-1.5">
+              {/* Banner — a real Ahbab Palace project photo under a
+                  brand-blue wash (the photo stays faint, the brand colour
+                  leads) with the app logo + wordmark. */}
+              <div className="relative h-32 overflow-hidden">
+                <Image
+                  src="/ahbab1pics/ahbab1pics.webp"
+                  alt=""
+                  aria-hidden
+                  fill
+                  sizes="460px"
+                  className="object-cover"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(24,71,161,0.93) 0%, rgba(24,71,161,0.80) 55%, rgba(19,54,128,0.92) 100%)",
+                  }}
+                />
+                <div className="absolute inset-0 opacity-20 mix-blend-overlay grid-bg" />
+                <div className="absolute -bottom-12 -right-12 h-32 w-32 rounded-full bg-white/15 blur-2xl" />
+                <div className="relative h-full flex items-center justify-center gap-3 px-5">
+                  <div className="rounded-2xl bg-white/95 backdrop-blur-md shadow-xl p-1.5 shrink-0">
                     <Image
                       src="/icon.png"
                       alt="Promise PPD"
-                      width={56}
-                      height={56}
+                      width={52}
+                      height={52}
                       className="rounded-xl"
                     />
+                  </div>
+                  <div className="leading-tight">
+                    <div className="text-lg font-extrabold text-white drop-shadow-sm">
+                      Promise PPD
+                    </div>
+                    <div className="text-[11px] text-white/85">
+                      স্বপ্ন যেখানে বাস্তব
+                    </div>
                   </div>
                 </div>
               </div>
@@ -163,8 +187,8 @@ export default function PWAInstallPrompt() {
 
               <div className="px-5 sm:px-6 pt-5 pb-5 sm:pb-6">
                 <div className="flex items-center justify-center gap-1.5 mb-2">
-                  <Sparkles className="h-3.5 w-3.5 text-brand-red" />
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-brand-red">
+                  <Sparkles className="h-3.5 w-3.5 text-brand-blue" />
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-brand-blue">
                     নতুন · দ্রুত · অফলাইন
                   </span>
                 </div>
