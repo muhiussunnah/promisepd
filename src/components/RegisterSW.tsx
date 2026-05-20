@@ -70,7 +70,30 @@ export default function RegisterSW() {
       const tries = Number(sessionStorage.getItem(RETRY_KEY) || "0");
       if (tries >= 2) return;
       sessionStorage.setItem(RETRY_KEY, String(tries + 1));
-      setTimeout(() => window.location.reload(), 600);
+      // A plain reload re-serves the SAME poisoned (cached 404/503)
+      // immutable chunk, so it would never recover.  First overwrite
+      // every referenced /_next/static asset in the HTTP cache with a
+      // fresh network copy (`cache: "reload"`), THEN reload — now the
+      // chunk loads 200 and the page renders.
+      (async () => {
+        try {
+          const urls = Array.from(
+            document.querySelectorAll<HTMLScriptElement | HTMLLinkElement>(
+              "script[src],link[href]",
+            ),
+          )
+            .map((el) =>
+              el instanceof HTMLScriptElement ? el.src : el.href,
+            )
+            .filter((u) => u && u.includes("/_next/static/"));
+          await Promise.allSettled(
+            urls.map((u) => fetch(u, { cache: "reload" })),
+          );
+        } catch {
+          /* best-effort — reload regardless */
+        }
+        window.location.reload();
+      })();
     };
     // Clear the retry counter a few seconds after a clean load so a
     // future (unrelated) visit starts fresh.
