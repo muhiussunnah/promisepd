@@ -31,6 +31,22 @@ export type Database = {
         Update: Partial<Database["public"]["Tables"]["contact_submissions"]["Insert"]>;
         Relationships: [];
       };
+      newsletter_subscriptions: {
+        Row: {
+          id: string;
+          email: string;
+          source: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          email: string;
+          source?: string | null;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["newsletter_subscriptions"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

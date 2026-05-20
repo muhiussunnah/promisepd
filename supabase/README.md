@@ -1,15 +1,20 @@
 # Supabase setup — promisepd
 
-This site uses Supabase (PostgreSQL) for its public contact form:
+This site uses Supabase (PostgreSQL) for its public forms:
 
 | Form        | Table                       | Where it's used                    |
 | ----------- | --------------------------- | ---------------------------------- |
 | Contact     | `contact_submissions`       | `/#contact` + `/contact` page      |
+| Newsletter  | `newsletter_subscriptions`  | homepage `<Newsletter />` section  |
 
 Writes go through the **service-role key** server-side
 (`src/lib/supabase/admin.ts`, called by `src/app/actions.ts`).
-Row Level Security is enabled on the table — the anon key can't
+Row Level Security is enabled on both tables — the anon key can't
 read or write anything. This keeps PII off the browser.
+
+A successful contact submit also emails the team, and a new
+newsletter signup gets a branded welcome email — both via Resend
+(`src/lib/email.ts`, key in `RESEND_API_KEY`).
 
 ## 1. Create the project
 

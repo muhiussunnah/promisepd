@@ -5,7 +5,8 @@
  *
  * Reads .env.local, connects with the service-role key, and reports:
  *   - whether the project URL + key authenticate
- *   - whether the contact_submissions table exists
+ *   - whether the contact_submissions / newsletter_subscriptions
+ *     tables exist
  *   - whether the public "uploads" storage bucket exists
  *
  * Use it before AND after applying the migrations to confirm each
@@ -78,11 +79,12 @@ async function checkBucket(id) {
 }
 
 await checkTable("contact_submissions");
+await checkTable("newsletter_subscriptions");
 await checkBucket("uploads");
 
 console.log(
   allGood
-    ? "\n🎉 Everything is set up — the contact form and uploads are live."
+    ? "\n🎉 Everything is set up — contact form, newsletter, and uploads are live."
     : "\n⚠️  Some pieces are missing — run the migration SQL in the Supabase SQL Editor (see chat), then re-run this script.",
 );
 process.exit(allGood ? 0 : 2);
