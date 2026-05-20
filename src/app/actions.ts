@@ -10,6 +10,7 @@
  *  is being provisioned. */
 
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendContactNotification } from "@/lib/email";
 
 export type ContactPayload = {
   name: string;
@@ -59,6 +60,18 @@ export async function submitContact(
       error: "Something went wrong saving your message. Please try again.",
     };
   }
+
+  // Fire the branded email notification AFTER the row is safely
+  // stored — `await` so serverless doesn't kill the function before
+  // the request finishes, but a mail failure never fails the form
+  // (sendContactNotification swallows its own errors).
+  await sendContactNotification({
+    name: payload.name.trim(),
+    email: payload.email.trim().toLowerCase(),
+    phone: payload.phone?.trim() || undefined,
+    interest: payload.interest?.trim() || undefined,
+    message: payload.message.trim(),
+  });
 
   return { ok: true };
 }

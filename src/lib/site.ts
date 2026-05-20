@@ -349,7 +349,7 @@ export const SECTION_META: Record<
   projects: { title: "চলমান প্রকল্প", tagline: "ঢাকার বুকে নতুন ঠিকানা" },
   why: { title: "কেন প্রমিস গ্রুপ", tagline: "পরিবার যে কারণে বেছে নেয়" },
   testimonials: { title: "গ্রাহকদের কণ্ঠ", tagline: "তাঁদের কথায় আমাদের গল্প" },
-  contact: { title: "যোগাযোগ করুন", tagline: "এক কর্মদিবসেই উত্তর পাবেন" },
+  contact: { title: "যোগাযোগ করুন", tagline: "খুব শীঘ্রই উত্তর পাবেন" },
 };
 
 export const STATS = [

@@ -14,7 +14,7 @@ const OG_IMAGE = absoluteUrl("/og-image.png");
 
 const PAGE_TITLE = "যোগাযোগ — Promise PPD";
 const PAGE_DESC =
-  "প্রমিস গ্রুপের সাথে সরাসরি যোগাযোগ করুন — ফোন, ইমেইল, অফিস ঠিকানা এবং বার্তা পাঠানোর ফর্ম। এক কর্মদিবসের মধ্যে আমরা উত্তর দিই।";
+  "প্রমিস গ্রুপের সাথে সরাসরি যোগাযোগ করুন — ফোন, ইমেইল, অফিস ঠিকানা এবং বার্তা পাঠানোর ফর্ম। আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করি।";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -100,7 +100,7 @@ export default function ContactPage() {
           </h1>
           <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed max-w-2xl mx-auto">
             ফোন, ইমেইল, অফিস ভিজিট বা বার্তা — যেভাবে স্বাচ্ছন্দ্য বোধ
-            করেন, আমাদের জানান। সাধারণত এক কর্মদিবসের মধ্যে উত্তর দিই।
+            করেন, আমাদের জানান। আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করি।
           </p>
         </div>
       </section>

@@ -41,7 +41,7 @@ export default function Contact() {
       if (res.ok) {
         setStatus({
           type: "ok",
-          msg: "ধন্যবাদ — আমরা এক কর্মদিবসের মধ্যে যোগাযোগ করবো।",
+          msg: "ধন্যবাদ — আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করবো।",
         });
         setForm({
           name: "",
@@ -98,7 +98,7 @@ export default function Contact() {
             চলুন খুঁজে নিই <span className="text-grad">আপনার পরবর্তী বাড়ি।</span>
           </h2>
           <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
-            একটি বার্তা পাঠান — সাধারণত আমরা এক কর্মদিবসের মধ্যে উত্তর দিই।
+            একটি বার্তা পাঠান — আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করবো।
           </p>
         </motion.div>
 
