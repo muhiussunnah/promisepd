@@ -84,7 +84,7 @@ export const DIVISIONS: Division[] = [
       "৫+ চলমান ও সম্পন্ন প্রকল্প",
       "ফ্ল্যাট, জমি ও বাণিজ্যিক স্পেস",
       "প্রিমিয়াম লোকেশন",
-      "৩০+ সুখী পরিবার",
+      "৩০০০+ সুখী পরিবার",
     ],
   },
   {
@@ -355,7 +355,7 @@ export const STATS = [
   { value: 15, suffix: "+", label: "বছরের অভিজ্ঞতা" },
   { value: 5, suffix: "", label: "ব্যবসায়িক বিভাগ" },
   { value: 5, suffix: "+", label: "প্রকল্প" },
-  { value: 30, suffix: "+", label: "সুখী পরিবার" },
+  { value: 3000, suffix: "+", label: "সুখী পরিবার" },
 ];
 
 export type Project = {

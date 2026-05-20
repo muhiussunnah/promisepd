@@ -30,11 +30,11 @@ const DEFAULT_BLOBS: Blob[] = [
     parallax: -60,
     delay: 8,
   },
-  // Single red accent blob — kept smaller + lower opacity so it
-  // warms the corner without dominating.
+  // Neutral ASH accent blob — the old red one washed the canvas pink;
+  // ash keeps a soft tonal corner that stays in the blue/ash brand family.
   {
     className:
-      "right-[10%] bottom-[5%] w-[36vw] h-[36vw] bg-[radial-gradient(circle_at_70%_70%,rgba(225, 25, 36, 0.06),transparent_55%)]",
+      "right-[10%] bottom-[5%] w-[36vw] h-[36vw] bg-[radial-gradient(circle_at_70%_70%,rgba(192,199,209,0.18),transparent_55%)]",
     parallax: 140,
     delay: 12,
   },

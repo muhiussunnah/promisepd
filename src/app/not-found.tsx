@@ -87,7 +87,7 @@ export default function NotFound() {
       />
       <div
         aria-hidden
-        className="absolute -bottom-40 -right-32 h-[44vw] w-[44vw] rounded-full bg-[radial-gradient(circle,rgba(225,25,36,0.08),transparent_60%)] blur-3xl animate-blob-slow"
+        className="absolute -bottom-40 -right-32 h-[44vw] w-[44vw] rounded-full bg-[radial-gradient(circle,rgba(192,199,209,0.16),transparent_60%)] blur-3xl animate-blob-slow"
       />
       <div className="absolute inset-0 -z-10 grid-bg opacity-40" />
 

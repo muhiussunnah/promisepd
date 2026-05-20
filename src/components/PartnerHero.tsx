@@ -121,11 +121,11 @@ export default function PartnerHero() {
                   1. Bottom-heavy navy gradient for content legibility
                   2. Warm gold radial that picks up the photo's own
                      sunset tones (top-right)
-                  3. Brand-red bloom in the lower-left to keep the
+                  3. Brand-blue bloom in the lower-left to keep the
                      card visibly Promise-branded */}
               <div className="absolute inset-0 bg-gradient-to-b from-brand-blue-dark/35 via-brand-blue-dark/65 to-brand-blue-dark/92" />
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(255,196,107,0.28),transparent_55%)]" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_90%,rgba(225,25,36,0.30),transparent_55%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_90%,rgba(24,71,161,0.38),transparent_55%)]" />
 
               {/* Subtle dome-tone vignette to keep the photo's
                   iconic green dome from competing with text. */}

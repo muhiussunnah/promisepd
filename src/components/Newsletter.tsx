@@ -32,7 +32,7 @@ export default function Newsletter() {
         blobs={[
           {
             className:
-              "left-[-15%] top-[10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(225, 25, 36, 0.07),transparent_60%)]",
+              "left-[-15%] top-[10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(192,199,209,0.14),transparent_60%)]",
             parallax: -80,
           },
           {

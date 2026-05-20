@@ -127,11 +127,14 @@ export default function Hero() {
           colours still ride on top.  Respects reduced-motion. */}
       <PropertyBackdrop
         src={[
-          "/ftpics/ftt1.webp",
-          "/ftpics/ft.webp",
-          "/ftpics/fuzala-2-0.webp",
+          "/ftpics/ftt1.webp", // ফুজালা টাওয়ার
+          "/ahbab2pics/ahbab2pics.jpeg", // আহবাব প্যালেস ০২
+          "/ftpics/ft.webp", // ফুজালা টাওয়ার
+          "/ftpics/fuzala-2-0.webp", // ফুজালা টাওয়ার
+          "/ahbab1pics/ahbab1pics.webp", // আহবাব প্যালেস ০১
+          "/fcpics/fc1.webp", // ফুজালা কমপ্লেক্স
         ]}
-        alt="Fuzala Tower — Promise City"
+        alt="প্রমিস সিটির প্রকল্পসমূহ"
         intensity={38}
         position="center"
         bluewash="soft"

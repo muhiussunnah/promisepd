@@ -156,9 +156,9 @@ h4 {
     radial-gradient(at 18% 12%, rgba(24, 71, 161, 0.14) 0px, transparent 55%),
     radial-gradient(at 82% 8%, rgba(24, 71, 161, 0.12) 0px, transparent 55%),
     radial-gradient(at 12% 82%, rgba(24, 71, 161, 0.13) 0px, transparent 55%),
-    /* 1 × RED — single accent moment, half the opacity of blue */
-    radial-gradient(at 75% 78%, rgba(225, 25, 36, 0.04) 0px, transparent 50%),
-    /* 1 × ASH — neutral mid-tone bridging the two */
+    /* extra BLUE spot — the whole canvas stays in one brand hue */
+    radial-gradient(at 75% 78%, rgba(24, 71, 161, 0.07) 0px, transparent 50%),
+    /* 1 × ASH — neutral mid-tone */
     radial-gradient(at 50% 45%, rgba(192, 199, 209, 0.10) 0px, transparent 60%);
   filter: blur(40px) saturate(120%);
   z-index: -1;
@@ -170,7 +170,7 @@ h4 {
   background:
     radial-gradient(at 25% 25%, rgba(24, 71, 161, 0.08) 0px, transparent 60%),
     radial-gradient(at 75% 75%, rgba(24, 71, 161, 0.06) 0px, transparent 60%),
-    radial-gradient(at 60% 30%, rgba(225, 25, 36, 0.04) 0px, transparent 55%);
+    radial-gradient(at 60% 30%, rgba(192, 199, 209, 0.10) 0px, transparent 55%);
   z-index: -1;
 }
 

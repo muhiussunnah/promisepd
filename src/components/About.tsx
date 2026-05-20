@@ -42,7 +42,7 @@ export default function About() {
           },
           {
             className:
-              "right-[-10%] bottom-[10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(225, 25, 36, 0.08),transparent_60%)]",
+              "right-[-10%] bottom-[10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(192,199,209,0.16),transparent_60%)]",
             parallax: 120,
             delay: 4,
           },
