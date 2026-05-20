@@ -116,30 +116,62 @@ const ACCENT_BG_HEX: Record<TeamMember["accent"], string> = {
 };
 
 function MemberCard({ member }: { member: TeamMember }) {
+  // Premium hover system — engineered for *buttery* smoothness:
+  //
+  //   GPU rule:   only `transform` + `opacity` animate (compositor-
+  //               only, no paint or layout work).  The glow shadow
+  //               + ring + underline used to animate width / box-
+  //               shadow / ring directly — those repaint every frame
+  //               and feel "steppy" (laf dey).  Now they're pre-
+  //               rendered in hidden layers that fade opacity on
+  //               hover.
+  //
+  //   Easing:     a single curve — cubic-bezier(0.22, 1, 0.36, 1)
+  //               (ease-out-quart) — used across every transition so
+  //               nothing "ends" while another effect is still
+  //               accelerating.
+  //
+  //   Duration:   ≥ 700 ms.  Hover effects shorter than that read as
+  //               twitchy on a desktop where the cursor lingers.
+  //
+  //   transform-gpu: forces compositor promotion so the first frame
+  //               doesn't repaint the world on hover-in.
   return (
-    // Premium hover treatment — five layered effects fire together
-    // on hover so the card feels "crafted" rather than basic:
-    //   1. The card lifts 8 px with a brand-blue glow shadow + ring.
-    //   2. The photo scales 110 % with a 1.5° rotate (organic feel)
-    //      and brightness/saturation boost so the subject pops.
-    //   3. A diagonal shine sweeps left→right across the photo.
-    //   4. A brand-blue gradient tint fades in from the bottom edge,
-    //      anchoring the photo in the brand palette while hovered.
-    //   5. A floating role pill slides up from below the photo.
-    //   6. The name gains an animated red→blue underline that draws
-    //      from 0 → 100 % width.
-    //
-    // Everything is pure CSS via Tailwind group-hover — no JS event
-    // handlers, no client component needed, no JS bundle cost.
     <article
       className="
-        card group overflow-hidden flex flex-col cursor-default
-        transition-all duration-500
+        card group relative overflow-hidden flex flex-col cursor-default
+        transform-gpu transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
         hover:-translate-y-2
-        hover:shadow-[0_24px_60px_-15px_rgba(24,71,161,0.30),0_8px_24px_-8px_rgba(225,25,36,0.18)]
-        hover:ring-2 hover:ring-brand-blue/25
       "
     >
+      {/* Hover glow — pre-rendered shadow that fades opacity in.
+          Animating `box-shadow` directly is the #1 source of jumpy
+          hover effects because it's a paint operation, not a
+          composite.  Fading a fully-rendered shadow's *opacity*
+          stays on the compositor. */}
+      <span
+        aria-hidden
+        className="
+          pointer-events-none absolute inset-0 -z-10 rounded-[inherit]
+          opacity-0 group-hover:opacity-100
+          transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+          shadow-[0_24px_60px_-15px_rgba(24,71,161,0.32),0_8px_24px_-8px_rgba(225,25,36,0.18)]
+        "
+      />
+
+      {/* Brand-blue ring overlay — same trick: a separate layer
+          fades opacity instead of toggling the article's `ring-*`
+          utility, which would be a paint. */}
+      <span
+        aria-hidden
+        className="
+          pointer-events-none absolute inset-0 rounded-[inherit]
+          ring-2 ring-brand-blue/25
+          opacity-0 group-hover:opacity-100
+          transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
+        "
+      />
+
       {/* Brand-coloured photo frame */}
       <div
         className="relative aspect-[4/3] overflow-hidden"
@@ -153,51 +185,52 @@ function MemberCard({ member }: { member: TeamMember }) {
           alt={member.name}
           fill
           sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+          // Pure transform — no `filter:` adjustments, no width, no
+          // top/left.  900 ms gives the zoom enough time to feel
+          // intentional rather than snapped.
           className="
             object-cover relative z-10
-            transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+            transform-gpu transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]
             will-change-transform
-            group-hover:scale-110 group-hover:rotate-[1.5deg]
-            group-hover:brightness-110 group-hover:saturate-110
+            group-hover:scale-[1.08] group-hover:rotate-[1.2deg]
           "
         />
 
-        {/* Brand-tint gradient — fades in over the lower half of the
-            photo on hover, gives the subject a subtle blue "halo". */}
+        {/* Brand-tint gradient — fades opacity only (GPU). */}
         <div
           aria-hidden
           className="
             pointer-events-none absolute inset-0 z-20
             bg-gradient-to-t from-brand-blue/45 via-brand-blue/12 to-transparent
             opacity-0 group-hover:opacity-100
-            transition-opacity duration-500
+            transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
           "
         />
 
-        {/* Diagonal shine sweep — narrow bright stripe that slides
-            across the photo when the card is hovered.  Skewed -12°
-            for a "polished metal" feel. */}
+        {/* Diagonal shine sweep — wide travel distance, long
+            duration so it reads as a slow polish rather than a
+            flash.  Pure translateX → composited. */}
         <div
           aria-hidden
           className="
             pointer-events-none absolute top-0 bottom-0 -left-1/2 z-30
             w-1/2 -skew-x-12
             bg-gradient-to-r from-transparent via-white/35 to-transparent
-            -translate-x-full
-            group-hover:translate-x-[440%]
-            transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]
+            -translate-x-full group-hover:translate-x-[440%]
+            transform-gpu transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)]
           "
         />
 
-        {/* Floating role badge — slides up from below the frame edge
-            on hover, with a tiny delay so it lands after the lift
-            has settled. */}
+        {/* Floating role badge — slides up + fades.  Both are
+            transform / opacity, both share the same curve. */}
         <div
           className="
             absolute left-3 bottom-3 z-40
             translate-y-12 opacity-0
             group-hover:translate-y-0 group-hover:opacity-100
-            transition-all duration-500 delay-150 ease-[cubic-bezier(0.16,1,0.3,1)]
+            transform-gpu
+            transition-[transform,opacity] duration-700 delay-150
+            ease-[cubic-bezier(0.22,1,0.36,1)]
           "
         >
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-blue shadow-lg ring-1 ring-white/40">
@@ -207,24 +240,26 @@ function MemberCard({ member }: { member: TeamMember }) {
       </div>
 
       <div className="p-6 flex-1 flex flex-col">
-        <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint transition-colors duration-300 group-hover:text-brand-blue/75">
+        <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-brand-blue/75">
           {member.nameEn}
         </div>
 
-        {/* Name with animated draw-underline.  The span is absolutely
-            positioned under the text; width transitions 0 → 100 %
-            on group hover with a 600 ms ease-out. */}
+        {/* Name underline — drawn with `scaleX(0) → scaleX(1)` and
+            `origin-left` instead of width-tweening.  Width animations
+            cause layout work (every frame the element resizes);
+            transform: scaleX is GPU-composited, smooth as silk. */}
         <h3 className="mt-1 text-xl font-bold text-fg leading-tight relative inline-block w-fit">
           <span className="relative">
             {member.name}
             <span
               aria-hidden
               className="
-                absolute left-0 -bottom-1 h-[3px] w-0
+                absolute left-0 -bottom-1 h-[3px] w-full
+                origin-left scale-x-0 group-hover:scale-x-100
                 bg-gradient-to-r from-brand-red via-brand-blue to-brand-blue
                 rounded-full
-                group-hover:w-full
-                transition-[width] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+                transform-gpu transition-transform duration-700
+                ease-[cubic-bezier(0.22,1,0.36,1)]
               "
             />
           </span>
@@ -241,7 +276,7 @@ function MemberCard({ member }: { member: TeamMember }) {
         )}
 
         {(member.phone || member.email) && (
-          <div className="mt-5 pt-5 border-t border-border space-y-2 transition-colors duration-300 group-hover:border-brand-blue/30">
+          <div className="mt-5 pt-5 border-t border-border space-y-2 transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-brand-blue/30">
             {member.phone && (
               <a
                 href={`tel:${member.phone}`}
