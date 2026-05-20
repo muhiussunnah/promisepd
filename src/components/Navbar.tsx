@@ -24,6 +24,7 @@ import {
   SECTION_META,
   NAV_IDS,
   DIVISIONS,
+  DIVISION_LOGO,
   HOME_BRAND_CYCLES,
 } from "@/lib/site";
 import { useActiveSection } from "@/lib/useActiveSection";
@@ -265,6 +266,7 @@ export default function Navbar() {
                               <div className="grid gap-1">
                                 {item.dropdown.map((d) => {
                                   const Icon = DIV_ICONS[d.icon] ?? Building2;
+                                  const logo = DIVISION_LOGO[d.slug];
                                   return (
                                     <Link
                                       key={d.slug}
@@ -272,17 +274,29 @@ export default function Navbar() {
                                       onClick={() => setDropdownOpen(false)}
                                       className="group flex items-start gap-3 rounded-xl p-3 hover:bg-bg-soft transition-colors"
                                     >
-                                      <div
-                                        className={`shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg ${
-                                          ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
-                                        } shadow-md group-hover:scale-105 transition-transform ${
-                                          d.accent === "ash"
-                                            ? "text-fg"
-                                            : "text-white"
-                                        }`}
-                                      >
-                                        <Icon className="h-5 w-5" />
-                                      </div>
+                                      {logo ? (
+                                        <div className="shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white border border-border shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                                          <Image
+                                            src={logo}
+                                            alt={d.label}
+                                            width={36}
+                                            height={36}
+                                            className="h-8 w-8 object-contain"
+                                          />
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className={`shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg ${
+                                            ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
+                                          } shadow-md group-hover:scale-105 transition-transform ${
+                                            d.accent === "ash"
+                                              ? "text-fg"
+                                              : "text-white"
+                                          }`}
+                                        >
+                                          <Icon className="h-5 w-5" />
+                                        </div>
+                                      )}
                                       <div className="min-w-0">
                                         <div className="text-sm font-bold text-fg leading-tight">
                                           {d.label}
@@ -441,6 +455,7 @@ export default function Navbar() {
                               <div className="pl-2 pt-1 pb-2 grid gap-1">
                                 {item.dropdown.map((d) => {
                                   const Icon = DIV_ICONS[d.icon] ?? Building2;
+                                  const logo = DIVISION_LOGO[d.slug];
                                   return (
                                     <Link
                                       key={d.slug}
@@ -448,17 +463,29 @@ export default function Navbar() {
                                       onClick={() => setOpen(false)}
                                       className="flex items-start gap-3 rounded-lg p-2.5 hover:bg-bg-soft transition-colors"
                                     >
-                                      <div
-                                        className={`shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-md ${
-                                          ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
-                                        } shadow-sm ${
-                                          d.accent === "ash"
-                                            ? "text-fg"
-                                            : "text-white"
-                                        }`}
-                                      >
-                                        <Icon className="h-4 w-4" />
-                                      </div>
+                                      {logo ? (
+                                        <div className="shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-md bg-white border border-border shadow-sm overflow-hidden">
+                                          <Image
+                                            src={logo}
+                                            alt={d.label}
+                                            width={28}
+                                            height={28}
+                                            className="h-6 w-6 object-contain"
+                                          />
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className={`shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-md ${
+                                            ACCENT_TO_SOLID[d.accent] ?? ACCENT_TO_SOLID.red
+                                          } shadow-sm ${
+                                            d.accent === "ash"
+                                              ? "text-fg"
+                                              : "text-white"
+                                          }`}
+                                        >
+                                          <Icon className="h-4 w-4" />
+                                        </div>
+                                      )}
                                       <div className="min-w-0">
                                         <div className="text-sm font-semibold text-fg leading-tight">
                                           {d.label}

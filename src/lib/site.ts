@@ -288,6 +288,18 @@ export const DIVISIONS: Division[] = [
   },
 ];
 
+/** Brand logo (WebP, transparent) per division — used for the Hero
+ *  showcase card icon and the "আমাদের বিভাগ" nav dropdown.  Keyed by
+ *  slug; a division without an entry falls back to its lucide `icon`.
+ *  Sources converted via scripts/convert-division-logos.mjs.
+ *  (interior-3d-design has no brand logo yet → keeps the lucide icon.) */
+export const DIVISION_LOGO: Record<string, string> = {
+  "promise-city": "/div-promise-city.webp",
+  "ahbab-real-estate": "/div-ahbab-real-estate.webp",
+  "promise-international": "/div-promise-international.webp",
+  "ahbab-travels-tours": "/div-ahbab-travels-tours.webp",
+};
+
 export const NAV = [
   // Home points at root `/` (not `/#home`) so the URL bar stays
   // clean — Navbar intercepts the click and scrolls to top when

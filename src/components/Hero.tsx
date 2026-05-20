@@ -29,7 +29,7 @@ import AnimatedBlobs from "./AnimatedBlobs";
 import PropertyBackdrop from "./PropertyBackdrop";
 import TypeOnce from "./TypeOnce";
 import PromoVideoButton from "./PromoVideoButton";
-import { DIVISIONS } from "@/lib/site";
+import { DIVISIONS, DIVISION_LOGO } from "@/lib/site";
 import { toBn } from "@/lib/bn";
 
 const ICONS: Record<string, LucideIcon> = {
@@ -273,6 +273,7 @@ export default function Hero() {
               <AnimatePresence mode="wait">
                 {(() => {
                   const cardImage = DIVISION_CARD_IMAGE[current.slug];
+                  const logo = DIVISION_LOGO[current.slug];
                   // Every showcase card shares ONE surface colour now —
                   // the brand blue.  Red / ash accents were making the
                   // highlight chips blend into the background; a single
@@ -340,8 +341,19 @@ export default function Hero() {
                           <Sparkles className={`h-5 w-5 ${sparkleCls}`} />
                         </div>
 
-                        <div className="mt-7 inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl">
-                          <Icon className="h-10 w-10 sm:h-12 sm:w-12 text-fg" />
+                        <div className="mt-7 inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl overflow-hidden p-3 sm:p-3.5">
+                          {logo ? (
+                            <Image
+                              src={logo}
+                              alt={current.nameBn}
+                              width={96}
+                              height={96}
+                              className="h-full w-full object-contain"
+                              priority={idx === 0}
+                            />
+                          ) : (
+                            <Icon className="h-10 w-10 sm:h-12 sm:w-12 text-fg" />
+                          )}
                         </div>
 
                         <h3
