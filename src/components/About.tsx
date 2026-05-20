@@ -83,11 +83,11 @@ export default function About() {
 
             <div className="mt-8 inline-flex items-center gap-4 rounded-2xl bg-white border border-border p-3 pr-5 shadow-sm">
               <Image
-                src="/logo.png"
+                src="/logo-tight.webp"
                 alt={SITE.shortName}
-                width={500}
-                height={500}
-                className="h-16 w-auto shrink-0"
+                width={463}
+                height={482}
+                className="h-20 w-auto shrink-0"
               />
               <div className="leading-tight">
                 <div className="text-sm font-bold text-fg">

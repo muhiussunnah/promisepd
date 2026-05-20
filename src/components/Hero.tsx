@@ -167,7 +167,7 @@ export default function Hero() {
                     <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
                     {toBn(idx + 1)} / ৫ · {current.nameBn}
                   </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-fg-faint font-semibold">
+                  <span className="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-brand-blue font-bold">
                     {current.nameEn}
                   </span>
                 </div>

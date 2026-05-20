@@ -71,6 +71,7 @@ export default function Navbar() {
   const isBlog = firstSegment === "blog";
   const isTeam = firstSegment === "team";
   const isLeaderboard = firstSegment === "leaderboard";
+  const isGallery = firstSegment === "gallery";
   const isContact = firstSegment === "contact";
 
   // Cycle brand identities only while sitting on the home section
@@ -93,11 +94,13 @@ export default function Navbar() {
           ? { title: "আমাদের টিম", tagline: "যাঁদের কাজ আপনার স্বপ্ন গড়ে" }
           : isLeaderboard
             ? { title: "লিডারবোর্ড", tagline: "শীর্ষে যাঁরা — তাঁদের পুরস্কার" }
-            : isContact
-              ? { title: "যোগাযোগ", tagline: "যেকোনো প্রশ্নে আমরা পাশে" }
-              : isHome && activeSection === "home"
-                ? HOME_BRAND_CYCLES[homeCycle]
-                : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
+            : isGallery
+              ? { title: "গ্যালারি", tagline: "ছবি ও ভিডিওতে আমাদের কাজ" }
+              : isContact
+                ? { title: "যোগাযোগ", tagline: "যেকোনো প্রশ্নে আমরা পাশে" }
+                : isHome && activeSection === "home"
+                  ? HOME_BRAND_CYCLES[homeCycle]
+                  : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -171,13 +174,13 @@ export default function Navbar() {
               aria-label={SITE.shortName}
             >
               <Image
-                src="/logo.png"
+                src="/logo-tight.webp"
                 alt={SITE.shortName}
-                width={500}
-                height={500}
+                width={463}
+                height={482}
                 priority
                 className={`shrink-0 w-auto transition-[height] duration-300 ease-out ${
-                  isCondensed ? "h-12 sm:h-14" : "h-16 sm:h-20"
+                  isCondensed ? "h-16 sm:h-[68px]" : "h-[88px] sm:h-28"
                 }`}
               />
 

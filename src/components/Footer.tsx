@@ -107,11 +107,11 @@ export default function Footer() {
           <div>
             <Link href="/#home" className="flex items-center gap-3">
               <Image
-                src="/logo.png"
+                src="/logo-tight.webp"
                 alt={SITE.shortName}
-                width={500}
-                height={500}
-                className="h-14 w-auto shrink-0"
+                width={463}
+                height={482}
+                className="h-[68px] w-auto shrink-0"
               />
               <div className="leading-tight">
                 <div className="text-base font-bold text-grad-rb">

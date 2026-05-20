@@ -17,7 +17,7 @@ export const SITE = {
   founded: 2010,
   socials: {
     facebook: "https://www.facebook.com/profile.php?id=61557334089998",
-    youtube: "https://www.youtube.com/@promisepd",
+    youtube: "https://www.youtube.com/@PromiseCity",
     whatsapp: "https://wa.me/8801910065136",
     tiktok: "https://www.tiktok.com/@promisepd",
     instagram: "https://www.instagram.com/promisepd",
@@ -319,6 +319,7 @@ export const NAV = [
     })),
   },
   { label: "প্রকল্প", href: "/#projects", id: "projects" },
+  { label: "গ্যালারি", href: "/gallery", id: "gallery", standalone: true },
   { label: "পার্টনার হোন", href: "/partner", id: "partner", standalone: true },
   { label: "লিডারবোর্ড", href: "/leaderboard", id: "leaderboard", standalone: true },
   { label: "টিম", href: "/team", id: "team", standalone: true },
