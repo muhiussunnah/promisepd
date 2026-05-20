@@ -24,7 +24,7 @@ import { X, Play } from "lucide-react";
 
 // One source of truth for the promo video — if it changes, this is
 // the only line to edit.
-const PROMO_VIDEO_ID = "kxKG8eU6L9s";
+const PROMO_VIDEO_ID = "u55eC0IjfUQ";
 
 export default function PromoVideoButton({
   children,
