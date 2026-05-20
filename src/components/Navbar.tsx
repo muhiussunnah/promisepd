@@ -278,11 +278,15 @@ export default function Navbar() {
                                       className="group flex items-start gap-3 rounded-xl p-3 hover:bg-bg-soft transition-colors"
                                     >
                                       {logo ? (
-                                        <div className="shrink-0 inline-flex h-11 w-11 items-center justify-center rounded-lg bg-white border border-border shadow-sm group-hover:scale-105 transition-transform overflow-hidden p-1">
+                                        // No white box — the wide wordmark
+                                        // logos sit straight on the dropdown
+                                        // surface so there's no letterboxed
+                                        // white square around them.
+                                        <div className="shrink-0 inline-flex h-11 w-12 items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
                                           <Image
                                             src={logo}
                                             alt={d.label}
-                                            width={44}
+                                            width={48}
                                             height={44}
                                             className="h-full w-full object-contain"
                                           />
@@ -467,11 +471,11 @@ export default function Navbar() {
                                       className="flex items-start gap-3 rounded-lg p-2.5 hover:bg-bg-soft transition-colors"
                                     >
                                       {logo ? (
-                                        <div className="shrink-0 inline-flex h-9 w-9 items-center justify-center rounded-md bg-white border border-border shadow-sm overflow-hidden p-0.5">
+                                        <div className="shrink-0 inline-flex h-9 w-10 items-center justify-center overflow-hidden">
                                           <Image
                                             src={logo}
                                             alt={d.label}
-                                            width={36}
+                                            width={40}
                                             height={36}
                                             className="h-full w-full object-contain"
                                           />
