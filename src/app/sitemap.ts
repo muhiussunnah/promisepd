@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { DIVISIONS } from "@/lib/site";
+import { DIVISIONS, PROJECTS } from "@/lib/site";
 import { BLOG_POSTS } from "@/lib/blog";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -59,6 +59,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    // Each project's detail page.
+    ...PROJECTS.map((p) => ({
+      url: `${SITE_URL}/projects/${p.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
     })),
     // Blog index.
     {

@@ -301,32 +301,14 @@ export const DIVISION_LOGO: Record<string, string> = {
   "ahbab-travels-tours": "/div-ahbab-travels-tours.webp",
 };
 
-export const NAV = [
-  // Home points at root `/` (not `/#home`) so the URL bar stays
-  // clean — Navbar intercepts the click and scrolls to top when
-  // the user is already on the homepage.
-  { label: "হোম", href: "/", id: "home" },
-  {
-    label: "আমাদের বিভাগ",
-    href: "/#divisions",
-    id: "divisions",
-    dropdown: DIVISIONS.map((d) => ({
-      label: d.nameBn,
-      tagline: d.tagline,
-      href: `/${d.slug}`,
-      slug: d.slug,
-      icon: d.icon,
-      accent: d.accent,
-    })),
-  },
-  { label: "প্রকল্প", href: "/#projects", id: "projects" },
-  { label: "গ্যালারি", href: "/gallery", id: "gallery", standalone: true },
-  { label: "পার্টনার হোন", href: "/partner", id: "partner", standalone: true },
-  { label: "লিডারবোর্ড", href: "/leaderboard", id: "leaderboard", standalone: true },
-  { label: "টিম", href: "/team", id: "team", standalone: true },
-  { label: "ব্লগ", href: "/blog", id: "blog", standalone: true },
-  { label: "যোগাযোগ", href: "/contact", id: "contact", standalone: true },
-];
+/** Real photo per division for the homepage division-card headers.
+ *  Keyed by slug; a division without an entry keeps its solid accent
+ *  header.  (Savings + interior have no real project photo yet.) */
+export const DIVISION_IMAGE: Record<string, string> = {
+  "promise-city": "/promisecityreal.webp",
+  "ahbab-real-estate": "/ahbab.webp",
+  "ahbab-travels-tours": "/kaaba.webp",
+};
 
 // "about" + "why" left in NAV_IDS so the navbar's title/tagline still
 // flips correctly when the visitor scrolls *through* those homepage
@@ -375,70 +357,153 @@ export const STATS = [
 ];
 
 export type Project = {
+  /** URL slug — drives /projects/<slug> detail page + nav dropdown. */
+  slug: string;
   name: string;
   status: "চলমান" | "সম্পন্ন" | "আসন্ন";
   location: string;
   price: string;
   size?: string;
   description: string;
+  /** Longer copy shown on the detail page hero. */
+  longDescription: string;
   highlights: string[];
   /** Brand accent for the card header band — keeps the projects grid varied. */
   accent: "red" | "blue" | "ash";
+  /** Real cover image (WebP) — card header + detail hero. */
+  cover: string;
+  /** Gallery images for the detail page (first one usually = cover). */
+  gallery: string[];
+  /** Optional YouTube video ids shown on the detail page. */
+  videoIds?: string[];
 };
 
 export const PROJECTS: Project[] = [
   {
+    slug: "promise-city",
+    name: "প্রমিস সিটি",
+    status: "চলমান",
+    location: "ঢাকা",
+    price: "৳ ৪.৪৫ লাখ থেকে",
+    description:
+      "প্রমিস সিটি — আহবাব প্যালেস, ফুজালা টাওয়ার ও ফুজালা কমপ্লেক্স নিয়ে গড়ে ওঠা একটি সমন্বিত আবাসিক ঠিকানা।",
+    longDescription:
+      "প্রমিস সিটি আমাদের ফ্ল্যাগশিপ আবাসিক উদ্যোগ — একই ছাদের নিচে আহবাব প্যালেস, ফুজালা টাওয়ার ও ফুজালা কমপ্লেক্স। যাচাইকৃত দলিল, নমনীয় কিস্তি এবং সম্পূর্ণ আইনি নিরাপত্তার সাথে ঢাকার বুকে আপনার ভবিষ্যতের ঠিকানা।",
+    highlights: ["৫+ চলমান প্রকল্প", "প্রিমিয়াম লোকেশন", "নমনীয় কিস্তি", "সম্পূর্ণ আইনি নিরাপত্তা"],
+    accent: "red",
+    cover: "/promisecityreal.webp",
+    gallery: [
+      "/promisecityreal.webp",
+      "/ftpics/ftt1.webp",
+      "/fcpics/fc1.webp",
+      "/ahbab1pics/ahbab1pics.webp",
+    ],
+    videoIds: ["u55eC0IjfUQ"],
+  },
+  {
+    slug: "fuzala-tower",
     name: "ফুজালা টাওয়ার",
     status: "চলমান",
     location: "প্রমিস সিটি, ঢাকা",
     price: "৳ ৮.৫০ লাখ",
     description:
       "প্রমিস সিটির প্রাণকেন্দ্রে আধুনিক আবাসিক টাওয়ার — প্রিমিয়াম অ্যামেনিটি ও স্কাইলাইন ভিউ সহ।",
+    longDescription:
+      "ফুজালা টাওয়ার প্রমিস সিটির প্রাণকেন্দ্রে আধুনিক আবাসিক টাওয়ার — প্রিমিয়াম অ্যামেনিটি, স্কাইলাইন ভিউ এবং চিন্তাশীল স্থাপত্য নকশায় গড়া। প্রতিটি ইউনিট আলো-বাতাস ও গোপনীয়তার কথা মাথায় রেখে ডিজাইন করা।",
     highlights: ["প্রিমিয়াম লোকেশন", "স্কাইলাইন ভিউ", "আধুনিক সুবিধা"],
     accent: "red",
+    cover: "/ftpics/ftt1.webp",
+    gallery: ["/ftpics/ftt1.webp", "/ftpics/ft.webp", "/ftpics/fuzala-2-0.webp"],
+    videoIds: ["appf8v2ATLo"],
   },
   {
+    slug: "fuzala-complex",
     name: "ফুজালা কমপ্লেক্স",
     status: "চলমান",
     location: "প্রমিস সিটি, ঢাকা",
     price: "৳ ৪.৪৫ লাখ",
     description:
       "সাশ্রয়ী মূল্যের পারিবারিক কমপ্লেক্স — চিন্তাশীল লেআউট, নিরাপদ কমিউনিটি ও সহজ যাতায়াত।",
+    longDescription:
+      "ফুজালা কমপ্লেক্স সাশ্রয়ী মূল্যের পারিবারিক আবাসন — চিন্তাশীল লেআউট, নিরাপদ কমিউনিটি ও সহজ যাতায়াতের সংযোগ। প্রথমবার নিজের ঠিকানা গড়তে চাওয়া পরিবারের জন্য আদর্শ।",
     highlights: ["পারিবারিক ডিজাইন", "নিরাপদ কমিউনিটি", "সহজ যাতায়াত"],
     accent: "blue",
+    cover: "/fcpics/fc1.webp",
+    gallery: ["/fcpics/fc1.webp", "/fcpics/fc2.webp", "/fcpics/fc3.webp", "/fcpics/f4.webp"],
   },
   {
+    slug: "ahbab-palace-01",
     name: "আহবাব প্যালেস · ০১",
     status: "চলমান",
     location: "ঢাকা",
     price: "৳ ৪০.০০ লাখ",
     description:
       "ফ্ল্যাগশিপ প্যালেস-ক্লাস বাসস্থান — প্রশস্ত যাপন, প্রিমিয়াম ফিনিশিং ও নিরবচ্ছিন্ন গোপনীয়তা।",
+    longDescription:
+      "আহবাব প্যালেস ০১ আমাদের ফ্ল্যাগশিপ প্যালেস-ক্লাস বাসস্থান — প্রশস্ত যাপন স্থান, প্রিমিয়াম ফিনিশিং এবং নিরবচ্ছিন্ন গোপনীয়তা। বিলাসিতা ও মান যেখানে প্রতিটি ডিটেইলে।",
     highlights: ["ফ্ল্যাগশিপ প্রকল্প", "প্রিমিয়াম ফিনিশিং", "একান্ত গোপনীয়তা"],
     accent: "red",
+    cover: "/ahbab1pics/ahbab1pics.webp",
+    gallery: ["/ahbab1pics/ahbab1pics.webp"],
+    videoIds: ["9P1GRaFG-1I"],
   },
   {
+    slug: "ahbab-palace-02",
     name: "আহবাব প্যালেস · ০২",
     status: "চলমান",
     location: "ঢাকা",
     price: "৳ ১৪.৫০ লাখ",
-    size: "১২০০ বর্গফুট",
+    size: "১২০০ ও ১৮০০ বর্গফুট",
     description:
-      "কমপ্যাক্ট বিলাসিতা ১২০০ বর্গফুটে — খোলা রান্নাঘর, ব্যালকনি ও আধুনিক ফিটিং।",
-    highlights: ["১২০০ বর্গফুট", "খোলা রান্নাঘর", "আধুনিক ফিটিং"],
+      "১২০০ ও ১৮০০ বর্গফুটের ইউনিট — খোলা রান্নাঘর, মাস্টার স্যুট, বড় ব্যালকনি ও আধুনিক ফিটিং।",
+    longDescription:
+      "আহবাব প্যালেস ০২ — ১২০০ ও ১৮০০ বর্গফুটের দুই ধরনের ইউনিট। খোলা রান্নাঘর, মাস্টার স্যুট, বড় ব্যালকনি ও আধুনিক ফিটিং — পরিবারের আকার ও বাজেট অনুযায়ী বেছে নেওয়ার স্বাধীনতা।",
+    highlights: ["১২০০ ও ১৮০০ বর্গফুট", "মাস্টার স্যুট", "বড় ব্যালকনি", "আধুনিক ফিটিং"],
     accent: "blue",
+    cover: "/ahbab2pics/ahbab2pics.jpeg",
+    gallery: ["/ahbab2pics/ahbab2pics.jpeg"],
+  },
+];
+
+export const NAV = [
+  // Home points at root `/` (not `/#home`) so the URL bar stays
+  // clean — Navbar intercepts the click and scrolls to top when
+  // the user is already on the homepage.
+  { label: "হোম", href: "/", id: "home" },
+  {
+    label: "আমাদের বিভাগ",
+    href: "/#divisions",
+    id: "divisions",
+    dropdown: DIVISIONS.map((d) => ({
+      label: d.nameBn,
+      tagline: d.tagline,
+      href: `/${d.slug}`,
+      slug: d.slug,
+      icon: d.icon as string | undefined,
+      image: undefined as string | undefined,
+      accent: d.accent as string,
+    })),
   },
   {
-    name: "আহবাব প্যালেস · ০২",
-    status: "চলমান",
-    location: "ঢাকা",
-    price: "৳ ২১.৭৫ লাখ",
-    size: "১৮০০ বর্গফুট",
-    description:
-      "১৮০০ বর্গফুটের প্রশস্ত বাসস্থান — মাস্টার স্যুট, বড় ব্যালকনি ও পরিবারের জন্য আদর্শ।",
-    highlights: ["১৮০০ বর্গফুট", "মাস্টার স্যুট", "বড় ব্যালকনি"],
-    accent: "ash",
+    label: "প্রকল্প",
+    href: "/#projects",
+    id: "projects",
+    dropdown: PROJECTS.map((p) => ({
+      label: p.name,
+      tagline: p.location,
+      href: `/projects/${p.slug}`,
+      slug: p.slug,
+      icon: undefined as string | undefined,
+      image: p.cover as string | undefined,
+      accent: p.accent as string,
+    })),
   },
+  { label: "গ্যালারি", href: "/gallery", id: "gallery", standalone: true },
+  { label: "পার্টনার হোন", href: "/partner", id: "partner", standalone: true },
+  { label: "লিডারবোর্ড", href: "/leaderboard", id: "leaderboard", standalone: true },
+  { label: "টিম", href: "/team", id: "team", standalone: true },
+  { label: "ব্লগ", href: "/blog", id: "blog", standalone: true },
+  { label: "যোগাযোগ", href: "/contact", id: "contact", standalone: true },
 ];
 
 export const WHY_US = [

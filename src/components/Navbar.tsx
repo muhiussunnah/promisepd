@@ -25,6 +25,7 @@ import {
   NAV_IDS,
   DIVISIONS,
   DIVISION_LOGO,
+  PROJECTS,
   HOME_BRAND_CYCLES,
 } from "@/lib/site";
 import { useActiveSection } from "@/lib/useActiveSection";
@@ -49,8 +50,13 @@ const ACCENT_TO_SOLID: Record<string, string> = {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileDivOpen, setMobileDivOpen] = useState(false);
+  // Which mega-dropdown is open — keyed by NAV item id ("divisions" /
+  // "projects").  null = none.  Lets multiple nav items each own a
+  // dropdown without clobbering each other.
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(
+    null,
+  );
   const [homeCycle, setHomeCycle] = useState(0);
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -67,6 +73,11 @@ export default function Navbar() {
   const currentDivision = firstSegment
     ? DIVISIONS.find((d) => d.slug === firstSegment)
     : null;
+  // Project detail pages live at /projects/<slug>; match the 2nd segment.
+  const currentProject =
+    firstSegment === "projects"
+      ? PROJECTS.find((p) => p.slug === pathname.split("/")[2])
+      : null;
   const isPartner = firstSegment === "partner";
   const isBlog = firstSegment === "blog";
   const isTeam = firstSegment === "team";
@@ -86,6 +97,8 @@ export default function Navbar() {
 
   const meta = currentDivision
     ? { title: currentDivision.nameBn, tagline: currentDivision.tagline }
+    : currentProject
+    ? { title: currentProject.name, tagline: currentProject.location }
     : isPartner
       ? { title: "পার্টনার হোন", tagline: "নিজের আয়ের লক্ষ্য নিজে ঠিক করুন" }
       : isBlog
@@ -233,8 +246,8 @@ export default function Navbar() {
                     <div
                       key={item.href}
                       className="relative"
-                      onMouseEnter={() => setDropdownOpen(true)}
-                      onMouseLeave={() => setDropdownOpen(false)}
+                      onMouseEnter={() => setOpenDropdown(item.id)}
+                      onMouseLeave={() => setOpenDropdown(null)}
                     >
                       <Link
                         href={item.href}
@@ -246,13 +259,13 @@ export default function Navbar() {
                         {item.label}
                         <ChevronDown
                           className={`h-3.5 w-3.5 transition-transform ${
-                            dropdownOpen ? "rotate-180" : ""
+                            openDropdown === item.id ? "rotate-180" : ""
                           }`}
                         />
                       </Link>
 
                       <AnimatePresence>
-                        {dropdownOpen && (
+                        {openDropdown === item.id && (
                           <motion.div
                             initial={{ opacity: 0, y: 8, scale: 0.96 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -268,20 +281,31 @@ export default function Navbar() {
                             <div className="glass-strong rounded-2xl p-3 shadow-2xl">
                               <div className="grid gap-1">
                                 {item.dropdown.map((d) => {
-                                  const Icon = DIV_ICONS[d.icon] ?? Building2;
+                                  const Icon = DIV_ICONS[d.icon ?? ""] ?? Building2;
                                   const logo = DIVISION_LOGO[d.slug];
+                                  const cover = d.image;
                                   return (
                                     <Link
                                       key={d.slug}
                                       href={d.href}
-                                      onClick={() => setDropdownOpen(false)}
+                                      onClick={() => setOpenDropdown(null)}
                                       className="group flex items-start gap-3 rounded-xl p-3 hover:bg-bg-soft transition-colors"
                                     >
-                                      {logo ? (
-                                        // No white box — the wide wordmark
-                                        // logos sit straight on the dropdown
-                                        // surface so there's no letterboxed
-                                        // white square around them.
+                                      {cover ? (
+                                        // Project → a small real cover photo.
+                                        <div className="shrink-0 h-11 w-14 rounded-lg overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
+                                          <Image
+                                            src={cover}
+                                            alt={d.label}
+                                            width={56}
+                                            height={44}
+                                            className="h-full w-full object-cover"
+                                          />
+                                        </div>
+                                      ) : logo ? (
+                                        // Division → its brand logo, sitting
+                                        // straight on the surface (no white
+                                        // box / letterbox).
                                         <div className="shrink-0 inline-flex h-11 w-12 items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
                                           <Image
                                             src={logo}
@@ -440,18 +464,22 @@ export default function Navbar() {
                         transition={{ delay: 0.05 * i }}
                       >
                         <button
-                          onClick={() => setMobileDivOpen((v) => !v)}
+                          onClick={() =>
+                            setMobileOpenDropdown((v) =>
+                              v === item.id ? null : item.id,
+                            )
+                          }
                           className="w-full group flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium hover:bg-bg-soft text-fg transition-colors"
                         >
                           <span>{item.label}</span>
                           <ChevronDown
                             className={`h-4 w-4 transition-transform ${
-                              mobileDivOpen ? "rotate-180" : ""
+                              mobileOpenDropdown === item.id ? "rotate-180" : ""
                             }`}
                           />
                         </button>
                         <AnimatePresence initial={false}>
-                          {mobileDivOpen && (
+                          {mobileOpenDropdown === item.id && (
                             <motion.div
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
@@ -461,8 +489,9 @@ export default function Navbar() {
                             >
                               <div className="pl-2 pt-1 pb-2 grid gap-1">
                                 {item.dropdown.map((d) => {
-                                  const Icon = DIV_ICONS[d.icon] ?? Building2;
+                                  const Icon = DIV_ICONS[d.icon ?? ""] ?? Building2;
                                   const logo = DIVISION_LOGO[d.slug];
+                                  const cover = d.image;
                                   return (
                                     <Link
                                       key={d.slug}
@@ -470,7 +499,17 @@ export default function Navbar() {
                                       onClick={() => setOpen(false)}
                                       className="flex items-start gap-3 rounded-lg p-2.5 hover:bg-bg-soft transition-colors"
                                     >
-                                      {logo ? (
+                                      {cover ? (
+                                        <div className="shrink-0 h-9 w-12 rounded-md overflow-hidden shadow-sm">
+                                          <Image
+                                            src={cover}
+                                            alt={d.label}
+                                            width={48}
+                                            height={36}
+                                            className="h-full w-full object-cover"
+                                          />
+                                        </div>
+                                      ) : logo ? (
                                         <div className="shrink-0 inline-flex h-9 w-10 items-center justify-center overflow-hidden">
                                           <Image
                                             src={logo}

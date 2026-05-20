@@ -1,9 +1,17 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { MapPin, Ruler, Check, ArrowRight } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
 import { PROJECTS } from "@/lib/site";
+
+const STATUS_DOT: Record<string, string> = {
+  red: "bg-brand-red",
+  blue: "bg-brand-blue",
+  ash: "bg-brand-ash-dark",
+};
 
 export default function Projects() {
   return (
@@ -52,63 +60,57 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PROJECTS.map((project, i) => {
-            const onLight = project.accent === "ash";
-            const headerBg =
-              project.accent === "red"
-                ? "bg-brand-red"
-                : project.accent === "blue"
-                  ? "bg-brand-blue"
-                  : "bg-brand-ash";
-            const headingCls = onLight
-              ? "text-fg"
-              : "text-white drop-shadow-md";
-            const subCls = onLight ? "text-fg-muted" : "text-white/95";
-            const statusDot =
-              project.accent === "red"
-                ? "bg-brand-red"
-                : project.accent === "blue"
-                  ? "bg-brand-blue"
-                  : "bg-brand-ash-dark";
-            return (
+          {PROJECTS.map((project, i) => (
             <motion.article
-              key={`${project.name}-${i}`}
+              key={project.slug}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.55, delay: (i % 3) * 0.1 }}
               whileHover={{ y: -8 }}
-              className="card group relative h-full overflow-hidden"
+              className="card group relative h-full overflow-hidden flex flex-col"
             >
-              {/* Header band — solid brand color per project */}
-              <div className={`relative h-44 overflow-hidden ${headerBg}`}>
-                <div className="absolute inset-0 opacity-30 mix-blend-overlay grid-bg" />
-                <div className="absolute -bottom-20 -right-20 h-48 w-48 rounded-full bg-white/20 blur-3xl animate-blob" />
-                <div className="absolute -top-10 -left-10 h-40 w-40 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
+              {/* Header — real project photo with a dark scrim so the
+                  name + status read clearly on any image. */}
+              <Link
+                href={`/projects/${project.slug}`}
+                className="relative block h-48 overflow-hidden"
+                aria-label={project.name}
+              >
+                <Image
+                  src={project.cover}
+                  alt={project.name}
+                  fill
+                  sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-fg/85 via-fg/25 to-transparent" />
 
-                <div className="absolute top-4 left-4 flex items-center gap-2">
+                <div className="absolute top-4 left-4">
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-[11px] font-semibold tracking-wide text-fg shadow-sm">
-                    <span className={`h-1.5 w-1.5 rounded-full animate-pulse ${statusDot}`} />
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full animate-pulse ${
+                        STATUS_DOT[project.accent] ?? STATUS_DOT.red
+                      }`}
+                    />
                     {project.status}
                   </span>
                 </div>
 
-                <div className="absolute inset-0 flex items-end p-6">
-                  <div>
-                    <h3 className={`text-2xl sm:text-3xl font-bold ${headingCls}`}>
-                      {project.name}
-                    </h3>
-                    {project.size && (
-                      <span className={`mt-1 inline-flex items-center gap-1 text-xs ${subCls}`}>
-                        <Ruler className="h-3 w-3" />
-                        {project.size}
-                      </span>
-                    )}
-                  </div>
+                <div className="absolute inset-x-0 bottom-0 p-6">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-md">
+                    {project.name}
+                  </h3>
+                  {project.size && (
+                    <span className="mt-1 inline-flex items-center gap-1 text-xs text-white/95">
+                      <Ruler className="h-3 w-3" />
+                      {project.size}
+                    </span>
+                  )}
                 </div>
-              </div>
+              </Link>
 
-              <div className="relative p-6">
+              <div className="relative p-6 flex-1 flex flex-col">
                 <div className="flex items-baseline justify-between gap-3">
                   <div className="flex items-center gap-1.5 text-sm text-fg-muted">
                     <MapPin className="h-4 w-4 text-brand-red" />
@@ -142,17 +144,16 @@ export default function Projects() {
                   ))}
                 </ul>
 
-                <a
-                  href="#contact"
+                <Link
+                  href={`/projects/${project.slug}`}
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-grad-rb group/btn"
                 >
-                  সাইট ভিজিট বুক করুন
+                  বিস্তারিত দেখুন
                   <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                </a>
+                </Link>
               </div>
             </motion.article>
-            );
-          })}
+          ))}
         </div>
       </div>
     </section>

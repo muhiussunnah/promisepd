@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -12,7 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
-import { DIVISIONS } from "@/lib/site";
+import { DIVISIONS, DIVISION_IMAGE, DIVISION_LOGO } from "@/lib/site";
 
 const ICONS: Record<string, LucideIcon> = {
   Building2,
@@ -20,6 +21,17 @@ const ICONS: Record<string, LucideIcon> = {
   Landmark,
   Plane,
   Palette,
+};
+
+/** Accent → hex for the photo scrim (keeps the brand colour over the
+ *  real image so the card still reads on-brand). */
+const ACCENT_HEX: Record<string, string> = {
+  red: "#e11924",
+  blue: "#1847a1",
+  ash: "#c0c7d1",
+  rb: "#e11924",
+  ab: "#1847a1",
+  ar: "#e11924",
 };
 
 const ACCENT_SOLID: Record<string, string> = {
@@ -89,6 +101,9 @@ export default function Divisions() {
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {DIVISIONS.map((division, i) => {
             const Icon = ICONS[division.icon] ?? Building2;
+            const image = DIVISION_IMAGE[division.slug];
+            const logo = DIVISION_LOGO[division.slug];
+            const hex = ACCENT_HEX[division.accent] ?? ACCENT_HEX.red;
             const isLarge = i === 0; // Promise City featured larger
             return (
               <motion.article
@@ -106,28 +121,59 @@ export default function Divisions() {
                 <div
                   className={`relative ${isLarge ? "min-h-[280px]" : "min-h-[260px]"} flex flex-col`}
                 >
-                  {/* Header gradient strip */}
-                  <div
-                    className={`relative h-32 overflow-hidden ${
-                      ACCENT_SOLID[division.accent] ?? ACCENT_SOLID.red
-                    }`}
-                  >
-                    <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-                    <div className="absolute -bottom-12 -right-12 h-40 w-40 rounded-full bg-white/20 blur-3xl animate-blob" />
-                    <div className="absolute -top-6 -left-6 h-32 w-32 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
+                  {/* Header — real project photo (with an accent scrim
+                      so it stays on-brand) where we have one, otherwise
+                      the solid brand colour. */}
+                  <div className="relative h-32 overflow-hidden">
+                    {image ? (
+                      <>
+                        <Image
+                          src={image}
+                          alt={division.nameBn}
+                          fill
+                          sizes="(min-width:1024px) 420px, (min-width:640px) 50vw, 100vw"
+                          className="object-cover"
+                        />
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background: `linear-gradient(135deg, ${hex}d9, ${hex}70)`,
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <div
+                          className={`absolute inset-0 ${
+                            ACCENT_SOLID[division.accent] ?? ACCENT_SOLID.red
+                          }`}
+                        />
+                        <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
+                        <div className="absolute -bottom-12 -right-12 h-40 w-40 rounded-full bg-white/20 blur-3xl animate-blob" />
+                        <div className="absolute -top-6 -left-6 h-32 w-32 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
+                      </>
+                    )}
 
                     <div className="absolute inset-0 p-5 flex items-center justify-between">
-                      <div
-                        className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/95 backdrop-blur-md shadow-lg"
-                      >
-                        <Icon className="h-7 w-7 text-fg" />
+                      <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/95 backdrop-blur-md shadow-lg overflow-hidden p-2">
+                        {logo ? (
+                          <Image
+                            src={logo}
+                            alt={division.nameBn}
+                            width={56}
+                            height={56}
+                            className="h-full w-full object-contain"
+                          />
+                        ) : (
+                          <Icon className="h-7 w-7 text-fg" />
+                        )}
                       </div>
                       <div className="text-right">
                         <div
                           className={`text-[10px] uppercase tracking-[0.2em] ${
-                            division.accent === "ash"
+                            division.accent === "ash" && !image
                               ? "text-fg-soft"
-                              : "text-white/80"
+                              : "text-white/85"
                           }`}
                         >
                           বিভাগ {String(i + 1).padStart(2, "0")}
