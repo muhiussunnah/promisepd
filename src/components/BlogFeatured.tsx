@@ -8,56 +8,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  Building2,
-  Hammer,
-  Landmark,
-  Palette,
-  Plane,
-  Bell,
-  Megaphone,
-  Calendar,
-  FileText,
-  ScrollText,
-  BookOpen,
-  GraduationCap,
-  Lightbulb,
-  Compass,
-  Eye,
-  Clock,
-  ArrowRight,
-  Sparkles,
-  type LucideIcon,
-} from "lucide-react";
+import { Calendar, Eye, Clock, ArrowRight, Sparkles } from "lucide-react";
 import {
   BLOG_AUTHOR,
+  BLOG_COVER,
   CATEGORY_META,
   bnNumber,
   type BlogPost,
 } from "@/lib/blog";
-
-const ICONS: Record<string, LucideIcon> = {
-  Building2,
-  Hammer,
-  Landmark,
-  Palette,
-  Plane,
-  Bell,
-  Megaphone,
-  Calendar,
-  FileText,
-  ScrollText,
-  BookOpen,
-  GraduationCap,
-  Lightbulb,
-  Compass,
-};
-
-const ACCENT_HEX: Record<string, string> = {
-  red: "#e11924",
-  blue: "#1847a1",
-  ash: "#c0c7d1",
-};
 
 const ACCENT_TAG: Record<string, string> = {
   red: "bg-brand-red text-white",
@@ -66,8 +24,8 @@ const ACCENT_TAG: Record<string, string> = {
 };
 
 export default function BlogFeatured({ post }: { post: BlogPost }) {
-  const Icon = ICONS[post.icon] ?? BookOpen;
   const cat = CATEGORY_META[post.category];
+  const cover = BLOG_COVER[post.slug];
 
   return (
     <motion.article
@@ -81,14 +39,19 @@ export default function BlogFeatured({ post }: { post: BlogPost }) {
         href={`/blog/${post.slug}`}
         className="grid lg:grid-cols-5 h-full"
       >
-        {/* Visual — left 2/5 on desktop */}
-        <div
-          className="relative lg:col-span-2 min-h-[280px] lg:min-h-[360px] overflow-hidden"
-          style={{ backgroundColor: ACCENT_HEX[post.accent] }}
-        >
-          <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-          <div className="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-white/20 blur-3xl animate-blob" />
-          <div className="absolute -top-12 -left-12 h-56 w-56 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
+        {/* Visual — left 2/5 on desktop, real cover photo */}
+        <div className="relative lg:col-span-2 min-h-[280px] lg:min-h-[360px] overflow-hidden bg-bg-soft">
+          {cover && (
+            <Image
+              src={cover}
+              alt={post.title}
+              fill
+              sizes="(min-width:1024px) 40vw, 100vw"
+              priority
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-b from-fg/35 via-transparent to-fg/20" />
 
           {/* Featured ribbon */}
           <div className="absolute top-4 left-4 z-10">
@@ -106,12 +69,6 @@ export default function BlogFeatured({ post }: { post: BlogPost }) {
             >
               {cat.bn}
             </span>
-          </div>
-
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="inline-flex h-24 w-24 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl group-hover:scale-110 transition-transform">
-              <Icon className="h-12 w-12 text-fg" />
-            </div>
           </div>
         </div>
 

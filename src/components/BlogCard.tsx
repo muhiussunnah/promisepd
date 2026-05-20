@@ -1,61 +1,19 @@
 "use client";
 
-/** Compact blog card used in the 3×3 grid.  No real photos in the
- *  dataset — we lean on a brand-coloured gradient panel with a single
- *  lucide icon as the visual stand-in, which keeps the layout uniform
- *  while staying strictly on-brand. */
+/** Compact blog card used in the 3×3 grid — real cover photo header
+ *  with the category + reading-time chips floating on top. */
 
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  Building2,
-  Hammer,
-  Landmark,
-  Palette,
-  Plane,
-  Bell,
-  Megaphone,
-  Calendar,
-  FileText,
-  ScrollText,
-  BookOpen,
-  GraduationCap,
-  Lightbulb,
-  Compass,
-  Eye,
-  Clock,
-  type LucideIcon,
-} from "lucide-react";
+import { Eye, Clock } from "lucide-react";
 import {
   BLOG_AUTHOR,
+  BLOG_COVER,
   CATEGORY_META,
   bnNumber,
   type BlogPost,
 } from "@/lib/blog";
-
-const ICONS: Record<string, LucideIcon> = {
-  Building2,
-  Hammer,
-  Landmark,
-  Palette,
-  Plane,
-  Bell,
-  Megaphone,
-  Calendar,
-  FileText,
-  ScrollText,
-  BookOpen,
-  GraduationCap,
-  Lightbulb,
-  Compass,
-};
-
-const ACCENT_HEX: Record<string, string> = {
-  red: "#e11924",
-  blue: "#1847a1",
-  ash: "#c0c7d1",
-};
 
 const ACCENT_TAG: Record<string, string> = {
   red: "bg-brand-red text-white",
@@ -70,8 +28,8 @@ export default function BlogCard({
   post: BlogPost;
   index?: number;
 }) {
-  const Icon = ICONS[post.icon] ?? BookOpen;
   const cat = CATEGORY_META[post.category];
+  const cover = BLOG_COVER[post.slug];
 
   return (
     <motion.article
@@ -83,14 +41,19 @@ export default function BlogCard({
       className="card group overflow-hidden flex flex-col"
     >
       <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
-        {/* Visual / "hero" area */}
-        <div
-          className="relative h-44 overflow-hidden"
-          style={{ backgroundColor: ACCENT_HEX[post.accent] }}
-        >
-          <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-          <div className="absolute -bottom-12 -right-12 h-40 w-40 rounded-full bg-white/20 blur-3xl animate-blob" />
-          <div className="absolute -top-6 -left-6 h-32 w-32 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
+        {/* Real cover photo */}
+        <div className="relative h-44 overflow-hidden bg-bg-soft">
+          {cover && (
+            <Image
+              src={cover}
+              alt={post.title}
+              fill
+              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+          )}
+          {/* Soft scrim so the floating chips stay readable on any photo */}
+          <div className="absolute inset-0 bg-gradient-to-b from-fg/30 via-transparent to-fg/15" />
 
           {/* Category chip — top-left */}
           <div className="absolute top-3 left-3 z-10">
@@ -109,13 +72,6 @@ export default function BlogCard({
               <Clock className="h-3 w-3" />
               {bnNumber(post.readingMinutes)} মিনিট
             </span>
-          </div>
-
-          {/* Centred icon */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white/95 backdrop-blur-md shadow-xl group-hover:scale-110 transition-transform">
-              <Icon className="h-8 w-8 text-fg" />
-            </div>
           </div>
         </div>
 

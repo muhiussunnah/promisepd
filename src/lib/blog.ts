@@ -75,6 +75,29 @@ export const CATEGORY_ORDER: BlogCategoryKey[] = [
   "resources",
 ];
 
+/** Real cover photo per post (slug → /public WebP).  Project posts
+ *  reuse the real project galleries; topic posts use commercial-free
+ *  Pexels photos (optimised to WebP).  Cards + the article hero read
+ *  from here instead of showing a lucide icon. */
+export const BLOG_COVER: Record<string, string> = {
+  // Notice
+  "2026-marketing-rules-update": "/blog-marketing.webp",
+  "office-hours-weekly-holiday": "/blog-office.webp",
+  "upcoming-projects-2026": "/promisecityreal.webp",
+  // Projects
+  "fuzala-tower-flagship": "/ftpics/ftt1.webp",
+  "fuzala-complex-family-home": "/fcpics/fc1.webp",
+  "ahbab-palace-01-flagship": "/ahbab1pics/ahbab1pics.webp",
+  "ahbab-palace-02-1200sft": "/ahbab2pics/ahbab2pics.jpeg",
+  "ahbab-palace-02-1800sft": "/interior3d.webp",
+  // Rules
+  "flat-booking-rules-guide": "/blog-contract.webp",
+  "commission-payment-rules-partners": "/savings.webp",
+  // Resources
+  "land-buying-bangladesh-guide": "/blog-land.webp",
+  "flat-buying-complete-guide-2026": "/blog-keys.webp",
+};
+
 /** Display labels + ordering for the secondary "প্রকল্প" filter.
  *  Order mirrors src/lib/site.ts > PROJECTS so the two surfaces
  *  stay in sync visually. */

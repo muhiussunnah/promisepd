@@ -10,26 +10,13 @@ import {
   Calendar,
   Phone,
   Mail,
-  Building2,
-  Hammer,
-  Landmark,
-  Palette,
-  Plane,
-  Bell,
-  Megaphone,
-  FileText,
-  ScrollText,
-  BookOpen,
-  GraduationCap,
-  Lightbulb,
-  Compass,
-  type LucideIcon,
 } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
 import BlogCard from "@/components/BlogCard";
 import { SITE } from "@/lib/site";
 import {
   BLOG_AUTHOR,
+  BLOG_COVER,
   BLOG_POSTS,
   CATEGORY_META,
   bnNumber,
@@ -41,29 +28,6 @@ import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 
 const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.png");
-
-const ICONS: Record<string, LucideIcon> = {
-  Building2,
-  Hammer,
-  Landmark,
-  Palette,
-  Plane,
-  Bell,
-  Megaphone,
-  Calendar,
-  FileText,
-  ScrollText,
-  BookOpen,
-  GraduationCap,
-  Lightbulb,
-  Compass,
-};
-
-const ACCENT_HEX: Record<string, string> = {
-  red: "#e11924",
-  blue: "#1847a1",
-  ash: "#c0c7d1",
-};
 
 const ACCENT_TAG: Record<string, string> = {
   red: "bg-brand-red text-white",
@@ -126,7 +90,7 @@ export default async function BlogPostPage(
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
-  const Icon = ICONS[post.icon] ?? BookOpen;
+  const cover = BLOG_COVER[post.slug];
   const cat = CATEGORY_META[post.category];
   const related = getRelatedPosts(post.slug, 3);
 
@@ -233,20 +197,20 @@ export default async function BlogPostPage(
         </div>
       </section>
 
-      {/* Article visual */}
+      {/* Article visual — real cover photo */}
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div
-          className="relative rounded-3xl overflow-hidden shadow-xl h-56 sm:h-72 lg:h-80"
-          style={{ backgroundColor: ACCENT_HEX[post.accent] }}
-        >
-          <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-          <div className="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-white/20 blur-3xl animate-blob" />
-          <div className="absolute -top-12 -left-12 h-56 w-56 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="inline-flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl">
-              <Icon className="h-12 w-12 sm:h-14 sm:w-14 text-fg" />
-            </div>
-          </div>
+        <div className="relative rounded-3xl overflow-hidden shadow-xl h-56 sm:h-72 lg:h-80 bg-bg-soft">
+          {cover && (
+            <Image
+              src={cover}
+              alt={post.title}
+              fill
+              priority
+              sizes="(min-width:1024px) 896px, 100vw"
+              className="object-cover"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-fg/25 to-transparent" />
         </div>
       </div>
 
