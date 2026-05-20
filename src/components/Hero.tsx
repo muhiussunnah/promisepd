@@ -46,9 +46,9 @@ const ICONS: Record<string, LucideIcon> = {
 const DIVISION_CARD_IMAGE: Record<string, string | undefined> = {
   "promise-city": "/promisecity.webp",
   "ahbab-real-estate": "/ahbab.webp",
-  // "promise-international": "/...webp",   ← coming
-  // "ahbab-travels-tours": "/...webp",     ← coming
-  // "interior-3d-design": "/...webp",      ← coming
+  "promise-international": "/savings.webp",
+  "ahbab-travels-tours": "/kaaba.webp",
+  "interior-3d-design": "/interior3d.webp",
 };
 
 // The hero now reads in ONE brand colour — blue — across every

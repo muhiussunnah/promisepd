@@ -307,7 +307,9 @@ export const DIVISION_LOGO: Record<string, string> = {
 export const DIVISION_IMAGE: Record<string, string> = {
   "promise-city": "/promisecityreal.webp",
   "ahbab-real-estate": "/ahbab.webp",
+  "promise-international": "/savings.webp",
   "ahbab-travels-tours": "/kaaba.webp",
+  "interior-3d-design": "/interior3d.webp",
 };
 
 // "about" + "why" left in NAV_IDS so the navbar's title/tagline still
