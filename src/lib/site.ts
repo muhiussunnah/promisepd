@@ -40,7 +40,7 @@ export type Division = {
   longDescription: string;
   icon: string;
   accent: "red" | "blue" | "ash" | "rb" | "ab" | "ar";
-  features: { title: string; description: string }[];
+  features: { title: string; description: string; icon: string }[];
   highlights: string[];
 };
 
@@ -63,21 +63,25 @@ export const DIVISIONS: Division[] = [
         title: "প্রিমিয়াম লোকেশনে ফ্ল্যাট",
         description:
           "ঢাকার বিকাশমান এলাকায় বাছাইকৃত প্রকল্পে আধুনিক অ্যাপার্টমেন্ট।",
+        icon: "Building2",
       },
       {
         title: "যাচাইকৃত জমি ও প্লট",
         description:
           "সম্পূর্ণ আইনি যাচাইসহ প্রিমিয়াম প্লট এবং ল্যান্ডিং প্রপার্টি।",
+        icon: "MapPin",
       },
       {
         title: "নমনীয় কিস্তি",
         description:
           "আপনার ক্যাশফ্লো অনুযায়ী মাসিক পরিকল্পনা — বাজেট না ভেঙে।",
+        icon: "CreditCard",
       },
       {
         title: "সম্পূর্ণ আইনি নিরাপত্তা",
         description:
           "যাচাইকৃত দলিল, নিবন্ধিত স্বাক্ষর, কোনো অস্পষ্টতা নেই।",
+        icon: "ShieldCheck",
       },
     ],
     highlights: [
@@ -105,26 +109,31 @@ export const DIVISIONS: Division[] = [
         title: "আবাসিক ভবন নির্মাণ",
         description:
           "আধুনিক বাড়ি, অ্যাপার্টমেন্ট ও পারিবারিক কমপ্লেক্স নির্মাণ।",
+        icon: "Home",
       },
       {
         title: "বাণিজ্যিক নির্মাণ",
         description:
           "অফিস, দোকান এবং মিশ্র-ব্যবহারের ভবন নির্মাণ।",
+        icon: "Store",
       },
       {
         title: "রিনোভেশন ও সম্প্রসারণ",
         description:
           "পুরানো ভবন আধুনিকায়ন এবং সম্প্রসারণের কাজ।",
+        icon: "Wrench",
       },
       {
         title: "নকশা থেকে নির্মাণ",
         description:
           "আর্কিটেকচার, স্ট্রাকচারাল ডিজাইন থেকে নির্মাণ — সবকিছু।",
+        icon: "Ruler",
       },
       {
         title: "মান নিয়ন্ত্রণ",
         description:
           "প্রতিটি ধাপে কঠোর গুণগত তদারকি ও অভিজ্ঞ ইঞ্জিনিয়ার।",
+        icon: "Award",
       },
     ],
     highlights: [
@@ -152,26 +161,31 @@ export const DIVISIONS: Division[] = [
         title: "১০,০০০ টাকা থেকে শুরু",
         description:
           "কম পরিমাণ থেকেই সঞ্চয় শুরু করতে পারবেন — যেকোনো অঙ্ক।",
+        icon: "PiggyBank",
       },
       {
         title: "যেকোনো সময় উত্তোলন",
         description:
           "ব্যাংকের মতো যখন প্রয়োজন তখনই টাকা তুলতে পারবেন।",
+        icon: "Wallet",
       },
       {
         title: "বার্ষিক লভ্যাংশ",
         description:
           "সারা বছরের লেনদেনের ভিত্তিতে বছর শেষে লভ্যাংশ — সুদ নয়।",
+        icon: "TrendingUp",
       },
       {
         title: "স্বচ্ছ পরিচালনা",
         description:
           "প্রতিটি লেনদেন স্পষ্ট ও যাচাইযোগ্য, কোনো লুকানো শর্ত নেই।",
+        icon: "Eye",
       },
       {
         title: "দ্রুত জরুরি সেবা",
         description:
           "জরুরি প্রয়োজনে দ্রুত সাড়া — দীর্ঘ প্রক্রিয়ার ঝামেলা নেই।",
+        icon: "Zap",
       },
     ],
     highlights: [
@@ -199,31 +213,37 @@ export const DIVISIONS: Division[] = [
         title: "হজ্জ প্যাকেজ",
         description:
           "সম্পূর্ণ হজ্জ প্যাকেজ — ভিসা, ফ্লাইট, হোটেল ও মুয়াল্লিম সেবা।",
+        icon: "Moon",
       },
       {
         title: "উমরাহ প্যাকেজ",
         description:
           "বছরজুড়ে উমরাহ যাত্রা — বিভিন্ন বাজেট ও মেয়াদের অপশন।",
+        icon: "Star",
       },
       {
         title: "ভিসা প্রক্রিয়া",
         description:
           "দ্রুত ও সঠিক ভিসা প্রক্রিয়াকরণ — সব কাগজপত্র আমরা সামলাই।",
+        icon: "FileCheck",
       },
       {
         title: "হোটেল ও পরিবহন",
         description:
           "মক্কা ও মদিনায় প্রিমিয়াম থাকা এবং নির্ভরযোগ্য পরিবহন।",
+        icon: "BedDouble",
       },
       {
         title: "অভিজ্ঞ গাইড",
         description:
           "জ্ঞানী ও অভিজ্ঞ মুয়াল্লিম এবং বাংলা ভাষায় গাইড।",
+        icon: "Users",
       },
       {
         title: "সম্পূর্ণ সহায়তা",
         description:
           "যাত্রার আগে, চলাকালীন ও পরে — ২৪/৭ সহায়তা।",
+        icon: "Headphones",
       },
     ],
     highlights: [
@@ -253,31 +273,37 @@ export const DIVISIONS: Division[] = [
         title: "আবাসিক ইন্টেরিয়র",
         description:
           "বসার ঘর, শোবার ঘর, রান্নাঘর — প্রতিটি কোণে নিখুঁত নকশা।",
+        icon: "Sofa",
       },
       {
         title: "অফিস ও কমার্শিয়াল",
         description:
           "অফিস, শো-রুম ও দোকানের জন্য আধুনিক ও কার্যকর নকশা।",
+        icon: "Briefcase",
       },
       {
         title: "3D রেন্ডারিং",
         description:
           "ফটোরিয়ালিস্টিক 3D ভিজ্যুয়ালাইজেশন — নির্মাণের আগেই দেখুন।",
+        icon: "Box",
       },
       {
         title: "স্পেস প্ল্যানিং",
         description:
           "প্রতিটি বর্গফুটের সর্বোচ্চ ব্যবহার — স্মার্ট লেআউট।",
+        icon: "LayoutGrid",
       },
       {
         title: "ফার্নিচার সিলেকশন",
         description:
           "নকশার সাথে মিলিয়ে সঠিক ফার্নিচার ও উপাদান নির্বাচন।",
+        icon: "Armchair",
       },
       {
         title: "কাস্টম সমাধান",
         description:
           "আপনার রুচি ও বাজেট অনুযায়ী সম্পূর্ণ ব্যক্তিগত ডিজাইন।",
+        icon: "Palette",
       },
     ],
     highlights: [

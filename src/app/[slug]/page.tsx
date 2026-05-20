@@ -13,6 +13,30 @@ import {
   Palette,
   Phone,
   Mail,
+  Home,
+  MapPin,
+  CreditCard,
+  ShieldCheck,
+  Store,
+  Wrench,
+  Ruler,
+  Award,
+  PiggyBank,
+  Wallet,
+  TrendingUp,
+  Eye,
+  Zap,
+  Moon,
+  Star,
+  FileCheck,
+  BedDouble,
+  Users,
+  Headphones,
+  Sofa,
+  Briefcase,
+  Box,
+  LayoutGrid,
+  Armchair,
   type LucideIcon,
 } from "lucide-react";
 import { DIVISIONS, PROJECTS, SITE } from "@/lib/site";
@@ -29,6 +53,37 @@ const ICONS: Record<string, LucideIcon> = {
   Hammer,
   Landmark,
   Plane,
+  Palette,
+};
+
+/** Per-feature icons — gives each service card its own glyph instead
+ *  of a repeated check mark, so the pages read as authentic, not demo. */
+const FEATURE_ICONS: Record<string, LucideIcon> = {
+  Building2,
+  MapPin,
+  CreditCard,
+  ShieldCheck,
+  Home,
+  Store,
+  Wrench,
+  Ruler,
+  Award,
+  PiggyBank,
+  Wallet,
+  TrendingUp,
+  Eye,
+  Zap,
+  Moon,
+  Star,
+  FileCheck,
+  BedDouble,
+  Users,
+  Headphones,
+  Sofa,
+  Briefcase,
+  Box,
+  LayoutGrid,
+  Armchair,
   Palette,
 };
 
@@ -159,25 +214,28 @@ export default async function DivisionPage(props: PageProps<"/[slug]">) {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {division.features.map((f) => (
-              <div key={f.title} className="card p-6">
-                <div
-                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${
-                    ACCENT_SOLID[division.accent]
-                  } shadow-md`}
-                >
-                  <Check
-                    className={`h-5 w-5 ${
-                      division.accent === "ash" ? "text-fg" : "text-white"
-                    }`}
-                  />
+            {division.features.map((f) => {
+              const FIcon = FEATURE_ICONS[f.icon] ?? Check;
+              return (
+                <div key={f.title} className="card group p-6">
+                  <div
+                    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${
+                      ACCENT_SOLID[division.accent]
+                    } shadow-md group-hover:scale-105 transition-transform`}
+                  >
+                    <FIcon
+                      className={`h-5 w-5 ${
+                        division.accent === "ash" ? "text-fg" : "text-white"
+                      }`}
+                    />
+                  </div>
+                  <h3 className="mt-4 text-lg font-bold text-fg">{f.title}</h3>
+                  <p className="mt-1.5 text-sm text-fg-muted leading-relaxed">
+                    {f.description}
+                  </p>
                 </div>
-                <h3 className="mt-4 text-lg font-bold text-fg">{f.title}</h3>
-                <p className="mt-1.5 text-sm text-fg-muted leading-relaxed">
-                  {f.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
