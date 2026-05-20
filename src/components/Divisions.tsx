@@ -23,16 +23,11 @@ const ICONS: Record<string, LucideIcon> = {
   Palette,
 };
 
-/** Accent → hex for the photo scrim (keeps the brand colour over the
- *  real image so the card still reads on-brand). */
-const ACCENT_HEX: Record<string, string> = {
-  red: "#e11924",
-  blue: "#1847a1",
-  ash: "#c0c7d1",
-  rb: "#e11924",
-  ab: "#1847a1",
-  ar: "#e11924",
-};
+/** Photo scrim — ONE brand-blue tint over every division photo.  Red
+ *  scrims were drowning the real images and looked harsh; a single,
+ *  lighter blue keeps the photos clearly visible and on-brand. */
+const PHOTO_SCRIM =
+  "linear-gradient(135deg, rgba(24,71,161,0.72), rgba(24,71,161,0.38))";
 
 const ACCENT_SOLID: Record<string, string> = {
   red: "bg-brand-red",
@@ -103,7 +98,6 @@ export default function Divisions() {
             const Icon = ICONS[division.icon] ?? Building2;
             const image = DIVISION_IMAGE[division.slug];
             const logo = DIVISION_LOGO[division.slug];
-            const hex = ACCENT_HEX[division.accent] ?? ACCENT_HEX.red;
             const isLarge = i === 0; // Promise City featured larger
             return (
               <motion.article
@@ -136,9 +130,7 @@ export default function Divisions() {
                         />
                         <div
                           className="absolute inset-0"
-                          style={{
-                            background: `linear-gradient(135deg, ${hex}d9, ${hex}70)`,
-                          }}
+                          style={{ background: PHOTO_SCRIM }}
                         />
                       </>
                     ) : (
@@ -201,11 +193,7 @@ export default function Divisions() {
                             key={h}
                             className="text-xs text-fg-soft flex items-center gap-1.5"
                           >
-                            <span
-                              className={`h-1.5 w-1.5 rounded-full ${
-                                ACCENT_SOLID[division.accent]
-                              }`}
-                            />
+                            <span className="h-1.5 w-1.5 rounded-full bg-brand-blue" />
                             {h}
                           </li>
                         ))}

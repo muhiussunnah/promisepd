@@ -270,41 +270,32 @@ export default function Hero() {
             <div className="relative">
               <div className="absolute -inset-4 sm:-inset-6 rounded-[2rem] bg-gradient-to-br from-white/40 to-white/0 -z-10" />
 
-              <AnimatePresence mode="wait">
-                {(() => {
-                  const cardImage = DIVISION_CARD_IMAGE[current.slug];
-                  const logo = DIVISION_LOGO[current.slug];
-                  // Every showcase card shares ONE surface colour now —
-                  // the brand blue.  Red / ash accents were making the
-                  // highlight chips blend into the background; a single
-                  // blue keeps the whole rotation consistent + premium.
-                  const hex = "#1847a1";
-                  const labelCls = "text-white/85";
-                  const headingCls = "text-white drop-shadow-md";
-                  const subCls = "text-white/95";
-                  const sparkleCls = "text-white/70";
-                  // Solid white chips + near-black text — maximum
-                  // legibility on the blue surface (the old translucent
-                  // white-on-white chips were unreadable).
-                  const chipCls =
-                    "bg-white/92 border border-white/60 text-fg font-semibold shadow-sm";
-                  return (
-                    <motion.div
-                      key={idx}
-                      // Gentle fade + small rise only — the left column
-                      // already carries the typewriter motion, so the
-                      // right card stays calm (no zoom / rotate) and the
-                      // eye isn't pulled two ways at once.
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                      className="relative rounded-[1.75rem] p-7 sm:p-9 overflow-hidden shadow-2xl"
-                      style={cardImage ? undefined : { backgroundColor: hex }}
-                    >
-                      {cardImage ? (
-                        <>
-                          {/* Real division photo — fills the card. */}
+              {/* The card BOX stays fixed (solid brand-blue surface).
+                  Only the photo crossfades and the text fades in when the
+                  division rotates — no slide / scale / card rebuild. */}
+              {(() => {
+                const cardImage = DIVISION_CARD_IMAGE[current.slug];
+                const logo = DIVISION_LOGO[current.slug];
+                const hex = "#1847a1";
+                const chipCls =
+                  "bg-white/92 border border-white/60 text-fg font-semibold shadow-sm";
+                return (
+                  <div
+                    className="relative rounded-[1.75rem] p-7 sm:p-9 overflow-hidden shadow-2xl"
+                    style={{ backgroundColor: hex }}
+                  >
+                    {/* Crossfading photo layer — old fades out while the
+                        new one fades in, over the static blue box. */}
+                    <AnimatePresence>
+                      {cardImage && (
+                        <motion.div
+                          key={cardImage}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.7, ease: "easeInOut" }}
+                          className="absolute inset-0"
+                        >
                           <Image
                             src={cardImage}
                             alt={current.nameBn}
@@ -313,83 +304,77 @@ export default function Hero() {
                             className="object-cover"
                             priority={idx === 0}
                           />
-                          {/* Accent scrim — photo peeks through up top,
-                              deepens toward the bottom so the heading +
-                              chips + button stay perfectly readable. */}
                           <div
                             className="absolute inset-0"
                             style={{
                               background: `linear-gradient(to bottom, ${hex}30 0%, ${hex}aa 50%, ${hex}f2 100%)`,
                             }}
                           />
-                        </>
-                      ) : (
-                        <>
-                          <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-                          <div className="absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-white/25 blur-3xl animate-blob" />
-                          <div className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-white/20 blur-2xl animate-blob-slow" />
-                        </>
+                        </motion.div>
                       )}
+                    </AnimatePresence>
 
-                      <div className="relative">
-                        <div className="flex items-center justify-between">
-                          <div
-                            className={`text-[10px] uppercase tracking-[0.25em] font-semibold ${labelCls}`}
-                          >
-                            বিভাগ {toBn(idx + 1).padStart(2, "০")}
-                          </div>
-                          <Sparkles className={`h-5 w-5 ${sparkleCls}`} />
+                    {/* Content — keyed remount = simple fade-in, no
+                        slide.  Sits at opacity 0 in layout first, so the
+                        box height never collapses during the swap. */}
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
+                      className="relative"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="text-[10px] uppercase tracking-[0.25em] font-semibold text-white/85">
+                          বিভাগ {toBn(idx + 1).padStart(2, "০")}
                         </div>
-
-                        <div className="mt-7 inline-flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl overflow-hidden p-2 sm:p-2.5">
-                          {logo ? (
-                            <Image
-                              src={logo}
-                              alt={current.nameBn}
-                              width={112}
-                              height={112}
-                              className="h-full w-full object-contain"
-                              priority={idx === 0}
-                            />
-                          ) : (
-                            <Icon className="h-12 w-12 sm:h-14 sm:w-14 text-fg" />
-                          )}
-                        </div>
-
-                        <h3
-                          className={`mt-6 text-2xl sm:text-3xl font-bold leading-tight ${headingCls}`}
-                        >
-                          {current.nameBn}
-                        </h3>
-                        <p
-                          className={`mt-2 text-sm leading-relaxed ${subCls}`}
-                        >
-                          {current.tagline}
-                        </p>
-
-                        <div className="mt-7 grid grid-cols-2 gap-2.5">
-                          {current.highlights.slice(0, 4).map((h) => (
-                            <div
-                              key={h}
-                              className={`rounded-xl px-3 py-2.5 text-[11px] sm:text-xs leading-snug ${chipCls}`}
-                            >
-                              {h}
-                            </div>
-                          ))}
-                        </div>
-
-                        <Link
-                          href={`/${current.slug}`}
-                          className="mt-7 inline-flex items-center gap-1.5 rounded-xl bg-white text-fg px-4 py-2.5 text-sm font-bold shadow-md hover:scale-[1.03] transition-transform"
-                        >
-                          বিভাগটি দেখুন
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
+                        <Sparkles className="h-5 w-5 text-white/70" />
                       </div>
+
+                      <div className="mt-7 inline-flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl overflow-hidden p-2 sm:p-2.5">
+                        {logo ? (
+                          <Image
+                            src={logo}
+                            alt={current.nameBn}
+                            width={112}
+                            height={112}
+                            className="h-full w-full object-contain"
+                            priority={idx === 0}
+                          />
+                        ) : (
+                          <Icon className="h-12 w-12 sm:h-14 sm:w-14 text-fg" />
+                        )}
+                      </div>
+
+                      <h3 className="mt-6 text-2xl sm:text-3xl font-bold leading-tight text-white drop-shadow-md">
+                        {current.nameBn}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-white/95">
+                        {current.tagline}
+                      </p>
+
+                      <div className="mt-7 grid grid-cols-2 gap-2.5">
+                        {current.highlights.slice(0, 4).map((h) => (
+                          <div
+                            key={h}
+                            className={`rounded-xl px-3 py-2.5 text-[11px] sm:text-xs leading-snug ${chipCls}`}
+                          >
+                            {h}
+                          </div>
+                        ))}
+                      </div>
+
+                      <Link
+                        href={`/${current.slug}`}
+                        className="mt-7 inline-flex items-center gap-1.5 rounded-xl bg-white text-fg px-4 py-2.5 text-sm font-bold shadow-md hover:scale-[1.03] transition-transform"
+                      >
+                        বিভাগটি দেখুন
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
                     </motion.div>
-                  );
-                })()}
-              </AnimatePresence>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>
