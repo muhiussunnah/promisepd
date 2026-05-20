@@ -328,6 +328,7 @@ export const FOOTER_QUICK_LINKS: { label: string; href: string }[] = [
   { label: "আমাদের বিভাগ", href: "/#divisions" },
   { label: "প্রকল্প", href: "/#projects" },
   { label: "পার্টনার হোন", href: "/partner" },
+  { label: "মার্কেটিং পলিসি", href: "/marketing-policy" },
   { label: "যোগাযোগ", href: "/contact" },
 ];
 
