@@ -40,19 +40,6 @@ const ICONS: Record<string, LucideIcon> = {
   Palette,
 };
 
-/** SOLID brand color per division accent (no gradients).
- *  red/rb/ar → solid red, blue/ab → solid blue, ash → solid ash-dark.
- *  Used as the showcase card's fallback fill until a real photo
- *  exists for that division. */
-const ACCENT_SOLID_HEX: Record<string, string> = {
-  red: "#e11924",
-  blue: "#1847a1",
-  ash: "#c0c7d1",
-  rb: "#e11924",
-  ab: "#1847a1",
-  ar: "#e11924",
-};
-
 /** Real photo per division for the hero showcase card.  Two are
  *  supplied so far; the rest fall back to the solid accent fill
  *  above until their images land in /public. */
@@ -280,21 +267,20 @@ export default function Hero() {
               <AnimatePresence mode="wait">
                 {(() => {
                   const cardImage = DIVISION_CARD_IMAGE[current.slug];
-                  const hex = ACCENT_SOLID_HEX[current.accent];
-                  // With a real photo behind it the content always sits
-                  // on a dark accent scrim → white text.  Only the
-                  // image-less ash card flips to dark text on its light
-                  // fill.
-                  const onLight = !cardImage && current.accent === "ash";
-                  const labelCls = onLight ? "text-fg-soft" : "text-white/85";
-                  const headingCls = onLight
-                    ? "text-fg drop-shadow-none"
-                    : "text-white drop-shadow-md";
-                  const subCls = onLight ? "text-fg-muted" : "text-white/95";
-                  const sparkleCls = onLight ? "text-fg-muted/60" : "text-white/70";
-                  const chipCls = onLight
-                    ? "bg-fg/5 backdrop-blur-md border border-fg/15 text-fg"
-                    : "bg-white/15 backdrop-blur-md border border-white/25 text-white";
+                  // Every showcase card shares ONE surface colour now —
+                  // the brand blue.  Red / ash accents were making the
+                  // highlight chips blend into the background; a single
+                  // blue keeps the whole rotation consistent + premium.
+                  const hex = "#1847a1";
+                  const labelCls = "text-white/85";
+                  const headingCls = "text-white drop-shadow-md";
+                  const subCls = "text-white/95";
+                  const sparkleCls = "text-white/70";
+                  // Solid white chips + near-black text — maximum
+                  // legibility on the blue surface (the old translucent
+                  // white-on-white chips were unreadable).
+                  const chipCls =
+                    "bg-white/92 border border-white/60 text-fg font-semibold shadow-sm";
                   return (
                     <motion.div
                       key={idx}
@@ -367,7 +353,7 @@ export default function Hero() {
                           {current.highlights.slice(0, 4).map((h) => (
                             <div
                               key={h}
-                              className={`rounded-xl px-3 py-2.5 text-[11px] sm:text-xs font-medium leading-snug ${chipCls}`}
+                              className={`rounded-xl px-3 py-2.5 text-[11px] sm:text-xs leading-snug ${chipCls}`}
                             >
                               {h}
                             </div>
