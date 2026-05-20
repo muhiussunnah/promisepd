@@ -37,6 +37,10 @@ for (const [srcName, outName] of MAP) {
 
   await sharp(src, { failOn: "none" })
     .rotate()
+    // Trim the transparent / solid border baked into each logo so the
+    // mark fills its frame — otherwise object-contain shrinks it inside
+    // the icon box and it looks tiny with a lot of empty space.
+    .trim({ threshold: 12 })
     .resize({
       width: 512,
       height: 512,

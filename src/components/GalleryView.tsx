@@ -339,11 +339,11 @@ export default function GalleryView() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
+            onClick={() => setLightbox(null)}
             className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-8"
           >
             <div
               className="absolute inset-0 bg-fg/85 backdrop-blur-md"
-              onClick={() => setLightbox(null)}
               aria-hidden
             />
 
@@ -358,13 +358,16 @@ export default function GalleryView() {
                 type="button"
                 onClick={() => setLightbox(null)}
                 aria-label="বন্ধ করুন"
-                className="absolute -top-12 right-0 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-fg shadow-lg hover:scale-110 transition-transform"
+                className="absolute -top-12 right-0 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-fg shadow-lg hover:scale-110 hover:bg-brand-red hover:text-white transition-all"
               >
                 <X className="h-5 w-5" />
               </button>
 
               {lightbox.type === "video" ? (
-                <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-white/10">
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-white/10"
+                >
                   <iframe
                     src={`https://www.youtube.com/embed/${lightbox.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
                     title={lightbox.title}
@@ -374,7 +377,10 @@ export default function GalleryView() {
                   />
                 </div>
               ) : (
-                <div className="relative w-full h-[70vh] sm:h-[78vh] rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-white/10">
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative w-full h-[70vh] sm:h-[78vh] rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-white/10"
+                >
                   <Image
                     src={lightbox.src}
                     alt={lightbox.title}

@@ -278,13 +278,13 @@ export default function Navbar() {
                                       className="group flex items-start gap-3 rounded-xl p-3 hover:bg-bg-soft transition-colors"
                                     >
                                       {logo ? (
-                                        <div className="shrink-0 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white border border-border shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                                        <div className="shrink-0 inline-flex h-11 w-11 items-center justify-center rounded-lg bg-white border border-border shadow-sm group-hover:scale-105 transition-transform overflow-hidden p-1">
                                           <Image
                                             src={logo}
                                             alt={d.label}
-                                            width={36}
-                                            height={36}
-                                            className="h-8 w-8 object-contain"
+                                            width={44}
+                                            height={44}
+                                            className="h-full w-full object-contain"
                                           />
                                         </div>
                                       ) : (
@@ -467,13 +467,13 @@ export default function Navbar() {
                                       className="flex items-start gap-3 rounded-lg p-2.5 hover:bg-bg-soft transition-colors"
                                     >
                                       {logo ? (
-                                        <div className="shrink-0 inline-flex h-8 w-8 items-center justify-center rounded-md bg-white border border-border shadow-sm overflow-hidden">
+                                        <div className="shrink-0 inline-flex h-9 w-9 items-center justify-center rounded-md bg-white border border-border shadow-sm overflow-hidden p-0.5">
                                           <Image
                                             src={logo}
                                             alt={d.label}
-                                            width={28}
-                                            height={28}
-                                            className="h-6 w-6 object-contain"
+                                            width={36}
+                                            height={36}
+                                            className="h-full w-full object-contain"
                                           />
                                         </div>
                                       ) : (

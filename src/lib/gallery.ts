@@ -30,17 +30,24 @@ export const YOUTUBE = {
 /** How many items per page in each tab. */
 export const GALLERY_PAGE_SIZE = 12;
 
-/** Curated project photos — newest / most-impressive first. */
+/** Curated project photos — ordered project-by-project: আহবাব প্যালেস
+ *  ০১ → ০২ → ফুজালা টাওয়ার → ফুজালা কমপ্লেক্স, then the wider brand /
+ *  travels shots.  Add new rows in the right project's block. */
 export const GALLERY_IMAGES: GalleryImage[] = [
+  // আহবাব প্যালেস ০১
+  { src: "/ahbab1pics/ahbab1pics.webp", title: "আহবাব প্যালেস ০১ — ফ্ল্যাগশিপ প্রকল্প" },
+  // আহবাব প্যালেস ০২
+  { src: "/ahbab2pics/ahbab2pics.jpeg", title: "আহবাব প্যালেস ০২ — আবাসিক ভবন" },
+  // ফুজালা টাওয়ার
   { src: "/ftpics/ftt1.webp", title: "ফুজালা টাওয়ার — সম্মুখ দৃশ্য" },
   { src: "/ftpics/ft.webp", title: "ফুজালা টাওয়ার — নির্মাণ অগ্রগতি" },
   { src: "/ftpics/fuzala-2-0.webp", title: "ফুজালা টাওয়ার — স্থাপত্য নকশা" },
+  // ফুজালা কমপ্লেক্স
   { src: "/fcpics/fc1.webp", title: "ফুজালা কমপ্লেক্স — প্রকল্প দৃশ্য" },
   { src: "/fcpics/fc2.webp", title: "ফুজালা কমপ্লেক্স — ভবন কাঠামো" },
   { src: "/fcpics/fc3.webp", title: "ফুজালা কমপ্লেক্স — আবাসিক ব্লক" },
   { src: "/fcpics/f4.webp", title: "ফুজালা কমপ্লেক্স — চারপাশের পরিবেশ" },
-  { src: "/ahbab1pics/ahbab1pics.webp", title: "আহবাব প্যালেস ০১ — ফ্ল্যাগশিপ প্রকল্প" },
-  { src: "/ahbab2pics/ahbab2pics.jpeg", title: "আহবাব প্যালেস ০২ — আবাসিক ভবন" },
+  // ব্র্যান্ড ও ট্রাভেলস
   { src: "/promisecity.webp", title: "প্রমিস সিটি — স্বপ্নের ঠিকানা" },
   { src: "/ahbab.webp", title: "আহবাব রিয়েল এস্টেট — নির্মাণ সমাধান" },
   { src: "/kaaba.webp", title: "আহবাব ট্রাভেলস — পবিত্র উমরাহ যাত্রা" },

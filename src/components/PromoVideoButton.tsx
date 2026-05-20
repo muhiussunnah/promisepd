@@ -61,10 +61,14 @@ export default function PromoVideoButton({
         aria-haspopup="dialog"
         className={
           className ??
-          "group inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-border px-6 py-3.5 text-sm sm:text-base font-semibold text-fg hover:border-brand-blue/40 hover:shadow-lg transition-all"
+          "group inline-flex items-center justify-center gap-2.5 rounded-2xl bg-white border border-border pl-2.5 pr-6 py-2.5 text-sm sm:text-base font-semibold text-fg hover:border-brand-red/40 hover:shadow-lg transition-all"
         }
       >
-        <Play className="h-4 w-4 text-brand-red" />
+        {/* Pulsing red play badge — reads unmistakably as "tap to watch". */}
+        <span className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-red text-white shadow-md group-hover:scale-105 transition-transform">
+          <span className="absolute inset-0 rounded-full bg-brand-red animate-ping opacity-40" />
+          <Play className="relative h-4 w-4 translate-x-[1px] fill-white" />
+        </span>
         {children ?? "প্রোমো ভিডিও"}
       </button>
 
@@ -78,12 +82,16 @@ export default function PromoVideoButton({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
+            // Click anywhere on the overlay closes — the inner video box
+            // stops propagation, so only clicks *outside* the player (or
+            // on the X) dismiss it.  This makes the close bullet-proof
+            // regardless of where the X lands on a given viewport.
+            onClick={() => setOpen(false)}
             className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-8"
           >
-            {/* Backdrop — click to close */}
+            {/* Backdrop — visual only; clicks bubble to the overlay. */}
             <div
               className="absolute inset-0 bg-fg/85 backdrop-blur-md"
-              onClick={() => setOpen(false)}
               aria-hidden
             />
 
@@ -95,17 +103,20 @@ export default function PromoVideoButton({
               className="relative w-full max-w-5xl"
             >
               {/* Close button — sits above the video, always visible
-                  against the dimmed backdrop. */}
+                  against the dimmed backdrop.  z-10 keeps it tappable. */}
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="ভিডিও বন্ধ করুন"
-                className="absolute -top-12 right-0 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-fg shadow-lg hover:scale-110 transition-transform"
+                className="absolute -top-12 right-0 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-fg shadow-lg hover:scale-110 hover:bg-brand-red hover:text-white transition-all"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-white/10">
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black ring-1 ring-white/10"
+              >
                 <iframe
                   // Mounted only while `open` is true (the entire
                   // <AnimatePresence> subtree unmounts on close), so

@@ -341,18 +341,18 @@ export default function Hero() {
                           <Sparkles className={`h-5 w-5 ${sparkleCls}`} />
                         </div>
 
-                        <div className="mt-7 inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl overflow-hidden p-3 sm:p-3.5">
+                        <div className="mt-7 inline-flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl overflow-hidden p-2 sm:p-2.5">
                           {logo ? (
                             <Image
                               src={logo}
                               alt={current.nameBn}
-                              width={96}
-                              height={96}
+                              width={112}
+                              height={112}
                               className="h-full w-full object-contain"
                               priority={idx === 0}
                             />
                           ) : (
-                            <Icon className="h-10 w-10 sm:h-12 sm:w-12 text-fg" />
+                            <Icon className="h-12 w-12 sm:h-14 sm:w-14 text-fg" />
                           )}
                         </div>
 
