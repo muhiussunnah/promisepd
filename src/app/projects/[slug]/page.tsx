@@ -70,6 +70,19 @@ export default async function ProjectPage(
   const project = PROJECTS.find((p) => p.slug === slug);
   if (!project) notFound();
 
+  // Magazine layout: when a project has rich "details" paragraphs, the
+  // first video is embedded in the MIDDLE of them (bigger, centred) and
+  // the remaining videos (if any) drop to the bottom Videos section.
+  const details = project.details ?? [];
+  const mid = Math.ceil(details.length / 2);
+  const firstHalf = details.slice(0, mid);
+  const secondHalf = details.slice(mid);
+  const midVideo = details.length > 0 ? project.videoIds?.[0] : undefined;
+  const bottomVideos =
+    details.length > 0
+      ? (project.videoIds ?? []).slice(1)
+      : project.videoIds ?? [];
+
   const breadcrumb = breadcrumbSchema([
     { name: "হোম", url: SITE_URL },
     { name: "প্রকল্প", url: `${SITE_URL}/#projects` },
@@ -179,6 +192,47 @@ export default async function ProjectPage(
         </div>
       </section>
 
+      {/* About — rich description with the video sitting in the middle */}
+      {details.length > 0 && (
+        <section className="relative pb-12 sm:pb-16">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6">
+              প্রকল্প <span className="text-grad">সম্পর্কে</span>
+            </h2>
+
+            <div className="space-y-5 text-base sm:text-lg text-fg-muted leading-relaxed">
+              {firstHalf.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+
+            {midVideo && (
+              <figure className="my-10 sm:my-12">
+                <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border bg-black">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${midVideo}?rel=0&modestbranding=1&playsinline=1`}
+                    title={`${project.name} — প্রজেক্ট ভিডিও`}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+                <figcaption className="mt-3 text-center text-sm text-fg-faint">
+                  {project.name} — প্রজেক্ট ডকুমেন্টরি
+                </figcaption>
+              </figure>
+            )}
+
+            <div className="space-y-5 text-base sm:text-lg text-fg-muted leading-relaxed">
+              {secondHalf.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Gallery */}
       <section className="relative pb-12 sm:pb-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -189,8 +243,8 @@ export default async function ProjectPage(
         </div>
       </section>
 
-      {/* Videos */}
-      {project.videoIds && project.videoIds.length > 0 && (
+      {/* Videos — only the ones not already embedded in the About section */}
+      {bottomVideos.length > 0 && (
         <section className="relative pb-16 sm:pb-20">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-2">
@@ -198,7 +252,7 @@ export default async function ProjectPage(
               ভিডিও
             </h2>
             <div className="grid gap-5 sm:grid-cols-2">
-              {project.videoIds.map((id) => (
+              {bottomVideos.map((id) => (
                 <div
                   key={id}
                   className="relative aspect-video rounded-2xl overflow-hidden shadow-xl bg-black ring-1 ring-border"
