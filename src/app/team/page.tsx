@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Phone, Mail, Users, Sparkles } from "lucide-react";
+import { Users, Sparkles } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
+import TeamMemberCard from "@/components/TeamMemberCard";
 import { breadcrumbSchema } from "@/lib/schema";
-import { TEAM_MEMBERS, type TeamMember } from "@/lib/team";
+import { TEAM_MEMBERS } from "@/lib/team";
 import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 
 const SITE_URL = getSiteUrl();
@@ -77,8 +77,8 @@ export default function TeamPage() {
       <section className="relative pb-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {TEAM_MEMBERS.map((member) => (
-              <MemberCard key={member.slug} member={member} />
+            {TEAM_MEMBERS.map((member, i) => (
+              <TeamMemberCard key={member.slug} member={member} index={i} />
             ))}
           </div>
         </div>
@@ -106,200 +106,5 @@ export default function TeamPage() {
         </div>
       </section>
     </>
-  );
-}
-
-const ACCENT_BG_HEX: Record<TeamMember["accent"], string> = {
-  red: "#e11924",
-  blue: "#1847a1",
-  ash: "#c0c7d1",
-};
-
-function MemberCard({ member }: { member: TeamMember }) {
-  // Premium hover system — engineered for *buttery* smoothness:
-  //
-  //   GPU rule:   only `transform` + `opacity` animate (compositor-
-  //               only, no paint or layout work).  The glow shadow
-  //               + ring + underline used to animate width / box-
-  //               shadow / ring directly — those repaint every frame
-  //               and feel "steppy" (laf dey).  Now they're pre-
-  //               rendered in hidden layers that fade opacity on
-  //               hover.
-  //
-  //   Easing:     a single curve — cubic-bezier(0.22, 1, 0.36, 1)
-  //               (ease-out-quart) — used across every transition so
-  //               nothing "ends" while another effect is still
-  //               accelerating.
-  //
-  //   Duration:   ≥ 700 ms.  Hover effects shorter than that read as
-  //               twitchy on a desktop where the cursor lingers.
-  //
-  //   transform-gpu: forces compositor promotion so the first frame
-  //               doesn't repaint the world on hover-in.
-  return (
-    <article
-      className="
-        card group relative overflow-hidden flex flex-col cursor-default
-        transform-gpu transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-        hover:-translate-y-2
-      "
-    >
-      {/* Hover glow — pre-rendered shadow that fades opacity in.
-          Animating `box-shadow` directly is the #1 source of jumpy
-          hover effects because it's a paint operation, not a
-          composite.  Fading a fully-rendered shadow's *opacity*
-          stays on the compositor. */}
-      <span
-        aria-hidden
-        className="
-          pointer-events-none absolute inset-0 -z-10 rounded-[inherit]
-          opacity-0 group-hover:opacity-100
-          transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-          shadow-[0_24px_60px_-15px_rgba(24,71,161,0.32),0_8px_24px_-8px_rgba(225,25,36,0.18)]
-        "
-      />
-
-      {/* Brand-blue ring overlay — same trick: a separate layer
-          fades opacity instead of toggling the article's `ring-*`
-          utility, which would be a paint. */}
-      <span
-        aria-hidden
-        className="
-          pointer-events-none absolute inset-0 rounded-[inherit]
-          ring-2 ring-brand-blue/25
-          opacity-0 group-hover:opacity-100
-          transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-        "
-      />
-
-      {/* Brand-coloured photo frame */}
-      <div
-        className="relative aspect-[4/3] overflow-hidden"
-        style={{ backgroundColor: ACCENT_BG_HEX[member.accent] }}
-      >
-        <div className="absolute inset-0 opacity-20 mix-blend-overlay grid-bg" />
-        <div className="absolute -bottom-16 -right-16 h-48 w-48 rounded-full bg-white/20 blur-3xl animate-blob" />
-
-        <Image
-          src={member.photo}
-          alt={member.name}
-          fill
-          // `object-contain` (not cover) shows the FULL photo at its
-          // natural aspect — no crop / zoom that would cut the head or
-          // chop the office shot.  quality 92 keeps it crisp, never
-          // hazy.  The accent-coloured frame fills the letterbox.
-          quality={92}
-          sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 100vw"
-          className="
-            object-contain relative z-10
-            transform-gpu transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]
-            will-change-transform
-            group-hover:scale-[1.04]
-          "
-        />
-
-        {/* Brand-tint gradient — fades opacity only (GPU). */}
-        <div
-          aria-hidden
-          className="
-            pointer-events-none absolute inset-0 z-20
-            bg-gradient-to-t from-brand-blue/45 via-brand-blue/12 to-transparent
-            opacity-0 group-hover:opacity-100
-            transition-opacity duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]
-          "
-        />
-
-        {/* Diagonal shine sweep — wide travel distance, long
-            duration so it reads as a slow polish rather than a
-            flash.  Pure translateX → composited. */}
-        <div
-          aria-hidden
-          className="
-            pointer-events-none absolute top-0 bottom-0 -left-1/2 z-30
-            w-1/2 -skew-x-12
-            bg-gradient-to-r from-transparent via-white/35 to-transparent
-            -translate-x-full group-hover:translate-x-[440%]
-            transform-gpu transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)]
-          "
-        />
-
-        {/* Floating role badge — slides up + fades.  Both are
-            transform / opacity, both share the same curve. */}
-        <div
-          className="
-            absolute left-3 bottom-3 z-40
-            translate-y-12 opacity-0
-            group-hover:translate-y-0 group-hover:opacity-100
-            transform-gpu
-            transition-[transform,opacity] duration-700 delay-150
-            ease-[cubic-bezier(0.22,1,0.36,1)]
-          "
-        >
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-blue shadow-lg ring-1 ring-white/40">
-            {member.role}
-          </span>
-        </div>
-      </div>
-
-      <div className="p-6 flex-1 flex flex-col">
-        <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-brand-blue/75">
-          {member.nameEn}
-        </div>
-
-        {/* Name underline — drawn with `scaleX(0) → scaleX(1)` and
-            `origin-left` instead of width-tweening.  Width animations
-            cause layout work (every frame the element resizes);
-            transform: scaleX is GPU-composited, smooth as silk. */}
-        <h3 className="mt-1 text-xl font-bold text-fg leading-tight relative inline-block w-fit">
-          <span className="relative">
-            {member.name}
-            <span
-              aria-hidden
-              className="
-                absolute left-0 -bottom-1 h-[3px] w-full
-                origin-left scale-x-0 group-hover:scale-x-100
-                bg-gradient-to-r from-brand-red via-brand-blue to-brand-blue
-                rounded-full
-                transform-gpu transition-transform duration-700
-                ease-[cubic-bezier(0.22,1,0.36,1)]
-              "
-            />
-          </span>
-        </h3>
-
-        <div className="mt-1 text-sm font-semibold text-brand-blue">
-          {member.role}
-        </div>
-
-        {member.bio && (
-          <p className="mt-3 text-sm text-fg-muted leading-relaxed flex-1">
-            {member.bio}
-          </p>
-        )}
-
-        {(member.phone || member.email) && (
-          <div className="mt-5 pt-5 border-t border-border space-y-2 transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:border-brand-blue/30">
-            {member.phone && (
-              <a
-                href={`tel:${member.phone}`}
-                className="flex items-center gap-2 text-sm text-fg hover:text-brand-blue transition-colors"
-              >
-                <Phone className="h-3.5 w-3.5 text-fg-muted shrink-0" />
-                <span className="truncate">{member.phone}</span>
-              </a>
-            )}
-            {member.email && (
-              <a
-                href={`mailto:${member.email}`}
-                className="flex items-center gap-2 text-sm text-fg hover:text-brand-blue transition-colors"
-              >
-                <Mail className="h-3.5 w-3.5 text-fg-muted shrink-0" />
-                <span className="truncate">{member.email}</span>
-              </a>
-            )}
-          </div>
-        )}
-      </div>
-    </article>
   );
 }
