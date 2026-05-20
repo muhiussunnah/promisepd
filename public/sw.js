@@ -1,6 +1,10 @@
-/* Promise PPD — production service worker (v3).
+/* Promise PPD — production service worker (v4).
  *
- * Why v3 (and why every previous install needs to be nuked):
+ * v4 bump: forces every browser to install a fresh worker, which on
+ * activate nukes ALL caches and claims clients — clearing any stale
+ * cached HTML/assets left from a flaky deploy.
+ *
+ * Why versioned (and why every previous install needs to be nuked):
  *   v1 cached HTML pages aggressively and never invalidated.  Next.js
  *   HTML embeds hashed chunk URLs (`/_next/static/chunks/<hash>.js`).
  *   Once we redeploy, those hashes change — but a PWA user's v1 cache
@@ -23,7 +27,7 @@
  *      requiring the user to close every tab.
  */
 
-const CACHE_VERSION = "ppd-v3";
+const CACHE_VERSION = "ppd-v4";
 
 // Only these explicit paths get cached.  Anything else — and anything
 // HTML — bypasses the cache entirely.

@@ -49,8 +49,39 @@ export default function RegisterSW() {
       return;
     }
 
-    // When the active SW changes (because a freshly-installed v3 just
-    // called clients.claim), reload so the page picks up an HTML
+    // ── Auto-recover from transient chunk-load failures ──────────────
+    // A CDN hiccup (e.g. a 503 on a /_next/static chunk) makes the
+    // dynamic import throw a ChunkLoadError.  Because most of the UI is
+    // framer-motion with `initial opacity:0`, the animation JS never
+    // runs and those elements stay invisible → the page looks blank.
+    // Reload up to twice to fetch a healthy asset set, then give up so
+    // a genuine outage can't trap us in a reload loop.
+    const RETRY_KEY = "ppd-chunk-retry";
+    const isChunkError = (msg: string) =>
+      /ChunkLoadError|Loading chunk|Failed to load chunk|error loading dynamically imported module|Importing a module script failed/i.test(
+        msg,
+      );
+    const onChunkError = (e: ErrorEvent | PromiseRejectionEvent) => {
+      const msg =
+        ("reason" in e && (e.reason?.message || String(e.reason))) ||
+        ("message" in e && e.message) ||
+        "";
+      if (!isChunkError(String(msg))) return;
+      const tries = Number(sessionStorage.getItem(RETRY_KEY) || "0");
+      if (tries >= 2) return;
+      sessionStorage.setItem(RETRY_KEY, String(tries + 1));
+      setTimeout(() => window.location.reload(), 600);
+    };
+    // Clear the retry counter a few seconds after a clean load so a
+    // future (unrelated) visit starts fresh.
+    const onLoadClearRetry = () =>
+      setTimeout(() => sessionStorage.removeItem(RETRY_KEY), 4000);
+    window.addEventListener("error", onChunkError);
+    window.addEventListener("unhandledrejection", onChunkError);
+    window.addEventListener("load", onLoadClearRetry);
+
+    // When the active SW changes (because a freshly-installed worker
+    // just called clients.claim), reload so the page picks up an HTML
     // shell that matches the new build's chunk hashes.  Without this,
     // PWA users stayed on the old HTML and broke.
     const onControllerChange = () => {
@@ -97,6 +128,9 @@ export default function RegisterSW() {
     return () => {
       cancelled = true;
       window.removeEventListener("load", onLoad);
+      window.removeEventListener("error", onChunkError);
+      window.removeEventListener("unhandledrejection", onChunkError);
+      window.removeEventListener("load", onLoadClearRetry);
       navigator.serviceWorker.removeEventListener(
         "controllerchange",
         onControllerChange,
