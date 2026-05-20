@@ -11,9 +11,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import AnimatedBlobs from "./AnimatedBlobs";
 import PropertyBackdrop from "./PropertyBackdrop";
-import type { Division } from "@/lib/site";
+import { DIVISION_IMAGE, DIVISION_LOGO, type Division } from "@/lib/site";
 
 /** Per-division architectural backdrop.  Each slug gets a different
  *  photo so visitors flipping between divisions see distinct
@@ -49,6 +50,11 @@ export default function DivisionHero({ division }: { division: Division }) {
   const Icon = ICONS[division.icon] ?? Building2;
 
   const backdrop = DIVISION_BACKDROP[division.slug];
+  const image = DIVISION_IMAGE[division.slug];
+  const logo = DIVISION_LOGO[division.slug];
+  // Brand-blue scrim over the photo so the card reads on-brand (matches
+  // the homepage hero showcase card) instead of a flat red panel.
+  const hex = "#1847a1";
 
   return (
     <section className="relative isolate flex min-h-[80svh] items-center overflow-hidden pt-28 pb-16">
@@ -118,33 +124,57 @@ export default function DivisionHero({ division }: { division: Division }) {
           >
             <div
               className="relative rounded-3xl p-10 sm:p-12 overflow-hidden shadow-2xl"
-              style={{ backgroundColor: ACCENT_SOLID_HEX[division.accent] }}
+              style={image ? undefined : { backgroundColor: ACCENT_SOLID_HEX[division.accent] }}
             >
-              <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-              <div className="absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-white/20 blur-3xl animate-blob" />
-              <div className="absolute -top-12 -left-12 h-48 w-48 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
+              {image ? (
+                <>
+                  {/* Real division photo + brand-blue scrim */}
+                  <Image
+                    src={image}
+                    alt={division.nameBn}
+                    fill
+                    sizes="(min-width:1024px) 440px, 100vw"
+                    className="object-cover"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: `linear-gradient(to bottom, ${hex}59 0%, ${hex}c4 55%, ${hex}f2 100%)`,
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
+                  <div className="absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-white/20 blur-3xl animate-blob" />
+                  <div className="absolute -top-12 -left-12 h-48 w-48 rounded-full bg-white/15 blur-2xl animate-blob-slow" />
+                </>
+              )}
 
               <div className="relative">
-                <div className="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl">
-                  <Icon className="h-10 w-10 text-fg" />
+                <div className="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-white/95 backdrop-blur-md shadow-xl overflow-hidden p-2.5">
+                  {logo ? (
+                    <Image
+                      src={logo}
+                      alt={division.nameBn}
+                      width={80}
+                      height={80}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <Icon className="h-10 w-10 text-fg" />
+                  )}
                 </div>
 
                 <div className="mt-8 grid grid-cols-2 gap-3">
-                  {division.highlights.slice(0, 4).map((h) => {
-                    const onLight = division.accent === "ash";
-                    return (
-                      <div
-                        key={h}
-                        className={`rounded-xl px-3 py-2.5 text-xs sm:text-sm font-medium backdrop-blur-md border ${
-                          onLight
-                            ? "bg-fg/5 border-fg/15 text-fg"
-                            : "bg-white/15 border-white/20 text-white"
-                        }`}
-                      >
-                        {h}
-                      </div>
-                    );
-                  })}
+                  {division.highlights.slice(0, 4).map((h) => (
+                    <div
+                      key={h}
+                      className="rounded-xl px-3 py-2.5 text-xs sm:text-sm font-medium backdrop-blur-md border bg-white/15 border-white/25 text-white"
+                    >
+                      {h}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

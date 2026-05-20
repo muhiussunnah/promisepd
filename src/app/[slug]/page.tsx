@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
@@ -198,23 +199,42 @@ export default async function DivisionPage(props: PageProps<"/[slug]">) {
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {PROJECTS.map((p, i) => (
-                <article key={i} className="card overflow-hidden">
-                  <div className="relative h-40 bg-brand-red overflow-hidden">
-                    <div className="absolute inset-0 opacity-25 mix-blend-overlay grid-bg" />
-                    <div className="absolute inset-0 flex items-end p-5">
-                      <div>
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold text-fg">
-                          <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />
-                          {p.status}
-                        </span>
-                        <h3 className="mt-2 text-xl font-bold text-white drop-shadow-md">
-                          {p.name}
-                        </h3>
-                      </div>
+              {PROJECTS.map((p) => (
+                <article
+                  key={p.slug}
+                  className="card group overflow-hidden flex flex-col"
+                >
+                  {/* Real cover photo — links to the project detail page */}
+                  <Link
+                    href={`/projects/${p.slug}`}
+                    className="relative block h-44 overflow-hidden"
+                    aria-label={p.name}
+                  >
+                    <Image
+                      src={p.cover}
+                      alt={p.name}
+                      fill
+                      sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-fg/85 via-fg/25 to-transparent" />
+                    <div className="absolute top-4 left-4">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold text-fg shadow-sm">
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${
+                            ACCENT_SOLID[p.accent] ?? ACCENT_SOLID.red
+                          }`}
+                        />
+                        {p.status}
+                      </span>
                     </div>
-                  </div>
-                  <div className="p-5">
+                    <div className="absolute inset-x-0 bottom-0 p-5">
+                      <h3 className="text-xl font-bold text-white drop-shadow-md">
+                        {p.name}
+                      </h3>
+                    </div>
+                  </Link>
+                  <div className="p-5 flex-1 flex flex-col">
                     <div className="flex items-baseline justify-between">
                       <div className="text-xs text-fg-muted">{p.location}</div>
                       <div className="text-lg font-bold text-grad-rb">
@@ -224,9 +244,16 @@ export default async function DivisionPage(props: PageProps<"/[slug]">) {
                     {p.size && (
                       <div className="text-xs text-fg-faint mt-1">{p.size}</div>
                     )}
-                    <p className="mt-3 text-sm text-fg-muted leading-relaxed">
+                    <p className="mt-3 text-sm text-fg-muted leading-relaxed flex-1">
                       {p.description}
                     </p>
+                    <Link
+                      href={`/projects/${p.slug}`}
+                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-grad-rb group/btn"
+                    >
+                      বিস্তারিত দেখুন
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                    </Link>
                   </div>
                 </article>
               ))}
