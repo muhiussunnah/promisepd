@@ -11,8 +11,7 @@ const LOGO_URL = `${SITE_URL}/logo.png`;
 const sameAs = [
   SITE.socials.facebook,
   SITE.socials.youtube,
-  SITE.socials.instagram,
-  SITE.socials.tiktok,
+  SITE.socials.telegram,
 ].filter((u) => u && !u.endsWith("#"));
 
 /** Promise Group as the publishing Organization. */

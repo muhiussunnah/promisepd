@@ -46,40 +46,14 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function TikTokIcon(props: React.SVGProps<SVGSVGElement>) {
+function TelegramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden {...props}>
-      {/* Layered cyan + magenta for TikTok's signature offset effect */}
+      <circle cx="12" cy="12" r="12" fill="#229ED9" />
       <path
-        fill="#25F4EE"
-        d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.78 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.82-.1Z"
+        fill="#FFF"
+        d="M5.49 11.77 16.4 7.56c.51-.18.95.12.79.88l-1.86 8.76c-.13.62-.5.77-1.01.48l-2.78-2.05-1.34 1.29c-.15.15-.27.27-.56.27l.2-2.84 5.18-4.68c.23-.2-.05-.31-.35-.12l-6.4 4.03-2.76-.86c-.6-.19-.61-.6.14-.9Z"
       />
-      <path
-        fill="#FE2C55"
-        d="M20.61 7.7a4.85 4.85 0 0 1-1.02-1.01 4.83 4.83 0 0 1-3.77-4.25V2H13.6v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 6.78 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.8.91Z"
-      />
-      <path
-        fill="#000"
-        d="M19.59 7.69a4.85 4.85 0 0 1-1.02-1.01 4.83 4.83 0 0 1-3.77-4.25H12.4v13.66a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.32-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.78 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.82-.1Z"
-      />
-    </svg>
-  );
-}
-
-function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden {...props}>
-      <defs>
-        <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#FED576" />
-          <stop offset="30%" stopColor="#F47133" />
-          <stop offset="60%" stopColor="#BC3081" />
-          <stop offset="100%" stopColor="#4C68D7" />
-        </linearGradient>
-      </defs>
-      <rect x="2" y="2" width="20" height="20" rx="5" fill="url(#ig-grad)" />
-      <circle cx="12" cy="12" r="4.5" fill="none" stroke="#FFF" strokeWidth="1.6" />
-      <circle cx="17.4" cy="6.6" r="1.2" fill="#FFF" />
     </svg>
   );
 }
@@ -89,8 +63,7 @@ export default function Footer() {
     { name: "Facebook", url: SITE.socials.facebook, Icon: FacebookIcon, ring: "ring-[#1877F2]/30" },
     { name: "YouTube", url: SITE.socials.youtube, Icon: YouTubeIcon, ring: "ring-[#FF0000]/30" },
     { name: "WhatsApp", url: SITE.socials.whatsapp, Icon: WhatsAppIcon, ring: "ring-[#25D366]/30" },
-    { name: "TikTok", url: SITE.socials.tiktok, Icon: TikTokIcon, ring: "ring-fg/30" },
-    { name: "Instagram", url: SITE.socials.instagram, Icon: InstagramIcon, ring: "ring-brand-red/40" },
+    { name: "Telegram", url: SITE.socials.telegram, Icon: TelegramIcon, ring: "ring-[#229ED9]/30" },
   ];
 
   return (

@@ -13,14 +13,15 @@ export const SITE = {
     "১২৩/১/২ কাজী টাওয়ার, দক্ষিণ যাত্রাবাড়ী, ঢাকা-১২০৪, বাংলাদেশ",
   hours: "মঙ্গল – রবি · সকাল ৯টা – সন্ধ্যা ৬টা",
   weeklyOff: "সাপ্তাহিক ছুটি: সোমবার",
-  facebook: "https://www.facebook.com/profile.php?id=61557334089998",
+  facebook: "https://www.facebook.com/profile.php?id=100083894211030",
   founded: 2010,
   socials: {
-    facebook: "https://www.facebook.com/profile.php?id=61557334089998",
+    facebook: "https://www.facebook.com/profile.php?id=100083894211030",
     youtube: "https://www.youtube.com/@PromiseCity",
-    whatsapp: "https://wa.me/8801910065136",
-    tiktok: "https://www.tiktok.com/@promisepd",
-    instagram: "https://www.instagram.com/promisepd",
+    // Footer WhatsApp icon → the public broadcast channel.  (The
+    // floating chat button uses SITE.whatsapp / wa.me for 1:1 chat.)
+    whatsapp: "https://whatsapp.com/channel/0029VbCq2Gv47Xe5fUugZi1D",
+    telegram: "https://t.me/promisegroup2026",
   },
   credit: {
     label: "Made by Mustaqeem Billah",
