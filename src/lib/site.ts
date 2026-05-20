@@ -531,8 +531,8 @@ export const PROJECTS: Project[] = [
       "আহবাব প্যালেস ০২ — ১২০০ ও ১৮০০ বর্গফুটের দুই ধরনের ইউনিট। খোলা রান্নাঘর, মাস্টার স্যুট, বড় ব্যালকনি ও আধুনিক ফিটিং — পরিবারের আকার ও বাজেট অনুযায়ী বেছে নেওয়ার স্বাধীনতা।",
     highlights: ["১২০০ ও ১৮০০ বর্গফুট", "মাস্টার স্যুট", "বড় ব্যালকনি", "আধুনিক ফিটিং"],
     accent: "blue",
-    cover: "/ahbab2pics/ahbab2pics.jpeg",
-    gallery: ["/ahbab2pics/ahbab2pics.jpeg"],
+    cover: "/ahbab2pics/ahbab2pics.webp",
+    gallery: ["/ahbab2pics/ahbab2pics.webp"],
   },
 ];
 

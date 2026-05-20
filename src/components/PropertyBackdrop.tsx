@@ -95,7 +95,10 @@ export default function PropertyBackdrop({
       <AnimatePresence mode="popLayout">
         <motion.div
           key={currentSrc}
-          initial={{ opacity: 0 }}
+          // First frame paints instantly at target opacity (no 1.4 s
+          // fade-in) so the hero backdrop is visible with first paint —
+          // later rotations still crossfade.
+          initial={{ opacity: idx === 0 ? targetOpacity : 0 }}
           animate={{ opacity: targetOpacity }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
 /** Grapheme-aware single-shot typewriter for Bangla.
@@ -31,10 +31,20 @@ export default function TypeOnce({
 }) {
   const reduce = useReducedMotion();
   const graphemes = useMemo(() => getGraphemes(text), [text]);
-  const [count, setCount] = useState(reduce ? graphemes.length : 0);
+  // Render the FULL text on the server + first paint so the hero H1 is
+  // the LCP element immediately (an empty-then-typed H1 was pushing LCP
+  // past 4 s).  The typewriter effect still plays when the text CHANGES
+  // — i.e. on each hero rotation — just not on the very first load.
+  const [count, setCount] = useState(graphemes.length);
+  const firstRun = useRef(true);
 
   useEffect(() => {
     if (reduce) {
+      setCount(graphemes.length);
+      return;
+    }
+    if (firstRun.current) {
+      firstRun.current = false;
       setCount(graphemes.length);
       return;
     }

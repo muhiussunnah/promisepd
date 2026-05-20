@@ -37,7 +37,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   // আহবাব প্যালেস ০১
   { src: "/ahbab1pics/ahbab1pics.webp", title: "আহবাব প্যালেস ০১ — ফ্ল্যাগশিপ প্রকল্প" },
   // আহবাব প্যালেস ০২
-  { src: "/ahbab2pics/ahbab2pics.jpeg", title: "আহবাব প্যালেস ০২ — আবাসিক ভবন" },
+  { src: "/ahbab2pics/ahbab2pics.webp", title: "আহবাব প্যালেস ০২ — আবাসিক ভবন" },
   // ফুজালা টাওয়ার
   { src: "/ftpics/ftt1.webp", title: "ফুজালা টাওয়ার — সম্মুখ দৃশ্য" },
   { src: "/ftpics/ft.webp", title: "ফুজালা টাওয়ার — নির্মাণ অগ্রগতি" },

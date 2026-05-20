@@ -157,9 +157,12 @@ export default function Hero() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
+                // Slide only — no opacity hiding — so the hero text paints
+                // with first paint (huge LCP / Speed-Index win) instead of
+                // waiting for JS to fade it in.
+                initial={{ y: 16 }}
+                animate={{ y: 0 }}
+                exit={{ y: -12 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               >
                 {/* Service kicker */}
@@ -184,25 +187,17 @@ export default function Hero() {
                   />
                 </h1>
 
-                {/* Tagline */}
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.4 }}
+                {/* Tagline — rendered immediately (no fade delay) for SI/LCP */}
+                <p
                   className={`mt-4 text-[clamp(1.05rem,1.6vw,1.375rem)] font-bold ${accentText}`}
                 >
                   {current.tagline}
-                </motion.p>
+                </p>
 
                 {/* Description */}
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.65, duration: 0.4 }}
-                  className="mt-3 text-[clamp(0.95rem,1.2vw,1.0625rem)] text-fg-muted leading-relaxed max-w-2xl"
-                >
+                <p className="mt-3 text-[clamp(0.95rem,1.2vw,1.0625rem)] text-fg-muted leading-relaxed max-w-2xl">
                   {current.description}
-                </motion.p>
+                </p>
               </motion.div>
             </AnimatePresence>
 
@@ -231,12 +226,19 @@ export default function Hero() {
                     key={d.slug}
                     onClick={() => setIdx(i)}
                     aria-label={d.nameBn}
-                    className={`transition-all duration-500 ease-out rounded-full ${
-                      active
-                        ? `w-9 h-1.5 ${ACCENT_SOLID_CLASS[d.accent]}`
-                        : "w-1.5 h-1.5 bg-fg-faint/40 hover:bg-fg-faint/70"
-                    }`}
-                  />
+                    // 24×24 hit area (a11y touch-target) with the small
+                    // visual dot centred inside — negative margin keeps the
+                    // dots visually tight.
+                    className="group inline-flex h-6 w-6 -mx-1.5 items-center justify-center"
+                  >
+                    <span
+                      className={`block transition-all duration-500 ease-out rounded-full ${
+                        active
+                          ? `w-9 h-1.5 ${ACCENT_SOLID_CLASS[d.accent]}`
+                          : "w-1.5 h-1.5 bg-fg-faint/40 group-hover:bg-fg-faint/70"
+                      }`}
+                    />
+                  </button>
                 );
               })}
               <span className="ml-2 text-[10px] uppercase tracking-[0.2em] text-fg-faint">
@@ -349,9 +351,9 @@ export default function Hero() {
                         )}
                       </div>
 
-                      <h3 className="mt-6 text-2xl sm:text-3xl font-bold leading-tight text-white drop-shadow-md">
+                      <p className="mt-6 text-2xl sm:text-3xl font-bold leading-tight text-white drop-shadow-md">
                         {current.nameBn}
-                      </h3>
+                      </p>
                       <p className="mt-2 text-sm leading-relaxed text-white/95">
                         {current.tagline}
                       </p>

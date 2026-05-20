@@ -214,6 +214,7 @@ export default function Contact() {
                 <select
                   value={form.interest}
                   onChange={(e) => update("interest", e.target.value)}
+                  aria-label="আগ্রহের বিষয়"
                   className="mt-1.5 w-full rounded-xl bg-white border border-border px-4 py-3 text-sm focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/15 transition-all"
                 >
                   {INTERESTS.map((i) => (

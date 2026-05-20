@@ -88,7 +88,7 @@ export const BLOG_COVER: Record<string, string> = {
   "fuzala-tower-flagship": "/ftpics/ftt1.webp",
   "fuzala-complex-family-home": "/fcpics/fc1.webp",
   "ahbab-palace-01-flagship": "/ahbab1pics/ahbab1pics.webp",
-  "ahbab-palace-02-1200sft": "/ahbab2pics/ahbab2pics.jpeg",
+  "ahbab-palace-02-1200sft": "/ahbab2pics/ahbab2pics.webp",
   "ahbab-palace-02-1800sft": "/interior3d.webp",
   // Rules
   "flat-booking-rules-guide": "/blog-contract.webp",
