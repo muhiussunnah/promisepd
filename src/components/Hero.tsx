@@ -149,7 +149,7 @@ export default function Hero() {
       {/* Main content */}
       <motion.div
         style={{ y }}
-        className="relative z-10 flex-1 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 flex items-center"
+        className="relative z-10 flex-1 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 flex items-start lg:items-center"
       >
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 w-full items-center">
           {/* LEFT — content */}
@@ -390,7 +390,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.9, duration: 0.6 }}
-        className="relative z-10 flex justify-center pt-4 pb-2"
+        className="relative z-10 flex justify-center mt-8 sm:mt-4 lg:mt-0 pt-4 pb-2"
       >
         <div className="flex flex-col items-center gap-1.5 text-fg-faint">
           <span className="text-[10px] uppercase tracking-[0.3em]">নিচে নামুন</span>
