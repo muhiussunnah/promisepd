@@ -23,6 +23,7 @@ import { PROJECTS, SITE } from "@/lib/site";
 import { toBn } from "@/lib/bn";
 import JsonLd from "@/components/JsonLd";
 import ProjectGallery from "@/components/ProjectGallery";
+import ShareAvailability from "@/components/ShareAvailability";
 import { breadcrumbSchema } from "@/lib/schema";
 import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 
@@ -263,89 +264,12 @@ export default async function ProjectPage(
 
       {/* Share availability — limited-share projects (e.g. Fuzala Tower) */}
       {project.shareMap && (
-        <section className="relative py-12 sm:py-16 bg-bg-soft">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-2 mb-2">
-              <Building2 className="h-6 w-6 text-brand-blue" />
-              <h2 className="text-2xl sm:text-3xl font-bold">
-                শেয়ার <span className="text-grad">অ্যাভেইলেবিলিটি</span>
-              </h2>
-            </div>
-            <p className="text-sm sm:text-base text-fg-muted mb-5">
-              মোট {toBn(project.shareMap.total)}টি শেয়ার ·{" "}
-              {toBn(project.shareMap.sold)}টি বিক্রি শেষ ·{" "}
-              <span className="font-bold text-brand-red">
-                মাত্র {toBn(project.shareMap.total - project.shareMap.sold)}টি
-                বাকি
-              </span>{" "}
-              — দ্রুত শেষ হয়ে যাচ্ছে!
-            </p>
-
-            {/* Legend */}
-            <div className="flex flex-wrap items-center gap-4 mb-5 text-xs font-medium text-fg-soft">
-              <span className="inline-flex items-center gap-1.5">
-                <span className="h-3.5 w-3.5 rounded bg-brand-blue/15 border border-brand-blue/50" />
-                খালি — ক্লিক করে বুক করুন
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <span className="h-3.5 w-3.5 rounded bg-bg-soft-2 border border-border" />
-                বিক্রি শেষ
-              </span>
-            </div>
-
-            {/* Numbered share grid — sold cells are muted, the open ones
-                blink and dial-to-book on tap. */}
-            <div className="rounded-2xl border border-border bg-white p-3 sm:p-4">
-              <div className="grid grid-cols-6 sm:grid-cols-10 lg:grid-cols-12 gap-1.5 sm:gap-2">
-                {Array.from(
-                  { length: project.shareMap.total },
-                  (_, i) => {
-                    const n = i + 1;
-                    const available = n > project.shareMap!.sold;
-                    if (available) {
-                      return (
-                        <a
-                          key={n}
-                          href={`tel:${SITE.phone}`}
-                          title={`শেয়ার ${toBn(n)} — খালি · বুক করতে কল করুন`}
-                          className="group relative inline-flex items-center justify-center rounded-lg border-2 border-brand-blue/50 bg-gradient-to-b from-brand-blue/12 to-brand-blue/5 py-2 text-xs font-extrabold text-brand-blue shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:border-brand-blue hover:bg-brand-blue hover:text-white hover:shadow-[var(--shadow-brand)]"
-                        >
-                          <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-80" />
-                            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
-                          </span>
-                          {toBn(n)}
-                        </a>
-                      );
-                    }
-                    return (
-                      <span
-                        key={n}
-                        className="inline-flex items-center justify-center rounded-lg border border-border bg-bg-soft-2 py-2 text-xs font-semibold text-fg-faint"
-                      >
-                        {toBn(n)}
-                      </span>
-                    );
-                  },
-                )}
-              </div>
-            </div>
-
-            <div className="mt-5 grad-border p-5 flex flex-col sm:flex-row sm:items-center gap-4">
-              <div className="flex-1 text-sm text-fg-muted leading-relaxed">
-                {project.shareMap.note ??
-                  "পছন্দের খালি শেয়ার নিশ্চিত করতে এখনই যোগাযোগ করুন — সীমিত শেয়ার।"}
-              </div>
-              <a
-                href={`tel:${SITE.phone}`}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-red px-6 py-3 text-sm font-bold text-white shadow-md hover:scale-[1.02] transition-transform whitespace-nowrap"
-              >
-                <Phone className="h-4 w-4" />
-                শেয়ার বুকিং
-              </a>
-            </div>
-          </div>
-        </section>
+        <ShareAvailability
+          total={project.shareMap.total}
+          sold={project.shareMap.sold}
+          note={project.shareMap.note}
+          phone={SITE.phone}
+        />
       )}
 
       {/* Payment & deed terms */}
@@ -449,7 +373,7 @@ export default async function ProjectPage(
                 খালি
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="h-3.5 w-3.5 rounded bg-bg-soft-2 border border-border" />
+                <span className="h-3.5 w-3.5 rounded bg-brand-red/10 border border-brand-red/30" />
                 বিক্রি শেষ
               </span>
               <span className="inline-flex items-center gap-1.5">
@@ -501,10 +425,10 @@ export default async function ProjectPage(
                       return (
                         <span
                           key={u.id}
-                          className={`inline-flex min-w-[4rem] flex-col items-center justify-center rounded-xl border px-3 py-2 ${
+                          className={`relative inline-flex min-w-[4rem] flex-col items-center justify-center rounded-xl border px-3 py-2 ${
                             isRented
                               ? "border-brand-ash bg-brand-ash/30 text-fg-muted"
-                              : "border-border bg-bg-soft-2 text-fg-faint"
+                              : "border-brand-red/25 bg-brand-red/10 text-brand-red/80"
                           }`}
                         >
                           <span
@@ -514,14 +438,18 @@ export default async function ProjectPage(
                           >
                             #{u.id}
                           </span>
-                          {u.size && (
+                          {u.size && !isRented && (
                             <span className="mt-0.5 text-[9px] font-medium leading-none">
-                              {isRented ? "ভাড়া" : `${u.size} sqft`}
+                              {u.size} sqft
                             </span>
                           )}
-                          {!isRented && (
-                            <span className="mt-0.5 text-[8px] font-bold uppercase leading-none">
-                              বিক্রি
+                          {isRented ? (
+                            <span className="mt-1 rounded-full bg-brand-ash/50 px-1.5 py-0.5 text-[8px] font-bold uppercase leading-none text-fg-muted">
+                              ভাড়া
+                            </span>
+                          ) : (
+                            <span className="mt-1 whitespace-nowrap rounded-full bg-brand-red px-1.5 py-0.5 text-[8px] font-bold uppercase leading-none text-white shadow-sm">
+                              বিক্রি শেষ
                             </span>
                           )}
                         </span>
