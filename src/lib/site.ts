@@ -488,6 +488,14 @@ export type Project = {
     note?: string;
     categories: { katha: string; shotangsho: string; price: string }[];
   };
+  /** Limited-share projects (e.g. Fuzala Tower): `total` numbered
+   *  shares, the first `sold` are gone, the rest are open & tappable
+   *  (tap → dial to book). */
+  shareMap?: {
+    total: number;
+    sold: number;
+    note?: string;
+  };
 };
 
 export const PROJECTS: Project[] = [
@@ -566,6 +574,11 @@ export const PROJECTS: Project[] = [
       ],
       note: "ল্যান্ড শেয়ার ৫,০০,০০০ টাকা পরিশোধের পর নির্মাণ খরচ ৪,০০,০০০ টাকা — ৮টি কিস্তিতে (প্রতিবার ৫০,০০০ টাকা) + মাত্র ১০% সার্ভিস চার্জ। কাজ শুরু হলে ৫০,০০০ টাকা দিন → কোম্পানি নির্মাণকাজ এগিয়ে নেবে → প্রতিটি কাজের A-Z হিসাব অ্যাপ, ওয়েবসাইট বা অফিসে দেখে নিন → এরপর পরের কিস্তি। সম্পূর্ণ স্বচ্ছ নির্মাণ হিসাব।",
     },
+    shareMap: {
+      total: 350,
+      sold: 300,
+      note: "মোট ৩৫০টি শেয়ারের মধ্যে ৩০০টি ইতিমধ্যে বিক্রি শেষ — মাত্র ৫০টি বাকি। যেকোনো খালি শেয়ারে ক্লিক করলেই সরাসরি কল চলে যাবে। দেরি করলে পছন্দের শেয়ার হাতছাড়া হতে পারে।",
+    },
   },
   {
     slug: "fuzala-complex",
@@ -633,12 +646,12 @@ export const PROJECTS: Project[] = [
     videoIds: ["9P1GRaFG-1I"],
     unitMap: {
       floors: [
-        { label: "৬ষ্ঠ তলা", units: [{ id: "A6", status: "sold" }, { id: "B6", status: "sold" }] },
-        { label: "৫ম তলা", units: [{ id: "A5", status: "available" }, { id: "B5", status: "available" }] },
-        { label: "৪র্থ তলা", units: [{ id: "A4", status: "sold" }, { id: "B4", status: "sold" }] },
-        { label: "৩য় তলা", units: [{ id: "A3", status: "sold" }, { id: "B3", status: "sold" }] },
-        { label: "২য় তলা", units: [{ id: "A2", status: "sold" }, { id: "B2", status: "sold" }] },
-        { label: "১ম তলা", units: [{ id: "A1", status: "sold" }, { id: "B1", status: "sold" }] },
+        { label: "৬ষ্ঠ তলা", units: [{ id: "6A", status: "sold" }, { id: "6B", status: "sold" }] },
+        { label: "৫ম তলা", units: [{ id: "5A", status: "available" }, { id: "5B", status: "available" }] },
+        { label: "৪র্থ তলা", units: [{ id: "4A", status: "sold" }, { id: "4B", status: "sold" }] },
+        { label: "৩য় তলা", units: [{ id: "3A", status: "sold" }, { id: "3B", status: "sold" }] },
+        { label: "২য় তলা", units: [{ id: "2A", status: "sold" }, { id: "2B", status: "sold" }] },
+        { label: "১ম তলা", units: [{ id: "1A", status: "sold" }, { id: "1B", status: "sold" }] },
       ],
     },
   },
@@ -671,15 +684,15 @@ export const PROJECTS: Project[] = [
     unitMap: {
       floors: [
         { label: "ছাদ", units: [{ id: "R1", status: "rented", size: "ভাড়া" }, { id: "R2", status: "rented", size: "ভাড়া" }] },
-        { label: "৯ম তলা", units: [{ id: "A9", status: "available", size: "১২০০" }, { id: "B9", status: "available", size: "১২০০" }, { id: "C9", status: "available", size: "১২০০" }] },
-        { label: "৮ম তলা", units: [{ id: "A8", status: "available", size: "১২০০" }, { id: "B8", status: "available", size: "১২০০" }, { id: "C8", status: "available", size: "১২০০" }] },
-        { label: "৭ম তলা", units: [{ id: "A7", status: "available", size: "১২০০" }, { id: "B7", status: "available", size: "১২০০" }, { id: "C7", status: "available", size: "১২০০" }] },
-        { label: "৬ষ্ঠ তলা", units: [{ id: "A6", status: "available", size: "১২০০" }, { id: "B6", status: "available", size: "১২০০" }, { id: "C6", status: "available", size: "১২০০" }] },
-        { label: "৫ম তলা", units: [{ id: "A5", status: "available", size: "১৮০০" }, { id: "B5", status: "available", size: "১৮০০" }] },
-        { label: "৪র্থ তলা", units: [{ id: "A4", status: "sold", size: "১৮০০" }, { id: "B4", status: "available", size: "১৮০০" }] },
-        { label: "৩য় তলা", units: [{ id: "A3", status: "sold", size: "১২০০" }, { id: "B3", status: "sold", size: "১২০০" }, { id: "C3", status: "sold", size: "১২০০" }] },
-        { label: "২য় তলা", units: [{ id: "A2", status: "sold", size: "১২০০" }, { id: "B2", status: "sold", size: "১২০০" }, { id: "C2", status: "sold", size: "১২০০" }] },
-        { label: "১ম তলা", units: [{ id: "A1", status: "sold", size: "১২০০" }, { id: "B1", status: "sold", size: "১২০০" }, { id: "C1", status: "sold", size: "১২০০" }] },
+        { label: "৯ম তলা", units: [{ id: "9A", status: "available", size: "১২০০" }, { id: "9B", status: "available", size: "১২০০" }, { id: "9C", status: "available", size: "১২০০" }] },
+        { label: "৮ম তলা", units: [{ id: "8A", status: "available", size: "১২০০" }, { id: "8B", status: "available", size: "১২০০" }, { id: "8C", status: "available", size: "১২০০" }] },
+        { label: "৭ম তলা", units: [{ id: "7A", status: "available", size: "১২০০" }, { id: "7B", status: "available", size: "১২০০" }, { id: "7C", status: "available", size: "১২০০" }] },
+        { label: "৬ষ্ঠ তলা", units: [{ id: "6A", status: "available", size: "১২০০" }, { id: "6B", status: "available", size: "১২০০" }, { id: "6C", status: "available", size: "১২০০" }] },
+        { label: "৫ম তলা", units: [{ id: "5A", status: "available", size: "১৮০০" }, { id: "5B", status: "available", size: "১৮০০" }] },
+        { label: "৪র্থ তলা", units: [{ id: "4A", status: "sold", size: "১৮০০" }, { id: "4B", status: "available", size: "১৮০০" }] },
+        { label: "৩য় তলা", units: [{ id: "3A", status: "sold", size: "১২০০" }, { id: "3B", status: "sold", size: "১২০০" }, { id: "3C", status: "sold", size: "১২০০" }] },
+        { label: "২য় তলা", units: [{ id: "2A", status: "sold", size: "১২০০" }, { id: "2B", status: "sold", size: "১২০০" }, { id: "2C", status: "sold", size: "১২০০" }] },
+        { label: "১ম তলা", units: [{ id: "1A", status: "sold", size: "১২০০" }, { id: "1B", status: "sold", size: "১২০০" }, { id: "1C", status: "sold", size: "১২০০" }] },
       ],
     },
   },
