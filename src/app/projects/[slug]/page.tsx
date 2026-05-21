@@ -15,6 +15,7 @@ import {
   Wallet,
   Calendar,
   KeyRound,
+  ZoomIn,
 } from "lucide-react";
 import { PROJECTS, SITE } from "@/lib/site";
 import { toBn } from "@/lib/bn";
@@ -270,39 +271,29 @@ export default async function ProjectPage(
             </div>
 
             <div className="grid sm:grid-cols-3 gap-4">
-              <div className="card p-5">
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-blue text-white shadow-md">
-                  <Wallet className="h-5 w-5" />
-                </div>
-                <div className="mt-3 text-[11px] uppercase tracking-wider text-fg-faint font-bold">
-                  বুকিং মানি
-                </div>
-                <div className="text-xl font-bold text-grad-rb">
-                  {project.payment.bookingMoney}
-                </div>
-              </div>
-              <div className="card p-5">
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-red text-white shadow-md">
-                  <Calendar className="h-5 w-5" />
-                </div>
-                <div className="mt-3 text-[11px] uppercase tracking-wider text-fg-faint font-bold">
-                  মাসিক কিস্তি
-                </div>
-                <div className="text-xl font-bold text-grad-rb">
-                  {project.payment.monthly}
-                </div>
-              </div>
-              <div className="card p-5">
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-ash-dark text-white shadow-md">
-                  <KeyRound className="h-5 w-5" />
-                </div>
-                <div className="mt-3 text-[11px] uppercase tracking-wider text-fg-faint font-bold">
-                  মোট ল্যান্ড শেয়ার
-                </div>
-                <div className="text-xl font-bold text-grad-rb">
-                  {project.payment.totalShare}
-                </div>
-              </div>
+              {project.payment.rows.map((row, i) => {
+                const RIcon = [Wallet, Calendar, KeyRound][i % 3];
+                const box = [
+                  "bg-brand-blue",
+                  "bg-brand-red",
+                  "bg-brand-ash-dark",
+                ][i % 3];
+                return (
+                  <div key={row.label} className="card p-5">
+                    <div
+                      className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${box} text-white shadow-md`}
+                    >
+                      <RIcon className="h-5 w-5" />
+                    </div>
+                    <div className="mt-3 text-[11px] uppercase tracking-wider text-fg-faint font-bold">
+                      {row.label}
+                    </div>
+                    <div className="text-xl font-bold text-grad-rb">
+                      {row.value}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="mt-4 flex items-start gap-3 rounded-2xl bg-bg-soft border border-border px-5 py-4">
@@ -311,6 +302,39 @@ export default async function ProjectPage(
                 {project.payment.note}
               </p>
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* Full rules / spec graphic — official details + নিয়মাবলী */}
+      {project.rulesImage && (
+        <section className="relative pb-12 sm:pb-16">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-2 mb-6">
+              <FileText className="h-6 w-6 text-brand-blue" />
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                বিস্তারিত <span className="text-grad">নিয়মাবলী</span>
+              </h2>
+            </div>
+            <a
+              href={project.rulesImage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative block rounded-2xl overflow-hidden border border-border shadow-lg"
+            >
+              <Image
+                src={project.rulesImage}
+                alt={`${project.name} — বিস্তারিত নিয়মাবলী`}
+                width={1280}
+                height={904}
+                sizes="(min-width:1024px) 896px, 100vw"
+                className="w-full h-auto"
+              />
+              <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-fg/80 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md group-hover:bg-brand-blue transition-colors">
+                <ZoomIn className="h-3.5 w-3.5" />
+                বড় করে দেখুন
+              </span>
+            </a>
           </div>
         </section>
       )}
