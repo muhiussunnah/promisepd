@@ -175,11 +175,12 @@ export default function StoryView() {
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+              whileHover={{ y: -6 }}
               className="lg:col-span-5"
             >
-              <div className="relative mx-auto w-[min(22rem,100%)]">
-                <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-brand-blue/30 via-transparent to-brand-red/20 blur-md -z-10" />
-                <div className="grad-border overflow-hidden shadow-2xl bg-white">
+              <div className="group relative mx-auto w-[min(22rem,100%)]">
+                <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-brand-blue/30 via-transparent to-brand-red/20 blur-md -z-10 transition-opacity duration-500 group-hover:opacity-80" />
+                <div className="grad-border overflow-hidden shadow-2xl bg-white transition-shadow duration-500 group-hover:shadow-[0_30px_60px_-15px_rgba(24,71,161,0.45)]">
                   <div className="relative aspect-[4/5]">
                     <Image
                       src="/ceo-v2.webp"
@@ -187,7 +188,7 @@ export default function StoryView() {
                       fill
                       priority
                       sizes="(min-width:1024px) 352px, 100vw"
-                      className="object-cover object-top"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-fg/70 via-transparent to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
