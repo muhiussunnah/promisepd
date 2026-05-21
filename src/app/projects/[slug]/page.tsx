@@ -152,7 +152,7 @@ export default async function ProjectPage(
               <MapPin className="h-4 w-4" />
               {project.location}
             </span>
-            <span className="text-sm">
+            <span className="text-sm whitespace-nowrap">
               <span className="text-white/70">শুরু </span>
               <span className="font-bold">{project.price}</span>
             </span>

@@ -112,15 +112,15 @@ export default function Projects() {
 
               <div className="relative p-6 flex-1 flex flex-col">
                 <div className="flex items-baseline justify-between gap-3">
-                  <div className="flex items-center gap-1.5 text-sm text-fg-muted">
-                    <MapPin className="h-4 w-4 text-brand-red" />
+                  <div className="flex items-center gap-1.5 text-sm text-fg-muted min-w-0">
+                    <MapPin className="h-4 w-4 text-brand-red shrink-0" />
                     {project.location}
                   </div>
-                  <div className="text-right">
+                  <div className="text-right shrink-0">
                     <div className="text-[10px] uppercase tracking-wider text-fg-faint">
                       শুরু
                     </div>
-                    <div className="text-lg sm:text-xl font-bold text-grad-rb">
+                    <div className="text-lg sm:text-xl font-bold text-grad-rb whitespace-nowrap">
                       {project.price}
                     </div>
                   </div>
