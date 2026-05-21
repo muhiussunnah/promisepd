@@ -11,7 +11,7 @@ const OG_IMAGE = absoluteUrl("/og-image.png");
 
 const PAGE_TITLE = "গ্যালারি — Promise PPD";
 const PAGE_DESC =
-  "প্রমিস সিটির প্রকল্পের সর্বশেষ ছবি ও ভিডিও — ফুজালা টাওয়ার, ফুজালা কমপ্লেক্স, আহবাব প্যালেসসহ আমাদের সকল কাজের একটি ঝলক।";
+  "আমাদের প্রকল্পের সর্বশেষ ছবি ও ভিডিও — ফুজালা টাওয়ার, ফুজালা কমপ্লেক্স, আহবাব প্যালেসসহ সকল কাজের একটি ঝলক।";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,

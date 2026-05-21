@@ -115,6 +115,19 @@ export default function Hero() {
   const accentSolidClass = ACCENT_SOLID_CLASS[current.accent];
   const accentText = ACCENT_TEXT[current.accent];
 
+  // Title gets a split treatment: the first half fades in, the second
+  // half types out (typewriter).  Both effects stay OFF on the very
+  // first paint (LCP-safe) and play on every rotation after that.
+  const playedRef = useRef(false);
+  const playEffects = playedRef.current;
+  useEffect(() => {
+    playedRef.current = true;
+  }, []);
+  const titleWords = current.heroTitle.split(" ");
+  const splitAt = Math.ceil(titleWords.length / 2);
+  const titleFade = titleWords.slice(0, splitAt).join(" ");
+  const titleType = titleWords.slice(splitAt).join(" ");
+
   return (
     <section
       id="home"
@@ -134,7 +147,7 @@ export default function Hero() {
           "/ahbab1pics/ahbab1pics.webp", // আহবাব প্যালেস ০১
           "/fcpics/fc1.webp", // ফুজালা কমপ্লেক্স
         ]}
-        alt="প্রমিস সিটির প্রকল্পসমূহ"
+        alt="প্রমিস পিপিডি-র প্রকল্পসমূহ"
         intensity={38}
         position="center"
         bluewash="soft"
@@ -178,13 +191,25 @@ export default function Hero() {
                   </span>
                 </div>
 
-                {/* Big title — typewriter (re-types on each slide) */}
+                {/* Big title — first half fades in, second half types
+                    out (typewriter) on each rotation. */}
                 <h1 className="mt-5 text-[clamp(1.875rem,4.6vw,3.75rem)] font-extrabold leading-[1.15] tracking-tight text-fg max-w-[22ch] min-h-[1.5em]">
-                  <TypeOnce
-                    text={current.heroTitle}
-                    speed={45}
-                    cursorColor={ACCENT_CURSOR[current.accent]}
-                  />
+                  <motion.span
+                    initial={playEffects ? { opacity: 0 } : false}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.55, ease: "easeOut" }}
+                  >
+                    {titleFade}
+                    {titleType ? " " : ""}
+                  </motion.span>
+                  {titleType && (
+                    <TypeOnce
+                      text={titleType}
+                      speed={45}
+                      cursorColor={ACCENT_CURSOR[current.accent]}
+                      animate={playEffects}
+                    />
+                  )}
                 </h1>
 
                 {/* Tagline — rendered immediately (no fade delay) for SI/LCP */}

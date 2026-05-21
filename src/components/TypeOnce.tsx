@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
 /** Grapheme-aware single-shot typewriter for Bangla.
@@ -23,28 +23,25 @@ export default function TypeOnce({
   speed = 50,
   cursorColor = "#e11924",
   cursorWidth = 3,
+  animate = false,
 }: {
   text: string;
   speed?: number;
   cursorColor?: string;
   cursorWidth?: number;
+  /** When false (the default + first paint) the full text is rendered
+   *  instantly so the hero H1 is the LCP element with no delay.  The
+   *  parent flips this to true on every rotation so the typewriter
+   *  effect plays only AFTER the first load — never blocking LCP. */
+  animate?: boolean;
 }) {
   const reduce = useReducedMotion();
   const graphemes = useMemo(() => getGraphemes(text), [text]);
-  // Render the FULL text on the server + first paint so the hero H1 is
-  // the LCP element immediately (an empty-then-typed H1 was pushing LCP
-  // past 4 s).  The typewriter effect still plays when the text CHANGES
-  // — i.e. on each hero rotation — just not on the very first load.
-  const [count, setCount] = useState(graphemes.length);
-  const firstRun = useRef(true);
+  const shouldType = animate && !reduce;
+  const [count, setCount] = useState(shouldType ? 0 : graphemes.length);
 
   useEffect(() => {
-    if (reduce) {
-      setCount(graphemes.length);
-      return;
-    }
-    if (firstRun.current) {
-      firstRun.current = false;
+    if (!shouldType) {
       setCount(graphemes.length);
       return;
     }
@@ -60,7 +57,7 @@ export default function TypeOnce({
       });
     }, speed);
     return () => clearInterval(t);
-  }, [graphemes, speed, reduce]);
+  }, [graphemes, speed, shouldType]);
 
   const done = count >= graphemes.length;
 
