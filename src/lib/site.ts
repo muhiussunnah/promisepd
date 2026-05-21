@@ -440,6 +440,17 @@ export type Project = {
   gallery: string[];
   /** Optional YouTube video ids shown on the detail page. */
   videoIds?: string[];
+  /** Floor-plan link (PDF / image, e.g. Google Drive). */
+  floorPlanUrl?: string;
+  /** Payment & deed terms — rendered as a dedicated detail section. */
+  payment?: {
+    bookingMoney: string;
+    monthly: string;
+    totalShare: string;
+    note: string;
+  };
+  /** Building availability for multi-building projects (status grid). */
+  buildings?: { total: number; soldOut: number; nowBooking: number };
 };
 
 export const PROJECTS: Project[] = [
@@ -492,15 +503,36 @@ export const PROJECTS: Project[] = [
     name: "ফুজালা কমপ্লেক্স",
     status: "চলমান",
     location: "প্রমিস সিটি, ঢাকা",
-    price: "৳ ৪.৪৫ লাখ",
+    price: "৳ ৫,২০,০০০",
+    size: "১২০০ বর্গফুট / ইউনিট",
     description:
-      "সাশ্রয়ী মূল্যের পারিবারিক কমপ্লেক্স — চিন্তাশীল লেআউট, নিরাপদ কমিউনিটি ও সহজ যাতায়াত।",
+      "৩০টি ভবনের পারিবারিক আবাসন — G+9, প্রতি ফ্লোরে ২টি ১২০০ বর্গফুট ইউনিট। ১১টি ভবন বিক্রি শেষ, ১২ নম্বর ভবনে বুকিং চলছে।",
     longDescription:
-      "ফুজালা কমপ্লেক্স সাশ্রয়ী মূল্যের পারিবারিক আবাসন — চিন্তাশীল লেআউট, নিরাপদ কমিউনিটি ও সহজ যাতায়াতের সংযোগ। প্রথমবার নিজের ঠিকানা গড়তে চাওয়া পরিবারের জন্য আদর্শ।",
-    highlights: ["পারিবারিক ডিজাইন", "নিরাপদ কমিউনিটি", "সহজ যাতায়াত"],
+      "ফুজালা কমপ্লেক্স প্রমিস সিটির সাশ্রয়ী পারিবারিক আবাসন প্রকল্প — মোট ৩০টি ভবন, প্রতিটি ৬ শতাংশ (প্রায় ৪ কাঠা) জমির উপর G+9 কাঠামোয় নির্মিত।",
+    details: [
+      "ফুজালা কমপ্লেক্স প্রমিস সিটির একটি সাশ্রয়ী পারিবারিক আবাসন প্রকল্প — মোট ৩০টি ভবন, প্রতিটি ভবন ৬ শতাংশ (প্রায় ৪ কাঠা) জমির উপর G+9 কাঠামোয় নির্মিত।",
+      "প্রতিটি ফ্লোরে ২টি করে ইউনিট, প্রতিটি ১২০০ বর্গফুট। বেসমেন্টে পার্কিং — প্রতি ২ ইউনিটের জন্য ১টি পার্কিং স্পেস বরাদ্দ।",
+      "ইতিমধ্যে ১১টি ভবন সম্পূর্ণ বিক্রি হয়ে গেছে। বর্তমানে ১২ নম্বর ভবনে বুকিং চলছে — পছন্দের ইউনিট নিশ্চিত করতে এখনই যোগাযোগ করুন।",
+      "চিন্তাশীল লেআউট, নিরাপদ কমিউনিটি ও সহজ যাতায়াতের সংযোগ — প্রথমবার নিজের ঠিকানা গড়তে চাওয়া পরিবারের জন্য ফুজালা কমপ্লেক্স একটি আদর্শ ঠিকানা।",
+    ],
+    highlights: [
+      "৩০টি ভবন · G+9",
+      "প্রতি ফ্লোরে ২ ইউনিট · ১২০০ sqft",
+      "৬ শতাংশ (৪ কাঠা) জমি",
+      "বেসমেন্ট পার্কিং (২ ইউনিটে ১টি)",
+    ],
     accent: "blue",
     cover: "/fcpics/fc1.webp",
     gallery: ["/fcpics/fc1.webp", "/fcpics/fc2.webp", "/fcpics/fc3.webp", "/fcpics/f4.webp"],
+    floorPlanUrl:
+      "https://drive.google.com/file/d/1LNYsoSRrMGJFrGXG4MQkAj7s71-JkK4L/view?usp=sharing",
+    payment: {
+      bookingMoney: "৪০,০০০ টাকা",
+      monthly: "৪,০০০ টাকা / মাস",
+      totalShare: "৫,২০,০০০ টাকা",
+      note: "মোট ল্যান্ড শেয়ার মূল্য ৫,২০,০০০ টাকা পরিশোধ হলে প্রমিস সিটি জমির দলিল সম্পন্ন করে দেবে। কেউ যদি ২০২৭ সালের ডিসেম্বরের মধ্যে সম্পূর্ণ মূল্য পরিশোধ করেন, তাঁকে তখনই জমির দলিল বুঝিয়ে দেওয়া হবে এবং ২০২৯ সালে ফ্ল্যাট হস্তান্তর করা হবে — ইন শা আল্লাহ।",
+    },
+    buildings: { total: 30, soldOut: 11, nowBooking: 12 },
   },
   {
     slug: "ahbab-palace-01",

@@ -232,10 +232,18 @@ export default function Navbar() {
                 const isActive =
                   item.id === "home"
                     ? isHome && activeSection === "home"
-                    : item.href.startsWith("/#")
-                      ? isHome && activeSection === item.id
-                      : pathname === item.href ||
-                        pathname.startsWith(`${item.href}/`);
+                    : item.id === "divisions"
+                      ? // Light up on any division page too, not just the
+                        // homepage #divisions section.
+                        !!currentDivision ||
+                        (isHome && activeSection === "divisions")
+                      : item.id === "projects"
+                        ? !!currentProject ||
+                          (isHome && activeSection === "projects")
+                        : item.href.startsWith("/#")
+                          ? isHome && activeSection === item.id
+                          : pathname === item.href ||
+                            pathname.startsWith(`${item.href}/`);
                 if (item.dropdown) {
                   return (
                     <div
@@ -447,9 +455,15 @@ export default function Navbar() {
                   const isActive =
                     item.id === "home"
                       ? isHome && activeSection === "home"
-                      : item.href.startsWith("/#")
-                        ? isHome && activeSection === item.id
-                        : pathname === item.href;
+                      : item.id === "divisions"
+                        ? !!currentDivision ||
+                          (isHome && activeSection === "divisions")
+                        : item.id === "projects"
+                          ? !!currentProject ||
+                            (isHome && activeSection === "projects")
+                          : item.href.startsWith("/#")
+                            ? isHome && activeSection === item.id
+                            : pathname === item.href;
                   if (item.dropdown) {
                     return (
                       <motion.div

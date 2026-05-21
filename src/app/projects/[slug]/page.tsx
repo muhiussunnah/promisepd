@@ -10,8 +10,14 @@ import {
   Ruler,
   Phone,
   PlayCircle,
+  FileText,
+  Building2,
+  Wallet,
+  Calendar,
+  KeyRound,
 } from "lucide-react";
 import { PROJECTS, SITE } from "@/lib/site";
+import { toBn } from "@/lib/bn";
 import JsonLd from "@/components/JsonLd";
 import ProjectGallery from "@/components/ProjectGallery";
 import { breadcrumbSchema } from "@/lib/schema";
@@ -167,9 +173,147 @@ export default async function ProjectPage(
               <Phone className="h-4 w-4 text-brand-blue" />
               {SITE.phoneDisplay}
             </a>
+            {project.floorPlanUrl && (
+              <a
+                href={project.floorPlanUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white/15 border border-white/30 backdrop-blur-md px-6 py-3.5 text-sm sm:text-base font-semibold text-white hover:bg-white/25 transition-colors"
+              >
+                <FileText className="h-4 w-4" />
+                ফ্লোর প্ল্যান দেখুন
+              </a>
+            )}
           </div>
         </div>
       </section>
+
+      {/* Building availability — multi-building projects only */}
+      {project.buildings && (
+        <section className="relative py-12 sm:py-16 bg-bg-soft">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-2 mb-2">
+              <Building2 className="h-6 w-6 text-brand-blue" />
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                ভবন <span className="text-grad">স্ট্যাটাস</span>
+              </h2>
+            </div>
+            <p className="text-sm sm:text-base text-fg-muted mb-6">
+              মোট {toBn(project.buildings.total)}টি ভবন ·{" "}
+              {toBn(project.buildings.soldOut)}টি বিক্রি শেষ · ভবন{" "}
+              {toBn(project.buildings.nowBooking)}-এ বুকিং চলছে
+            </p>
+
+            <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-10 gap-2.5">
+              {Array.from({ length: project.buildings.total }, (_, idx) => {
+                const n = idx + 1;
+                const sold = n <= project.buildings!.soldOut;
+                const booking = n === project.buildings!.nowBooking;
+                return (
+                  <div
+                    key={n}
+                    className={`relative flex flex-col items-center justify-center rounded-xl border py-3 text-center ${
+                      booking
+                        ? "bg-brand-blue text-white border-brand-blue shadow-[var(--shadow-brand)]"
+                        : sold
+                          ? "bg-bg-soft-2 text-fg-faint border-border"
+                          : "bg-white text-fg-soft border-border"
+                    }`}
+                  >
+                    <span className="text-base font-extrabold tnum">
+                      {toBn(n)}
+                    </span>
+                    <span className="text-[9px] font-bold uppercase tracking-wide mt-0.5">
+                      {booking ? "বুকিং" : sold ? "বিক্রি শেষ" : "আসছে"}
+                    </span>
+                    {booking && (
+                      <span className="absolute -top-1.5 -right-1.5 flex h-3 w-3">
+                        <span className="absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75 animate-ping" />
+                        <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-red" />
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-6 grad-border p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex-1">
+                <div className="text-sm font-bold text-fg">
+                  ভবন {toBn(project.buildings.nowBooking)}-এ এখন বুকিং চলছে
+                </div>
+                <p className="text-sm text-fg-muted mt-0.5">
+                  পছন্দের ইউনিট নিশ্চিত করতে এখনই যোগাযোগ করুন — সীমিত ইউনিট।
+                </p>
+              </div>
+              <a
+                href={`tel:${SITE.phone}`}
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-red px-6 py-3 text-sm font-bold text-white shadow-md hover:scale-[1.02] transition-transform whitespace-nowrap"
+              >
+                <Phone className="h-4 w-4" />
+                জরুরি যোগাযোগ
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Payment & deed terms */}
+      {project.payment && (
+        <section className="relative py-12 sm:py-16">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-2 mb-6">
+              <Wallet className="h-6 w-6 text-brand-blue" />
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                পেমেন্ট ও <span className="text-grad">দলিল</span>
+              </h2>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-4">
+              <div className="card p-5">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-blue text-white shadow-md">
+                  <Wallet className="h-5 w-5" />
+                </div>
+                <div className="mt-3 text-[11px] uppercase tracking-wider text-fg-faint font-bold">
+                  বুকিং মানি
+                </div>
+                <div className="text-xl font-bold text-grad-rb">
+                  {project.payment.bookingMoney}
+                </div>
+              </div>
+              <div className="card p-5">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-red text-white shadow-md">
+                  <Calendar className="h-5 w-5" />
+                </div>
+                <div className="mt-3 text-[11px] uppercase tracking-wider text-fg-faint font-bold">
+                  মাসিক কিস্তি
+                </div>
+                <div className="text-xl font-bold text-grad-rb">
+                  {project.payment.monthly}
+                </div>
+              </div>
+              <div className="card p-5">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-ash-dark text-white shadow-md">
+                  <KeyRound className="h-5 w-5" />
+                </div>
+                <div className="mt-3 text-[11px] uppercase tracking-wider text-fg-faint font-bold">
+                  মোট ল্যান্ড শেয়ার
+                </div>
+                <div className="text-xl font-bold text-grad-rb">
+                  {project.payment.totalShare}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-start gap-3 rounded-2xl bg-bg-soft border border-border px-5 py-4">
+              <KeyRound className="h-5 w-5 text-brand-blue shrink-0 mt-0.5" />
+              <p className="text-sm text-fg-muted leading-relaxed">
+                {project.payment.note}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Highlights */}
       <section className="relative py-12 sm:py-16">
