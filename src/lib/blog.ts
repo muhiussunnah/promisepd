@@ -91,11 +91,11 @@ export const BLOG_COVER: Record<string, string> = {
   "ahbab-palace-02-1200sft": "/ahbab2pics/ahbab2pics.webp",
   "ahbab-palace-02-1800sft": "/interior3d.webp",
   // Rules
-  "flat-booking-rules-guide": "/blog-contract.webp",
+  "flat-booking-rules-guide": "/blog-contract-v2.webp",
   "commission-payment-rules-partners": "/savings.webp",
   // Resources
   "land-buying-bangladesh-guide": "/blog-land.webp",
-  "flat-buying-complete-guide-2026": "/blog-keys.webp",
+  "flat-buying-complete-guide-2026": "/blog-keys-v2.webp",
 };
 
 /** Display labels + ordering for the secondary "প্রকল্প" filter.
