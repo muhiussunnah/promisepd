@@ -16,6 +16,8 @@ import {
   Calendar,
   KeyRound,
   ZoomIn,
+  Sparkles,
+  LandPlot,
 } from "lucide-react";
 import { PROJECTS, SITE } from "@/lib/site";
 import { toBn } from "@/lib/bn";
@@ -380,26 +382,57 @@ export default async function ProjectPage(
                   </div>
                   <div className="flex flex-wrap gap-2 flex-1">
                     {floor.units.map((u) => {
-                      const cls =
-                        u.status === "available"
-                          ? "bg-brand-blue/10 border-brand-blue/40 text-brand-blue"
-                          : u.status === "rented"
-                            ? "bg-brand-ash/30 border-brand-ash text-fg-muted"
-                            : "bg-bg-soft-2 border-border text-fg-faint";
+                      // Available units are tappable (→ call to book),
+                      // with a blinking "open" beacon + hover lift.
+                      if (u.status === "available") {
+                        return (
+                          <a
+                            key={u.id}
+                            href={`tel:${SITE.phone}`}
+                            title={`${u.id} — খালি · বুক করতে কল করুন`}
+                            className="group relative inline-flex min-w-[4rem] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-brand-blue/50 bg-gradient-to-b from-brand-blue/12 to-brand-blue/5 px-3 py-2 text-brand-blue shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.08] hover:border-brand-blue hover:bg-brand-blue hover:text-white hover:shadow-[var(--shadow-brand)]"
+                          >
+                            <span className="absolute -top-1.5 -right-1.5 flex h-3 w-3">
+                              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-80" />
+                              <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white" />
+                            </span>
+                            <span className="text-sm font-extrabold leading-none">
+                              {u.id}
+                            </span>
+                            {u.size && (
+                              <span className="mt-0.5 text-[9px] font-semibold leading-none opacity-90">
+                                {u.size} sqft
+                              </span>
+                            )}
+                            <span className="mt-0.5 text-[8px] font-bold uppercase leading-none opacity-85 group-hover:opacity-100">
+                              খালি
+                            </span>
+                          </a>
+                        );
+                      }
+                      const isRented = u.status === "rented";
                       return (
                         <span
                           key={u.id}
-                          className={`inline-flex min-w-[3.6rem] flex-col items-center justify-center rounded-lg border px-2.5 py-1.5 ${cls}`}
+                          className={`inline-flex min-w-[4rem] flex-col items-center justify-center rounded-xl border px-3 py-2 ${
+                            isRented
+                              ? "border-brand-ash bg-brand-ash/30 text-fg-muted"
+                              : "border-border bg-bg-soft-2 text-fg-faint"
+                          }`}
                         >
-                          <span className="text-sm font-extrabold leading-none">
+                          <span
+                            className={`text-sm font-bold leading-none ${
+                              isRented ? "" : "line-through"
+                            }`}
+                          >
                             {u.id}
                           </span>
                           {u.size && (
                             <span className="mt-0.5 text-[9px] font-medium leading-none">
-                              {u.size === "ভাড়া" ? "ভাড়া" : `${u.size} sqft`}
+                              {isRented ? "ভাড়া" : `${u.size} sqft`}
                             </span>
                           )}
-                          {u.status === "sold" && (
+                          {!isRented && (
                             <span className="mt-0.5 text-[8px] font-bold uppercase leading-none">
                               বিক্রি
                             </span>
@@ -423,6 +456,86 @@ export default async function ProjectPage(
                 <Phone className="h-4 w-4" />
                 বুকিং যোগাযোগ
               </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Land plots — pricing + categories (Promise City township) */}
+      {project.plots && (
+        <section className="relative py-12 sm:py-16 bg-bg-soft">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-2 mb-2">
+              <LandPlot className="h-6 w-6 text-brand-blue" />
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                জমির <span className="text-grad">প্লট ও মূল্য</span>
+              </h2>
+            </div>
+            <p className="text-sm sm:text-base text-fg-muted mb-6">
+              বিনিয়োগযোগ্য আবাসিক প্লট — যাচাইকৃত দলিল ও নামজারিসহ হস্তান্তর।
+            </p>
+
+            {/* Price summary strip */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+              {[
+                { label: "প্রতি শতাংশ", value: project.plots.pricePerShotangsho },
+                { label: "প্রতি কাঠা", value: project.plots.pricePerKatha },
+                { label: "রূপান্তর", value: project.plots.conversion },
+              ].map((row) => (
+                <div key={row.label} className="card p-5">
+                  <div className="text-[11px] uppercase tracking-wider text-fg-faint font-bold">
+                    {row.label}
+                  </div>
+                  <div className="text-xl font-bold text-grad-rb">
+                    {row.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Plot category cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {project.plots.categories.map((c) => (
+                <div
+                  key={c.katha}
+                  className="grad-border p-6 text-center transition-transform hover:-translate-y-1"
+                >
+                  <div className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-blue text-white shadow-md">
+                    <Ruler className="h-6 w-6" />
+                  </div>
+                  <div className="mt-3 text-2xl font-extrabold text-fg">
+                    {c.katha}
+                  </div>
+                  <div className="text-sm text-fg-muted">{c.shotangsho}</div>
+                  <div className="mt-3 text-xl font-bold text-grad-rb">
+                    {c.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Layout plan button + coming-soon dynamic note */}
+            <div className="mt-6 flex flex-col gap-4">
+              {project.plots.layoutPlanUrl && (
+                <a
+                  href={project.plots.layoutPlanUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-blue px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.01] transition-all sm:w-auto sm:self-start"
+                >
+                  <FileText className="h-4 w-4" />
+                  জমির লেআউট প্ল্যান দেখুন
+                  <ZoomIn className="h-4 w-4" />
+                </a>
+              )}
+              {project.plots.note && (
+                <div className="flex items-start gap-3 rounded-2xl bg-white border border-border px-5 py-4">
+                  <Sparkles className="h-5 w-5 text-brand-blue shrink-0 mt-0.5" />
+                  <p className="text-sm text-fg-muted leading-relaxed">
+                    {project.plots.note}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </section>
