@@ -335,18 +335,17 @@ export default function StoryView() {
       </section>
 
       {/* ── PULL QUOTE / IMPACT BAND ─────────────────────────── */}
-      <section className="relative overflow-hidden py-16 sm:py-24">
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "linear-gradient(135deg, #1847a1 0%, #133680 55%, #0f2a66 100%)",
-          }}
-        />
-        <div className="absolute inset-0 -z-10 grid-bg opacity-20" />
+      <section
+        className="relative overflow-hidden py-16 sm:py-24"
+        style={{
+          background:
+            "linear-gradient(135deg, #1847a1 0%, #133680 55%, #0f2a66 100%)",
+        }}
+      >
+        <div className="absolute inset-0 grid-bg opacity-20" />
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-brand-red" />
 
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center text-white">
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center text-white">
           <motion.div {...reveal}>
             <Quote className="mx-auto h-10 w-10 text-white/40" />
             <p className="mt-6 text-2xl sm:text-3xl lg:text-[2.5rem] font-bold leading-[1.3]">
