@@ -160,7 +160,7 @@ export default function PWAInstallPrompt() {
                   <div className="rounded-2xl bg-white/95 backdrop-blur-md shadow-xl p-1.5 shrink-0">
                     <Image
                       src="/icon.png"
-                      alt="Promise PPD"
+                      alt="PromisePD"
                       width={52}
                       height={52}
                       className="rounded-xl"
@@ -168,7 +168,7 @@ export default function PWAInstallPrompt() {
                   </div>
                   <div className="leading-tight">
                     <div className="text-lg font-extrabold text-white drop-shadow-sm">
-                      Promise PPD
+                      PromisePD
                     </div>
                     <div className="text-[11px] text-white/85">
                       স্বপ্ন যেখানে বাস্তব
@@ -194,7 +194,7 @@ export default function PWAInstallPrompt() {
                 </div>
 
                 <h3 className="text-center text-lg sm:text-xl font-bold text-fg leading-tight">
-                  Promise PPD অ্যাপ ইনস্টল করুন
+                  PromisePD অ্যাপ ইনস্টল করুন
                 </h3>
                 <p className="mt-2 text-center text-xs sm:text-sm text-fg-muted leading-relaxed">
                   {isIOS

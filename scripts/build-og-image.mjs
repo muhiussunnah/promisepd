@@ -1,8 +1,11 @@
 /**
  * One-shot: build the premium, on-brand share/install imagery —
- *   - /public/og-image.png        (1200×630)  social link previews
- *   - /public/screenshot-wide.png (1280×720)  PWA install dialog (wide)
- *   - /public/screenshot-mobile.png (720×1280) PWA install dialog (narrow)
+ *   - /public/og-image.png            (1200×630)  social link previews
+ *   - /public/screenshot-wide-v2.png  (1280×720)  PWA install dialog (wide)
+ *   - /public/screenshot-mobile-v2.png (720×1280) PWA install dialog (narrow)
+ *
+ * Screenshot filenames are versioned (-v2) so the browser/CDN can't serve
+ * a stale install-dialog preview when the design changes.
  *
  * Design: a real Ahbab Palace project photo kept FAINT under a strong
  * brand-blue wash (blue #1847A1 leads, red #E11924 as a thin accent bar)
@@ -64,7 +67,7 @@ const DIV = "Real Estate &#183; Construction &#183; Savings &#183; Hajj &#183; 3
 // ── Landscape (og + wide) ─────────────────────────────────────────────
 const landscape = (W, H) => `
   <image href="data:image/png;base64,${LOGO_B64}" x="${W * 0.075}" y="${H * 0.19}" width="${H * 0.24}" height="${H * 0.24}"/>
-  <text x="${W * 0.225}" y="${H * 0.29}" font-family="${FONT}" font-size="${H * 0.099}" font-weight="bold" fill="#ffffff">Promise PPD</text>
+  <text x="${W * 0.225}" y="${H * 0.29}" font-family="${FONT}" font-size="${H * 0.099}" font-weight="bold" fill="#ffffff">PromisePD</text>
   <text x="${W * 0.226}" y="${H * 0.365}" font-family="${FONT}" font-size="${H * 0.043}" fill="#dbe4f7">Promise Proper Development Ltd.</text>
   <text x="${W * 0.075}" y="${H * 0.635}" font-family="${FONT}" font-size="${H * 0.092}" font-weight="bold" fill="#ffffff">Dhaka's Trusted Real-Estate Partner</text>
   <text x="${W * 0.077}" y="${H * 0.73}" font-family="${FONT}" font-size="${H * 0.046}" fill="#cfe0f7">${DIV}</text>
@@ -73,7 +76,7 @@ const landscape = (W, H) => `
 // ── Portrait (mobile) — centred stack ─────────────────────────────────
 const portrait = (W, H) => `
   <image href="data:image/png;base64,${LOGO_B64}" x="${(W - 200) / 2}" y="${H * 0.14}" width="200" height="200"/>
-  <text x="${W / 2}" y="${H * 0.36}" text-anchor="middle" font-family="${FONT}" font-size="78" font-weight="bold" fill="#ffffff">Promise PPD</text>
+  <text x="${W / 2}" y="${H * 0.36}" text-anchor="middle" font-family="${FONT}" font-size="78" font-weight="bold" fill="#ffffff">PromisePD</text>
   <text x="${W / 2}" y="${H * 0.40}" text-anchor="middle" font-family="${FONT}" font-size="30" fill="#dbe4f7">Promise Proper Development Ltd.</text>
   <text x="${W / 2}" y="${H * 0.55}" text-anchor="middle" font-family="${FONT}" font-size="62" font-weight="bold" fill="#ffffff">Dhaka's Trusted</text>
   <text x="${W / 2}" y="${H * 0.605}" text-anchor="middle" font-family="${FONT}" font-size="62" font-weight="bold" fill="#ffffff">Real-Estate Partner</text>
@@ -82,5 +85,5 @@ const portrait = (W, H) => `
   <text x="${W / 2}" y="${H * 0.90}" text-anchor="middle" font-family="${FONT}" font-size="30" font-weight="bold" fill="#ffffff" opacity="0.92">promisepd.com</text>`;
 
 await build("og-image.png", 1200, 630, landscape(1200, 630));
-await build("screenshot-wide.png", 1280, 720, landscape(1280, 720));
-await build("screenshot-mobile.png", 720, 1280, portrait(720, 1280));
+await build("screenshot-wide-v2.png", 1280, 720, landscape(1280, 720));
+await build("screenshot-mobile-v2.png", 720, 1280, portrait(720, 1280));

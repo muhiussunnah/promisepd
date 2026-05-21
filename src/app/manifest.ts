@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/?source=pwa",
     name: "Promise Proper Development Ltd. — স্বপ্ন যেখানে বাস্তব",
-    short_name: "Promise PPD",
+    short_name: "PromisePD",
     description:
       "ঢাকার বিশ্বস্ত আবাসন অংশীদার। ৫টি বিভাগে এক ছাদের নিচে — রিয়েল এস্টেট, নির্মাণ, সঞ্চয়, হজ্জ ও ৩ডি ডিজাইন।",
     start_url: "/?source=pwa",
@@ -31,18 +31,18 @@ export default function manifest(): MetadataRoute.Manifest {
     // Rich install previews — Chrome/Edge show these in the install dialog.
     screenshots: [
       {
-        src: "/screenshot-wide.png",
+        src: "/screenshot-wide-v2.png",
         sizes: "1280x720",
         type: "image/png",
         form_factor: "wide",
-        label: "Promise PPD — Dhaka's trusted real-estate partner",
+        label: "PromisePD — Dhaka's trusted real-estate partner",
       },
       {
-        src: "/screenshot-mobile.png",
+        src: "/screenshot-mobile-v2.png",
         sizes: "720x1280",
         type: "image/png",
         form_factor: "narrow",
-        label: "Promise PPD — five business divisions",
+        label: "PromisePD — five business divisions",
       },
     ],
     shortcuts: [

@@ -27,7 +27,7 @@
  *      requiring the user to close every tab.
  */
 
-const CACHE_VERSION = "ppd-v4";
+const CACHE_VERSION = "ppd-v5";
 
 // Only these explicit paths get cached.  Anything else — and anything
 // HTML — bypasses the cache entirely.
@@ -37,8 +37,8 @@ const SAFE_TO_CACHE = new Set([
   "/apple-icon.png",
   "/og-image.png",
   "/manifest.webmanifest",
-  "/screenshot-mobile.png",
-  "/screenshot-wide.png",
+  "/screenshot-mobile-v2.png",
+  "/screenshot-wide-v2.png",
 ]);
 
 self.addEventListener("install", (event) => {
