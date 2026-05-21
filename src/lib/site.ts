@@ -453,6 +453,18 @@ export type Project = {
   };
   /** Building availability for multi-building projects (status grid). */
   buildings?: { total: number; soldOut: number; nowBooking: number };
+  /** Floor-by-floor unit availability — rendered as a seat-map style
+   *  diagram so visitors see which units are sold / open. */
+  unitMap?: {
+    floors: {
+      label: string;
+      units: {
+        id: string;
+        status: "sold" | "available" | "rented";
+        size?: string;
+      }[];
+    }[];
+  };
 };
 
 export const PROJECTS: Project[] = [
@@ -560,30 +572,75 @@ export const PROJECTS: Project[] = [
     location: "ঢাকা",
     price: "৳ ৪০.০০ লাখ",
     description:
-      "ফ্ল্যাগশিপ প্যালেস-ক্লাস বাসস্থান — প্রশস্ত যাপন, প্রিমিয়াম ফিনিশিং ও নিরবচ্ছিন্ন গোপনীয়তা।",
+      "ফ্ল্যাগশিপ প্যালেস-ক্লাস বাসস্থান — G+6, ১২টি ফ্ল্যাট। প্রায় সবাই উঠে গেছেন; ৫ম তলায় মাত্র ২টি ফ্ল্যাট খালি।",
     longDescription:
-      "আহবাব প্যালেস ০১ আমাদের ফ্ল্যাগশিপ প্যালেস-ক্লাস বাসস্থান — প্রশস্ত যাপন স্থান, প্রিমিয়াম ফিনিশিং এবং নিরবচ্ছিন্ন গোপনীয়তা। বিলাসিতা ও মান যেখানে প্রতিটি ডিটেইলে।",
-    highlights: ["ফ্ল্যাগশিপ প্রকল্প", "প্রিমিয়াম ফিনিশিং", "একান্ত গোপনীয়তা"],
+      "আহবাব প্যালেস ০১ আমাদের ফ্ল্যাগশিপ প্যালেস-ক্লাস বাসস্থান — G+6 ভবন, মোট ১২টি ফ্ল্যাট, প্রতি ফ্লোরে ২টি ইউনিট। প্রশস্ত যাপন, প্রিমিয়াম ফিনিশিং এবং নিরবচ্ছিন্ন গোপনীয়তা।",
+    details: [
+      "আহবাব প্যালেস ০১ — G+6 কাঠামোর ফ্ল্যাগশিপ ভবন, মোট ১২টি ফ্ল্যাট, প্রতি ফ্লোরে ২টি করে ইউনিট।",
+      "প্রায় সব বাসিন্দা ইতিমধ্যে উঠে গেছেন — বর্তমানে শুধু ৫ম তলায় ২টি ফ্ল্যাট খালি আছে। নিচের ডায়াগ্রামে কোন ইউনিট খালি আর কোনটি বিক্রি, তা দেখে নিন।",
+      "প্যালেস-ক্লাস মানে শুধু আকার নয় — মানে। প্রিমিয়াম ফিনিশিং, আমদানিকৃত ফিটিংস এবং প্রতিটি ফ্লোরে সীমিত ইউনিটের নিরবচ্ছিন্ন গোপনীয়তা।",
+    ],
+    highlights: [
+      "G+6 · ১২টি ফ্ল্যাট",
+      "প্রতি ফ্লোরে ২টি ইউনিট",
+      "৫ম তলায় মাত্র ২টি খালি",
+      "প্রিমিয়াম ফিনিশিং",
+    ],
     accent: "red",
     cover: "/ahbab1pics/ahbab1pics.webp",
     gallery: ["/ahbab1pics/ahbab1pics.webp"],
     videoIds: ["9P1GRaFG-1I"],
+    unitMap: {
+      floors: [
+        { label: "৬ষ্ঠ তলা", units: [{ id: "A6", status: "sold" }, { id: "B6", status: "sold" }] },
+        { label: "৫ম তলা", units: [{ id: "A5", status: "available" }, { id: "B5", status: "available" }] },
+        { label: "৪র্থ তলা", units: [{ id: "A4", status: "sold" }, { id: "B4", status: "sold" }] },
+        { label: "৩য় তলা", units: [{ id: "A3", status: "sold" }, { id: "B3", status: "sold" }] },
+        { label: "২য় তলা", units: [{ id: "A2", status: "sold" }, { id: "B2", status: "sold" }] },
+        { label: "১ম তলা", units: [{ id: "A1", status: "sold" }, { id: "B1", status: "sold" }] },
+      ],
+    },
   },
   {
     slug: "ahbab-palace-02",
     name: "আহবাব প্যালেস · ০২",
     status: "চলমান",
     location: "ঢাকা",
-    price: "৳ ১৪.৫০ লাখ",
-    size: "১২০০ ও ১৮০০ বর্গফুট",
+    price: "৳ ৪,০০০ / বর্গফুট",
+    size: "১২০০ – ১৮০০ বর্গফুট",
     description:
-      "১২০০ ও ১৮০০ বর্গফুটের ইউনিট — খোলা রান্নাঘর, মাস্টার স্যুট, বড় ব্যালকনি ও আধুনিক ফিটিং।",
+      "G+9 ভবন — প্রতি ফ্লোরে ৩টি ১২০০ বর্গফুট ইউনিট, ৪র্থ-৫ম তলায় ২টি ১৮০০ বর্গফুট। ছাদের ভাড়া ফ্ল্যাটেই সার্ভিস চার্জ চলে যায়।",
     longDescription:
-      "আহবাব প্যালেস ০২ — ১২০০ ও ১৮০০ বর্গফুটের দুই ধরনের ইউনিট। খোলা রান্নাঘর, মাস্টার স্যুট, বড় ব্যালকনি ও আধুনিক ফিটিং — পরিবারের আকার ও বাজেট অনুযায়ী বেছে নেওয়ার স্বাধীনতা।",
-    highlights: ["১২০০ ও ১৮০০ বর্গফুট", "মাস্টার স্যুট", "বড় ব্যালকনি", "আধুনিক ফিটিং"],
+      "আহবাব প্যালেস ০২ একটি G+9 আবাসিক ভবন — প্রতি বর্গফুট মাত্র ৪,০০০ টাকা। ছাদের ২টি ভাড়া ফ্ল্যাট থেকেই লিফট সার্ভিস চার্জ ও দারোয়ানের বিল চলে আসে — বাসিন্দাদের আলাদা মাসিক সার্ভিস চার্জের বোঝা নেই।",
+    details: [
+      "আহবাব প্যালেস ০২ একটি G+9 ভবন — সাধারণ ফ্লোরে ৩টি করে ইউনিট, প্রতিটি ১২০০ বর্গফুট (মোট ৩৬০০ বর্গফুট প্রতি ফ্লোর)।",
+      "৪র্থ ও ৫ম তলায় ২টি করে বড় ইউনিট — প্রতিটি ১৮০০ বর্গফুট, বড় পরিবারের জন্য আদর্শ।",
+      "ছাদে ২টি অতিরিক্ত ফ্ল্যাট — যা ভাড়া দিয়ে লিফট সার্ভিস চার্জ ও দারোয়ানের বিল চালানো হয়। অর্থাৎ বাসিন্দাদের আলাদা সার্ভিস চার্জের বোঝা নেই — সবার জন্যই দারুণ।",
+      "প্রতি বর্গফুট মাত্র ৪,০০০ টাকা। ইতিমধ্যে ৬ তলা নির্মাণ সম্পন্ন এবং ১০টি ফ্ল্যাট বিক্রি হয়ে গেছে। নিচের ডায়াগ্রামে খালি ও বিক্রিত ইউনিট দেখে নিন।",
+    ],
+    highlights: [
+      "G+9 · প্রতি ফ্লোরে ৩ ইউনিট (১২০০ sqft)",
+      "৪র্থ-৫ম তলা: ২ ইউনিট (১৮০০ sqft)",
+      "ছাদের ভাড়ায় সার্ভিস চার্জ ও দারোয়ান বিল",
+      "প্রতি বর্গফুট ৪,০০০ টাকা · ১০টি সোল্ড আউট",
+    ],
     accent: "blue",
     cover: "/ahbab2pics/ahbab2pics.webp",
     gallery: ["/ahbab2pics/ahbab2pics.webp"],
+    unitMap: {
+      floors: [
+        { label: "ছাদ", units: [{ id: "R1", status: "rented", size: "ভাড়া" }, { id: "R2", status: "rented", size: "ভাড়া" }] },
+        { label: "৯ম তলা", units: [{ id: "A9", status: "available", size: "১২০০" }, { id: "B9", status: "available", size: "১২০০" }, { id: "C9", status: "available", size: "১২০০" }] },
+        { label: "৮ম তলা", units: [{ id: "A8", status: "available", size: "১২০০" }, { id: "B8", status: "available", size: "১২০০" }, { id: "C8", status: "available", size: "১২০০" }] },
+        { label: "৭ম তলা", units: [{ id: "A7", status: "available", size: "১২০০" }, { id: "B7", status: "available", size: "১২০০" }, { id: "C7", status: "available", size: "১২০০" }] },
+        { label: "৬ষ্ঠ তলা", units: [{ id: "A6", status: "available", size: "১২০০" }, { id: "B6", status: "available", size: "১২০০" }, { id: "C6", status: "available", size: "১২০০" }] },
+        { label: "৫ম তলা", units: [{ id: "A5", status: "available", size: "১৮০০" }, { id: "B5", status: "available", size: "১৮০০" }] },
+        { label: "৪র্থ তলা", units: [{ id: "A4", status: "sold", size: "১৮০০" }, { id: "B4", status: "available", size: "১৮০০" }] },
+        { label: "৩য় তলা", units: [{ id: "A3", status: "sold", size: "১২০০" }, { id: "B3", status: "sold", size: "১২০০" }, { id: "C3", status: "sold", size: "১২০০" }] },
+        { label: "২য় তলা", units: [{ id: "A2", status: "sold", size: "১২০০" }, { id: "B2", status: "sold", size: "১২০০" }, { id: "C2", status: "sold", size: "১২০০" }] },
+        { label: "১ম তলা", units: [{ id: "A1", status: "sold", size: "১২০০" }, { id: "B1", status: "sold", size: "১২০০" }, { id: "C1", status: "sold", size: "১২০০" }] },
+      ],
+    },
   },
 ];
 

@@ -339,6 +339,95 @@ export default async function ProjectPage(
         </section>
       )}
 
+      {/* Unit availability — seat-map style floor diagram */}
+      {project.unitMap && (
+        <section className="relative py-12 sm:py-16 bg-bg-soft">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-2 mb-2">
+              <Building2 className="h-6 w-6 text-brand-blue" />
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                ইউনিট <span className="text-grad">অ্যাভেইলেবিলিটি</span>
+              </h2>
+            </div>
+            <p className="text-sm sm:text-base text-fg-muted mb-5">
+              কোন ইউনিট খালি আর কোনটি বিক্রি হয়ে গেছে — নিচের ডায়াগ্রামে দেখে নিন।
+            </p>
+
+            {/* Legend */}
+            <div className="flex flex-wrap items-center gap-4 mb-5 text-xs font-medium text-fg-soft">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-3.5 w-3.5 rounded bg-brand-blue/15 border border-brand-blue/50" />
+                খালি
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-3.5 w-3.5 rounded bg-bg-soft-2 border border-border" />
+                বিক্রি শেষ
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-3.5 w-3.5 rounded bg-brand-ash/40 border border-brand-ash" />
+                ভাড়া
+              </span>
+            </div>
+
+            <div className="rounded-2xl border border-border bg-white overflow-hidden divide-y divide-border">
+              {project.unitMap.floors.map((floor) => (
+                <div
+                  key={floor.label}
+                  className="flex items-center gap-3 px-3 sm:px-4 py-2.5"
+                >
+                  <div className="w-16 sm:w-20 shrink-0 text-xs sm:text-sm font-bold text-fg">
+                    {floor.label}
+                  </div>
+                  <div className="flex flex-wrap gap-2 flex-1">
+                    {floor.units.map((u) => {
+                      const cls =
+                        u.status === "available"
+                          ? "bg-brand-blue/10 border-brand-blue/40 text-brand-blue"
+                          : u.status === "rented"
+                            ? "bg-brand-ash/30 border-brand-ash text-fg-muted"
+                            : "bg-bg-soft-2 border-border text-fg-faint";
+                      return (
+                        <span
+                          key={u.id}
+                          className={`inline-flex min-w-[3.6rem] flex-col items-center justify-center rounded-lg border px-2.5 py-1.5 ${cls}`}
+                        >
+                          <span className="text-sm font-extrabold leading-none">
+                            {u.id}
+                          </span>
+                          {u.size && (
+                            <span className="mt-0.5 text-[9px] font-medium leading-none">
+                              {u.size === "ভাড়া" ? "ভাড়া" : `${u.size} sqft`}
+                            </span>
+                          )}
+                          {u.status === "sold" && (
+                            <span className="mt-0.5 text-[8px] font-bold uppercase leading-none">
+                              বিক্রি
+                            </span>
+                          )}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 grad-border p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex-1 text-sm text-fg-muted">
+                পছন্দের খালি ইউনিট নিশ্চিত করতে এখনই যোগাযোগ করুন — সীমিত ইউনিট।
+              </div>
+              <a
+                href={`tel:${SITE.phone}`}
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-blue px-6 py-3 text-sm font-bold text-white shadow-[var(--shadow-brand)] hover:scale-[1.02] transition-transform whitespace-nowrap"
+              >
+                <Phone className="h-4 w-4" />
+                বুকিং যোগাযোগ
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Highlights */}
       <section className="relative py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
