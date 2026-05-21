@@ -49,7 +49,11 @@ async function build(file, W, H, body) {
   const out = path.join(PUB, file);
   await sharp(base)
     .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
-    .png({ compressionLevel: 9 })
+    // Palette PNG keeps the file well under WhatsApp/Facebook's ~300 KB
+    // preview limit (a full-colour photo PNG was 600 KB+ and silently
+    // dropped from the link preview).  The blue-washed art has a narrow
+    // colour range, so 256 colours look clean.
+    .png({ palette: true, colours: 256, compressionLevel: 9, effort: 10 })
     .toFile(out);
   const m = await sharp(out).metadata();
   console.log(`✓ ${file} · ${m.width}×${m.height} · ${Math.round(fs.statSync(out).size / 1024)} KB`);
