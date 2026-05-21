@@ -60,7 +60,7 @@ export async function generateMetadata(
       url,
       title,
       description: project.description,
-      siteName: "Promise PPD",
+      siteName: "PromisePD",
       locale: "bn_BD",
       images: [{ url: image, secureUrl: image, alt: project.name }],
     },

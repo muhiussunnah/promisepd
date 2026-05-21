@@ -9,7 +9,7 @@ import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.png");
 
-const PAGE_TITLE = "আমাদের টিম — Promise PPD";
+const PAGE_TITLE = "আমাদের টিম — PromisePD";
 const PAGE_DESC =
   "প্রমিস গ্রুপের পেছনের মানুষ — যারা প্রতিদিন আপনার স্বপ্নের ঠিকানা গড়তে কাজ করছেন। নেতৃত্ব, ব্যবস্থাপনা এবং অপারেশন টিমের পরিচিতি।";
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/team`,
     title: PAGE_TITLE,
     description: PAGE_DESC,
-    siteName: "Promise PPD",
+    siteName: "PromisePD",
     locale: "bn_BD",
     images: [
       {

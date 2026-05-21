@@ -24,7 +24,7 @@ export default function GlobalError({
   // Inline mailto so we don't have to import client components — at
   // this point even the layout has failed.
   const mailto = `mailto:${DEVELOPER.email}?subject=${encodeURIComponent(
-    "Promise PPD — Critical Site Error",
+    "PromisePD — Critical Site Error",
   )}&body=${encodeURIComponent(
     `URL: ${typeof window !== "undefined" ? window.location.href : ""}\n` +
       `Error: ${error.message}\n` +
@@ -37,7 +37,7 @@ export default function GlobalError({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>সমস্যা · Promise PPD</title>
+        <title>সমস্যা · PromisePD</title>
         <style
           dangerouslySetInnerHTML={{
             __html: `

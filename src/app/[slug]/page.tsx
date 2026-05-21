@@ -121,7 +121,7 @@ export async function generateMetadata(
       url,
       title,
       description: division.description,
-      siteName: "Promise PPD",
+      siteName: "PromisePD",
       locale: "bn_BD",
       images: [
         {

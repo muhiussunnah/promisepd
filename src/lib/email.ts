@@ -27,7 +27,7 @@ export type ContactEmailPayload = {
 
 /** Where lead notifications land + who they're "from". */
 const NOTIFY_TO = process.env.CONTACT_NOTIFY_EMAIL || "hellopromisecity@gmail.com";
-const FROM = process.env.CONTACT_FROM_EMAIL || "Promise PPD <onboarding@resend.dev>";
+const FROM = process.env.CONTACT_FROM_EMAIL || "PromisePD <onboarding@resend.dev>";
 
 /** Resend's shared `onboarding@resend.dev` sender can ONLY deliver
  *  to your own Resend-account email until you verify a domain.  So
@@ -88,7 +88,7 @@ export async function sendNewsletterWelcome(
     const { error } = await resend.emails.send({
       from: FROM,
       to: email,
-      subject: "স্বাগতম — Promise PPD নিউজলেটারে যুক্ত হয়েছেন 🎉",
+      subject: "স্বাগতম — PromisePD নিউজলেটারে যুক্ত হয়েছেন 🎉",
       html: buildWelcomeEmailHtml(),
     });
     if (error) {
@@ -187,7 +187,7 @@ function buildContactEmailHtml(p: ContactEmailPayload): string {
           <!-- Reply CTA -->
           <tr>
             <td style="padding:22px 32px 8px;">
-              <a href="mailto:${esc(p.email)}?subject=${encodeURIComponent("Re: আপনার বার্তা — Promise PPD")}"
+              <a href="mailto:${esc(p.email)}?subject=${encodeURIComponent("Re: আপনার বার্তা — PromisePD")}"
                  style="display:inline-block;background:#1847a1;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:13px 28px;border-radius:14px;">
                 ↩&nbsp; সরাসরি উত্তর দিন
               </a>

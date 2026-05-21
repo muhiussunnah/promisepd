@@ -88,6 +88,6 @@ export const DEVELOPER = {
   ..._dev,
   whatsappUrl: `https://wa.me/${(_dev.phone ?? "").replace(/[^\d]/g, "")}`,
   /** Pre-filled mail link that captures the error context. */
-  reportMailUrl: (subject = "Promise PPD — Site Issue Report", body = "") =>
+  reportMailUrl: (subject = "PromisePD — Site Issue Report", body = "") =>
     `mailto:${_dev.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
 };

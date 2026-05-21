@@ -60,7 +60,7 @@ export default function WhatsAppFAB() {
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-white">
-                    Promise PPD
+                    PromisePD
                   </div>
                   <div className="text-[11px] text-white/90">
                     সাধারণত কয়েক মিনিটে উত্তর
@@ -69,7 +69,7 @@ export default function WhatsAppFAB() {
               </div>
               <div className="p-4">
                 <div className="rounded-2xl rounded-bl-sm bg-bg-soft p-3">
-                  <p className="text-xs text-fg-muted mb-1">Promise PPD</p>
+                  <p className="text-xs text-fg-muted mb-1">PromisePD</p>
                   <p className="text-sm">
                     আসসালামু আলাইকুম! কীভাবে সাহায্য করতে পারি?
                   </p>

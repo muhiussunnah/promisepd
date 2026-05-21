@@ -1,4 +1,4 @@
-/* Promise PPD — production service worker (v4).
+/* PromisePD — production service worker (v4).
  *
  * v4 bump: forces every browser to install a fresh worker, which on
  * activate nukes ALL caches and claims clients — clearing any stale
@@ -128,7 +128,7 @@ function offlinePage() {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>সংযোগ নেই · Promise PPD</title>
+<title>সংযোগ নেই · PromisePD</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f7f9ff;color:#0b1220;display:flex;min-height:100vh;align-items:center;justify-content:center;padding:1.5rem}

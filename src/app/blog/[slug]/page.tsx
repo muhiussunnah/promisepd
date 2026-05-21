@@ -59,7 +59,7 @@ export async function generateMetadata(
       url,
       title: post.title,
       description: post.excerpt,
-      siteName: "Promise PPD",
+      siteName: "PromisePD",
       locale: "bn_BD",
       publishedTime: post.iso,
       authors: [BLOG_AUTHOR.name],

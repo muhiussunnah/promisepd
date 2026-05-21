@@ -9,7 +9,7 @@ import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.png");
 
-const PAGE_TITLE = "গ্যালারি — Promise PPD";
+const PAGE_TITLE = "গ্যালারি — PromisePD";
 const PAGE_DESC =
   "আমাদের প্রকল্পের সর্বশেষ ছবি ও ভিডিও — ফুজালা টাওয়ার, ফুজালা কমপ্লেক্স, আহবাব প্যালেসসহ সকল কাজের একটি ঝলক।";
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/gallery`,
     title: PAGE_TITLE,
     description: PAGE_DESC,
-    siteName: "Promise PPD",
+    siteName: "PromisePD",
     locale: "bn_BD",
     images: [
       {

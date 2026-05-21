@@ -12,7 +12,7 @@ import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.png");
 
-const PAGE_TITLE = "যোগাযোগ — Promise PPD";
+const PAGE_TITLE = "যোগাযোগ — PromisePD";
 const PAGE_DESC =
   "প্রমিস গ্রুপের সাথে সরাসরি যোগাযোগ করুন — ফোন, ইমেইল, অফিস ঠিকানা এবং বার্তা পাঠানোর ফর্ম। আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করি।";
 
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/contact`,
     title: PAGE_TITLE,
     description: PAGE_DESC,
-    siteName: "Promise PPD",
+    siteName: "PromisePD",
     locale: "bn_BD",
     images: [
       {
@@ -227,7 +227,7 @@ export default function ContactPage() {
                 viewport. */}
             <div className="relative aspect-[4/5] sm:aspect-[16/9]">
               <iframe
-                title="Promise PPD office location — Kazi Tower, South Jatrabari, Dhaka"
+                title="PromisePD office location — Kazi Tower, South Jatrabari, Dhaka"
                 src="https://maps.google.com/maps?q=Kazi+Tower+South+Jatrabari+Dhaka&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 className="absolute inset-0 w-full h-full border-0"
                 loading="lazy"

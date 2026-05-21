@@ -8,9 +8,9 @@ import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.png");
 
-const PAGE_TITLE = "লগইন — Promise PPD";
+const PAGE_TITLE = "লগইন — PromisePD";
 const PAGE_DESC =
-  "আপনার Promise PPD অ্যাকাউন্টে লগইন করুন — মোবাইল নম্বর ও পাসওয়ার্ড দিয়েই দ্রুত প্রবেশ।";
+  "আপনার PromisePD অ্যাকাউন্টে লগইন করুন — মোবাইল নম্বর ও পাসওয়ার্ড দিয়েই দ্রুত প্রবেশ।";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/login`,
     title: PAGE_TITLE,
     description: PAGE_DESC,
-    siteName: "Promise PPD",
+    siteName: "PromisePD",
     locale: "bn_BD",
     images: [{ url: OG_IMAGE, secureUrl: OG_IMAGE, type: "image/png", width: 1200, height: 630, alt: PAGE_TITLE }],
   },

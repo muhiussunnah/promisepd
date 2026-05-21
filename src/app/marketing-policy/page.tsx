@@ -12,7 +12,7 @@ import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.png");
 
-const PAGE_TITLE = "মার্কেটিং পলিসি — Promise PPD";
+const PAGE_TITLE = "মার্কেটিং পলিসি — PromisePD";
 const PAGE_DESC =
   "প্রমিস সিটির মার্কেটার ও রিসেলারদের জন্য অফিসিয়াল মার্কেটিং নীতিমালা — কনটেন্ট ব্যবহার, মূল্য নির্ধারণ, রেফারেন্স, কমিশন ও ক্লায়েন্ট ভিজিটের নিয়মাবলী।";
 
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/marketing-policy`,
     title: PAGE_TITLE,
     description: PAGE_DESC,
-    siteName: "Promise PPD",
+    siteName: "PromisePD",
     locale: "bn_BD",
     images: [
       {

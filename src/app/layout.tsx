@@ -30,13 +30,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Promise Proper Development Ltd. — স্বপ্ন যেখানে বাস্তব",
-    template: "%s · Promise PPD",
+    template: "%s · PromisePD",
   },
   description:
     "ঢাকার বিশ্বস্ত আবাসন অংশীদার। প্রিমিয়াম আবাসিক ও বাণিজ্যিক প্রকল্প, নমনীয় কিস্তি, আইনি নিরাপত্তা এবং ১৫+ বছরের অভিজ্ঞতা।",
-  applicationName: "Promise PPD",
+  applicationName: "PromisePD",
   keywords: [
-    "Promise PPD",
+    "PromisePD",
     "Promise City",
     "প্রমিস সিটি",
     "প্রমিস পিপিডি",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     title: "Promise Proper Development Ltd. — স্বপ্ন যেখানে বাস্তব",
     description:
       "ঢাকার বিশ্বস্ত আবাসন অংশীদার। ৫টি বিভাগে এক ছাদের নিচে সম্পূর্ণ সমাধান।",
-    siteName: "Promise PPD",
+    siteName: "PromisePD",
     images: [
       {
         url: OG_IMAGE,
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
         type: "image/png",
         width: 1200,
         height: 630,
-        alt: "Promise PPD — স্বপ্ন যেখানে বাস্তব",
+        alt: "PromisePD — স্বপ্ন যেখানে বাস্তব",
       },
     ],
   },
@@ -101,11 +101,11 @@ export const metadata: Metadata = {
     creator: "@promisepd",
     title: "Promise Proper Development Ltd.",
     description: "স্বপ্ন যেখানে বাস্তব · ঢাকার বিশ্বস্ত আবাসন অংশীদার।",
-    images: [{ url: OG_IMAGE, alt: "Promise PPD" }],
+    images: [{ url: OG_IMAGE, alt: "PromisePD" }],
   },
   appleWebApp: {
     capable: true,
-    title: "Promise PPD",
+    title: "PromisePD",
     statusBarStyle: "default",
   },
   // icons intentionally omitted — Next.js auto-discovers src/app/icon.png

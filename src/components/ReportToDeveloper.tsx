@@ -47,7 +47,7 @@ export default function ReportToDeveloper({
     const lines = [
       "Hi Inzamul,",
       "",
-      "I ran into an issue on the Promise PPD site:",
+      "I ran into an issue on the PromisePD site:",
       "",
       `URL:        ${window.location.href}`,
       `Time:       ${ts}`,
@@ -57,7 +57,7 @@ export default function ReportToDeveloper({
     if (errorDigest) lines.push(`Digest:     ${errorDigest}`);
     lines.push("", "What I was trying to do:", "", "<your note here>");
     return DEVELOPER.reportMailUrl(
-      `Promise PPD — Site Issue (${ts.slice(0, 10)})`,
+      `PromisePD — Site Issue (${ts.slice(0, 10)})`,
       lines.join("\n"),
     );
   };

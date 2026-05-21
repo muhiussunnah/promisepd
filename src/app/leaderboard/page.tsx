@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/leaderboard`,
     title: PAGE_TITLE,
     description: PAGE_DESC,
-    siteName: "Promise PPD",
+    siteName: "PromisePD",
     locale: "bn_BD",
     images: [
       {
