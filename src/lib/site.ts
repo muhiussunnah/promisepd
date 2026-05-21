@@ -746,7 +746,6 @@ export const NAV = [
   { label: "টিম", href: "/team", id: "team", standalone: true },
   { label: "পেছনের গল্প", href: "/story", id: "story", standalone: true },
   { label: "ব্লগ", href: "/blog", id: "blog", standalone: true },
-  { label: "যোগাযোগ", href: "/contact", id: "contact", standalone: true },
 ];
 
 export const WHY_US = [
