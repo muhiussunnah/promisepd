@@ -744,6 +744,7 @@ export const NAV = [
   { label: "পার্টনার হোন", href: "/partner", id: "partner", standalone: true },
   { label: "লিডারবোর্ড", href: "/leaderboard", id: "leaderboard", standalone: true },
   { label: "টিম", href: "/team", id: "team", standalone: true },
+  { label: "পেছনের গল্প", href: "/story", id: "story", standalone: true },
   { label: "ব্লগ", href: "/blog", id: "blog", standalone: true },
   { label: "যোগাযোগ", href: "/contact", id: "contact", standalone: true },
 ];

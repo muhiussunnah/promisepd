@@ -35,6 +35,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    // The founder's story — flagship brand page.
+    {
+      url: `${SITE_URL}/story`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     {
       url: `${SITE_URL}/leaderboard`,
       lastModified: now,
