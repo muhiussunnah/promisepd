@@ -17,7 +17,7 @@ import { PARTNER_AWARDS, PARTNER_PERIOD } from "@/lib/partner";
 import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 
 const SITE_URL = getSiteUrl();
-const OG_IMAGE = absoluteUrl("/og-image.png");
+const OG_IMAGE = absoluteUrl("/og-image.jpg");
 
 const PAGE_TITLE = "লিডারবোর্ড — প্রমিস পার্টনার র‍্যাঙ্কিং";
 const PAGE_DESC =
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
       {
         url: OG_IMAGE,
         secureUrl: OG_IMAGE,
-        type: "image/png",
+        type: "image/jpeg",
         width: 1200,
         height: 630,
         alt: PAGE_TITLE,

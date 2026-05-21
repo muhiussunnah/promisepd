@@ -24,7 +24,7 @@ const bn = Noto_Sans_Bengali({
 });
 
 const SITE_URL = getSiteUrl();
-const OG_IMAGE = absoluteUrl("/og-image.png");
+const OG_IMAGE = absoluteUrl("/og-image.jpg");
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
       {
         url: OG_IMAGE,
         secureUrl: OG_IMAGE,
-        type: "image/png",
+        type: "image/jpeg",
         width: 1200,
         height: 630,
         alt: "PromisePD — স্বপ্ন যেখানে বাস্তব",

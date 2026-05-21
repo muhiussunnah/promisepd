@@ -27,7 +27,7 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 
 const SITE_URL = getSiteUrl();
-const OG_IMAGE = absoluteUrl("/og-image.png");
+const OG_IMAGE = absoluteUrl("/og-image.jpg");
 
 const ACCENT_TAG: Record<string, string> = {
   red: "bg-brand-red text-white",
@@ -67,7 +67,7 @@ export async function generateMetadata(
         {
           url: OG_IMAGE,
           secureUrl: OG_IMAGE,
-          type: "image/png",
+          type: "image/jpeg",
           width: 1200,
           height: 630,
           alt: post.title,

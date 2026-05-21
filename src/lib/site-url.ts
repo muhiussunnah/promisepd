@@ -12,7 +12,7 @@
  *
  *  Why this matters: Open Graph / Twitter scrapers (Facebook, WhatsApp,
  *  LinkedIn, etc.) must be able to fetch the og:image at the URL we
- *  emit. If we hard-code `https://promisepd.com/og-image.png` while the
+ *  emit. If we hard-code `https://promisepd.com/og-image.jpg` while the
  *  site is actually live at `promisepd.vercel.app`, the image fails to
  *  load and link previews show as bare text. Driving everything from
  *  the live deployment URL avoids that. */

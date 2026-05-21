@@ -12,7 +12,7 @@ import { breadcrumbSchema } from "@/lib/schema";
 import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 
 const SITE_URL = getSiteUrl();
-const OG_IMAGE = absoluteUrl("/og-image.png");
+const OG_IMAGE = absoluteUrl("/og-image.jpg");
 
 const PAGE_TITLE = "পার্টনার হোন — নিজের আয়ের লক্ষ্য নিজে ঠিক করুন";
 const PAGE_DESC = `প্রমিস গ্রুপের পার্টনার প্রোগ্রাম। মাত্র ${PARTNER_HEADLINE.referralsTarget} জন রেফার করে ফ্রি উমরাহ + ৳ ${PARTNER_HEADLINE.totalValueBn} টাকার পুরস্কার। ক্যালকুলেটরে আয়ের লক্ষ্য সেট করুন, প্ল্যান বানান।`;
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       {
         url: OG_IMAGE,
         secureUrl: OG_IMAGE,
-        type: "image/png",
+        type: "image/jpeg",
         width: 1200,
         height: 630,
         alt: PAGE_TITLE,

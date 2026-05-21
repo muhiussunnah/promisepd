@@ -27,7 +27,7 @@
  *      requiring the user to close every tab.
  */
 
-const CACHE_VERSION = "ppd-v5";
+const CACHE_VERSION = "ppd-v6";
 
 // Only these explicit paths get cached.  Anything else — and anything
 // HTML — bypasses the cache entirely.
@@ -35,7 +35,7 @@ const SAFE_TO_CACHE = new Set([
   "/logo.png",
   "/icon.png",
   "/apple-icon.png",
-  "/og-image.png",
+  "/og-image.jpg",
   "/manifest.webmanifest",
   "/screenshot-mobile-v2.png",
   "/screenshot-wide-v2.png",

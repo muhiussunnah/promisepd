@@ -1,6 +1,6 @@
 /**
  * One-shot: build the premium, on-brand share/install imagery —
- *   - /public/og-image.png            (1200×630)  social link previews
+ *   - /public/og-image.jpg            (1200×630)  social link previews
  *   - /public/screenshot-wide-v2.png  (1280×720)  PWA install dialog (wide)
  *   - /public/screenshot-mobile-v2.png (720×1280) PWA install dialog (narrow)
  *
@@ -50,14 +50,18 @@ async function build(file, W, H, body) {
     ${body}
   </svg>`;
   const out = path.join(PUB, file);
-  await sharp(base)
-    .composite([{ input: Buffer.from(svg), top: 0, left: 0 }])
-    // Palette PNG keeps the file well under WhatsApp/Facebook's ~300 KB
-    // preview limit (a full-colour photo PNG was 600 KB+ and silently
-    // dropped from the link preview).  The blue-washed art has a narrow
-    // colour range, so 256 colours look clean.
-    .png({ palette: true, colours: 256, compressionLevel: 9, effort: 10 })
-    .toFile(out);
+  const img = sharp(base).composite([
+    { input: Buffer.from(svg), top: 0, left: 0 },
+  ]);
+  if (/\.jpe?g$/i.test(file)) {
+    // JPEG for the social OG image — WhatsApp/Facebook/LinkedIn render
+    // JPEG link-preview thumbnails far more reliably than (palette) PNG,
+    // and mozjpeg keeps it tiny (well under the ~300 KB limit).
+    await img.jpeg({ quality: 86, mozjpeg: true, chromaSubsampling: "4:4:4" }).toFile(out);
+  } else {
+    // Palette PNG for the PWA install screenshots — crisp UI art, small.
+    await img.png({ palette: true, colours: 256, compressionLevel: 9, effort: 10 }).toFile(out);
+  }
   const m = await sharp(out).metadata();
   console.log(`✓ ${file} · ${m.width}×${m.height} · ${Math.round(fs.statSync(out).size / 1024)} KB`);
 }
@@ -84,6 +88,6 @@ const portrait = (W, H) => `
   <text x="${W / 2}" y="${H * 0.735}" text-anchor="middle" font-family="${FONT}" font-size="27" fill="#cfe0f7">Hajj &#183; 3D Design</text>
   <text x="${W / 2}" y="${H * 0.90}" text-anchor="middle" font-family="${FONT}" font-size="30" font-weight="bold" fill="#ffffff" opacity="0.92">promisepd.com</text>`;
 
-await build("og-image.png", 1200, 630, landscape(1200, 630));
+await build("og-image.jpg", 1200, 630, landscape(1200, 630));
 await build("screenshot-wide-v2.png", 1280, 720, landscape(1280, 720));
 await build("screenshot-mobile-v2.png", 720, 1280, portrait(720, 1280));
