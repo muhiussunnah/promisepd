@@ -17,7 +17,7 @@ import type { FormDef, FormField } from "@/lib/forms";
 // preview and the PDF, so values shift slightly right and sit just
 // ABOVE the dotted line instead of crossing it.
 const LEFT_SHIFT = 1.3;
-const LIFT = 1.1;
+const LIFT = 0.4;
 const SIG_FONT = `"Great Vibes","Hind Siliguri",cursive`;
 
 const toBnDigits = (s: string) =>
@@ -216,7 +216,7 @@ export default function FormFiller({ form }: { form: FormDef }) {
           } else {
             const fpx = ((f.pos.size ?? 1.7) / 100) * W;
             ctx.font = `${fpx}px "Hind Siliguri","Noto Sans Bengali",sans-serif`;
-            ctx.textBaseline = "alphabetic";
+            ctx.textBaseline = "bottom"; // matches the preview's translateY(-100%)
             const maxW = (f.pos.width / 100) * W;
             const y = ((f.pos.top - LIFT) / 100) * H;
             if (f.pos.align === "center") {

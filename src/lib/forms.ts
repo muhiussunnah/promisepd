@@ -98,9 +98,9 @@ export const FORMS: FormDef[] = [
       { key: "mother", label: "মাতা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 24.0, left: 56, width: 40, size: S } },
       { key: "present_addr", label: "বর্তমান ঠিকানা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 26.7, left: 18, width: 78, size: S } },
       { key: "permanent_addr", label: "স্থায়ী ঠিকানা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 29.7, left: 15, width: 81, size: S } },
-      { key: "dob", label: "জন্ম তারিখ (DDMMYYYY)", type: "text", group: "আবেদনকারীর তথ্য", placeholder: "১৫০৩১৯৯০", pos: { page: 1, top: 33.0, left: 16, width: 14, size: S, boxes: { firstX: 14.0, pitch: 2.0, count: 8, cy: 31.3, size: 1.5 } } },
-      { key: "nid", label: "NID/পাসপোর্ট নং", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 33.0, left: 47, width: 40, size: 1.5, boxes: { firstX: 46.7, pitch: 3.05, count: 17, cy: 31.3, size: 1.5 } } },
-      { key: "mobile", label: "মোবাইল নং", type: "tel", group: "আবেদনকারীর তথ্য", required: true, pos: { page: 1, top: 36.0, left: 17, width: 28, size: 1.5, boxes: { firstX: 13.7, pitch: 2.45, count: 11, cy: 36.3, size: 1.6 } } },
+      { key: "dob", label: "জন্ম তারিখ (DDMMYYYY)", type: "text", group: "আবেদনকারীর তথ্য", placeholder: "১৫০৩১৯৯০", pos: { page: 1, top: 33.0, left: 16, width: 14, size: S, boxes: { firstX: 15.0, pitch: 2.2, count: 8, cy: 32.4, size: 1.5 } } },
+      { key: "nid", label: "NID/পাসপোর্ট নং", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 33.0, left: 47, width: 40, size: 1.5, boxes: { firstX: 47.5, pitch: 3.06, count: 17, cy: 32.4, size: 1.5 } } },
+      { key: "mobile", label: "মোবাইল নং", type: "tel", group: "আবেদনকারীর তথ্য", required: true, pos: { page: 1, top: 36.0, left: 17, width: 28, size: 1.5, boxes: { firstX: 14.8, pitch: 2.3, count: 11, cy: 36.8, size: 1.6 } } },
       { key: "email", label: "ই-মেইল", type: "email", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 38.0, left: 60, width: 36, size: 2.0 } },
 
       // ── Nominee ─────────────────────────────────────────────
@@ -108,13 +108,13 @@ export const FORMS: FormDef[] = [
       { key: "n_profession", label: "নমিনির পেশা", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 45.0, left: 61, width: 16, size: S } },
       { key: "n_blood", label: "নমিনির রক্তের গ্রুপ", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 48.5, left: 14, width: 11, size: S } },
       { key: "n_relation", label: "সম্পর্ক", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 48.5, left: 35, width: 16, size: S } },
-      { key: "n_dob", label: "নমিনির জন্ম তারিখ (DDMMYYYY)", type: "text", group: "নমিনির তথ্য", placeholder: "১০০৫১৯৯২", pos: { page: 1, top: 48.5, left: 65, width: 12, size: S, boxes: { firstX: 65.0, pitch: 2.0, count: 8, cy: 47.8, size: 1.4 } } },
+      { key: "n_dob", label: "নমিনির জন্ম তারিখ (DDMMYYYY)", type: "text", group: "নমিনির তথ্য", placeholder: "১০০৫১৯৯২", pos: { page: 1, top: 48.5, left: 65, width: 12, size: S, boxes: { firstX: 65.5, pitch: 2.0, count: 8, cy: 48.8, size: 1.4 } } },
       { key: "n_father", label: "নমিনির পিতা/স্বামী", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 51.5, left: 13, width: 30, size: S } },
       { key: "n_mother", label: "নমিনির মাতা", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 51.5, left: 53, width: 24, size: S } },
       { key: "n_present_addr", label: "নমিনির বর্তমান ঠিকানা", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 54.2, left: 18, width: 58, size: S } },
       { key: "n_permanent_addr", label: "নমিনির স্থায়ী ঠিকানা", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 57.2, left: 15, width: 61, size: S } },
-      { key: "n_nid", label: "নমিনির NID/পাসপোর্ট নং", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 61.5, left: 22, width: 50, size: 1.5, boxes: { firstX: 16.0, pitch: 3.0, count: 17, cy: 59.8, size: 1.5 } } },
-      { key: "n_mobile", label: "নমিনির মোবাইল নং", type: "tel", group: "নমিনির তথ্য", pos: { page: 1, top: 65.2, left: 17, width: 50, size: 1.5, boxes: { firstX: 13.7, pitch: 2.45, count: 11, cy: 64.3, size: 1.6 } } },
+      { key: "n_nid", label: "নমিনির NID/পাসপোর্ট নং", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 61.5, left: 22, width: 50, size: 1.5, boxes: { firstX: 16.5, pitch: 3.0, count: 17, cy: 60.8, size: 1.5 } } },
+      { key: "n_mobile", label: "নমিনির মোবাইল নং", type: "tel", group: "নমিনির তথ্য", pos: { page: 1, top: 65.2, left: 17, width: 50, size: 1.5, boxes: { firstX: 14.8, pitch: 2.3, count: 11, cy: 65.3, size: 1.6 } } },
 
       // ── Official ────────────────────────────────────────────
       { key: "ref", label: "রেফারেন্স", type: "text", group: "অফিসিয়াল তথ্য", pos: { page: 1, top: 73.7, left: 13, width: 30, size: S } },
