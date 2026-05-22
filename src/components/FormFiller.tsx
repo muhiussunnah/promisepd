@@ -56,26 +56,56 @@ export default function FormFiller({ form }: { form: FormDef }) {
     setStatus("working");
     setErrorMsg("");
     try {
-      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
-        import("html2canvas"),
-        import("jspdf"),
-      ]);
-      const pages = captureRef.current!.querySelectorAll<HTMLElement>(
-        "[data-form-page]",
-      );
+      const { jsPDF } = await import("jspdf");
+      // Make sure the Bengali webfont is ready so canvas shapes it
+      // identically to the on-screen preview.
+      if (document.fonts?.ready) await document.fonts.ready;
+
+      const loadImg = (src: string) =>
+        new Promise<HTMLImageElement>((res, rej) => {
+          const im = new Image();
+          im.crossOrigin = "anonymous";
+          im.onload = () => res(im);
+          im.onerror = rej;
+          im.src = src;
+        });
+
       const pdf = new jsPDF({ unit: "pt", format: "a4", orientation: "portrait" });
       const pw = pdf.internal.pageSize.getWidth();
       const ph = pdf.internal.pageSize.getHeight();
-      for (let i = 0; i < pages.length; i++) {
-        const canvas = await html2canvas(pages[i], {
-          scale: 2.4,
-          useCORS: true,
-          backgroundColor: "#ffffff",
-          logging: false,
-        });
-        const img = canvas.toDataURL("image/jpeg", 0.85);
-        if (i > 0) pdf.addPage();
-        pdf.addImage(img, "JPEG", 0, 0, pw, ph);
+
+      // Draw each official page to a canvas, then paint the typed values
+      // with ctx.fillText (browser-shaped Bengali, pixel-precise).
+      for (let pi = 0; pi < form.pages.length; pi++) {
+        const img = await loadImg(form.pages[pi]);
+        const W = img.naturalWidth || 1785;
+        const H = img.naturalHeight || 2525;
+        const cv = document.createElement("canvas");
+        cv.width = W;
+        cv.height = H;
+        const ctx = cv.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, W, H);
+        ctx.fillStyle = "#111827";
+        ctx.textBaseline = "bottom";
+        for (const f of form.fields) {
+          if (f.pos.page !== pi + 1) continue;
+          const v = (values[f.key] || "").trim();
+          if (!v) continue;
+          const fontPx = ((f.pos.size ?? 1.4) / 100) * W;
+          ctx.font = `${fontPx}px "Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif`;
+          const maxW = (f.pos.width / 100) * W;
+          const y = (f.pos.top / 100) * H;
+          if (f.pos.align === "center") {
+            ctx.textAlign = "center";
+            ctx.fillText(v, (f.pos.left / 100) * W + maxW / 2, y, maxW);
+          } else {
+            ctx.textAlign = "left";
+            ctx.fillText(v, (f.pos.left / 100) * W, y, maxW);
+          }
+        }
+        const data = cv.toDataURL("image/jpeg", 0.86);
+        if (pi > 0) pdf.addPage();
+        pdf.addImage(data, "JPEG", 0, 0, pw, ph);
       }
       const base64 = pdf.output("datauristring").split(",")[1];
 
