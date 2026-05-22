@@ -25,6 +25,9 @@ const nextConfig: NextConfig = {
   // Tree-shake heavy named-export libraries at the import level.
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
+    // Form submissions ship a client-generated PDF (base64) to the
+    // submit-form Server Action — allow a comfortable payload.
+    serverActions: { bodySizeLimit: "8mb" },
   },
 
   // Old division URLs (`/divisions/<slug>`) now live at the root.

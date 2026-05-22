@@ -1,3 +1,5 @@
+import { FORMS } from "./forms";
+
 export const SITE = {
   name: "Promise Proper Development Ltd.",
   nameBn: "প্রমিস প্রপার ডেভেলপমেন্ট লিমিটেড",
@@ -738,6 +740,20 @@ export const NAV = [
       icon: undefined as string | undefined,
       image: p.cover as string | undefined,
       accent: p.accent as string,
+    })),
+  },
+  {
+    label: "ফর্ম",
+    href: "/forms",
+    id: "forms",
+    dropdown: FORMS.map((f) => ({
+      label: f.nameBn,
+      tagline: f.shortBn,
+      href: `/forms/${f.slug}`,
+      slug: f.slug,
+      icon: undefined as string | undefined,
+      image: f.pages[0] as string | undefined,
+      accent: f.accent as string,
     })),
   },
   { label: "গ্যালারি", href: "/gallery", id: "gallery", standalone: true },
