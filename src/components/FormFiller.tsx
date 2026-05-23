@@ -43,7 +43,8 @@ const loadImg = (src: string) =>
 
 export default function FormFiller({ form }: { form: FormDef }) {
   const [values, setValues] = useState<Record<string, string>>({});
-  const [photos, setPhotos] = useState<Record<string, string>>({}); // key → dataURL
+  const [photos, setPhotos] = useState<Record<string, string>>({}); // ছবি box → dataURL
+  const [docs, setDocs] = useState<Record<string, string>>({}); // NID/passport → dataURL
   const [status, setStatus] = useState<"idle" | "working" | "done" | "error">(
     "idle",
   );
@@ -98,18 +99,21 @@ export default function FormFiller({ form }: { form: FormDef }) {
     return "";
   }
 
-  async function handlePhoto(key: string, file?: File | null) {
+  async function handleUpload(
+    key: string,
+    file: File | null | undefined,
+    store: (u: (p: Record<string, string>) => Record<string, string>) => void,
+    maxW: number,
+  ) {
     if (!file) return;
     if (file.size > 5 * 1024 * 1024) {
-      setErrorMsg("ছবি ৫ MB এর কম হতে হবে।");
+      setErrorMsg("ফাইল ৫ MB এর কম হতে হবে।");
       setStatus("error");
       return;
     }
     const url = URL.createObjectURL(file);
     try {
       const img = await loadImg(url);
-      // Downscale to keep the PDF light.
-      const maxW = 700;
       const scale = Math.min(1, maxW / img.naturalWidth);
       const w = Math.round(img.naturalWidth * scale);
       const h = Math.round(img.naturalHeight * scale);
@@ -117,7 +121,7 @@ export default function FormFiller({ form }: { form: FormDef }) {
       cv.width = w;
       cv.height = h;
       cv.getContext("2d")!.drawImage(img, 0, 0, w, h);
-      setPhotos((p) => ({ ...p, [key]: cv.toDataURL("image/jpeg", 0.85) }));
+      store((p) => ({ ...p, [key]: cv.toDataURL("image/jpeg", 0.85) }));
     } finally {
       URL.revokeObjectURL(url);
     }
@@ -205,14 +209,23 @@ export default function FormFiller({ form }: { form: FormDef }) {
           if (!v) continue;
           if (f.pos.boxes) {
             const b = f.pos.boxes;
-            const chars = onlyDigits(v).split("").slice(0, b.count);
             const fpx = ((b.size ?? 1.5) / 100) * W;
             ctx.font = `${fpx}px "Hind Siliguri","Noto Sans Bengali",sans-serif`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            chars.forEach((c, i) => {
-              ctx.fillText(c, ((b.firstX + i * b.pitch) / 100) * W, (b.cy / 100) * H);
-            });
+            const cyPx = (b.cy / 100) * H;
+            if (b.mode === "date" && b.cells) {
+              const d = onlyDigits(v);
+              const parts = [d.slice(0, 2), d.slice(2, 4), d.slice(4, 8)];
+              b.cells.forEach((cx, i) => {
+                if (parts[i]) ctx.fillText(parts[i], (cx / 100) * W, cyPx);
+              });
+            } else {
+              const chars = onlyDigits(v).split("").slice(0, b.count ?? 20);
+              chars.forEach((c, i) => {
+                ctx.fillText(c, (((b.firstX ?? 0) + i * (b.pitch ?? 2)) / 100) * W, cyPx);
+              });
+            }
           } else {
             const fpx = ((f.pos.size ?? 1.7) / 100) * W;
             ctx.font = `${fpx}px "Hind Siliguri","Noto Sans Bengali",sans-serif`;
@@ -257,6 +270,44 @@ export default function FormFiller({ form }: { form: FormDef }) {
         if (pi > 0) pdf.addPage();
         pdf.addImage(data, "JPEG", 0, 0, pw, ph);
       }
+
+      // Appended ID-document pages (each on its own clean page).
+      for (const d of form.documents ?? []) {
+        const src = docs[d.key];
+        if (!src) continue;
+        const im = await loadImg(src);
+        const W = 1240,
+          H = 1754;
+        const cv = document.createElement("canvas");
+        cv.width = W;
+        cv.height = H;
+        const ctx = cv.getContext("2d")!;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#1847a1";
+        ctx.font = `bold 42px "Hind Siliguri",sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillText(d.label, W / 2, 64);
+        const m = 90;
+        const availW = W - 2 * m;
+        const availH = H - 230;
+        const ir = im.naturalWidth / im.naturalHeight;
+        let dw = availW,
+          dh = availW / ir;
+        if (dh > availH) {
+          dh = availH;
+          dw = availH * ir;
+        }
+        const ix = (W - dw) / 2;
+        ctx.drawImage(im, ix, 170, dw, dh);
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(ix, 170, dw, dh);
+        pdf.addPage();
+        pdf.addImage(cv.toDataURL("image/jpeg", 0.85), "JPEG", 0, 0, pw, ph);
+      }
+
       const base64 = pdf.output("datauristring").split(",")[1];
 
       const res = await submitForm({
@@ -294,6 +345,7 @@ export default function FormFiller({ form }: { form: FormDef }) {
           onClick={() => {
             setValues({});
             setPhotos({});
+            setDocs({});
             setStatus("idle");
           }}
           className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-6 py-3 text-sm font-bold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark transition-colors"
@@ -352,7 +404,7 @@ export default function FormFiller({ form }: { form: FormDef }) {
                         type="file"
                         accept="image/*"
                         className="hidden"
-                        onChange={(e) => handlePhoto(p.key, e.target.files?.[0])}
+                        onChange={(e) => handleUpload(p.key, e.target.files?.[0], setPhotos, 700)}
                       />
                     </label>
                   )}
@@ -394,6 +446,53 @@ export default function FormFiller({ form }: { form: FormDef }) {
             </div>
           ))}
         </div>
+
+        {/* Document uploads (NID / passport) — appended as PDF pages */}
+        {form.documents && form.documents.length > 0 && (
+          <div className="mt-7">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-brand-blue mb-3">
+              ডকুমেন্ট আপলোড (NID / পাসপোর্ট)
+            </h3>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {form.documents.map((d) => (
+                <div key={d.key} className="rounded-xl border border-border bg-white p-3">
+                  <div className="text-xs font-semibold text-fg-soft mb-1">{d.label}</div>
+                  {docs[d.key] ? (
+                    <div className="relative">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={docs[d.key]}
+                        alt={d.label}
+                        className="h-28 w-full object-contain rounded-lg border border-border bg-bg-soft"
+                      />
+                      <button
+                        onClick={() => setDocs((pr) => { const n = { ...pr }; delete n[d.key]; return n; })}
+                        className="absolute top-1 right-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-fg/80 text-white"
+                        aria-label="সরান"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="flex flex-col items-center justify-center gap-1 h-28 rounded-lg border-2 border-dashed border-border-strong cursor-pointer hover:border-brand-blue/50 transition-colors text-fg-muted">
+                      <Upload className="h-5 w-5" />
+                      <span className="text-[11px] font-medium">ফাইল বাছাই করুন</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => handleUpload(d.key, e.target.files?.[0], setDocs, 1100)}
+                      />
+                    </label>
+                  )}
+                  <div className="mt-1 text-[10px] text-fg-faint">
+                    NID/পাসপোর্টের স্পষ্ট ছবি · সর্বোচ্চ ৫ MB · জমার শেষে যুক্ত হবে
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {status === "error" && (
           <div className="mt-5 flex items-start gap-2 rounded-xl bg-brand-red/10 border border-brand-red/30 px-4 py-3 text-sm text-brand-red">
@@ -465,25 +564,33 @@ export default function FormFiller({ form }: { form: FormDef }) {
                   const v = values[f.key].trim();
                   if (f.pos.boxes) {
                     const b = f.pos.boxes;
+                    const cell = (txt: string, leftPct: number, i: number) => (
+                      <span
+                        key={f.key + i}
+                        className="absolute text-fg"
+                        style={{
+                          left: `${leftPct}%`,
+                          top: `${b.cy}%`,
+                          transform: "translate(-50%,-50%)",
+                          fontSize: `${fontPx(b.size)}px`,
+                          lineHeight: 1,
+                          fontFamily: "'Hind Siliguri','Noto Sans Bengali',sans-serif",
+                        }}
+                      >
+                        {txt}
+                      </span>
+                    );
+                    if (b.mode === "date" && b.cells) {
+                      const d = onlyDigits(v);
+                      const parts = [d.slice(0, 2), d.slice(2, 4), d.slice(4, 8)];
+                      return b.cells
+                        .map((cx, i) => (parts[i] ? cell(parts[i], cx, i) : null))
+                        .filter(Boolean);
+                    }
                     return onlyDigits(v)
                       .split("")
-                      .slice(0, b.count)
-                      .map((c, i) => (
-                        <span
-                          key={f.key + i}
-                          className="absolute text-fg"
-                          style={{
-                            left: `${b.firstX + i * b.pitch}%`,
-                            top: `${b.cy}%`,
-                            transform: "translate(-50%,-50%)",
-                            fontSize: `${fontPx(b.size)}px`,
-                            lineHeight: 1,
-                            fontFamily: "'Hind Siliguri','Noto Sans Bengali',sans-serif",
-                          }}
-                        >
-                          {c}
-                        </span>
-                      ));
+                      .slice(0, b.count ?? 20)
+                      .map((c, i) => cell(c, (b.firstX ?? 0) + i * (b.pitch ?? 2), i));
                   }
                   return [
                     <span

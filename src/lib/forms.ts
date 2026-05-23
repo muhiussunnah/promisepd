@@ -28,9 +28,19 @@ export type FormField = {
     width: number; // % wide (text condenses within)
     size?: number; // font size as % of page width (default S)
     align?: "left" | "center";
-    /** When present, the value's characters drop one-per-box (digits
-     *  stripped of separators) — for the NID / mobile / DOB grids. */
-    boxes?: { firstX: number; pitch: number; count: number; cy: number; size?: number };
+    /** When present, the value renders into the printed grid boxes.
+     *  - "digits" (default): one digit per box (NID / mobile).
+     *  - "date": value is DDMMYYYY → day, month, year each centred in
+     *    its own box (`cells` = the 3 box-centre x%). */
+    boxes?: {
+      cy: number;
+      size?: number;
+      mode?: "digits" | "date";
+      firstX?: number;
+      pitch?: number;
+      count?: number;
+      cells?: number[];
+    };
   };
 };
 
@@ -73,10 +83,12 @@ export type FormDef = {
   fields: FormField[];
   photos?: PhotoBox[];
   signatures?: SignaturePlace[];
+  /** Uploaded ID docs appended as extra PDF pages (full-page image). */
+  documents?: { key: string; label: string }[];
 };
 
 /** Shared default font size (% of page width). Bumped for legibility. */
-const S = 1.7;
+const S = 1.9;
 
 export const FORMS: FormDef[] = [
   {
@@ -90,17 +102,17 @@ export const FORMS: FormDef[] = [
     ready: true,
     fields: [
       // ── Applicant ───────────────────────────────────────────
-      { key: "file_no", label: "ফাইল নং", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 18.5, left: 14, width: 20, size: S } },
+      { key: "file_no", label: "ফাইল নং", type: "text", group: "আবেদনকারীর তথ্য", placeholder: "অফিস পূরণ করবে — খালি রাখুন", pos: { page: 1, top: 18.5, left: 16, width: 20, size: S } },
       { key: "name", label: "নাম", type: "text", group: "আবেদনকারীর তথ্য", required: true, pos: { page: 1, top: 21.0, left: 11.5, width: 40, size: S } },
       { key: "profession", label: "পেশা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 21.0, left: 61, width: 16, size: S } },
       { key: "blood", label: "রক্তের গ্রুপ", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 21.0, left: 87, width: 11, size: S } },
-      { key: "father", label: "পিতা/স্বামী", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 24.0, left: 13, width: 38, size: S } },
-      { key: "mother", label: "মাতা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 24.0, left: 56, width: 40, size: S } },
+      { key: "father", label: "পিতা/স্বামী", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 24.0, left: 16.5, width: 35, size: S } },
+      { key: "mother", label: "মাতা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 24.0, left: 59, width: 37, size: S } },
       { key: "present_addr", label: "বর্তমান ঠিকানা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 26.7, left: 18, width: 78, size: S } },
       { key: "permanent_addr", label: "স্থায়ী ঠিকানা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 29.7, left: 15, width: 81, size: S } },
-      { key: "dob", label: "জন্ম তারিখ (DDMMYYYY)", type: "text", group: "আবেদনকারীর তথ্য", placeholder: "১৫০৩১৯৯০", pos: { page: 1, top: 33.0, left: 16, width: 14, size: S, boxes: { firstX: 15.0, pitch: 2.2, count: 8, cy: 32.4, size: 1.5 } } },
-      { key: "nid", label: "NID/পাসপোর্ট নং", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 33.0, left: 47, width: 40, size: 1.5, boxes: { firstX: 47.5, pitch: 3.06, count: 17, cy: 32.4, size: 1.5 } } },
-      { key: "mobile", label: "মোবাইল নং", type: "tel", group: "আবেদনকারীর তথ্য", required: true, pos: { page: 1, top: 36.0, left: 17, width: 28, size: 1.5, boxes: { firstX: 14.8, pitch: 2.3, count: 11, cy: 36.8, size: 1.6 } } },
+      { key: "dob", label: "জন্ম তারিখ (DDMMYYYY)", type: "text", group: "আবেদনকারীর তথ্য", placeholder: "১৫০৩১৯৯০", pos: { page: 1, top: 33.0, left: 16, width: 14, size: S, boxes: { mode: "date", cells: [17, 21, 26], cy: 32.4, size: 1.7 } } },
+      { key: "nid", label: "NID/পাসপোর্ট নং", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 33.0, left: 47, width: 40, size: 1.5, boxes: { firstX: 48.3, pitch: 3.06, count: 17, cy: 32.4, size: 1.6 } } },
+      { key: "mobile", label: "মোবাইল নং", type: "tel", group: "আবেদনকারীর তথ্য", required: true, pos: { page: 1, top: 36.0, left: 17, width: 28, size: 1.5, boxes: { firstX: 15.8, pitch: 2.3, count: 11, cy: 36.8, size: 1.7 } } },
       { key: "email", label: "ই-মেইল", type: "email", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 38.0, left: 60, width: 36, size: 2.0 } },
 
       // ── Nominee ─────────────────────────────────────────────
@@ -108,13 +120,13 @@ export const FORMS: FormDef[] = [
       { key: "n_profession", label: "নমিনির পেশা", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 45.0, left: 61, width: 16, size: S } },
       { key: "n_blood", label: "নমিনির রক্তের গ্রুপ", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 48.5, left: 14, width: 11, size: S } },
       { key: "n_relation", label: "সম্পর্ক", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 48.5, left: 35, width: 16, size: S } },
-      { key: "n_dob", label: "নমিনির জন্ম তারিখ (DDMMYYYY)", type: "text", group: "নমিনির তথ্য", placeholder: "১০০৫১৯৯২", pos: { page: 1, top: 48.5, left: 65, width: 12, size: S, boxes: { firstX: 65.5, pitch: 2.0, count: 8, cy: 48.8, size: 1.4 } } },
+      { key: "n_dob", label: "নমিনির জন্ম তারিখ (DDMMYYYY)", type: "text", group: "নমিনির তথ্য", placeholder: "১০০৫১৯৯২", pos: { page: 1, top: 48.5, left: 65, width: 12, size: S, boxes: { mode: "date", cells: [66.5, 69.5, 73], cy: 48.8, size: 1.4 } } },
       { key: "n_father", label: "নমিনির পিতা/স্বামী", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 51.5, left: 13, width: 30, size: S } },
       { key: "n_mother", label: "নমিনির মাতা", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 51.5, left: 53, width: 24, size: S } },
       { key: "n_present_addr", label: "নমিনির বর্তমান ঠিকানা", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 54.2, left: 18, width: 58, size: S } },
       { key: "n_permanent_addr", label: "নমিনির স্থায়ী ঠিকানা", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 57.2, left: 15, width: 61, size: S } },
-      { key: "n_nid", label: "নমিনির NID/পাসপোর্ট নং", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 61.5, left: 22, width: 50, size: 1.5, boxes: { firstX: 16.5, pitch: 3.0, count: 17, cy: 60.8, size: 1.5 } } },
-      { key: "n_mobile", label: "নমিনির মোবাইল নং", type: "tel", group: "নমিনির তথ্য", pos: { page: 1, top: 65.2, left: 17, width: 50, size: 1.5, boxes: { firstX: 14.8, pitch: 2.3, count: 11, cy: 65.3, size: 1.6 } } },
+      { key: "n_nid", label: "নমিনির NID/পাসপোর্ট নং", type: "text", group: "নমিনির তথ্য", pos: { page: 1, top: 61.5, left: 22, width: 50, size: 1.5, boxes: { firstX: 17.5, pitch: 3.0, count: 17, cy: 60.8, size: 1.6 } } },
+      { key: "n_mobile", label: "নমিনির মোবাইল নং", type: "tel", group: "নমিনির তথ্য", pos: { page: 1, top: 65.2, left: 17, width: 50, size: 1.5, boxes: { firstX: 15.8, pitch: 2.3, count: 11, cy: 65.3, size: 1.7 } } },
 
       // ── Official ────────────────────────────────────────────
       { key: "ref", label: "রেফারেন্স", type: "text", group: "অফিসিয়াল তথ্য", pos: { page: 1, top: 73.7, left: 13, width: 30, size: S } },
@@ -134,19 +146,22 @@ export const FORMS: FormDef[] = [
       { key: "in_words", label: "কথায়", type: "text", group: "অফিসিয়াল তথ্য", pos: { page: 1, top: 87.9, left: 52, width: 44, size: S } },
     ],
     photos: [
-      { key: "applicant", label: "আবেদনকারীর ছবি", note: "পাসপোর্ট সাইজ রঙিন ছবি · সর্বোচ্চ ৫ MB", page: 1, left: 81.3, top: 6.0, width: 17.3, height: 11.6 },
-      { key: "nominee", label: "নমিনির ছবি", note: "পাসপোর্ট সাইজ রঙিন ছবি · সর্বোচ্চ ৫ MB", page: 1, left: 81.3, top: 42.5, width: 17.3, height: 12.6 },
+      { key: "applicant", label: "আবেদনকারীর ছবি", note: "৪০০×৪০০ px · পাসপোর্ট সাইজ রঙিন · সর্বোচ্চ ৫ MB", page: 1, left: 81.3, top: 6.0, width: 17.3, height: 11.6 },
+      { key: "nominee", label: "নমিনির ছবি", note: "৪০০×৪০০ px · পাসপোর্ট সাইজ রঙিন · সর্বোচ্চ ৫ MB", page: 1, left: 81.3, top: 42.5, width: 17.3, height: 12.6 },
     ],
     signatures: [
-      // Applicant signature (their name, cursive) + date — by the
-      // nominee block's "স্বাক্ষর ও তারিখ".
-      { id: "applicant_sig", source: "applicantName", page: 1, left: 75, top: 65.8, width: 22, size: 2.4, align: "center", cursive: true },
-      { id: "applicant_date", source: "today", page: 1, left: 75, top: 68.2, width: 22, size: 1.3, align: "center" },
-      // Director (MD) signature — by "ব্যবস্থাপনা পরিচালক" at the bottom.
-      { id: "md_sig", source: "fixed", value: "MD. Kamrul Hasan", page: 1, left: 69, top: 90.0, width: 27, size: 2.6, align: "center", cursive: true },
-      // Page 2 (নীতিমালা) signature line.
+      // Applicant signature (their name, cursive) + date — sits ABOVE
+      // the nominee block's printed "স্বাক্ষর ও তারিখ" caption.
+      { id: "applicant_sig", source: "applicantName", page: 1, left: 73, top: 63.4, width: 24, size: 2.4, align: "center", cursive: true },
+      { id: "applicant_date", source: "today", page: 1, left: 73, top: 65.4, width: 24, size: 1.3, align: "center" },
+      // Only the final approval signature is needed (page 2) — no
+      // chairman/MD sign on page 1.
       { id: "applicant_sig2", source: "applicantName", page: 2, left: 6, top: 87.5, width: 26, size: 2.4, align: "center", cursive: true },
       { id: "md_sig2", source: "fixed", value: "MD. Kamrul Hasan", page: 2, left: 60, top: 87.5, width: 30, size: 2.6, align: "center", cursive: true },
+    ],
+    documents: [
+      { key: "applicant_nid", label: "আবেদনকারীর NID / পাসপোর্ট" },
+      { key: "nominee_nid", label: "নমিনির NID / পাসপোর্ট" },
     ],
   },
 
