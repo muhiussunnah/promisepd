@@ -111,6 +111,52 @@ type Dict = {
     subscribed: string;
     perks: string[];
   };
+  projDetail: {
+    allProjects: string;
+    fromPrice: string;
+    bookVisit: string;
+    floorPlan: string;
+    bldgStatusA: string;
+    bldgStatusB: string;
+    bldgSummary: (total: string, sold: string, booking: string) => string;
+    booking: string;
+    soldOut: string;
+    coming: string;
+    bldgNowBooking: (n: string) => string;
+    bldgCta: string;
+    urgentContact: string;
+    paymentA: string;
+    paymentB: string;
+    rulesA: string;
+    rulesB: string;
+    zoom: string;
+    unitA: string;
+    unitB: string;
+    unitSub: string;
+    legendOpen: string;
+    legendSold: string;
+    legendRented: string;
+    open: string;
+    rented: string;
+    unitCta: string;
+    bookingContact: string;
+    plotsA: string;
+    plotsB: string;
+    plotsSub: string;
+    perDecimal: string;
+    perKatha: string;
+    conversion: string;
+    layoutPlan: string;
+    aboutA: string;
+    aboutB: string;
+    docCaption: string;
+    galleryA: string;
+    galleryB: string;
+    videos: string;
+    ctaSuffix: string;
+    contactBtn: string;
+    share: { headA: string; headB: string; total: (t: string) => string; soldCount: (s: string) => string; remaining: (r: string) => string; filterOpen: (r: string) => string; filterSold: (s: string) => string; filterAll: (t: string) => string; legendOpen: string; legendSold: string; soldLabel: string; openLabel: string; bookBtn: string; empty: string };
+  };
   divDetail: {
     backToDivisions: string;
     consult: string;
@@ -264,6 +310,68 @@ export const DICT: Record<Locale, Dict> = {
       subscribed: "সাবস্ক্রাইব হয়েছে",
       perks: ["নতুন প্রকল্প", "কিস্তি অফার", "প্রি-লঞ্চ সুবিধা"],
     },
+    projDetail: {
+      allProjects: "সব প্রকল্প",
+      fromPrice: "শুরু",
+      bookVisit: "সাইট ভিজিট বুক করুন",
+      floorPlan: "ফ্লোর প্ল্যান দেখুন",
+      bldgStatusA: "ভবন",
+      bldgStatusB: "স্ট্যাটাস",
+      bldgSummary: (total, sold, booking) =>
+        `মোট ${total}টি ভবন · ${sold}টি বিক্রি শেষ · ভবন ${booking}-এ বুকিং চলছে`,
+      booking: "বুকিং",
+      soldOut: "বিক্রি শেষ",
+      coming: "আসছে",
+      bldgNowBooking: (n) => `ভবন ${n}-এ এখন বুকিং চলছে`,
+      bldgCta: "পছন্দের ইউনিট নিশ্চিত করতে এখনই যোগাযোগ করুন — সীমিত ইউনিট।",
+      urgentContact: "জরুরি যোগাযোগ",
+      paymentA: "পেমেন্ট ও",
+      paymentB: "দলিল",
+      rulesA: "বিস্তারিত",
+      rulesB: "নিয়মাবলী",
+      zoom: "বড় করে দেখুন",
+      unitA: "ইউনিট",
+      unitB: "অ্যাভেইলেবিলিটি",
+      unitSub: "কোন ইউনিট খালি আর কোনটি বিক্রি হয়ে গেছে — নিচের ডায়াগ্রামে দেখে নিন।",
+      legendOpen: "খালি",
+      legendSold: "বিক্রি শেষ",
+      legendRented: "ভাড়া",
+      open: "খালি",
+      rented: "ভাড়া",
+      unitCta: "পছন্দের খালি ইউনিট নিশ্চিত করতে এখনই যোগাযোগ করুন — সীমিত ইউনিট।",
+      bookingContact: "বুকিং যোগাযোগ",
+      plotsA: "জমির",
+      plotsB: "প্লট ও মূল্য",
+      plotsSub: "বিনিয়োগযোগ্য আবাসিক প্লট — যাচাইকৃত দলিল ও নামজারিসহ হস্তান্তর।",
+      perDecimal: "প্রতি শতাংশ",
+      perKatha: "প্রতি কাঠা",
+      conversion: "রূপান্তর",
+      layoutPlan: "জমির লেআউট প্ল্যান দেখুন",
+      aboutA: "প্রকল্প",
+      aboutB: "সম্পর্কে",
+      docCaption: "প্রজেক্ট ডকুমেন্টরি",
+      galleryA: "ছবি",
+      galleryB: "গ্যালারি",
+      videos: "ভিডিও",
+      ctaSuffix: "আপনার পছন্দ হয়েছে?",
+      contactBtn: "যোগাযোগ করুন",
+      share: {
+        headA: "শেয়ার",
+        headB: "অ্যাভেইলেবিলিটি",
+        total: (t) => `মোট ${t}টি শেয়ার`,
+        soldCount: (s) => `${s}টি বিক্রি শেষ`,
+        remaining: (r) => `মাত্র ${r}টি বাকি`,
+        filterOpen: (r) => `খালি — মাত্র ${r}টি`,
+        filterSold: (s) => `বিক্রি শেষ — ${s}টি`,
+        filterAll: (t) => `সব দেখুন — ${t}টি`,
+        legendOpen: "খালি — ক্লিক করে বুক করুন",
+        legendSold: "বিক্রি শেষ",
+        soldLabel: "বিক্রি শেষ",
+        openLabel: "খালি",
+        bookBtn: "শেয়ার বুকিং",
+        empty: "এই মুহূর্তে এই ক্যাটাগরিতে কোনো শেয়ার নেই।",
+      },
+    },
     divDetail: {
       backToDivisions: "আমাদের বিভাগ",
       consult: "পরামর্শ নিন",
@@ -414,6 +522,68 @@ export const DICT: Record<Locale, Dict> = {
       subscribing: "Sending...",
       subscribed: "Subscribed",
       perks: ["New projects", "Instalment offers", "Pre-launch perks"],
+    },
+    projDetail: {
+      allProjects: "All projects",
+      fromPrice: "From",
+      bookVisit: "Book a site visit",
+      floorPlan: "View floor plan",
+      bldgStatusA: "Building",
+      bldgStatusB: "status",
+      bldgSummary: (total, sold, booking) =>
+        `${total} buildings total · ${sold} sold out · booking open for building ${booking}`,
+      booking: "Booking",
+      soldOut: "Sold out",
+      coming: "Coming",
+      bldgNowBooking: (n) => `Booking now open for building ${n}`,
+      bldgCta: "Contact us now to secure your preferred unit — limited units.",
+      urgentContact: "Urgent contact",
+      paymentA: "Payment &",
+      paymentB: "deed",
+      rulesA: "Detailed",
+      rulesB: "rules",
+      zoom: "View larger",
+      unitA: "Unit",
+      unitB: "availability",
+      unitSub: "Which units are open and which are sold — see the diagram below.",
+      legendOpen: "Open",
+      legendSold: "Sold out",
+      legendRented: "Rented",
+      open: "Open",
+      rented: "Rented",
+      unitCta: "Contact us now to secure your preferred open unit — limited units.",
+      bookingContact: "Booking contact",
+      plotsA: "Land",
+      plotsB: "plots & pricing",
+      plotsSub: "Investable residential plots — verified deed, handover with mutation.",
+      perDecimal: "Per decimal",
+      perKatha: "Per katha",
+      conversion: "Conversion",
+      layoutPlan: "View land layout plan",
+      aboutA: "About the",
+      aboutB: "project",
+      docCaption: "project documentary",
+      galleryA: "Photo",
+      galleryB: "gallery",
+      videos: "Videos",
+      ctaSuffix: "— like what you see?",
+      contactBtn: "Contact us",
+      share: {
+        headA: "Share",
+        headB: "availability",
+        total: (t) => `${t} total shares`,
+        soldCount: (s) => `${s} sold out`,
+        remaining: (r) => `only ${r} left`,
+        filterOpen: (r) => `Open — only ${r}`,
+        filterSold: (s) => `Sold out — ${s}`,
+        filterAll: (t) => `Show all — ${t}`,
+        legendOpen: "Open — click to book",
+        legendSold: "Sold out",
+        soldLabel: "Sold out",
+        openLabel: "Open",
+        bookBtn: "Share booking",
+        empty: "No shares in this category right now.",
+      },
     },
     divDetail: {
       backToDivisions: "Our Divisions",

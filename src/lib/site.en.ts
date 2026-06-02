@@ -170,6 +170,128 @@ export const PROJECT_EN: Record<
   },
 };
 
+/** Project DETAIL page content in English, keyed by slug. Mirrors the
+ *  Bengali Project fields used on /projects/[slug]. */
+export const PROJECT_DETAIL_EN: Record<
+  string,
+  {
+    longDescription: string;
+    details?: string[];
+    payment?: { rows: { label: string; value: string }[]; note: string };
+    plots?: {
+      pricePerShotangsho: string;
+      pricePerKatha: string;
+      conversion: string;
+      note?: string;
+      categories: { katha: string; shotangsho: string; price: string }[];
+    };
+    shareMap?: { note?: string };
+  }
+> = {
+  "promise-city": {
+    longDescription:
+      "Promise City is our flagship residential township — Fuzala Tower and Fuzala Complex alongside investable land plots. Your future address in the heart of Dhaka, with verified deeds, handover with mutation and full legal security.",
+    details: [
+      "Promise City — a planned residential township in Dhaka, with investable land plots alongside Fuzala Tower and Fuzala Complex.",
+      "Land price: 6 Lakh taka per decimal, 9 Lakh taka per katha (= 1.5 decimals). Three plot categories — 4 katha, 6 katha and 9 katha.",
+      "Verified deed, handover with mutation — full legal security. Pick your plot from the layout plan.",
+    ],
+    plots: {
+      pricePerShotangsho: "6 Lakh taka",
+      pricePerKatha: "9 Lakh taka",
+      conversion: "1 katha = 1.5 decimals",
+      note: "Coming soon: live plot availability from the dashboard — filter by 4 / 6 / 9 katha and everyone can see which plots are open and which are sold — in shaa Allah.",
+      categories: [
+        { katha: "4 katha", shotangsho: "6 decimals", price: "Tk 36 Lakh" },
+        { katha: "6 katha", shotangsho: "9 decimals", price: "Tk 54 Lakh" },
+        { katha: "9 katha", shotangsho: "13.5 decimals", price: "Tk 81 Lakh" },
+      ],
+    },
+  },
+  "fuzala-tower": {
+    longDescription:
+      "Fuzala Tower is the crown of Promise City — a modern, complete residential tower in the heart of Dhaka, where every family finds security, comfort and an address to be proud of.",
+    details: [
+      "Fuzala Tower is not just a building — it is the crown of Promise City. A modern, complete residential tower in the heart of Dhaka, where every family finds security, comfort and an address worth taking pride in.",
+      "Every unit is thoughtfully designed — ample light and air, open balconies, spacious living rooms and modern finishing. Lift, generator backup, 24-hour security, dedicated parking and community space — every daily need under one roof.",
+      "Located at the heart of Promise City, with easy connection to schools, markets, mosques, hospitals and main roads — saving you both time and peace of mind in a congested city.",
+      "Verified deed, registered signatures and full legal transparency — investing in Fuzala Tower means a secure future. Land share is 5 Lakh taka, then construction cost of 4 Lakh taka — in 8 easy instalments (50,000 taka each) + just a 10% service charge. You can verify the A-Z of every cost yourself via the app, website or office.",
+      "No more dreaming from a rented home — build your family's lasting security and pride at Fuzala Tower. Book a site visit today.",
+    ],
+    payment: {
+      rows: [
+        { label: "Land share", value: "5,00,000 taka" },
+        { label: "Construction cost", value: "4,00,000 taka" },
+        { label: "Instalments", value: "8 × 50,000" },
+      ],
+      note: "After paying the 5,00,000 taka land share, construction cost is 4,00,000 taka — in 8 instalments (50,000 taka each) + just a 10% service charge. Pay 50,000 when work starts → the company advances construction → check the A-Z account on the app, website or at the office → then the next instalment. Fully transparent construction account.",
+    },
+    shareMap: {
+      note: "Of 350 total shares, 300 are already sold — only 50 left. Tap any open share to call us directly. Don't wait — your preferred share may slip away.",
+    },
+  },
+  "fuzala-complex": {
+    longDescription:
+      "Fuzala Complex is Promise City's affordable family-housing project — 30 buildings in total, each built G+9 on 9 decimals (about 6 katha) of land.",
+    details: [
+      "Fuzala Complex is Promise City's affordable family-housing project — 30 buildings in total, each on 9 decimals (about 6 katha) of land, built G+9.",
+      "Two units per floor, each 1200 sqft. Basement parking — one parking space allotted per 2 units.",
+      "11 buildings are already completely sold. Booking is now open for building 12 — contact us now to secure your preferred unit.",
+      "Thoughtful layout, a safe community and easy transport links — Fuzala Complex is an ideal address for families building their first home.",
+    ],
+    payment: {
+      rows: [
+        { label: "Booking money", value: "40,000 taka" },
+        { label: "Monthly instalment", value: "4,000 taka" },
+        { label: "Land share", value: "5,20,000 taka" },
+      ],
+      note: "Once the 5,20,000 taka land share is fully paid, Promise City registers the land deed. After that, building construction costs only the actual construction cost + just a 10% service charge — and you can see the A-Z of your construction cost directly on the app, website or at the office. Pay the full land share by December 2027 and get the deed then, with flat handover in 2029 — in shaa Allah.",
+    },
+  },
+  "ahbab-palace-01": {
+    longDescription:
+      "Ahbab Palace 01 is our flagship palace-class residence — a G+6 building with 12 flats, two units per floor. Spacious living, premium finishing and uninterrupted privacy.",
+    details: [
+      "Ahbab Palace 01 — a flagship G+6 building, 12 flats in total, two units per floor.",
+      "Almost all residents have already moved in — currently only 2 flats remain on the 5th floor. See which units are open and which are sold in the unit diagram.",
+      "Palace-class means more than size — it means quality. Premium finishing, imported fittings, and the uninterrupted privacy of limited units per floor.",
+    ],
+  },
+  "ahbab-palace-02": {
+    longDescription:
+      "Ahbab Palace 02 — a south-facing modern G+9 building at Bashundhara River View C Block (near the old Ad-Din Medical, plots 922 & 923). Work is moving fast on a modern, elegant design — the 5th-floor roof is cast and roughly 50% complete. Flat handover by July 2027, in shaa Allah.",
+    details: [
+      "Project: Ahbab Palace 02 · Location: Bashundhara River View, C Block (near the old Ad-Din Medical) · Plots 922 & 923 · Facing: south.",
+      "Advantages: near Bashundhara Lake; close to parks, college, madrasa, mosque and market — an eco-friendly, modern residential area.",
+      "G+9 building — three 1200 sqft units per regular floor, and two larger 1800 sqft units on the 4th and 5th floors.",
+      "Why Ahbab Real Estate: (a) own your dream flat for 35–40% less; (b) guaranteed on-time handover; (c) a transparent, trustworthy land-share model; (d) full support including registration; (e) superior, quality construction materials.",
+      "Timeline — work started: June 2025; completion: July 2027 in shaa Allah. Booking is on — several shares already sold, only a few left. With ~50% complete including the 5th-floor roof, some profit now applies to the land share — contact us now to secure your preferred flat.",
+    ],
+    payment: {
+      rows: [
+        { label: "Per square foot", value: "4,000 taka" },
+        { label: "1200 sqft flat", value: "~48 Lakh" },
+        { label: "1800 sqft flat", value: "~72 Lakh" },
+      ],
+      note: "Flat price is set at 4,000 taka per square foot — 1200 sqft ~48 Lakh, 1800 sqft ~72 Lakh. Start by paying the land share (1200 sqft 14.50 Lakh, 1800 sqft 21.75 Lakh) and the rest in instalments tied to construction progress. ~35–40% cheaper than the market. With ~50% complete including the 5th-floor roof, some profit now applies to the land share.",
+    },
+  },
+};
+
+/** Bengali floor label → English, for the unit-map diagram. */
+export const FLOOR_EN: Record<string, string> = {
+  "ছাদ": "Roof",
+  "৯ম তলা": "9th floor",
+  "৮ম তলা": "8th floor",
+  "৭ম তলা": "7th floor",
+  "৬ষ্ঠ তলা": "6th floor",
+  "৫ম তলা": "5th floor",
+  "৪র্থ তলা": "4th floor",
+  "৩য় তলা": "3rd floor",
+  "২য় তলা": "2nd floor",
+  "১ম তলা": "1st floor",
+};
+
 /** Stats — same order as STATS; only labels translate. */
 export const STATS_EN_LABELS = [
   "Years of experience",
