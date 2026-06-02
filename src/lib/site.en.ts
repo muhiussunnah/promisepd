@@ -222,6 +222,71 @@ export const TESTIMONIALS_EN = [
   },
 ];
 
+/** Division DETAIL page content (longDescription + features) in English,
+ *  keyed by slug. Same feature order/icons as the Bengali DIVISIONS. */
+export const DIVISION_DETAIL_EN: Record<
+  string,
+  {
+    long: string;
+    features: { title: string; description: string; points: string[] }[];
+  }
+> = {
+  "promise-city": {
+    long: "Under our real-estate division we run two townships — land plots, Fuzala Tower and Fuzala Complex at Promise City, and Ahbab Palace 01 & 02 at Bashundhara River View. Flats, land and landing property — all with verified deeds and full legal security.",
+    features: [
+      { title: "Flats in premium locations", description: "Modern apartments in hand-picked projects across Dhaka's growing areas.", points: ["Near main roads, schools & markets", "1, 2 & 3-bedroom units"] },
+      { title: "Verified land & plots", description: "Premium plots and landing property with full legal verification.", points: ["RS/BS khatian verified", "Handover with mutation"] },
+      { title: "Flexible instalments", description: "A monthly plan that fits your cashflow — without breaking your budget.", points: ["Monthly / quarterly plans", "In-house instalments, no bank loan"] },
+      { title: "Full legal security", description: "Verified deeds, registered signatures, zero ambiguity.", points: ["Registry-ready deed", "Experienced legal team"] },
+      { title: "Assured investment growth", description: "Land and flat values rise over time in growing areas — a safe investment.", points: ["Appreciation in growing areas", "Income from rent or resale"] },
+      { title: "Proven track record", description: "10+ years of experience and 3,000+ satisfied families — Promise City, a name you trust.", points: ["3,000+ satisfied families", "10+ years of experience"] },
+    ],
+  },
+  "ahbab-real-estate": {
+    long: "Through Ahbab Real Estate we deliver flats, homes and every kind of construction work. From design to key handover — a complete construction solution under one roof.",
+    features: [
+      { title: "Residential construction", description: "Modern homes, apartments and family complexes.", points: ["Design to finishing", "Quality-controlled materials"] },
+      { title: "Commercial construction", description: "Offices, shops and mixed-use buildings.", points: ["Office, showroom & shop", "Mixed-use buildings"] },
+      { title: "Renovation & extension", description: "Modernising old buildings and adding extensions.", points: ["Modernise old buildings", "Add extra floors"] },
+      { title: "Design to construction", description: "Architecture and structural design through to construction — everything.", points: ["Architectural & structural design", "3D visualisation"] },
+      { title: "Quality control", description: "Strict quality supervision at every stage with experienced engineers.", points: ["Supervision at every stage", "Experienced engineer team"] },
+    ],
+  },
+  "promise-international": {
+    long: "Through Promise International we offer savings services even better than a bank. Deposit any amount from 10,000 taka, withdraw anytime like a bank, and earn a transaction-based profit at year-end. Banks pay interest — and these days you can't even get your own money on time. We solve exactly that.",
+    features: [
+      { title: "Start from 10,000 taka", description: "Begin saving from a small amount — any sum.", points: ["Deposit any amount", "Easy account opening"] },
+      { title: "Withdraw anytime", description: "Withdraw your money whenever you need, just like a bank.", points: ["Instant during banking hours", "No lock-in period"] },
+      { title: "Annual profit", description: "A year-end profit based on the year's transactions — not interest.", points: ["Transaction-based profit", "Real profit, not interest"] },
+      { title: "Transparent management", description: "Every transaction is clear and verifiable, with no hidden terms.", points: ["Every transaction verifiable", "No hidden terms"] },
+      { title: "Fast emergency service", description: "Quick response in emergencies — no long, tedious process.", points: ["Fast response in emergencies", "Minimal process"] },
+    ],
+  },
+  "ahbab-travels-tours": {
+    long: "Ahbab Travels & Tours is one of Bangladesh's most trusted Hajj & Umrah providers. We stand beside you at every step — from visa processing to your journey and safe return home. Experienced guides, premium accommodation and complete support.",
+    features: [
+      { title: "Hajj packages", description: "Complete Hajj packages — visa, flight, hotel and muallim service.", points: ["Visa, flight & hotel together", "Experienced muallim"] },
+      { title: "Umrah packages", description: "Umrah journeys year-round — options for every budget and duration.", points: ["Travel opportunities all year", "Options for every budget"] },
+      { title: "Visa processing", description: "Fast, accurate visa processing — we handle all the paperwork.", points: ["We handle all paperwork", "Fast, accurate processing"] },
+      { title: "Hotel & transport", description: "Premium accommodation in Makkah & Madinah and reliable transport.", points: ["Stay near the Haram", "Air-conditioned transport"] },
+      { title: "Experienced guides", description: "Knowledgeable, experienced muallims and guidance in Bangla.", points: ["Guidance in Bangla", "A companion at every step"] },
+      { title: "Complete support", description: "Support before, during and after the journey — 24/7.", points: ["Support before & after travel", "24/7 emergency hotline"] },
+    ],
+  },
+  "interior-3d-design": {
+    long: "In this division we create engineering plans, interior design and photorealistic 3D visualisation — for homes, offices, shops, any space. See how your dream will look before it is even built.",
+    features: [
+      { title: "Residential interior", description: "Living room, bedroom, kitchen — flawless design in every corner.", points: ["Living, bedroom & kitchen", "Custom design in every corner"] },
+      { title: "Office & commercial", description: "Modern, functional design for offices, showrooms and shops.", points: ["Office, showroom & retail", "Brand-consistent design"] },
+      { title: "3D rendering", description: "Photorealistic 3D visualisation — see it before it's built.", points: ["Photorealistic visuals", "Preview before construction"] },
+      { title: "Space planning", description: "Maximum use of every square foot — smart layouts.", points: ["Make the most of every sqft", "Smart, functional layouts"] },
+      { title: "Furniture selection", description: "The right furniture and materials matched to your design.", points: ["Design-consistent furniture", "Quality materials"] },
+      { title: "Engineering plan & drawings", description: "Detailed architectural drawings with structural, civil and utility plans.", points: ["Structural & civil plans", "Complete architectural drawings"] },
+      { title: "Custom solutions", description: "Fully personalised design to match your taste and budget.", points: ["To match taste & budget", "Fully personalised design"] },
+    ],
+  },
+};
+
 /** English navbar meta (the scrolling logo title/tagline) — page +
  *  section keys mirror the Bengali SECTION_META / page checks. */
 export const NAV_META_EN: Record<string, { title: string; tagline: string }> = {

@@ -111,6 +111,25 @@ type Dict = {
     subscribed: string;
     perks: string[];
   };
+  divDetail: {
+    backToDivisions: string;
+    consult: string;
+    otherDivisions: string;
+    aboutEyebrow: string;
+    aboutSuffix: string;
+    featEyebrow: string;
+    featHeadA: string;
+    featHeadB: string;
+    projEyebrow: string;
+    projHeadA: string;
+    projHeadB: string;
+    ctaSuffix: string;
+    ctaMore: string;
+    ctaSub: string;
+    sendMsg: string;
+    prevDiv: string;
+    nextDiv: string;
+  };
   auth: {
     loginH: string;
     loginHb: string;
@@ -245,6 +264,25 @@ export const DICT: Record<Locale, Dict> = {
       subscribed: "সাবস্ক্রাইব হয়েছে",
       perks: ["নতুন প্রকল্প", "কিস্তি অফার", "প্রি-লঞ্চ সুবিধা"],
     },
+    divDetail: {
+      backToDivisions: "আমাদের বিভাগ",
+      consult: "পরামর্শ নিন",
+      otherDivisions: "অন্যান্য বিভাগ",
+      aboutEyebrow: "বিভাগ পরিচিতি",
+      aboutSuffix: "সম্পর্কে",
+      featEyebrow: "আমরা যা দিই",
+      featHeadA: "এই বিভাগের",
+      featHeadB: "সেবা ও সুবিধা",
+      projEyebrow: "চলমান প্রকল্প",
+      projHeadA: "প্রমিস সিটির",
+      projHeadB: "প্রকল্পসমূহ",
+      ctaSuffix: "সম্পর্কে",
+      ctaMore: "আরও জানুন",
+      ctaSub: "আমাদের সাথে সরাসরি কথা বলুন — আপনার প্রয়োজন বুঝে সঠিক সমাধান দেবো।",
+      sendMsg: "বার্তা পাঠান",
+      prevDiv: "পূর্ববর্তী বিভাগ",
+      nextDiv: "পরবর্তী বিভাগ",
+    },
     auth: {
       loginH: "স্বাগতম",
       loginHb: "ফিরে।",
@@ -376,6 +414,25 @@ export const DICT: Record<Locale, Dict> = {
       subscribing: "Sending...",
       subscribed: "Subscribed",
       perks: ["New projects", "Instalment offers", "Pre-launch perks"],
+    },
+    divDetail: {
+      backToDivisions: "Our Divisions",
+      consult: "Get a consultation",
+      otherDivisions: "Other divisions",
+      aboutEyebrow: "About this division",
+      aboutSuffix: "",
+      featEyebrow: "What we offer",
+      featHeadA: "This division's",
+      featHeadB: "services & benefits",
+      projEyebrow: "Ongoing Projects",
+      projHeadA: "Promise City",
+      projHeadB: "projects",
+      ctaSuffix: "",
+      ctaMore: "Learn more",
+      ctaSub: "Talk to us directly — we'll understand your needs and give you the right solution.",
+      sendMsg: "Send message",
+      prevDiv: "Previous division",
+      nextDiv: "Next division",
     },
     auth: {
       loginH: "Welcome",

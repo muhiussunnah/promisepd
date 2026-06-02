@@ -15,6 +15,8 @@ import Image from "next/image";
 import AnimatedBlobs from "./AnimatedBlobs";
 import PropertyBackdrop from "./PropertyBackdrop";
 import { DIVISION_IMAGE, DIVISION_LOGO, type Division } from "@/lib/site";
+import { DIVISION_EN } from "@/lib/site.en";
+import { DICT, localizedPath, type Locale } from "@/lib/i18n";
 
 /** Per-division architectural backdrop.  Each slug gets a different
  *  photo so visitors flipping between divisions see distinct
@@ -46,8 +48,22 @@ const ACCENT_SOLID_HEX: Record<string, string> = {
   ar: "#e11924",
 };
 
-export default function DivisionHero({ division }: { division: Division }) {
+export default function DivisionHero({
+  division,
+  locale = "bn",
+}: {
+  division: Division;
+  locale?: Locale;
+}) {
   const Icon = ICONS[division.icon] ?? Building2;
+  const isEn = locale === "en";
+  const dx = isEn ? DIVISION_EN[division.slug] : null;
+  const dName = dx?.name ?? division.nameBn;
+  const dTagline = dx?.tagline ?? division.tagline;
+  const dDesc = dx?.description ?? division.description;
+  const dHi = dx?.highlights ?? division.highlights;
+  const t = DICT[locale].divDetail;
+  const lp = (href: string) => localizedPath(href, locale);
 
   const backdrop = DIVISION_BACKDROP[division.slug];
   const image = DIVISION_IMAGE[division.slug];
@@ -79,10 +95,10 @@ export default function DivisionHero({ division }: { division: Division }) {
             className="lg:col-span-7"
           >
             <Link
-              href="/#divisions"
+              href={lp("/#divisions")}
               className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-fg-muted hover:text-fg transition-colors"
             >
-              ← আমাদের বিভাগ
+              ← {t.backToDivisions}
             </Link>
             <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
               <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
@@ -90,28 +106,28 @@ export default function DivisionHero({ division }: { division: Division }) {
               </span>
             </div>
             <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-              <span className="text-grad">{division.nameBn}</span>
+              <span className="text-grad">{dName}</span>
             </h1>
             <p className="mt-4 text-lg sm:text-xl text-fg-soft leading-relaxed font-medium">
-              {division.tagline}
+              {dTagline}
             </p>
             <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed max-w-2xl">
-              {division.description}
+              {dDesc}
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
-                href="/#contact"
+                href={lp("/#contact")}
                 className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
-                পরামর্শ নিন
+                {t.consult}
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/#divisions"
+                href={lp("/#divisions")}
                 className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-7 py-3.5 text-base font-semibold text-fg hover:border-brand-blue/40 transition-all"
               >
-                অন্যান্য বিভাগ
+                {t.otherDivisions}
               </Link>
             </div>
           </motion.div>
@@ -167,7 +183,7 @@ export default function DivisionHero({ division }: { division: Division }) {
                 </div>
 
                 <div className="mt-8 grid grid-cols-2 gap-3">
-                  {division.highlights.slice(0, 4).map((h) => (
+                  {dHi.slice(0, 4).map((h) => (
                     <div
                       key={h}
                       className="rounded-xl px-3 py-2.5 text-xs sm:text-sm font-medium backdrop-blur-md border bg-white/15 border-white/25 text-white"
