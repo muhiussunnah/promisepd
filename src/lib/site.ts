@@ -13,8 +13,12 @@ export const SITE = {
   email: "promisegroup2023@gmail.com",
   address:
     "১২৩/১/২ কাজী টাওয়ার, দক্ষিণ যাত্রাবাড়ী, ঢাকা-১২০৪, বাংলাদেশ",
+  addressEn:
+    "123/1/2 Kazi Tower, South Jatrabari, Dhaka-1204, Bangladesh",
   hours: "মঙ্গল – রবি · সকাল ৯টা – সন্ধ্যা ৬টা",
+  hoursEn: "Tue – Sun · 9:00 AM – 6:00 PM",
   weeklyOff: "সাপ্তাহিক ছুটি: সোমবার",
+  weeklyOffEn: "Weekly off: Monday",
   facebook: "https://www.facebook.com/profile.php?id=100083894211030",
   founded: 2010,
   socials: {
@@ -402,13 +406,17 @@ export const NAV_IDS = ["home", "about", "divisions", "projects", "why", "contac
  *  Only the 5 highest-conversion pages — full NAV would make the
  *  footer column much taller than the others and break the
  *  symmetric 4-column layout. */
-export const FOOTER_QUICK_LINKS: { label: string; href: string }[] = [
-  { label: "হোম", href: "/#home" },
-  { label: "আমাদের বিভাগ", href: "/#divisions" },
-  { label: "প্রকল্প", href: "/#projects" },
-  { label: "পার্টনার হোন", href: "/partner" },
-  { label: "মার্কেটিং পলিসি", href: "/marketing-policy" },
-  { label: "যোগাযোগ", href: "/contact" },
+export const FOOTER_QUICK_LINKS: {
+  label: string;
+  labelEn: string;
+  href: string;
+}[] = [
+  { label: "হোম", labelEn: "Home", href: "/#home" },
+  { label: "আমাদের বিভাগ", labelEn: "Divisions", href: "/#divisions" },
+  { label: "প্রকল্প", labelEn: "Projects", href: "/#projects" },
+  { label: "পার্টনার হোন", labelEn: "Become a Partner", href: "/partner" },
+  { label: "মার্কেটিং পলিসি", labelEn: "Marketing Policy", href: "/marketing-policy" },
+  { label: "যোগাযোগ", labelEn: "Contact", href: "/contact" },
 ];
 
 /** When on the home section, navbar cycles through these brand identities */

@@ -29,6 +29,7 @@ import {
   HOME_BRAND_CYCLES,
 } from "@/lib/site";
 import { useActiveSection } from "@/lib/useActiveSection";
+import { DICT, stripLocale, localizedPath } from "@/lib/i18n";
 import LangSwitcher from "./LangSwitcher";
 
 const DIV_ICONS: Record<string, LucideIcon> = {
@@ -59,7 +60,14 @@ export default function Navbar() {
   );
   const [homeCycle, setHomeCycle] = useState(0);
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  // Locale-aware: `/en/...` is the English mirror; everything else is
+  // Bengali at the root. `rest` is the locale-neutral path used for all
+  // active-state matching so highlighting works in both versions.
+  const { locale, rest } = stripLocale(pathname);
+  const t = DICT[locale];
+  const isEn = locale === "en";
+  const lp = (href: string) => localizedPath(href, locale);
+  const isHome = rest === "/";
 
   // Only track sections on home page
   const activeSection = useActiveSection(isHome ? NAV_IDS : [], 120);
@@ -67,8 +75,8 @@ export default function Navbar() {
   // Determine the navbar meta to display. Division pages now live at the
   // root (e.g. /interior-3d-design), so match the first path segment
   // against the known division slugs rather than a /divisions/ prefix.
-  const firstSegment = pathname.startsWith("/")
-    ? pathname.slice(1).split("/")[0]
+  const firstSegment = rest.startsWith("/")
+    ? rest.slice(1).split("/")[0]
     : null;
   const currentDivision = firstSegment
     ? DIVISIONS.find((d) => d.slug === firstSegment)
@@ -76,7 +84,7 @@ export default function Navbar() {
   // Project detail pages live at /projects/<slug>; match the 2nd segment.
   const currentProject =
     firstSegment === "projects"
-      ? PROJECTS.find((p) => p.slug === pathname.split("/")[2])
+      ? PROJECTS.find((p) => p.slug === rest.split("/")[2])
       : null;
   const isPartner = firstSegment === "partner";
   const isBlog = firstSegment === "blog";
@@ -164,10 +172,10 @@ export default function Navbar() {
             className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between"
           >
             <Link
-              href="/"
+              href={lp("/")}
               onClick={(e) => {
                 // Smooth-scroll to top + strip any #hash from the URL bar
-                if (pathname === "/") {
+                if (isHome) {
                   e.preventDefault();
                   window.scrollTo({ top: 0, behavior: "smooth" });
                   if (window.location.hash) {
@@ -243,8 +251,8 @@ export default function Navbar() {
                           (isHome && activeSection === "projects")
                         : item.href.startsWith("/#")
                           ? isHome && activeSection === item.id
-                          : pathname === item.href ||
-                            pathname.startsWith(`${item.href}/`);
+                          : rest === item.href ||
+                            rest.startsWith(`${item.href}/`);
                 if (item.dropdown) {
                   return (
                     <div
@@ -254,13 +262,13 @@ export default function Navbar() {
                       onMouseLeave={() => setOpenDropdown(null)}
                     >
                       <Link
-                        href={item.href}
+                        href={lp(item.href)}
                         data-active={isActive}
                         className={`link-underline flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors ${
                           isActive ? "text-fg" : "text-fg-soft hover:text-fg"
                         }`}
                       >
-                        {item.label}
+                        {t.nav[item.id] ?? item.label}
                         <ChevronDown
                           className={`h-3.5 w-3.5 transition-transform ${
                             openDropdown === item.id ? "rotate-180" : ""
@@ -291,7 +299,7 @@ export default function Navbar() {
                                   return (
                                     <Link
                                       key={d.slug}
-                                      href={d.href}
+                                      href={lp(d.href)}
                                       onClick={() => setOpenDropdown(null)}
                                       className="group flex items-start gap-3 rounded-xl p-3 hover:bg-bg-soft transition-colors"
                                     >
@@ -354,7 +362,7 @@ export default function Navbar() {
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={lp(item.href)}
                     data-active={isActive}
                     onClick={
                       // Home: when already on `/`, suppress the
@@ -363,7 +371,7 @@ export default function Navbar() {
                       // may have left in the URL bar.
                       item.id === "home"
                         ? (e) => {
-                            if (pathname === "/") {
+                            if (isHome) {
                               e.preventDefault();
                               window.scrollTo({ top: 0, behavior: "smooth" });
                               if (window.location.hash) {
@@ -382,7 +390,7 @@ export default function Navbar() {
                       isActive ? "text-fg" : "text-fg-soft hover:text-fg"
                     }`}
                   >
-                    {item.label}
+                    {t.nav[item.id] ?? item.label}
                   </Link>
                 );
               })}
@@ -396,16 +404,16 @@ export default function Navbar() {
                   Hidden on the smallest screens; mobile users get the
                   Login row inside the slide-out menu instead. */}
               <Link
-                href="/login"
+                href={lp("/login")}
                 className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 <LogIn className="h-4 w-4" />
-                <span>লগইন</span>
+                <span>{t.login}</span>
               </Link>
               <button
                 onClick={() => setOpen(true)}
                 className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-border hover:border-brand-blue/50 transition-colors"
-                aria-label="মেনু খুলুন"
+                aria-label={t.openMenu}
               >
                 <Menu className="h-5 w-5" />
               </button>
@@ -435,11 +443,11 @@ export default function Navbar() {
               className="absolute right-0 top-0 h-full w-[min(360px,85vw)] bg-white shadow-2xl p-6 overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-8">
-                <span className="text-lg font-bold text-grad-rb">মেনু</span>
+                <span className="text-lg font-bold text-grad-rb">{t.menu}</span>
                 <button
                   onClick={() => setOpen(false)}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-bg-soft hover:bg-bg-soft-2 transition-colors"
-                  aria-label="মেনু বন্ধ করুন"
+                  aria-label={t.closeMenu}
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -460,7 +468,7 @@ export default function Navbar() {
                             (isHome && activeSection === "projects")
                           : item.href.startsWith("/#")
                             ? isHome && activeSection === item.id
-                            : pathname === item.href;
+                            : rest === item.href;
                   if (item.dropdown) {
                     return (
                       <motion.div
@@ -477,7 +485,7 @@ export default function Navbar() {
                           }
                           className="w-full group flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium hover:bg-bg-soft text-fg transition-colors"
                         >
-                          <span>{item.label}</span>
+                          <span>{t.nav[item.id] ?? item.label}</span>
                           <ChevronDown
                             className={`h-4 w-4 transition-transform ${
                               mobileOpenDropdown === item.id ? "rotate-180" : ""
@@ -501,7 +509,7 @@ export default function Navbar() {
                                   return (
                                     <Link
                                       key={d.slug}
-                                      href={d.href}
+                                      href={lp(d.href)}
                                       onClick={() => setOpen(false)}
                                       className="flex items-start gap-3 rounded-lg p-2.5 hover:bg-bg-soft transition-colors"
                                     >
@@ -564,12 +572,12 @@ export default function Navbar() {
                       transition={{ delay: 0.05 * i }}
                     >
                       <Link
-                        href={item.href}
+                        href={lp(item.href)}
                         onClick={(e) => {
                           setOpen(false);
                           // Home on `/`: suppress nav + scroll to top
                           // + strip any leftover #hash from the URL.
-                          if (item.id === "home" && pathname === "/") {
+                          if (item.id === "home" && isHome) {
                             e.preventDefault();
                             window.scrollTo({ top: 0, behavior: "smooth" });
                             if (window.location.hash) {
@@ -588,7 +596,7 @@ export default function Navbar() {
                             : "hover:bg-bg-soft text-fg"
                         }`}
                       >
-                        <span>{item.label}</span>
+                        <span>{t.nav[item.id] ?? item.label}</span>
                         <span
                           className={
                             isActive
@@ -608,19 +616,19 @@ export default function Navbar() {
                   chip, so we surface Login + Sign Up inside the menu. */}
               <div className="mt-6 grid grid-cols-2 gap-2">
                 <Link
-                  href="/login"
+                  href={lp("/login")}
                   onClick={() => setOpen(false)}
                   className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-white border border-border px-4 py-3 text-sm font-semibold text-fg hover:border-brand-blue/50 transition-colors"
                 >
                   <LogIn className="h-4 w-4" />
-                  লগইন
+                  {t.login}
                 </Link>
                 <Link
-                  href="/signup"
+                  href={lp("/signup")}
                   onClick={() => setOpen(false)}
                   className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-bg-soft border border-border px-4 py-3 text-sm font-semibold text-fg hover:border-brand-blue/50 transition-colors"
                 >
-                  সাইন আপ
+                  {t.signup}
                 </Link>
               </div>
 

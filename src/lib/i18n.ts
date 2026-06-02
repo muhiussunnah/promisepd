@@ -55,6 +55,15 @@ type Dict = {
   openMenu: string;
   closeMenu: string;
   langName: string; // this locale's own name, for the switcher
+  footer: {
+    brand: string;
+    tagline: string;
+    about: string;
+    follow: string;
+    quickLinks: string;
+    contact: string;
+    rights: string;
+  };
 };
 
 export const DICT: Record<Locale, Dict> = {
@@ -79,6 +88,16 @@ export const DICT: Record<Locale, Dict> = {
     openMenu: "মেনু খুলুন",
     closeMenu: "মেনু বন্ধ করুন",
     langName: "বাংলা",
+    footer: {
+      brand: "প্রমিস সিটি",
+      tagline: "স্বপ্ন যেখানে বাস্তব",
+      about:
+        "১৫+ বছর ধরে ঢাকার মানুষকে সেবা দিয়ে আসছি — রিয়েল এস্টেট, নির্মাণ, সঞ্চয়, হজ্জ ও ডিজাইন।",
+      follow: "অনুসরণ করুন",
+      quickLinks: "দ্রুত লিঙ্ক",
+      contact: "যোগাযোগ",
+      rights: "সর্বস্বত্ব সংরক্ষিত।",
+    },
   },
   en: {
     nav: {
@@ -101,5 +120,15 @@ export const DICT: Record<Locale, Dict> = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     langName: "English",
+    footer: {
+      brand: "Promise City",
+      tagline: "Where dreams come true",
+      about:
+        "Serving the people of Dhaka for 15+ years — real estate, construction, savings, Hajj and design.",
+      follow: "Follow us",
+      quickLinks: "Quick Links",
+      contact: "Contact",
+      rights: "All rights reserved.",
+    },
   },
 };

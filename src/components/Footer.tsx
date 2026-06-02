@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { FOOTER_QUICK_LINKS, SITE } from "@/lib/site";
 import { toBn } from "@/lib/bn";
+import { DICT, stripLocale, localizedPath } from "@/lib/i18n";
 import ReportToDeveloper from "./ReportToDeveloper";
 import PaymentSecurityStrip from "./PaymentSecurityStrip";
 
@@ -59,6 +63,12 @@ function TelegramIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function Footer() {
+  const pathname = usePathname() || "/";
+  const { locale } = stripLocale(pathname);
+  const t = DICT[locale];
+  const isEn = locale === "en";
+  const lp = (href: string) => localizedPath(href, locale);
+
   const SOCIALS = [
     { name: "Facebook", url: SITE.socials.facebook, Icon: FacebookIcon, ring: "ring-[#1877F2]/30" },
     { name: "YouTube", url: SITE.socials.youtube, Icon: YouTubeIcon, ring: "ring-[#FF0000]/30" },
@@ -78,7 +88,7 @@ export default function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* ── Col 1 · Brand + description + socials ───────────── */}
           <div>
-            <Link href="/#home" className="flex items-center gap-3">
+            <Link href={lp("/#home")} className="flex items-center gap-3">
               <Image
                 src="/logo-tight.webp"
                 alt={SITE.shortName}
@@ -88,21 +98,20 @@ export default function Footer() {
               />
               <div className="leading-tight">
                 <div className="text-base font-bold text-grad-rb">
-                  প্রমিস সিটি
+                  {t.footer.brand}
                 </div>
                 <div className="text-xs tracking-wider text-fg-muted">
-                  স্বপ্ন যেখানে বাস্তব
+                  {t.footer.tagline}
                 </div>
               </div>
             </Link>
             <p className="mt-4 text-sm text-fg-muted leading-relaxed">
-              ১৫+ বছর ধরে ঢাকার মানুষকে সেবা দিয়ে আসছি — রিয়েল এস্টেট,
-              নির্মাণ, সঞ্চয়, হজ্জ ও ডিজাইন।
+              {t.footer.about}
             </p>
 
             <div className="mt-5">
               <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-3">
-                অনুসরণ করুন
+                {t.footer.follow}
               </h4>
               <div className="flex gap-2">
                 {SOCIALS.map(({ name, url, Icon, ring }) => (
@@ -124,16 +133,16 @@ export default function Footer() {
           {/* ── Col 2 · Quick links (curated top-5 only) ────────── */}
           <div>
             <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-3">
-              দ্রুত লিঙ্ক
+              {t.footer.quickLinks}
             </h4>
             <ul className="space-y-2">
               {FOOTER_QUICK_LINKS.map((item) => (
                 <li key={item.href}>
                   <Link
-                    href={item.href}
+                    href={lp(item.href)}
                     className="text-sm text-fg-muted hover:text-brand-blue transition-colors"
                   >
-                    {item.label}
+                    {isEn ? item.labelEn : item.label}
                   </Link>
                 </li>
               ))}
@@ -143,12 +152,14 @@ export default function Footer() {
           {/* ── Col 3 · Contact info ────────────────────────────── */}
           <div>
             <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-3">
-              যোগাযোগ
+              {t.footer.contact}
             </h4>
             <ul className="space-y-3 text-sm text-fg-muted">
               <li className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 mt-0.5 text-brand-red shrink-0" />
-                <span className="leading-relaxed">{SITE.address}</span>
+                <span className="leading-relaxed">
+                  {isEn ? SITE.addressEn : SITE.address}
+                </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-brand-blue shrink-0" />
@@ -171,9 +182,9 @@ export default function Footer() {
               <li className="flex items-start gap-2.5">
                 <Clock className="h-4 w-4 text-brand-blue shrink-0 mt-0.5" />
                 <div className="leading-relaxed">
-                  <div>{SITE.hours}</div>
+                  <div>{isEn ? SITE.hoursEn : SITE.hours}</div>
                   <div className="text-xs text-fg-faint mt-0.5">
-                    {SITE.weeklyOff}
+                    {isEn ? SITE.weeklyOffEn : SITE.weeklyOff}
                   </div>
                 </div>
               </li>
@@ -188,8 +199,8 @@ export default function Footer() {
             line on desktop so we keep vertical footprint minimal. */}
         <div className="mt-8 pt-5 border-t border-border flex flex-col lg:flex-row items-center justify-between gap-3">
           <p className="text-xs text-fg-muted text-center lg:text-left">
-            © {toBn(new Date().getFullYear())} {SITE.name}. সর্বস্বত্ব
-            সংরক্ষিত।
+            © {isEn ? new Date().getFullYear() : toBn(new Date().getFullYear())}{" "}
+            {SITE.name}. {t.footer.rights}
           </p>
           <div className="flex items-center gap-3 text-xs">
             <ReportToDeveloper variant="inline" />
