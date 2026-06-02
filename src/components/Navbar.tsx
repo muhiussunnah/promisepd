@@ -29,6 +29,7 @@ import {
   HOME_BRAND_CYCLES,
 } from "@/lib/site";
 import { useActiveSection } from "@/lib/useActiveSection";
+import LangSwitcher from "./LangSwitcher";
 
 const DIV_ICONS: Record<string, LucideIcon> = {
   Building2,
@@ -388,23 +389,19 @@ export default function Navbar() {
             </nav>
 
             <div className="flex items-center gap-2 py-1">
-              {/* Login — ghost button next to the primary Call CTA.
+              {/* EN / BN language switcher — two separate versions. */}
+              <LangSwitcher />
+
+              {/* Login — primary header action (replaced the Call CTA).
                   Hidden on the smallest screens; mobile users get the
                   Login row inside the slide-out menu instead. */}
               <Link
                 href="/login"
-                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-white border border-border px-3.5 py-2.5 text-sm font-semibold text-fg hover:border-brand-blue/50 hover:text-brand-blue transition-colors"
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 <LogIn className="h-4 w-4" />
                 <span>লগইন</span>
               </Link>
-              <a
-                href={`tel:${SITE.phone}`}
-                className="hidden md:inline-flex items-center gap-2 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
-              >
-                <Phone className="h-4 w-4" />
-                <span>কল করুন</span>
-              </a>
               <button
                 onClick={() => setOpen(true)}
                 className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-border hover:border-brand-blue/50 transition-colors"
