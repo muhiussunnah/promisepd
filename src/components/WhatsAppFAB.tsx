@@ -1,8 +1,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { SITE } from "@/lib/site";
+import { stripLocale } from "@/lib/i18n";
+
+const FAB_T = {
+  bn: {
+    tipBold: "হ্যালো!",
+    tip: "হোয়াটসঅ্যাপে দ্রুত উত্তর পান।",
+    replyTime: "সাধারণত কয়েক মিনিটে উত্তর",
+    greeting: "আসসালামু আলাইকুম! কীভাবে সাহায্য করতে পারি?",
+    startChat: "চ্যাট শুরু করুন",
+    aria: "WhatsApp চ্যাট",
+    waText: "আসসালামু আলাইকুম। আমি প্রমিস PPD-এর প্রকল্প সম্পর্কে জানতে চাই।",
+  },
+  en: {
+    tipBold: "Hello!",
+    tip: "Get a quick reply on WhatsApp.",
+    replyTime: "Usually replies in minutes",
+    greeting: "Assalamu Alaikum! How can we help you?",
+    startChat: "Start chat",
+    aria: "WhatsApp chat",
+    waText: "Assalamu Alaikum. I'd like to know about PromisePD's projects.",
+  },
+} as const;
 
 function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -15,15 +38,16 @@ function WhatsAppIcon(props: React.SVGProps<SVGSVGElement>) {
 export default function WhatsAppFAB() {
   const [open, setOpen] = useState(false);
   const [tipDismissed, setTipDismissed] = useState(false);
+  const pathname = usePathname() || "/";
+  const { locale } = stripLocale(pathname);
+  const t = FAB_T[locale];
 
   useEffect(() => {
-    const t = setTimeout(() => setTipDismissed(true), 6000);
-    return () => clearTimeout(t);
+    const timer = setTimeout(() => setTipDismissed(true), 6000);
+    return () => clearTimeout(timer);
   }, []);
 
-  const href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
-    "আসসালামু আলাইকুম। আমি প্রমিস PPD-এর প্রকল্প সম্পর্কে জানতে চাই।",
-  )}`;
+  const href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(t.waText)}`;
 
   return (
     <div className="fixed bottom-6 left-6 z-40 flex items-end gap-3 sm:left-6">
@@ -37,8 +61,7 @@ export default function WhatsAppFAB() {
             className="hidden sm:block mb-2 max-w-[220px] rounded-2xl rounded-bl-sm bg-white border border-border px-4 py-3 shadow-lg"
           >
             <p className="text-xs text-fg-muted">
-              <span className="font-semibold text-fg">হ্যালো!</span> হোয়াটসঅ্যাপে
-              দ্রুত উত্তর পান।
+              <span className="font-semibold text-fg">{t.tipBold}</span> {t.tip}
             </p>
           </motion.div>
         )}
@@ -63,16 +86,14 @@ export default function WhatsAppFAB() {
                     PromisePD
                   </div>
                   <div className="text-[11px] text-white/90">
-                    সাধারণত কয়েক মিনিটে উত্তর
+                    {t.replyTime}
                   </div>
                 </div>
               </div>
               <div className="p-4">
                 <div className="rounded-2xl rounded-bl-sm bg-bg-soft p-3">
                   <p className="text-xs text-fg-muted mb-1">PromisePD</p>
-                  <p className="text-sm">
-                    আসসালামু আলাইকুম! কীভাবে সাহায্য করতে পারি?
-                  </p>
+                  <p className="text-sm">{t.greeting}</p>
                 </div>
                 <a
                   href={href}
@@ -82,7 +103,7 @@ export default function WhatsAppFAB() {
                   className="mt-3 flex items-center justify-center gap-2 w-full rounded-xl bg-[#25d366] hover:bg-[#1ebd58] px-4 py-2.5 text-sm font-semibold text-white transition-colors"
                 >
                   <WhatsAppIcon className="h-4 w-4" />
-                  চ্যাট শুরু করুন
+                  {t.startChat}
                 </a>
               </div>
             </motion.div>
@@ -96,7 +117,7 @@ export default function WhatsAppFAB() {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setOpen((o) => !o)}
-          aria-label="WhatsApp চ্যাট"
+          aria-label={t.aria}
           className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#25d366] hover:bg-[#1ebd58] text-white shadow-2xl shadow-[#25d366]/40 transition-colors wa-pulse"
         >
           <WhatsAppIcon className="h-8 w-8" />

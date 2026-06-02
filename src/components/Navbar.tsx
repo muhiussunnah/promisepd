@@ -30,6 +30,12 @@ import {
 } from "@/lib/site";
 import { useActiveSection } from "@/lib/useActiveSection";
 import { DICT, stripLocale, localizedPath } from "@/lib/i18n";
+import {
+  DIVISION_EN,
+  PROJECT_EN,
+  NAV_META_EN,
+  HOME_BRAND_CYCLES_EN,
+} from "@/lib/site.en";
 import LangSwitcher from "./LangSwitcher";
 
 const DIV_ICONS: Record<string, LucideIcon> = {
@@ -103,7 +109,7 @@ export default function Navbar() {
     return () => clearInterval(t);
   }, [isHome, activeSection]);
 
-  const meta = currentDivision
+  const bnMeta = currentDivision
     ? { title: currentDivision.nameBn, tagline: currentDivision.tagline }
     : currentProject
     ? { title: currentProject.name, tagline: currentProject.location }
@@ -122,6 +128,34 @@ export default function Navbar() {
                 : isHome && activeSection === "home"
                   ? HOME_BRAND_CYCLES[homeCycle]
                   : (isHome ? SECTION_META[activeSection] : null) ?? SECTION_META.home;
+
+  const enMeta = currentDivision
+    ? {
+        title: DIVISION_EN[currentDivision.slug]?.name ?? currentDivision.nameBn,
+        tagline: DIVISION_EN[currentDivision.slug]?.tagline ?? currentDivision.tagline,
+      }
+    : currentProject
+    ? {
+        title: PROJECT_EN[currentProject.slug]?.name ?? currentProject.name,
+        tagline: PROJECT_EN[currentProject.slug]?.location ?? currentProject.location,
+      }
+    : isPartner
+      ? NAV_META_EN.partner
+      : isBlog
+        ? NAV_META_EN.blog
+        : isTeam
+          ? NAV_META_EN.team
+          : isLeaderboard
+            ? NAV_META_EN.leaderboard
+            : isGallery
+              ? NAV_META_EN.gallery
+              : isContact
+                ? NAV_META_EN.contact
+                : isHome && activeSection === "home"
+                  ? HOME_BRAND_CYCLES_EN[homeCycle % HOME_BRAND_CYCLES_EN.length]
+                  : (isHome ? NAV_META_EN[activeSection] : null) ?? NAV_META_EN.home;
+
+  const meta = isEn ? enMeta : bnMeta;
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";

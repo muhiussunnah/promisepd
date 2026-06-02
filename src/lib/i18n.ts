@@ -111,6 +111,33 @@ type Dict = {
     subscribed: string;
     perks: string[];
   };
+  auth: {
+    loginH: string;
+    loginHb: string;
+    loginSub: string;
+    signupH: string;
+    signupHb: string;
+    signupSub: string;
+    fullName: string;
+    phName: string;
+    loginId: string;
+    mobile: string;
+    mobileHint: string;
+    emailOrUser: string;
+    phEmailOrUser: string;
+    password: string;
+    remember: string;
+    forgot: string;
+    processing: string;
+    loginBtn: string;
+    signupBtn: string;
+    noAccount: string;
+    signupLink: string;
+    haveAccount: string;
+    loginLink: string;
+    pwHide: string;
+    pwShow: string;
+  };
 };
 
 export const DICT: Record<Locale, Dict> = {
@@ -218,6 +245,33 @@ export const DICT: Record<Locale, Dict> = {
       subscribed: "সাবস্ক্রাইব হয়েছে",
       perks: ["নতুন প্রকল্প", "কিস্তি অফার", "প্রি-লঞ্চ সুবিধা"],
     },
+    auth: {
+      loginH: "স্বাগতম",
+      loginHb: "ফিরে।",
+      loginSub: "মোবাইল নম্বর ও পাসওয়ার্ড দিয়ে দ্রুত লগইন করুন।",
+      signupH: "আপনার",
+      signupHb: "যাত্রা শুরু",
+      signupSub: "শুধু নাম + মোবাইল + পাসওয়ার্ড — এক মিনিটেই অ্যাকাউন্ট তৈরি।",
+      fullName: "পূর্ণ নাম",
+      phName: "যেমন: কামরুল হাসান",
+      loginId: "মোবাইল / ইউজারনেম / ইমেইল",
+      mobile: "মোবাইল নম্বর",
+      mobileHint: "শুধু মোবাইল + পাসওয়ার্ড দিয়েই দ্রুত লগইন করতে পারবেন।",
+      emailOrUser: "ইমেইল বা ইউজারনেম (ঐচ্ছিক)",
+      phEmailOrUser: "you@example.com  অথবা  kamrul95",
+      password: "পাসওয়ার্ড",
+      remember: "আমাকে মনে রাখুন",
+      forgot: "পাসওয়ার্ড ভুলে গেছেন?",
+      processing: "প্রক্রিয়াধীন...",
+      loginBtn: "লগইন করুন",
+      signupBtn: "অ্যাকাউন্ট তৈরি করুন",
+      noAccount: "অ্যাকাউন্ট নেই?",
+      signupLink: "সাইন আপ করুন →",
+      haveAccount: "আগে থেকেই অ্যাকাউন্ট আছে?",
+      loginLink: "লগইন করুন →",
+      pwHide: "পাসওয়ার্ড লুকান",
+      pwShow: "পাসওয়ার্ড দেখান",
+    },
   },
   en: {
     nav: {
@@ -322,6 +376,33 @@ export const DICT: Record<Locale, Dict> = {
       subscribing: "Sending...",
       subscribed: "Subscribed",
       perks: ["New projects", "Instalment offers", "Pre-launch perks"],
+    },
+    auth: {
+      loginH: "Welcome",
+      loginHb: "back.",
+      loginSub: "Log in quickly with your mobile number and password.",
+      signupH: "Begin your",
+      signupHb: "journey",
+      signupSub: "Just name + mobile + password — create an account in a minute.",
+      fullName: "Full name",
+      phName: "e.g. Kamrul Hasan",
+      loginId: "Mobile / username / email",
+      mobile: "Mobile number",
+      mobileHint: "Just mobile + password lets you log in fast.",
+      emailOrUser: "Email or username (optional)",
+      phEmailOrUser: "you@example.com  or  kamrul95",
+      password: "Password",
+      remember: "Remember me",
+      forgot: "Forgot password?",
+      processing: "Processing...",
+      loginBtn: "Log in",
+      signupBtn: "Create account",
+      noAccount: "No account?",
+      signupLink: "Sign up →",
+      haveAccount: "Already have an account?",
+      loginLink: "Log in →",
+      pwHide: "Hide password",
+      pwShow: "Show password",
     },
   },
 };

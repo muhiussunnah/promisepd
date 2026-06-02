@@ -37,10 +37,15 @@ import {
   type LoginPayload,
   type SignupPayload,
 } from "@/app/actions/auth";
+import { DICT, localizedPath } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 type Mode = "login" | "signup";
 
 export default function AuthForm({ mode }: { mode: Mode }) {
+  const locale = useLocale();
+  const a = DICT[locale].auth;
+  const lp = (href: string) => localizedPath(href, locale);
   const [identifier, setIdentifier] = useState("");
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -94,19 +99,19 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     >
       {mode === "signup" && (
         <Field
-          label="পূর্ণ নাম"
+          label={a.fullName}
           required
           icon={User}
           value={name}
           onChange={setName}
-          placeholder="যেমন: কামরুল হাসান"
+          placeholder={a.phName}
           autoComplete="name"
         />
       )}
 
       {mode === "login" ? (
         <Field
-          label="মোবাইল / ইউজারনেম / ইমেইল"
+          label={a.loginId}
           required
           icon={Phone}
           value={identifier}
@@ -117,7 +122,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         />
       ) : (
         <Field
-          label="মোবাইল নম্বর"
+          label={a.mobile}
           required
           icon={Phone}
           value={mobile}
@@ -125,45 +130,43 @@ export default function AuthForm({ mode }: { mode: Mode }) {
           placeholder="01XXXXXXXXX"
           inputMode="tel"
           autoComplete="tel"
-          hint="শুধু মোবাইল + পাসওয়ার্ড দিয়েই দ্রুত লগইন করতে পারবেন।"
+          hint={a.mobileHint}
         />
       )}
 
       {mode === "signup" && (
-        // Combined optional identifier — one box, two valid shapes.
-        // Auto-detects: contains "@" → goes to email, otherwise →
-        // username.  Keeps the form short and the visual rhythm
-        // tighter than two stacked optional fields.
         <Field
-          label="ইমেইল বা ইউজারনেম (ঐচ্ছিক)"
+          label={a.emailOrUser}
           icon={AtSign}
           value={emailOrUsername}
           onChange={setEmailOrUsername}
-          placeholder="you@example.com  অথবা  kamrul95"
+          placeholder={a.phEmailOrUser}
           autoComplete="email"
         />
       )}
 
       <PasswordField
-        label="পাসওয়ার্ড"
+        label={a.password}
         value={password}
         onChange={setPassword}
         showPw={showPw}
         onToggle={() => setShowPw((v) => !v)}
         autoComplete={mode === "login" ? "current-password" : "new-password"}
+        showLabel={a.pwShow}
+        hideLabel={a.pwHide}
       />
 
       {mode === "login" && (
         <div className="flex items-center justify-between text-xs">
           <label className="inline-flex items-center gap-2 text-fg-muted cursor-pointer">
             <input type="checkbox" className="accent-brand-blue" />
-            আমাকে মনে রাখুন
+            {a.remember}
           </label>
           <Link
-            href="/contact"
+            href={lp("/contact")}
             className="font-semibold text-brand-blue hover:underline"
           >
-            পাসওয়ার্ড ভুলে গেছেন?
+            {a.forgot}
           </Link>
         </div>
       )}
@@ -195,32 +198,28 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         ) : (
           <UserPlus className="h-4 w-4" />
         )}
-        {pending
-          ? "প্রক্রিয়াধীন..."
-          : mode === "login"
-            ? "লগইন করুন"
-            : "অ্যাকাউন্ট তৈরি করুন"}
+        {pending ? a.processing : mode === "login" ? a.loginBtn : a.signupBtn}
       </button>
 
       <div className="text-center text-sm text-fg-muted">
         {mode === "login" ? (
           <>
-            অ্যাকাউন্ট নেই?{" "}
+            {a.noAccount}{" "}
             <Link
-              href="/signup"
+              href={lp("/signup")}
               className="font-bold text-grad-rb hover:opacity-80"
             >
-              সাইন আপ করুন →
+              {a.signupLink}
             </Link>
           </>
         ) : (
           <>
-            আগে থেকেই অ্যাকাউন্ট আছে?{" "}
+            {a.haveAccount}{" "}
             <Link
-              href="/login"
+              href={lp("/login")}
               className="font-bold text-grad-rb hover:opacity-80"
             >
-              লগইন করুন →
+              {a.loginLink}
             </Link>
           </>
         )}
@@ -288,6 +287,8 @@ function PasswordField({
   showPw,
   onToggle,
   autoComplete,
+  showLabel,
+  hideLabel,
 }: {
   label: string;
   value: string;
@@ -295,6 +296,8 @@ function PasswordField({
   showPw: boolean;
   onToggle: () => void;
   autoComplete?: string;
+  showLabel: string;
+  hideLabel: string;
 }) {
   return (
     <div>
@@ -316,7 +319,7 @@ function PasswordField({
         <button
           type="button"
           onClick={onToggle}
-          aria-label={showPw ? "পাসওয়ার্ড লুকান" : "পাসওয়ার্ড দেখান"}
+          aria-label={showPw ? hideLabel : showLabel}
           className="text-fg-muted hover:text-brand-blue transition-colors p-1 -mr-1"
         >
           {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}

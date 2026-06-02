@@ -222,6 +222,30 @@ export const TESTIMONIALS_EN = [
   },
 ];
 
+/** English navbar meta (the scrolling logo title/tagline) — page +
+ *  section keys mirror the Bengali SECTION_META / page checks. */
+export const NAV_META_EN: Record<string, { title: string; tagline: string }> = {
+  home: { title: "PromisePD", tagline: "Where dreams come true" },
+  about: { title: "About us", tagline: "15+ years of trust & commitment" },
+  stats: { title: "Our journey", tagline: "Promise Group in numbers" },
+  divisions: { title: "Our Divisions", tagline: "5 divisions — under one roof" },
+  projects: { title: "Ongoing Projects", tagline: "New addresses in Dhaka" },
+  why: { title: "Why Promise Group", tagline: "Why families choose us" },
+  testimonials: { title: "Client voices", tagline: "Our story in their words" },
+  contact: { title: "Contact us", tagline: "We'll reply very soon" },
+  partner: { title: "Become a Partner", tagline: "Set your own income target" },
+  blog: { title: "Promise Journal", tagline: "Real-estate knowledge, your way" },
+  team: { title: "Our Team", tagline: "The people who build your dream" },
+  leaderboard: { title: "Leaderboard", tagline: "Those at the top — and their rewards" },
+  gallery: { title: "Gallery", tagline: "Our work in photos & videos" },
+  story: { title: "Our Story", tagline: "The journey behind PromisePD" },
+};
+
+export const HOME_BRAND_CYCLES_EN = [
+  { title: "PromisePD", tagline: "Where dreams come true" },
+  { title: "Promise City", tagline: "Where dreams come true" },
+];
+
 /** Contact "interest" options — same order as INTERESTS. */
 export const INTERESTS_EN = [
   "Promise City — flat/land",
