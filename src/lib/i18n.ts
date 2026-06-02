@@ -64,6 +64,53 @@ type Dict = {
     contact: string;
     rights: string;
   };
+  home: {
+    detailsBtn: string;
+    aboutBtn: string;
+    autoRotate: string;
+    divisionWord: string;
+    viewDivision: string;
+    trustChips: string[];
+    fromPrice: string;
+    about: { eyebrow: string; headA: string; headB: string; body1: string; body2: string };
+    divisions: { eyebrow: string; headA: string; headB: string; sub: string };
+    projects: { eyebrow: string; headA: string; headB: string; sub: string };
+    why: { eyebrow: string; headA: string; headB: string };
+    testimonials: { eyebrow: string; headA: string; headB: string };
+  };
+  contact: {
+    eyebrow: string;
+    headA: string;
+    headB: string;
+    sub: string;
+    labelPhone: string;
+    labelEmail: string;
+    labelOffice: string;
+    labelHours: string;
+    fName: string;
+    phName: string;
+    fEmail: string;
+    fPhone: string;
+    phPhone: string;
+    fInterest: string;
+    fMessage: string;
+    phMessage: string;
+    send: string;
+    sending: string;
+    consent: string;
+    ok: string;
+    err: string;
+  };
+  newsletter: {
+    headA: string;
+    headB: string;
+    sub: string;
+    placeholder: string;
+    subscribe: string;
+    subscribing: string;
+    subscribed: string;
+    perks: string[];
+  };
 };
 
 export const DICT: Record<Locale, Dict> = {
@@ -98,6 +145,79 @@ export const DICT: Record<Locale, Dict> = {
       contact: "যোগাযোগ",
       rights: "সর্বস্বত্ব সংরক্ষিত।",
     },
+    home: {
+      detailsBtn: "বিস্তারিত দেখুন",
+      aboutBtn: "আমাদের সম্পর্কে",
+      autoRotate: "স্বয়ংক্রিয়ভাবে পরিবর্তিত হয়",
+      divisionWord: "বিভাগ",
+      viewDivision: "বিভাগটি দেখুন",
+      trustChips: ["আইনি নিরাপত্তা", "গুণগত নির্মাণ", "প্রিমিয়াম এলাকা", "নমনীয় কিস্তি"],
+      fromPrice: "শুরু",
+      about: {
+        eyebrow: "আমাদের গল্প",
+        headA: "আমরা শুধু ভবন তৈরি করি না।",
+        headB: "প্রতিশ্রুতি গড়ি।",
+        body1:
+          "২০১০ সাল থেকে প্রমিস গ্রুপ ঢাকার মাটিতে নিঃশব্দে এক অবিচল শক্তি — পরিবারগুলোকে এমন বাড়িতে পৌঁছে দিচ্ছি যা তাঁদের জীবন, বাজেট ও ভবিষ্যতের সাথে মেলে।",
+        body2:
+          "আজ আমরা ৫টি বিভাগে কাজ করি — প্রমিস সিটি (রিয়েল এস্টেট), আহবাব রিয়েল এস্টেট (নির্মাণ), প্রমিস ইন্টারন্যাশনাল (সঞ্চয়), আহবাব ট্রাভেলস (হজ্জ/উমরাহ), এবং ইঞ্জিনিয়ারিং ও ইন্টেরিয়র ডিজাইন।",
+      },
+      divisions: {
+        eyebrow: "আমাদের বিভাগ",
+        headA: "৫টি বিভাগ —",
+        headB: "এক ছাদের নিচে।",
+        sub: "প্রমিস গ্রুপের পাঁচটি মূল ব্যবসায়িক বিভাগ — রিয়েল এস্টেট, নির্মাণ, সঞ্চয়, হজ্জ এবং ডিজাইন। প্রতিটি বিভাগে আমরা সেরাটাই দিই।",
+      },
+      projects: {
+        eyebrow: "চলমান প্রকল্প",
+        headA: "যেখানে মানুষ",
+        headB: "পরবর্তী ঠিকানা গড়ছে।",
+        sub: "বাছাইকৃত সাইট, স্বচ্ছ মূল্য, নমনীয় পরিকল্পনা। নিচের প্রতিটি প্রকল্প বাস্তব, চলমান এবং আজই বুকিংযোগ্য।",
+      },
+      why: {
+        eyebrow: "কেন প্রমিস PPD",
+        headA: "যে কারণে মানুষ",
+        headB: "আমাদের বেছে নেয়।",
+      },
+      testimonials: {
+        eyebrow: "বাস্তব কণ্ঠ",
+        headA: "আমাদের পরিবার",
+        headB: "যা বলে।",
+      },
+    },
+    contact: {
+      eyebrow: "যোগাযোগ",
+      headA: "চলুন খুঁজে নিই",
+      headB: "আপনার পরবর্তী বাড়ি।",
+      sub: "একটি বার্তা পাঠান — আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করবো।",
+      labelPhone: "ফোন",
+      labelEmail: "ইমেইল",
+      labelOffice: "অফিস",
+      labelHours: "সময়",
+      fName: "আপনার নাম",
+      phName: "পূর্ণ নাম",
+      fEmail: "ইমেইল",
+      fPhone: "ফোন (ঐচ্ছিক)",
+      phPhone: "+৮৮০ ১XXX-XXXXXX",
+      fInterest: "আগ্রহের বিষয়",
+      fMessage: "বার্তা",
+      phMessage: "আপনি কী খুঁজছেন একটু লিখুন...",
+      send: "বার্তা পাঠান",
+      sending: "পাঠানো হচ্ছে...",
+      consent: "ফর্ম জমা দিয়ে আপনি আমাদের যোগাযোগ করার অনুমতি দিচ্ছেন।",
+      ok: "ধন্যবাদ — আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করবো।",
+      err: "কিছু একটা সমস্যা হয়েছে, আবার চেষ্টা করুন।",
+    },
+    newsletter: {
+      headA: "আপডেট পেতে",
+      headB: "যুক্ত থাকুন।",
+      sub: "নতুন প্রকল্প, কিস্তি অফার ও প্রি-লঞ্চ সুবিধার খবর সবার আগে আপনার ইনবক্সে পৌঁছে দেবো — কোনো স্প্যাম নেই।",
+      placeholder: "you@example.com",
+      subscribe: "সাবস্ক্রাইব",
+      subscribing: "পাঠানো হচ্ছে...",
+      subscribed: "সাবস্ক্রাইব হয়েছে",
+      perks: ["নতুন প্রকল্প", "কিস্তি অফার", "প্রি-লঞ্চ সুবিধা"],
+    },
   },
   en: {
     nav: {
@@ -129,6 +249,79 @@ export const DICT: Record<Locale, Dict> = {
       quickLinks: "Quick Links",
       contact: "Contact",
       rights: "All rights reserved.",
+    },
+    home: {
+      detailsBtn: "View details",
+      aboutBtn: "About us",
+      autoRotate: "Auto-rotating",
+      divisionWord: "Division",
+      viewDivision: "View division",
+      trustChips: ["Legal security", "Quality build", "Premium areas", "Flexible instalments"],
+      fromPrice: "From",
+      about: {
+        eyebrow: "Our Story",
+        headA: "We don't just build buildings.",
+        headB: "We build promises.",
+        body1:
+          "Since 2010, Promise Group has been a quiet, steady force on Dhaka's soil — delivering families homes that fit their life, budget and future.",
+        body2:
+          "Today we work across 5 divisions — Promise City (real estate), Ahbab Real Estate (construction), Promise International (savings), Ahbab Travels (Hajj/Umrah), and Engineering & Interior Design.",
+      },
+      divisions: {
+        eyebrow: "Our Divisions",
+        headA: "5 divisions —",
+        headB: "under one roof.",
+        sub: "Promise Group's five core business divisions — real estate, construction, savings, Hajj and design. In each, we give our very best.",
+      },
+      projects: {
+        eyebrow: "Ongoing Projects",
+        headA: "Where people build",
+        headB: "their next address.",
+        sub: "Curated sites, transparent pricing, flexible plans. Every project below is real, ongoing and bookable today.",
+      },
+      why: {
+        eyebrow: "Why PromisePD",
+        headA: "The reasons people",
+        headB: "choose us.",
+      },
+      testimonials: {
+        eyebrow: "Real voices",
+        headA: "What our family",
+        headB: "says.",
+      },
+    },
+    contact: {
+      eyebrow: "Contact",
+      headA: "Let's find",
+      headB: "your next home.",
+      sub: "Send us a message — we'll get back to you very soon.",
+      labelPhone: "Phone",
+      labelEmail: "Email",
+      labelOffice: "Office",
+      labelHours: "Hours",
+      fName: "Your name",
+      phName: "Full name",
+      fEmail: "Email",
+      fPhone: "Phone (optional)",
+      phPhone: "+880 1XXX-XXXXXX",
+      fInterest: "Interested in",
+      fMessage: "Message",
+      phMessage: "Tell us a little about what you're looking for...",
+      send: "Send message",
+      sending: "Sending...",
+      consent: "By submitting this form you allow us to contact you.",
+      ok: "Thank you — we'll get back to you very soon.",
+      err: "Something went wrong, please try again.",
+    },
+    newsletter: {
+      headA: "Stay in the loop",
+      headB: "for updates.",
+      sub: "New projects, instalment offers and pre-launch perks — delivered to your inbox first. No spam, ever.",
+      placeholder: "you@example.com",
+      subscribe: "Subscribe",
+      subscribing: "Sending...",
+      subscribed: "Subscribed",
+      perks: ["New projects", "Instalment offers", "Pre-launch perks"],
     },
   },
 };

@@ -6,6 +6,9 @@ import { motion } from "framer-motion";
 import { MapPin, Ruler, Check, ArrowRight } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
 import { PROJECTS } from "@/lib/site";
+import { PROJECT_EN } from "@/lib/site.en";
+import { DICT, localizedPath } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 const STATUS_DOT: Record<string, string> = {
   red: "bg-brand-red",
@@ -14,6 +17,9 @@ const STATUS_DOT: Record<string, string> = {
 };
 
 export default function Projects() {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const t = DICT[locale].home;
   return (
     <section
       id="projects"
@@ -46,16 +52,15 @@ export default function Projects() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              চলমান প্রকল্প
+              {t.projects.eyebrow}
             </span>
           </div>
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-            যেখানে মানুষ{" "}
-            <span className="text-grad">পরবর্তী ঠিকানা গড়ছে।</span>
+            {t.projects.headA}{" "}
+            <span className="text-grad">{t.projects.headB}</span>
           </h2>
           <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
-            বাছাইকৃত সাইট, স্বচ্ছ মূল্য, নমনীয় পরিকল্পনা। নিচের প্রতিটি প্রকল্প
-            বাস্তব, চলমান এবং আজই বুকিংযোগ্য।
+            {t.projects.sub}
           </p>
         </motion.div>
 
@@ -73,9 +78,9 @@ export default function Projects() {
               {/* Header — real project photo with a dark scrim so the
                   name + status read clearly on any image. */}
               <Link
-                href={`/projects/${project.slug}`}
+                href={localizedPath(`/projects/${project.slug}`, locale)}
                 className="relative block h-48 overflow-hidden"
-                aria-label={project.name}
+                aria-label={isEn ? PROJECT_EN[project.slug].name : project.name}
               >
                 <Image
                   src={project.cover}
@@ -93,18 +98,18 @@ export default function Projects() {
                         STATUS_DOT[project.accent] ?? STATUS_DOT.red
                       }`}
                     />
-                    {project.status}
+                    {isEn ? PROJECT_EN[project.slug].status : project.status}
                   </span>
                 </div>
 
                 <div className="absolute inset-x-0 bottom-0 p-6">
                   <h3 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-md">
-                    {project.name}
+                    {isEn ? PROJECT_EN[project.slug].name : project.name}
                   </h3>
                   {project.size && (
                     <span className="mt-1 inline-flex items-center gap-1 text-xs text-white/95">
                       <Ruler className="h-3 w-3" />
-                      {project.size}
+                      {isEn ? PROJECT_EN[project.slug].size : project.size}
                     </span>
                   )}
                 </div>
@@ -114,24 +119,24 @@ export default function Projects() {
                 <div className="flex items-baseline justify-between gap-3">
                   <div className="flex items-center gap-1.5 text-sm text-fg-muted min-w-0">
                     <MapPin className="h-4 w-4 text-brand-red shrink-0" />
-                    {project.location}
+                    {isEn ? PROJECT_EN[project.slug].location : project.location}
                   </div>
                   <div className="text-right shrink-0">
                     <div className="text-[10px] uppercase tracking-wider text-fg-faint">
-                      শুরু
+                      {t.fromPrice}
                     </div>
                     <div className="text-lg sm:text-xl font-bold text-grad-rb whitespace-nowrap">
-                      {project.price}
+                      {isEn ? PROJECT_EN[project.slug].price : project.price}
                     </div>
                   </div>
                 </div>
 
                 <p className="mt-4 text-sm text-fg-muted leading-relaxed">
-                  {project.description}
+                  {isEn ? PROJECT_EN[project.slug].description : project.description}
                 </p>
 
                 <ul className="mt-5 space-y-2">
-                  {project.highlights.map((h) => (
+                  {(isEn ? PROJECT_EN[project.slug].highlights : project.highlights).map((h) => (
                     <li
                       key={h}
                       className="flex items-center gap-2 text-xs text-fg-soft"
@@ -145,10 +150,10 @@ export default function Projects() {
                 </ul>
 
                 <Link
-                  href={`/projects/${project.slug}`}
+                  href={localizedPath(`/projects/${project.slug}`, locale)}
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-grad-rb group/btn"
                 >
-                  বিস্তারিত দেখুন
+                  {t.detailsBtn}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                 </Link>
               </div>

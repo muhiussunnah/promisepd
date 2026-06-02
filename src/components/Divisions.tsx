@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
 import { DIVISIONS, DIVISION_IMAGE, DIVISION_LOGO } from "@/lib/site";
+import { DIVISION_EN } from "@/lib/site.en";
+import { DICT, localizedPath } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 const ICONS: Record<string, LucideIcon> = {
   Building2,
@@ -48,6 +51,9 @@ const ACCENT_GLOW: Record<string, string> = {
 };
 
 export default function Divisions() {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const t = DICT[locale].home;
   return (
     <section
       id="divisions"
@@ -80,16 +86,15 @@ export default function Divisions() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-blue animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              আমাদের বিভাগ
+              {t.divisions.eyebrow}
             </span>
           </div>
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-            ৫টি বিভাগ —{" "}
-            <span className="text-grad">এক ছাদের নিচে।</span>
+            {t.divisions.headA}{" "}
+            <span className="text-grad">{t.divisions.headB}</span>
           </h2>
           <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
-            প্রমিস গ্রুপের পাঁচটি মূল ব্যবসায়িক বিভাগ — রিয়েল এস্টেট, নির্মাণ,
-            সঞ্চয়, হজ্জ এবং ডিজাইন। প্রতিটি বিভাগে আমরা সেরাটাই দিই।
+            {t.divisions.sub}
           </p>
         </motion.div>
 
@@ -98,6 +103,10 @@ export default function Divisions() {
             const Icon = ICONS[division.icon] ?? Building2;
             const image = DIVISION_IMAGE[division.slug];
             const logo = DIVISION_LOGO[division.slug];
+            const dx = isEn ? DIVISION_EN[division.slug] : null;
+            const dName = dx?.name ?? division.nameBn;
+            const dDesc = dx?.description ?? division.description;
+            const dHi = dx?.highlights ?? division.highlights;
             const isLarge = i === 0; // Promise City featured larger
             return (
               <motion.article
@@ -168,7 +177,7 @@ export default function Divisions() {
                               : "text-white/85"
                           }`}
                         >
-                          বিভাগ {String(i + 1).padStart(2, "0")}
+                          {t.divisionWord} {String(i + 1).padStart(2, "0")}
                         </div>
                       </div>
                     </div>
@@ -176,19 +185,21 @@ export default function Divisions() {
 
                   <div className="relative flex-1 p-6">
                     <h3 className="text-xl sm:text-2xl font-bold text-fg leading-tight">
-                      {division.nameBn}
+                      {dName}
                     </h3>
-                    <div className="text-[11px] uppercase tracking-wider text-fg-faint mt-0.5">
-                      {division.nameEn}
-                    </div>
+                    {!isEn && (
+                      <div className="text-[11px] uppercase tracking-wider text-fg-faint mt-0.5">
+                        {division.nameEn}
+                      </div>
+                    )}
 
                     <p className="mt-3 text-sm text-fg-muted leading-relaxed">
-                      {division.description}
+                      {dDesc}
                     </p>
 
                     {isLarge && (
                       <ul className="mt-4 grid grid-cols-2 gap-1.5">
-                        {division.highlights.slice(0, 4).map((h) => (
+                        {dHi.slice(0, 4).map((h) => (
                           <li
                             key={h}
                             className="text-xs text-fg-soft flex items-center gap-1.5"
@@ -201,10 +212,10 @@ export default function Divisions() {
                     )}
 
                     <Link
-                      href={`/${division.slug}`}
+                      href={localizedPath(`/${division.slug}`, locale)}
                       className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-grad-rb group/btn"
                     >
-                      বিস্তারিত দেখুন
+                      {t.detailsBtn}
                       <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                     </Link>
                   </div>

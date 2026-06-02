@@ -13,14 +13,21 @@ import {
 } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
 import { SITE, INTERESTS } from "@/lib/site";
+import { INTERESTS_EN } from "@/lib/site.en";
+import { DICT } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 import { submitContact } from "@/app/actions";
 
 export default function Contact() {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const c = DICT[locale].contact;
+  const interests = isEn ? INTERESTS_EN : INTERESTS;
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    interest: INTERESTS[0],
+    interest: interests[0],
     message: "",
   });
   const [status, setStatus] = useState<{
@@ -39,22 +46,16 @@ export default function Contact() {
     startTransition(async () => {
       const res = await submitContact(form);
       if (res.ok) {
-        setStatus({
-          type: "ok",
-          msg: "ধন্যবাদ — আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করবো।",
-        });
+        setStatus({ type: "ok", msg: c.ok });
         setForm({
           name: "",
           email: "",
           phone: "",
-          interest: INTERESTS[0],
+          interest: interests[0],
           message: "",
         });
       } else {
-        setStatus({
-          type: "err",
-          msg: res.error || "কিছু একটা সমস্যা হয়েছে, আবার চেষ্টা করুন।",
-        });
+        setStatus({ type: "err", msg: res.error || c.err });
       }
     });
   }
@@ -91,14 +92,14 @@ export default function Contact() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              যোগাযোগ
+              {c.eyebrow}
             </span>
           </div>
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-            চলুন খুঁজে নিই <span className="text-grad">আপনার পরবর্তী বাড়ি।</span>
+            {c.headA} <span className="text-grad">{c.headB}</span>
           </h2>
           <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed">
-            একটি বার্তা পাঠান — আমরা খুব শীঘ্রই আপনার সাথে যোগাযোগ করবো।
+            {c.sub}
           </p>
         </motion.div>
 
@@ -113,29 +114,31 @@ export default function Contact() {
             {[
               {
                 icon: Phone,
-                label: "ফোন",
+                label: c.labelPhone,
                 value: SITE.phoneDisplay,
                 href: `tel:${SITE.phone}`,
                 bg: "bg-brand-red",
               },
               {
                 icon: Mail,
-                label: "ইমেইল",
+                label: c.labelEmail,
                 value: SITE.email,
                 href: `mailto:${SITE.email}`,
                 bg: "bg-brand-blue",
               },
               {
                 icon: MapPin,
-                label: "অফিস",
-                value: SITE.address,
+                label: c.labelOffice,
+                value: isEn ? SITE.addressEn : SITE.address,
                 href: "https://maps.google.com/?q=Kazi+Tower+South+Jatrabari+Dhaka",
                 bg: "bg-brand-blue",
               },
               {
                 icon: Clock,
-                label: "সময়",
-                value: `${SITE.hours} · ${SITE.weeklyOff}`,
+                label: c.labelHours,
+                value: isEn
+                  ? `${SITE.hoursEn} · ${SITE.weeklyOffEn}`
+                  : `${SITE.hours} · ${SITE.weeklyOff}`,
                 bg: "bg-brand-ash",
               },
             ].map((item) => {
@@ -184,14 +187,14 @@ export default function Contact() {
           >
             <div className="grid sm:grid-cols-2 gap-4">
               <Field
-                label="আপনার নাম"
+                label={c.fName}
                 required
                 value={form.name}
                 onChange={(v) => update("name", v)}
-                placeholder="পূর্ণ নাম"
+                placeholder={c.phName}
               />
               <Field
-                label="ইমেইল"
+                label={c.fEmail}
                 type="email"
                 required
                 value={form.email}
@@ -201,23 +204,23 @@ export default function Contact() {
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <Field
-                label="ফোন (ঐচ্ছিক)"
+                label={c.fPhone}
                 type="tel"
                 value={form.phone}
                 onChange={(v) => update("phone", v)}
-                placeholder="+৮৮০ ১XXX-XXXXXX"
+                placeholder={c.phPhone}
               />
               <div>
                 <label className="text-[11px] uppercase tracking-[0.18em] text-fg-muted">
-                  আগ্রহের বিষয়
+                  {c.fInterest}
                 </label>
                 <select
                   value={form.interest}
                   onChange={(e) => update("interest", e.target.value)}
-                  aria-label="আগ্রহের বিষয়"
+                  aria-label={c.fInterest}
                   className="mt-1.5 w-full rounded-xl bg-white border border-border px-4 py-3 text-sm focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/15 transition-all"
                 >
-                  {INTERESTS.map((i) => (
+                  {interests.map((i) => (
                     <option key={i} value={i}>
                       {i}
                     </option>
@@ -227,14 +230,14 @@ export default function Contact() {
             </div>
             <div>
               <label className="text-[11px] uppercase tracking-[0.18em] text-fg-muted">
-                বার্তা *
+                {c.fMessage} *
               </label>
               <textarea
                 required
                 value={form.message}
                 onChange={(e) => update("message", e.target.value)}
                 rows={5}
-                placeholder="আপনি কী খুঁজছেন একটু লিখুন..."
+                placeholder={c.phMessage}
                 className="mt-1.5 w-full rounded-xl bg-white border border-border px-4 py-3 text-sm placeholder:text-fg-faint focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/15 transition-all resize-none"
               />
             </div>
@@ -262,10 +265,10 @@ export default function Contact() {
               className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-blue px-6 py-4 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:scale-[1.02] disabled:opacity-70 disabled:scale-100 transition-all btn-shine"
             >
               <Send className="h-4 w-4" />
-              {pending ? "পাঠানো হচ্ছে..." : "বার্তা পাঠান"}
+              {pending ? c.sending : c.send}
             </button>
             <p className="text-[11px] text-fg-faint text-center">
-              ফর্ম জমা দিয়ে আপনি আমাদের যোগাযোগ করার অনুমতি দিচ্ছেন।
+              {c.consent}
             </p>
           </motion.form>
         </div>

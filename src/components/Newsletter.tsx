@@ -5,8 +5,15 @@ import { motion } from "framer-motion";
 import { Mail, Send, Check, Sparkles, BellRing, Tag, Rocket } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
 import { subscribeNewsletter } from "@/app/actions";
+import { DICT } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
+
+const PERK_ICONS = [Rocket, Tag, BellRing];
 
 export default function Newsletter() {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const n = DICT[locale].newsletter;
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
@@ -54,16 +61,15 @@ export default function Newsletter() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <Sparkles className="h-3.5 w-3.5 text-brand-blue" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              নিউজলেটার
+              {isEn ? "Newsletter" : "নিউজলেটার"}
             </span>
           </div>
 
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-            আপডেট পেতে <span className="text-grad">যুক্ত থাকুন।</span>
+            {n.headA} <span className="text-grad">{n.headB}</span>
           </h2>
           <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed max-w-2xl mx-auto">
-            নতুন প্রকল্প, কিস্তি অফার ও প্রি-লঞ্চ সুবিধার খবর সবার আগে আপনার
-            ইনবক্সে পৌঁছে দেবো — কোনো স্প্যাম নেই।
+            {n.sub}
           </p>
         </motion.div>
 
@@ -84,8 +90,8 @@ export default function Newsletter() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                aria-label="ইমেইল ঠিকানা"
+                placeholder={n.placeholder}
+                aria-label={isEn ? "Email address" : "ইমেইল ঠিকানা"}
                 className="w-full rounded-2xl sm:rounded-full bg-white border border-border pl-11 pr-4 sm:pr-44 py-3.5 text-sm sm:text-base placeholder:text-fg-faint focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/15 transition-all shadow-sm"
               />
             </div>
@@ -96,11 +102,11 @@ export default function Newsletter() {
             >
               {done ? (
                 <>
-                  <Check className="h-4 w-4" /> সাবস্ক্রাইব হয়েছে
+                  <Check className="h-4 w-4" /> {n.subscribed}
                 </>
               ) : (
                 <>
-                  {pending ? "পাঠানো হচ্ছে..." : "সাবস্ক্রাইব"}
+                  {pending ? n.subscribing : n.subscribe}
                   {!pending && <Send className="h-4 w-4" />}
                 </>
               )}
@@ -116,11 +122,9 @@ export default function Newsletter() {
           transition={{ duration: 0.55, delay: 0.3 }}
           className="mt-7 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
         >
-          {[
-            { icon: Rocket, label: "নতুন প্রকল্প" },
-            { icon: Tag, label: "কিস্তি অফার" },
-            { icon: BellRing, label: "প্রি-লঞ্চ সুবিধা" },
-          ].map(({ icon: Icon, label }) => (
+          {n.perks.map((label, pi) => {
+            const Icon = PERK_ICONS[pi];
+            return (
             <span
               key={label}
               className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm border border-border px-3 py-1.5 text-xs sm:text-sm font-medium text-fg-soft shadow-sm"
@@ -128,11 +132,14 @@ export default function Newsletter() {
               <Icon className="h-3.5 w-3.5 text-brand-red" />
               {label}
             </span>
-          ))}
+            );
+          })}
         </motion.div>
 
         <p className="mt-5 text-[11px] text-fg-faint">
-          সাবস্ক্রাইব করে আপনি আমাদের গোপনীয়তা নীতির সাথে সম্মত হচ্ছেন।
+          {isEn
+            ? "By subscribing you agree to our privacy policy."
+            : "সাবস্ক্রাইব করে আপনি আমাদের গোপনীয়তা নীতির সাথে সম্মত হচ্ছেন।"}
         </p>
       </div>
     </section>

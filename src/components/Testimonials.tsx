@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 import { TESTIMONIALS } from "@/lib/site";
+import { TESTIMONIALS_EN } from "@/lib/site.en";
+import { DICT } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 /** DiceBear placeholder avatar — swap for real client photos later. */
 function avatarUrl(name: string) {
@@ -11,8 +14,11 @@ function avatarUrl(name: string) {
 }
 
 export default function Testimonials() {
+  const locale = useLocale();
+  const t = DICT[locale].home.testimonials;
+  const source = locale === "en" ? TESTIMONIALS_EN : TESTIMONIALS;
   // Two rows: duplicated so the marquee loop is seamless.
-  const row = [...TESTIMONIALS, ...TESTIMONIALS];
+  const row = [...source, ...source];
 
   return (
     <section
@@ -30,12 +36,12 @@ export default function Testimonials() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-ash animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              বাস্তব কণ্ঠ
+              {t.eyebrow}
             </span>
           </div>
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-            আমাদের পরিবার{" "}
-            <span className="text-grad">যা বলে।</span>
+            {t.headA}{" "}
+            <span className="text-grad">{t.headB}</span>
           </h2>
         </motion.div>
       </div>

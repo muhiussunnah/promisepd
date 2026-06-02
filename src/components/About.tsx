@@ -5,8 +5,14 @@ import { motion } from "framer-motion";
 import { Building2, Heart, Handshake } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
 import { SITE } from "@/lib/site";
+import { ABOUT_PILLARS_EN } from "@/lib/site.en";
+import { DICT } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 export default function About() {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const tx = DICT[locale].home.about;
   const pillars = [
     {
       icon: Building2,
@@ -61,25 +67,38 @@ export default function About() {
             <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
               <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-                আমাদের গল্প
+                {tx.eyebrow}
               </span>
             </div>
             <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-              আমরা শুধু ভবন তৈরি করি না।{" "}
-              <span className="text-grad">প্রতিশ্রুতি গড়ি।</span>
+              {tx.headA}{" "}
+              <span className="text-grad">{tx.headB}</span>
             </h2>
-            <p className="mt-6 text-base sm:text-lg text-fg-muted leading-relaxed">
-              {SITE.founded} সাল থেকে প্রমিস গ্রুপ ঢাকার মাটিতে নিঃশব্দে এক
-              অবিচল শক্তি — পরিবারগুলোকে এমন বাড়িতে পৌঁছে দিচ্ছি যা তাঁদের
-              জীবন, বাজেট ও ভবিষ্যতের সাথে মেলে।
-            </p>
-            <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed">
-              আজ আমরা ৫টি বিভাগে কাজ করি — <strong>প্রমিস সিটি</strong> (রিয়েল
-              এস্টেট), <strong>আহবাব রিয়েল এস্টেট</strong> (নির্মাণ),{" "}
-              <strong>প্রমিস ইন্টারন্যাশনাল</strong> (সঞ্চয়),{" "}
-              <strong>আহবাব ট্রাভেলস</strong> (হজ্জ/উমরাহ), এবং{" "}
-              <strong>ইন্টেরিয়র ও 3D ডিজাইন</strong>।
-            </p>
+            {isEn ? (
+              <>
+                <p className="mt-6 text-base sm:text-lg text-fg-muted leading-relaxed">
+                  {tx.body1}
+                </p>
+                <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed">
+                  {tx.body2}
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="mt-6 text-base sm:text-lg text-fg-muted leading-relaxed">
+                  {SITE.founded} সাল থেকে প্রমিস গ্রুপ ঢাকার মাটিতে নিঃশব্দে এক
+                  অবিচল শক্তি — পরিবারগুলোকে এমন বাড়িতে পৌঁছে দিচ্ছি যা তাঁদের
+                  জীবন, বাজেট ও ভবিষ্যতের সাথে মেলে।
+                </p>
+                <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed">
+                  আজ আমরা ৫টি বিভাগে কাজ করি — <strong>প্রমিস সিটি</strong> (রিয়েল
+                  এস্টেট), <strong>আহবাব রিয়েল এস্টেট</strong> (নির্মাণ),{" "}
+                  <strong>প্রমিস ইন্টারন্যাশনাল</strong> (সঞ্চয়),{" "}
+                  <strong>আহবাব ট্রাভেলস</strong> (হজ্জ/উমরাহ), এবং{" "}
+                  <strong>ইন্টেরিয়র ও 3D ডিজাইন</strong>।
+                </p>
+              </>
+            )}
 
             <div className="mt-8 inline-flex items-center gap-4 rounded-2xl bg-white border border-border p-3 pr-5 shadow-sm">
               <Image
@@ -127,9 +146,11 @@ export default function About() {
                       />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-fg">{p.title}</h3>
+                      <h3 className="text-xl font-bold text-fg">
+                        {isEn ? ABOUT_PILLARS_EN[i].title : p.title}
+                      </h3>
                       <p className="mt-1.5 text-sm sm:text-base text-fg-muted leading-relaxed">
-                        {p.copy}
+                        {isEn ? ABOUT_PILLARS_EN[i].copy : p.copy}
                       </p>
                     </div>
                   </div>

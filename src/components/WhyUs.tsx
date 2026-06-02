@@ -13,6 +13,9 @@ import {
 } from "lucide-react";
 import AnimatedBlobs from "./AnimatedBlobs";
 import { WHY_US } from "@/lib/site";
+import { WHY_US_EN } from "@/lib/site.en";
+import { DICT } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 const ICONS: Record<string, LucideIcon> = {
   MapPin,
@@ -25,6 +28,9 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 export default function WhyUs() {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const t = DICT[locale].home.why;
   return (
     <section
       id="why"
@@ -57,12 +63,12 @@ export default function WhyUs() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-blue animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              কেন প্রমিস PPD
+              {t.eyebrow}
             </span>
           </div>
           <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
-            যে কারণে মানুষ{" "}
-            <span className="text-grad">আমাদের বেছে নেয়।</span>
+            {t.headA}{" "}
+            <span className="text-grad">{t.headB}</span>
           </h2>
         </motion.div>
 
@@ -101,9 +107,11 @@ export default function WhyUs() {
                     )}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold text-fg">{item.title}</h3>
+                    <h3 className="text-lg font-bold text-fg">
+                      {isEn ? WHY_US_EN[i].title : item.title}
+                    </h3>
                     <p className="mt-1.5 text-sm text-fg-muted leading-relaxed">
-                      {item.description}
+                      {isEn ? WHY_US_EN[i].description : item.description}
                     </p>
                   </div>
                 </div>

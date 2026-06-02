@@ -30,6 +30,9 @@ import PropertyBackdrop from "./PropertyBackdrop";
 import TypeOnce from "./TypeOnce";
 import PromoVideoButton from "./PromoVideoButton";
 import { DIVISIONS, DIVISION_LOGO } from "@/lib/site";
+import { DIVISION_EN } from "@/lib/site.en";
+import { DICT, localizedPath } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 import { toBn } from "@/lib/bn";
 
 const ICONS: Record<string, LucideIcon> = {
@@ -110,7 +113,17 @@ export default function Hero() {
     return () => clearInterval(t);
   }, [reduce]);
 
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const tr = DICT[locale].home;
+
   const current = DIVISIONS[idx];
+  const dx = isEn ? DIVISION_EN[current.slug] : null;
+  const curName = dx?.name ?? current.nameBn;
+  const curTagline = dx?.tagline ?? current.tagline;
+  const curDesc = dx?.description ?? current.description;
+  const curHeroTitle = dx?.heroTitle ?? current.heroTitle;
+  const curHighlights = dx?.highlights ?? current.highlights;
   const Icon = ICONS[current.icon] ?? Building2;
   const accentSolidClass = ACCENT_SOLID_CLASS[current.accent];
   const accentText = ACCENT_TEXT[current.accent];
@@ -123,7 +136,7 @@ export default function Hero() {
   useEffect(() => {
     playedRef.current = true;
   }, []);
-  const titleWords = current.heroTitle.split(" ");
+  const titleWords = curHeroTitle.split(" ");
   const splitAt = Math.ceil(titleWords.length / 2);
   const titleFade = titleWords.slice(0, splitAt).join(" ");
   const titleType = titleWords.slice(splitAt).join(" ");
@@ -184,7 +197,8 @@ export default function Hero() {
                     className={`inline-flex items-center gap-2 rounded-full ${accentSolidClass} px-3.5 py-1.5 text-[11px] sm:text-xs font-bold text-white tracking-wider shadow-md`}
                   >
                     <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-                    {toBn(idx + 1)} / ৫ · {current.nameBn}
+                    {isEn ? `${idx + 1} / 5` : `${toBn(idx + 1)} / ৫`} ·{" "}
+                    {curName}
                   </span>
                   <span className="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-brand-blue font-bold">
                     {current.nameEn}
@@ -216,12 +230,12 @@ export default function Hero() {
                 <p
                   className={`mt-4 text-[clamp(1.05rem,1.6vw,1.375rem)] font-bold ${accentText}`}
                 >
-                  {current.tagline}
+                  {curTagline}
                 </p>
 
                 {/* Description */}
                 <p className="mt-3 text-[clamp(0.95rem,1.2vw,1.0625rem)] text-fg-muted leading-relaxed max-w-2xl">
-                  {current.description}
+                  {curDesc}
                 </p>
               </motion.div>
             </AnimatePresence>
@@ -229,17 +243,14 @@ export default function Hero() {
             {/* CTAs */}
             <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
-                href={`/${current.slug}`}
+                href={localizedPath(`/${current.slug}`, locale)}
                 className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-blue px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
-                বিস্তারিত দেখুন
+                {tr.detailsBtn}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              {/* Click → opens the promo video in a lightbox modal.
-                  "আমাদের সম্পর্কে" pairs cleanly with the primary
-                  "বিস্তারিত দেখুন" CTA on the left — text details
-                  vs. an in-place company-overview video. */}
-              <PromoVideoButton>আমাদের সম্পর্কে</PromoVideoButton>
+              {/* Click → opens the promo video in a lightbox modal. */}
+              <PromoVideoButton>{tr.aboutBtn}</PromoVideoButton>
             </div>
 
             {/* Dot indicators */}
@@ -250,7 +261,7 @@ export default function Hero() {
                   <button
                     key={d.slug}
                     onClick={() => setIdx(i)}
-                    aria-label={d.nameBn}
+                    aria-label={isEn ? DIVISION_EN[d.slug]?.name ?? d.nameBn : d.nameBn}
                     // 24×24 hit area (a11y touch-target) with the small
                     // visual dot centred inside — negative margin keeps the
                     // dots visually tight.
@@ -267,17 +278,17 @@ export default function Hero() {
                 );
               })}
               <span className="ml-2 text-[10px] uppercase tracking-[0.2em] text-fg-faint">
-                স্বয়ংক্রিয়ভাবে পরিবর্তিত হয়
+                {tr.autoRotate}
               </span>
             </div>
 
             {/* Trust chips */}
             <div className="mt-7 grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-2xl">
               {[
-                { icon: ShieldCheck, label: "আইনি নিরাপত্তা", color: "text-brand-blue" },
-                { icon: Award, label: "গুণগত নির্মাণ", color: "text-brand-blue" },
-                { icon: MapPin, label: "প্রিমিয়াম এলাকা", color: "text-brand-blue" },
-                { icon: Wallet, label: "নমনীয় কিস্তি", color: "text-brand-blue" },
+                { icon: ShieldCheck, label: tr.trustChips[0], color: "text-brand-blue" },
+                { icon: Award, label: tr.trustChips[1], color: "text-brand-blue" },
+                { icon: MapPin, label: tr.trustChips[2], color: "text-brand-blue" },
+                { icon: Wallet, label: tr.trustChips[3], color: "text-brand-blue" },
               ].map((feature, i) => (
                 <motion.div
                   key={feature.label}
@@ -356,7 +367,10 @@ export default function Hero() {
                     >
                       <div className="flex items-center justify-between">
                         <div className="text-[10px] uppercase tracking-[0.25em] font-semibold text-white/85">
-                          বিভাগ {toBn(idx + 1).padStart(2, "০")}
+                          {tr.divisionWord}{" "}
+                          {isEn
+                            ? String(idx + 1).padStart(2, "0")
+                            : toBn(idx + 1).padStart(2, "০")}
                         </div>
                         <Sparkles className="h-5 w-5 text-white/70" />
                       </div>
@@ -377,14 +391,14 @@ export default function Hero() {
                       </div>
 
                       <p className="mt-6 text-2xl sm:text-3xl font-bold leading-tight text-white drop-shadow-md">
-                        {current.nameBn}
+                        {curName}
                       </p>
                       <p className="mt-2 text-sm leading-relaxed text-white/95">
-                        {current.tagline}
+                        {curTagline}
                       </p>
 
                       <div className="mt-7 grid grid-cols-2 gap-2.5">
-                        {current.highlights.slice(0, 4).map((h) => (
+                        {curHighlights.slice(0, 4).map((h) => (
                           <div
                             key={h}
                             className={`rounded-xl px-3 py-2.5 text-[11px] sm:text-xs leading-snug ${chipCls}`}
@@ -395,10 +409,10 @@ export default function Hero() {
                       </div>
 
                       <Link
-                        href={`/${current.slug}`}
+                        href={localizedPath(`/${current.slug}`, locale)}
                         className="mt-7 inline-flex items-center gap-1.5 rounded-xl bg-white text-fg px-4 py-2.5 text-sm font-bold shadow-md hover:scale-[1.03] transition-transform"
                       >
-                        বিভাগটি দেখুন
+                        {tr.viewDivision}
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     </motion.div>
@@ -418,7 +432,9 @@ export default function Hero() {
         className="relative z-10 flex justify-center mt-8 sm:mt-4 lg:mt-0 pt-4 pb-2"
       >
         <div className="flex flex-col items-center gap-1.5 text-fg-faint">
-          <span className="text-[10px] uppercase tracking-[0.3em]">নিচে নামুন</span>
+          <span className="text-[10px] uppercase tracking-[0.3em]">
+            {isEn ? "Scroll down" : "নিচে নামুন"}
+          </span>
           <div className="h-8 w-5 rounded-full border-2 border-fg-faint/40 flex justify-center p-1">
             <motion.div
               animate={{ y: [0, 10, 0] }}
