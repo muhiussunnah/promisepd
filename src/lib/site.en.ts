@@ -160,7 +160,7 @@ export const PROJECT_EN: Record<
     price: "Tk 4,000 / sqft",
     size: "1200 / 1800 sqft",
     description:
-      "A south-facing G+9 residential building at Bashundhara River View C Block — 1200 & 1800 sqft flats at just Tk 4,000 per sqft. 5th-floor roof cast; ~50% complete.",
+      "A south-facing G+8 residential building at Bashundhara River View C Block — 1200 & 1800 sqft flats at just Tk 4,000 per sqft. 5th-floor roof cast; ~50% complete.",
     highlights: [
       "South-facing · Bashundhara River View C Block",
       "1200 / 1800 sqft flats",
@@ -259,11 +259,11 @@ export const PROJECT_DETAIL_EN: Record<
   },
   "ahbab-palace-02": {
     longDescription:
-      "Ahbab Palace 02 — a south-facing modern G+9 building at Bashundhara River View C Block (near the old Ad-Din Medical, plots 922 & 923). Work is moving fast on a modern, elegant design — the 5th-floor roof is cast and roughly 50% complete. Flat handover by July 2027, in shaa Allah.",
+      "Ahbab Palace 02 — a south-facing modern G+8 building at Bashundhara River View C Block (near the old Ad-Din Medical, plots 922 & 923). Work is moving fast on a modern, elegant design — the 5th-floor roof is cast and roughly 50% complete. Flat handover by July 2027, in shaa Allah.",
     details: [
       "Project: Ahbab Palace 02 · Location: Bashundhara River View, C Block (near the old Ad-Din Medical) · Plots 922 & 923 · Facing: south.",
       "Advantages: near Bashundhara Lake; close to parks, college, madrasa, mosque and market — an eco-friendly, modern residential area.",
-      "G+9 building — three 1200 sqft units per regular floor, and two larger 1800 sqft units on the 4th and 5th floors.",
+      "G+8 building — three 1200 sqft units per regular floor, and two larger 1800 sqft units on the 4th and 5th floors.",
       "Why Ahbab Real Estate: (a) own your dream flat for 35–40% less; (b) guaranteed on-time handover; (c) a transparent, trustworthy land-share model; (d) full support including registration; (e) superior, quality construction materials.",
       "Timeline — work started: June 2025; completion: July 2027 in shaa Allah. Booking is on — several shares already sold, only a few left. With ~50% complete including the 5th-floor roof, some profit now applies to the land share — contact us now to secure your preferred flat.",
     ],
