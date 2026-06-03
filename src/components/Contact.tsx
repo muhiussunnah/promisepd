@@ -115,7 +115,7 @@ export default function Contact() {
               {
                 icon: Phone,
                 label: c.labelPhone,
-                value: SITE.phoneDisplay,
+                value: isEn ? SITE.phoneDisplayEn : SITE.phoneDisplay,
                 href: `tel:${SITE.phone}`,
                 bg: "bg-brand-red",
               },

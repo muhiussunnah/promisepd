@@ -270,7 +270,7 @@ export default function DivisionDetail({
                 className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 <Phone className="h-4 w-4" />
-                {SITE.phoneDisplay}
+                {isEn ? SITE.phoneDisplayEn : SITE.phoneDisplay}
               </a>
               <Link
                 href={lp("/#contact")}

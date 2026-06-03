@@ -334,6 +334,55 @@ export const TEAM_EN = {
   } as Record<string, string>,
 };
 
+/* ── FORMS ──────────────────────────────────────────────────────────── */
+/* Chrome + navigation labels are English on /en; the official form itself
+ * (the FormFiller document) stays Bengali in BOTH versions per the project
+ * rule — only the forms remain Bengali. */
+
+export const FORMS_EN = {
+  metaTitle: "Forms — PromisePD",
+  metaDesc:
+    "Fill out all of Promise Group's official forms online — flat allocation, investment, Promise City, Fuzala Tower & Complex, Marketing Director. Once filled, it reaches the office directly.",
+  eyebrow: "Online forms",
+  h1Plain: "Official forms,",
+  h1Accent: "filled online",
+  sub: "Pick the form you need and enter your details — the completed form is generated in the exact official design and sent straight to our office.",
+  fillBtn: "Fill the form",
+  comingBtn: "In preparation",
+  soonBadge: "Soon",
+  backToForms: "All forms",
+  notReadyBody:
+    "Online filling for this form is being added very soon — in shaa Allah. To apply right now, please contact our office.",
+  /** English names/descriptions for navigation, keyed by slug. */
+  names: {
+    "flat-allocation": {
+      name: "Flat Allocation Application",
+      description:
+        "Application form for booking and allotment of an Ahbab Real Estate flat — with applicant, nominee and official details.",
+    },
+    investment: {
+      name: "Investment Form",
+      description: "Application form for savings and investment with Promise International.",
+    },
+    "promise-city": {
+      name: "Promise City Form",
+      description: "Application form for land/plot booking in the Promise City project.",
+    },
+    "fuzala-tower": {
+      name: "Fuzala Tower Form",
+      description: "Application form for flat/share booking in Fuzala Tower.",
+    },
+    "fuzala-complex": {
+      name: "Fuzala Complex Form",
+      description: "Application form for flat booking in Fuzala Complex.",
+    },
+    "marketing-director": {
+      name: "Marketing Director Form",
+      description: "Application to join Promise Group as a Marketing Director.",
+    },
+  } as Record<string, { name: string; description: string }>,
+};
+
 /* ── CONTACT (page chrome; the form itself is localized via DICT) ──────── */
 
 export const CONTACT_EN = {

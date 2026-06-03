@@ -167,7 +167,7 @@ export default function Footer() {
                   href={`tel:${SITE.phone}`}
                   className="hover:text-fg transition-colors"
                 >
-                  {SITE.phoneDisplay}
+                  {isEn ? SITE.phoneDisplayEn : SITE.phoneDisplay}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">

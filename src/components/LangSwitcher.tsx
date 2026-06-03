@@ -14,7 +14,7 @@ import { stripLocale, swapLocale } from "@/lib/i18n";
  * "coming soon" state instead of linking to an unfinished page. Flip it
  * to `true` on the final push to make /en public everywhere.
  */
-const EN_READY = false;
+const EN_READY = true;
 
 export default function LangSwitcher() {
   const pathname = usePathname() || "/";

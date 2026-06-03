@@ -672,7 +672,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
               >
                 <Phone className="h-4 w-4" />
-                {SITE.phoneDisplay}
+                {isEn ? SITE.phoneDisplayEn : SITE.phoneDisplay}
               </a>
             </motion.div>
           </motion.div>

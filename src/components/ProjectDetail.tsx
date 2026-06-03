@@ -128,7 +128,7 @@ export default function ProjectDetail({
             </Link>
             <a href={`tel:${SITE.phone}`} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm sm:text-base font-semibold text-fg hover:scale-[1.02] transition-transform">
               <Phone className="h-4 w-4 text-brand-blue" />
-              {SITE.phoneDisplay}
+              {isEn ? SITE.phoneDisplayEn : SITE.phoneDisplay}
             </a>
             {project.floorPlanUrl && (
               <a href={project.floorPlanUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white/15 border border-white/30 backdrop-blur-md px-6 py-3.5 text-sm sm:text-base font-semibold text-white hover:bg-white/25 transition-colors">
@@ -468,7 +468,7 @@ export default function ProjectDetail({
               </Link>
               <a href={`tel:${SITE.phone}`} className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-7 py-3.5 text-base font-semibold text-fg hover:border-brand-blue/40 hover:shadow-lg transition-all">
                 <Phone className="h-4 w-4 text-brand-blue" />
-                {SITE.phoneDisplay}
+                {isEn ? SITE.phoneDisplayEn : SITE.phoneDisplay}
               </a>
             </div>
           </div>
