@@ -353,34 +353,42 @@ export const FORMS_EN = {
   backToForms: "All forms",
   notReadyBody:
     "Online filling for this form is being added very soon — in shaa Allah. To apply right now, please contact our office.",
-  /** English names/descriptions for navigation, keyed by slug. */
+  /** English names/short labels/descriptions for navigation, keyed by slug.
+   *  `short` drives the compact dropdown subtitle (one line); `description`
+   *  is the longer card text on the forms listing. */
   names: {
     "flat-allocation": {
       name: "Flat Allocation Application",
+      short: "Flat allocation",
       description:
         "Application form for booking and allotment of an Ahbab Real Estate flat — with applicant, nominee and official details.",
     },
     investment: {
       name: "Investment Form",
+      short: "Investment",
       description: "Application form for savings and investment with Promise International.",
     },
     "promise-city": {
       name: "Promise City Form",
+      short: "Promise City",
       description: "Application form for land/plot booking in the Promise City project.",
     },
     "fuzala-tower": {
       name: "Fuzala Tower Form",
+      short: "Fuzala Tower",
       description: "Application form for flat/share booking in Fuzala Tower.",
     },
     "fuzala-complex": {
       name: "Fuzala Complex Form",
+      short: "Fuzala Complex",
       description: "Application form for flat booking in Fuzala Complex.",
     },
     "marketing-director": {
       name: "Marketing Director Form",
+      short: "Marketing Director",
       description: "Application to join Promise Group as a Marketing Director.",
     },
-  } as Record<string, { name: string; description: string }>,
+  } as Record<string, { name: string; short: string; description: string }>,
 };
 
 /* ── CONTACT (page chrome; the form itself is localized via DICT) ──────── */

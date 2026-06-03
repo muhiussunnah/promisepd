@@ -58,7 +58,8 @@ function dropdownEn(
   }
   if (sectionId === "forms") {
     const e = FORMS_EN.names[slug];
-    return { label: e?.name ?? bnLabel, tagline: e?.description ?? bnTagline };
+    // Dropdown subtitle stays short (one line), mirroring the Bengali shortBn.
+    return { label: e?.name ?? bnLabel, tagline: e?.short ?? bnTagline };
   }
   return { label: bnLabel, tagline: bnTagline };
 }
