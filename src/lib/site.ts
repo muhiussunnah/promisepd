@@ -496,6 +496,9 @@ export type Project = {
         size?: string;
       }[];
     }[];
+    /** Optional parking summary (ground-floor / podium parking) shown as
+     *  a separate box beside the unit grid. */
+    parking?: { total: number; sold: number; available: number };
   };
   /** Land-plot categories & pricing (e.g. Promise City township). */
   plots?: {
@@ -713,7 +716,6 @@ export const PROJECTS: Project[] = [
     unitMap: {
       floors: [
         { label: "ছাদ", units: [{ id: "R1", status: "available" }, { id: "R2", status: "available" }] },
-        { label: "৯ম তলা", units: [{ id: "9A", status: "available", size: "১২০০" }, { id: "9B", status: "available", size: "১২০০" }, { id: "9C", status: "available", size: "১২০০" }] },
         { label: "৮ম তলা", units: [{ id: "8A", status: "available", size: "১২০০" }, { id: "8B", status: "sold", size: "১২০০" }, { id: "8C", status: "sold", size: "১২০০" }] },
         { label: "৭ম তলা", units: [{ id: "7A", status: "sold", size: "১২০০" }, { id: "7B", status: "sold", size: "১২০০" }, { id: "7C", status: "sold", size: "১২০০" }] },
         { label: "৬ষ্ঠ তলা", units: [{ id: "6A", status: "sold", size: "১২০০" }, { id: "6B", status: "sold", size: "১২০০" }, { id: "6C", status: "sold", size: "১২০০" }] },
@@ -721,8 +723,9 @@ export const PROJECTS: Project[] = [
         { label: "৪র্থ তলা", units: [{ id: "4A", status: "sold", size: "১৮০০" }, { id: "4B", status: "available", size: "১৮০০" }] },
         { label: "৩য় তলা", units: [{ id: "3A", status: "available", size: "১২০০" }, { id: "3B", status: "available", size: "১২০০" }, { id: "3C", status: "available", size: "১২০০" }] },
         { label: "২য় তলা", units: [{ id: "2A", status: "available", size: "১২০০" }, { id: "2B", status: "sold", size: "১২০০" }, { id: "2C", status: "sold", size: "১২০০" }] },
-        { label: "১ম তলা", units: [{ id: "1A", status: "sold", size: "১২০০" }, { id: "1B", status: "sold", size: "১২০০" }, { id: "1C", status: "sold", size: "১২০০" }] },
       ],
+      // Ground floor is parking. Owner's latest: 12 total, 9 sold, 3 open.
+      parking: { total: 12, sold: 9, available: 3 },
     },
   },
 ];

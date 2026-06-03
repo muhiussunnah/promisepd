@@ -16,6 +16,7 @@ import {
   ZoomIn,
   Sparkles,
   LandPlot,
+  Car,
 } from "lucide-react";
 import { SITE, type Project } from "@/lib/site";
 import { PROJECT_EN, PROJECT_DETAIL_EN, FLOOR_EN } from "@/lib/site.en";
@@ -314,6 +315,37 @@ export default function ProjectDetail({
                 </div>
               ))}
             </div>
+
+            {project.unitMap.parking && (
+              <div className="mt-4 rounded-2xl border border-border bg-white p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="flex items-center gap-3 sm:flex-1">
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-blue text-white shadow-md">
+                    <Car className="h-5 w-5" />
+                  </span>
+                  <div className="text-base font-bold text-fg">{t.parkingTitle}</div>
+                </div>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <span className="inline-flex items-center gap-1.5 rounded-xl bg-bg-soft px-3 py-2 text-sm font-semibold text-fg">
+                    {t.parkingTotal}
+                    <span className="font-extrabold">
+                      {isEn ? project.unitMap.parking.total : toBn(project.unitMap.parking.total)}
+                    </span>
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-xl border border-brand-red/25 bg-brand-red/10 px-3 py-2 text-sm font-semibold text-brand-red">
+                    {t.parkingSold}
+                    <span className="font-extrabold">
+                      {isEn ? project.unitMap.parking.sold : toBn(project.unitMap.parking.sold)}
+                    </span>
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-xl border-2 border-brand-blue/50 bg-brand-blue/10 px-3 py-2 text-sm font-semibold text-brand-blue">
+                    {t.parkingFree}
+                    <span className="font-extrabold">
+                      {isEn ? project.unitMap.parking.available : toBn(project.unitMap.parking.available)}
+                    </span>
+                  </span>
+                </div>
+              </div>
+            )}
 
             <div className="mt-5 grad-border p-5 flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1 text-sm text-fg-muted">{t.unitCta}</div>

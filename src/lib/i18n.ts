@@ -176,6 +176,10 @@ type Dict = {
     rented: string;
     unitCta: string;
     bookingContact: string;
+    parkingTitle: string;
+    parkingTotal: string;
+    parkingSold: string;
+    parkingFree: string;
     plotsA: string;
     plotsB: string;
     plotsSub: string;
@@ -414,6 +418,10 @@ export const DICT: Record<Locale, Dict> = {
       rented: "ভাড়া",
       unitCta: "পছন্দের খালি ইউনিট নিশ্চিত করতে এখনই যোগাযোগ করুন — সীমিত ইউনিট।",
       bookingContact: "বুকিং যোগাযোগ",
+      parkingTitle: "পার্কিং",
+      parkingTotal: "মোট",
+      parkingSold: "বিক্রি",
+      parkingFree: "খালি",
       plotsA: "জমির",
       plotsB: "প্লট ও মূল্য",
       plotsSub: "বিনিয়োগযোগ্য আবাসিক প্লট — যাচাইকৃত দলিল ও নামজারিসহ হস্তান্তর।",
@@ -665,6 +673,10 @@ export const DICT: Record<Locale, Dict> = {
       rented: "Rented",
       unitCta: "Contact us now to secure your preferred open unit — limited units.",
       bookingContact: "Booking contact",
+      parkingTitle: "Parking",
+      parkingTotal: "Total",
+      parkingSold: "Sold",
+      parkingFree: "Available",
       plotsA: "Land",
       plotsB: "plots & pricing",
       plotsSub: "Investable residential plots — verified deed, handover with mutation.",
