@@ -113,7 +113,7 @@ export default function About() {
                   {SITE.shortName}
                 </div>
                 <div className="text-xs text-fg-muted">
-                  {SITE.tagline}
+                  {isEn ? DICT[locale].footer.tagline : SITE.tagline}
                 </div>
               </div>
             </div>

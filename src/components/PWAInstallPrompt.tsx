@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Download,
@@ -12,6 +13,7 @@ import {
   WifiOff,
   Smartphone,
 } from "lucide-react";
+import { stripLocale } from "@/lib/i18n";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -24,7 +26,47 @@ const COOLDOWN_DAYS = 7;
 // browser's address-bar install icon.
 const APPEAR_DELAY_MS = 1500;
 
+/** Bilingual copy — self-detected from the pathname since this prompt
+ *  lives in the root layout, outside the LocaleProvider. */
+const COPY = {
+  bn: {
+    tagline: "স্বপ্ন যেখানে বাস্তব",
+    close: "বন্ধ করুন",
+    eyebrow: "নতুন · দ্রুত · অফলাইন",
+    head: "PromisePD অ্যাপ ইনস্টল করুন",
+    bodyIOS: "Safari-র শেয়ার বাটনে ট্যাপ করুন → 'Add to Home Screen' সিলেক্ট করুন।",
+    body: "এক ক্লিকে ফোন বা ডেস্কটপে — ব্রাউজার লাগবে না, দ্রুত খুলবে, অফলাইনেও কাজ করবে।",
+    benefits: ["দ্রুত লোড", "অফলাইনেও কাজ", "হোম স্ক্রিনে"],
+    iosHintA: "Safari-র শেয়ার আইকনে ট্যাপ করুন → নিচে নেমে",
+    iosHintB: "Add to Home Screen",
+    installing: "ইনস্টল হচ্ছে...",
+    install: "ইনস্টল করুন",
+    later: "পরে",
+    fallback: "ব্রাউজারের মেনু থেকে “Install App” অপশনটি বেছে নিন।",
+    footnote: "সম্পূর্ণ ফ্রি · কোনো অ্যাপ স্টোর লাগবে না",
+  },
+  en: {
+    tagline: "Where dreams come true",
+    close: "Close",
+    eyebrow: "New · Fast · Offline",
+    head: "Install the PromisePD app",
+    bodyIOS: "Tap Safari's Share button → select 'Add to Home Screen'.",
+    body: "One tap to your phone or desktop — no browser needed, opens fast, and works offline too.",
+    benefits: ["Fast load", "Works offline", "On home screen"],
+    iosHintA: "Tap Safari's Share icon → scroll down to",
+    iosHintB: "Add to Home Screen",
+    installing: "Installing...",
+    install: "Install",
+    later: "Later",
+    fallback: "Pick the “Install App” option from your browser menu.",
+    footnote: "Completely free · no app store needed",
+  },
+};
+
 export default function PWAInstallPrompt() {
+  const { locale } = stripLocale(usePathname() || "/");
+  const T = COPY[locale];
+
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [show, setShow] = useState(false);
@@ -109,9 +151,9 @@ export default function PWAInstallPrompt() {
   }
 
   const benefits = [
-    { icon: Zap, label: "দ্রুত লোড", color: "text-brand-red" },
-    { icon: WifiOff, label: "অফলাইনেও কাজ", color: "text-brand-blue" },
-    { icon: Smartphone, label: "হোম স্ক্রিনে", color: "text-brand-ash-dark" },
+    { icon: Zap, label: T.benefits[0], color: "text-brand-red" },
+    { icon: WifiOff, label: T.benefits[1], color: "text-brand-blue" },
+    { icon: Smartphone, label: T.benefits[2], color: "text-brand-ash-dark" },
   ];
 
   return (
@@ -171,7 +213,7 @@ export default function PWAInstallPrompt() {
                       PromisePD
                     </div>
                     <div className="text-[11px] text-white/85">
-                      স্বপ্ন যেখানে বাস্তব
+                      {T.tagline}
                     </div>
                   </div>
                 </div>
@@ -179,7 +221,7 @@ export default function PWAInstallPrompt() {
 
               <button
                 onClick={handleDismiss}
-                aria-label="বন্ধ করুন"
+                aria-label={T.close}
                 className="absolute top-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/95 backdrop-blur-md text-fg-muted hover:text-fg shadow-md transition-colors"
               >
                 <X className="h-4 w-4" />
@@ -189,17 +231,15 @@ export default function PWAInstallPrompt() {
                 <div className="flex items-center justify-center gap-1.5 mb-2">
                   <Sparkles className="h-3.5 w-3.5 text-brand-blue" />
                   <span className="text-[10px] uppercase tracking-wider font-bold text-brand-blue">
-                    নতুন · দ্রুত · অফলাইন
+                    {T.eyebrow}
                   </span>
                 </div>
 
                 <h3 className="text-center text-lg sm:text-xl font-bold text-fg leading-tight">
-                  PromisePD অ্যাপ ইনস্টল করুন
+                  {T.head}
                 </h3>
                 <p className="mt-2 text-center text-xs sm:text-sm text-fg-muted leading-relaxed">
-                  {isIOS
-                    ? "Safari-র শেয়ার বাটনে ট্যাপ করুন → 'Add to Home Screen' সিলেক্ট করুন।"
-                    : "এক ক্লিকে ফোন বা ডেস্কটপে — ব্রাউজার লাগবে না, দ্রুত খুলবে, অফলাইনেও কাজ করবে।"}
+                  {isIOS ? T.bodyIOS : T.body}
                 </p>
 
                 {/* Benefits row */}
@@ -221,8 +261,8 @@ export default function PWAInstallPrompt() {
                   <div className="mt-4 flex items-center gap-2 rounded-xl bg-bg-soft border border-border px-3 py-2.5">
                     <Share className="h-4 w-4 text-brand-blue shrink-0" />
                     <span className="text-xs text-fg-muted leading-snug">
-                      Safari-র শেয়ার আইকনে ট্যাপ করুন → নিচে নেমে{" "}
-                      <strong className="text-fg">Add to Home Screen</strong>
+                      {T.iosHintA}{" "}
+                      <strong className="text-fg">{T.iosHintB}</strong>
                     </span>
                   </div>
                 ) : deferredPrompt ? (
@@ -233,23 +273,23 @@ export default function PWAInstallPrompt() {
                       className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-blue hover:bg-brand-blue-dark px-4 py-3 text-sm font-bold text-white shadow-md hover:scale-[1.02] transition-all disabled:opacity-70"
                     >
                       <Download className="h-4 w-4" />
-                      {installing ? "ইনস্টল হচ্ছে..." : "ইনস্টল করুন"}
+                      {installing ? T.installing : T.install}
                     </button>
                     <button
                       onClick={handleDismiss}
                       className="rounded-xl border border-border px-4 py-3 text-sm font-semibold text-fg-muted hover:text-fg hover:border-border-strong transition-colors"
                     >
-                      পরে
+                      {T.later}
                     </button>
                   </div>
                 ) : (
                   <p className="mt-5 text-center text-xs text-fg-faint">
-                    ব্রাউজারের মেনু থেকে &ldquo;Install App&rdquo; অপশনটি বেছে নিন।
+                    {T.fallback}
                   </p>
                 )}
 
                 <p className="mt-3 text-center text-[10px] text-fg-faint">
-                  সম্পূর্ণ ফ্রি · কোনো অ্যাপ স্টোর লাগবে না
+                  {T.footnote}
                 </p>
               </div>
             </div>

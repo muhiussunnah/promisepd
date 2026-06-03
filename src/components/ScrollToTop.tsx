@@ -8,9 +8,12 @@ import {
   useSpring,
 } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { toBn } from "@/lib/bn";
+import { stripLocale } from "@/lib/i18n";
 
 export default function ScrollToTop() {
+  const isEn = stripLocale(usePathname() || "/").locale === "en";
   const [visible, setVisible] = useState(false);
   const [percent, setPercent] = useState(0);
   const { scrollYProgress } = useScroll();
@@ -51,7 +54,7 @@ export default function ScrollToTop() {
           {/* Percent badge — above the button, neutral colours so it
               reads as informational rather than alert. */}
           <div className="text-[11px] font-bold tabular-nums text-fg leading-none px-2 py-0.5 rounded-full bg-white shadow-sm border border-border">
-            {toBn(percent)}%
+            {isEn ? percent : toBn(percent)}%
           </div>
 
           {/* Button + circular progress ring */}
@@ -93,7 +96,7 @@ export default function ScrollToTop() {
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              aria-label="উপরে যান"
+              aria-label={isEn ? "Scroll to top" : "উপরে যান"}
               className="absolute inset-2 flex items-center justify-center rounded-full bg-brand-blue text-white shadow-lg shadow-brand-blue/30 hover:bg-brand-blue-dark transition-colors cursor-pointer"
             >
               <ArrowUp className="h-5 w-5" />
