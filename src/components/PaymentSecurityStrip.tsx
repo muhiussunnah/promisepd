@@ -32,13 +32,13 @@ const PAYMENT_LOGOS: LogoEntry[] = [
   { name: "Mastercard", src: "/payments/mastercard.webp", width: 130, height: 96 },
 ];
 
-export default function PaymentSecurityStrip() {
+export default function PaymentSecurityStrip({ isEn = false }: { isEn?: boolean }) {
   return (
     <div className="space-y-5">
       {/* ── Payment methods ────────────────────────────────────── */}
       <div>
         <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-3">
-          পেমেন্ট মেথড
+          {isEn ? "Payment methods" : "পেমেন্ট মেথড"}
         </h4>
         <div className="grid grid-cols-3 gap-2">
           {PAYMENT_LOGOS.map((logo) => (
@@ -65,7 +65,7 @@ export default function PaymentSecurityStrip() {
           pairs as a glyph badge since it has no single wordmark. */}
       <div>
         <h4 className="text-sm font-bold uppercase tracking-wider text-grad-rb mb-3">
-          সুরক্ষিত পেমেন্ট
+          {isEn ? "Secure payment" : "সুরক্ষিত পেমেন্ট"}
         </h4>
         <div className="space-y-2">
           <div className="flex items-center gap-2.5 rounded-lg bg-white border border-border px-3 py-2">

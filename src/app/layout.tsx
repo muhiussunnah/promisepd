@@ -7,6 +7,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import RegisterSW from "@/components/RegisterSW";
+import SkipLink from "@/components/SkipLink";
 import JsonLd from "@/components/JsonLd";
 import {
   organizationSchema,
@@ -136,12 +137,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-bg text-fg antialiased selection:bg-brand-blue selection:text-white">
         {/* Skip link for keyboard / screen-reader users — only visible on focus. */}
-        <a
-          href="#home"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-brand-blue focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white focus:shadow-lg focus:outline-none"
-        >
-          মূল কনটেন্টে যান
-        </a>
+        <SkipLink />
         <Navbar />
         <main id="main" className="relative">
           {children}

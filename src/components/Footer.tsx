@@ -192,7 +192,7 @@ export default function Footer() {
           </div>
 
           {/* ── Col 4 · Payment + security ──────────────────────── */}
-          <PaymentSecurityStrip />
+          <PaymentSecurityStrip isEn={isEn} />
         </div>
 
         {/* Bottom strip — copyright + credit + report-bug, all on one

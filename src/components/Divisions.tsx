@@ -132,7 +132,7 @@ export default function Divisions() {
                       <>
                         <Image
                           src={image}
-                          alt={division.nameBn}
+                          alt={dName}
                           fill
                           sizes="(min-width:1024px) 420px, (min-width:640px) 50vw, 100vw"
                           className="object-cover"
@@ -160,7 +160,7 @@ export default function Divisions() {
                         {logo ? (
                           <Image
                             src={logo}
-                            alt={division.nameBn}
+                            alt={dName}
                             width={56}
                             height={56}
                             className="h-full w-full object-contain"

@@ -18,8 +18,31 @@
  */
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Phone, Mail, MessageCircle, Bug } from "lucide-react";
 import { DEVELOPER } from "@/lib/team";
+import { stripLocale } from "@/lib/i18n";
+
+const COPY = {
+  bn: {
+    inlineLead: "সমস্যা দেখলে রিপোর্ট করুন →",
+    call: "কল",
+    callBtn: "কল করুন",
+    email: "ইমেইল",
+    cardEyebrow: "ডেভেলপারকে রিপোর্ট করুন",
+    cardBody:
+      "এই পেজে কোনো বাগ, ভাঙা লিংক, বা অস্বাভাবিক আচরণ দেখলে নিচের যেকোনো উপায়ে জানান। সাধারণত কয়েক ঘণ্টার মধ্যে সমাধান।",
+  },
+  en: {
+    inlineLead: "Spotted a problem? Report it →",
+    call: "Call",
+    callBtn: "Call",
+    email: "Email",
+    cardEyebrow: "Report to the developer",
+    cardBody:
+      "Spotted a bug, a broken link, or anything unusual on this page? Let us know any of the ways below — usually fixed within a few hours.",
+  },
+};
 
 export type ReportToDeveloperProps = {
   /** Visual treatment. `inline` is small + low-key (good for footers),
@@ -36,6 +59,7 @@ export default function ReportToDeveloper({
   errorMessage,
   errorDigest,
 }: ReportToDeveloperProps) {
+  const T = COPY[stripLocale(usePathname() || "/").locale];
   // Build the email body lazily on click so we always capture the
   // CURRENT URL (the page might have navigated since render).  No
   // window access on the server — we use `typeof` checks throughout.
@@ -66,12 +90,12 @@ export default function ReportToDeveloper({
     return (
       <div className="flex items-center justify-center gap-2 flex-wrap text-xs text-fg-muted">
         <Bug className="h-3.5 w-3.5 text-brand-blue" />
-        <span>সমস্যা দেখলে রিপোর্ট করুন →</span>
+        <span>{T.inlineLead}</span>
         <a
           href={`tel:${DEVELOPER.phone}`}
           className="font-semibold text-fg hover:text-brand-blue transition-colors"
         >
-          কল
+          {T.call}
         </a>
         <span className="text-fg-faint">·</span>
         <a
@@ -87,7 +111,7 @@ export default function ReportToDeveloper({
           href={typeof window === "undefined" ? DEVELOPER.reportMailUrl() : buildMailLink()}
           className="font-semibold text-fg hover:text-brand-blue transition-colors"
         >
-          ইমেইল
+          {T.email}
         </a>
       </div>
     );
@@ -109,7 +133,7 @@ export default function ReportToDeveloper({
           <div className="flex items-center gap-2">
             <Bug className="h-3.5 w-3.5 text-brand-blue shrink-0" />
             <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-fg-muted">
-              ডেভেলপারকে রিপোর্ট করুন
+              {T.cardEyebrow}
             </span>
           </div>
           <div className="mt-1 text-base font-bold text-fg">
@@ -120,8 +144,7 @@ export default function ReportToDeveloper({
       </div>
 
       <p className="mt-4 text-sm text-fg-muted leading-relaxed">
-        এই পেজে কোনো বাগ, ভাঙা লিংক, বা অস্বাভাবিক আচরণ দেখলে নিচের যেকোনো
-        উপায়ে জানান। সাধারণত কয়েক ঘণ্টার মধ্যে সমাধান।
+        {T.cardBody}
       </p>
 
       <div className="mt-4 flex flex-col sm:flex-row gap-2">
@@ -130,7 +153,7 @@ export default function ReportToDeveloper({
           className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-blue px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-brand-blue-dark transition-colors"
         >
           <Phone className="h-4 w-4" />
-          কল করুন
+          {T.callBtn}
         </a>
         <a
           href={DEVELOPER.whatsappUrl}
@@ -146,7 +169,7 @@ export default function ReportToDeveloper({
           className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-border px-4 py-3 text-sm font-bold text-fg hover:border-brand-blue/40 transition-colors"
         >
           <Mail className="h-4 w-4 text-brand-blue" />
-          ইমেইল
+          {T.email}
         </a>
       </div>
     </div>

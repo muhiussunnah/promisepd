@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useLocale } from "./LocaleProvider";
 
 export default function ProjectGallery({
   images,
@@ -17,6 +18,7 @@ export default function ProjectGallery({
   images: string[];
   name: string;
 }) {
+  const isEn = useLocale() === "en";
   const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export default function ProjectGallery({
           >
             <Image
               src={src}
-              alt={`${name} — ছবি ${i + 1}`}
+              alt={`${name} — ${isEn ? "photo" : "ছবি"} ${i + 1}`}
               fill
               sizes="(min-width:1024px) 33vw, 50vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -84,7 +86,7 @@ export default function ProjectGallery({
               <button
                 type="button"
                 onClick={() => setActive(null)}
-                aria-label="বন্ধ করুন"
+                aria-label={isEn ? "Close" : "বন্ধ করুন"}
                 className="absolute -top-12 right-0 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-fg shadow-lg hover:scale-110 hover:bg-brand-red hover:text-white transition-all"
               >
                 <X className="h-5 w-5" />

@@ -160,7 +160,7 @@ export default function Hero() {
           "/ahbab1pics/ahbab1pics.webp", // আহবাব প্যালেস ০১
           "/fcpics/fc1.webp", // ফুজালা কমপ্লেক্স
         ]}
-        alt="প্রমিস পিপিডি-র প্রকল্পসমূহ"
+        alt={isEn ? "PromisePD projects" : "প্রমিস পিপিডি-র প্রকল্পসমূহ"}
         intensity={38}
         position="center"
         bluewash="soft"
@@ -339,7 +339,7 @@ export default function Hero() {
                         >
                           <Image
                             src={cardImage}
-                            alt={current.nameBn}
+                            alt={isEn ? current.nameEn : current.nameBn}
                             fill
                             sizes="(min-width: 1024px) 440px, 100vw"
                             className="object-cover"
@@ -379,7 +379,7 @@ export default function Hero() {
                         {logo ? (
                           <Image
                             src={logo}
-                            alt={current.nameBn}
+                            alt={isEn ? current.nameEn : current.nameBn}
                             width={112}
                             height={112}
                             className="h-full w-full object-contain"

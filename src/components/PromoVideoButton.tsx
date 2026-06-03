@@ -21,6 +21,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play } from "lucide-react";
+import { useLocale } from "./LocaleProvider";
 
 // One source of truth for the promo video — if it changes, this is
 // the only line to edit.
@@ -36,6 +37,8 @@ export default function PromoVideoButton({
    *  change. */
   className?: string;
 }) {
+  const isEn = useLocale() === "en";
+  const videoLabel = isEn ? "PromisePD promo video" : "Promise PD প্রোমো ভিডিও";
   const [open, setOpen] = useState(false);
 
   // ESC to close + body scroll lock while open.
@@ -69,7 +72,7 @@ export default function PromoVideoButton({
           <span className="absolute inset-0 rounded-full bg-brand-red animate-ping opacity-40" />
           <Play className="relative h-4 w-4 translate-x-[1px] fill-white" />
         </span>
-        {children ?? "প্রোমো ভিডিও"}
+        {children ?? (isEn ? "Promo video" : "প্রোমো ভিডিও")}
       </button>
 
       <AnimatePresence>
@@ -77,7 +80,7 @@ export default function PromoVideoButton({
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="Promise PD প্রোমো ভিডিও"
+            aria-label={videoLabel}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -107,7 +110,7 @@ export default function PromoVideoButton({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="ভিডিও বন্ধ করুন"
+                aria-label={isEn ? "Close video" : "ভিডিও বন্ধ করুন"}
                 className="absolute -top-12 right-0 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-fg shadow-lg hover:scale-110 hover:bg-brand-red hover:text-white transition-all"
               >
                 <X className="h-5 w-5" />
@@ -123,7 +126,7 @@ export default function PromoVideoButton({
                   // the YouTube player + its tracking pixels are
                   // never loaded for visitors who don't watch.
                   src={`https://www.youtube.com/embed/${PROMO_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
-                  title="Promise PD প্রোমো ভিডিও"
+                  title={videoLabel}
                   className="absolute inset-0 w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
