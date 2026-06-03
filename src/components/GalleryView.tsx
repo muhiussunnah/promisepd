@@ -31,6 +31,8 @@ import {
   type GalleryVideo,
 } from "@/lib/gallery";
 import { toBn } from "@/lib/bn";
+import { GALLERY_EN } from "@/lib/pages.en";
+import { useLocale } from "./LocaleProvider";
 
 type Tab = "images" | "videos";
 
@@ -61,6 +63,8 @@ function Pagination({
   total: number;
   onChange: (p: number) => void;
 }) {
+  const isEn = useLocale() === "en";
+  const num = (n: number) => (isEn ? String(n) : toBn(n));
   if (total <= 1) return null;
   return (
     <div className="mt-10 flex items-center justify-center gap-1.5">
@@ -68,7 +72,7 @@ function Pagination({
         type="button"
         onClick={() => onChange(page - 1)}
         disabled={page === 1}
-        aria-label="পূর্ববর্তী"
+        aria-label={isEn ? GALLERY_EN.prev : "পূর্ববর্তী"}
         className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-white text-fg disabled:opacity-40 disabled:cursor-not-allowed hover:border-brand-blue/50 hover:text-brand-blue transition-colors"
       >
         <ChevronLeft className="h-4 w-4" />
@@ -94,7 +98,7 @@ function Pagination({
                 : "border border-border bg-white text-fg hover:border-brand-blue/50 hover:text-brand-blue"
             }`}
           >
-            {toBn(p)}
+            {num(p)}
           </button>
         ),
       )}
@@ -103,7 +107,7 @@ function Pagination({
         type="button"
         onClick={() => onChange(page + 1)}
         disabled={page === total}
-        aria-label="পরবর্তী"
+        aria-label={isEn ? GALLERY_EN.next : "পরবর্তী"}
         className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-white text-fg disabled:opacity-40 disabled:cursor-not-allowed hover:border-brand-blue/50 hover:text-brand-blue transition-colors"
       >
         <ChevronRight className="h-4 w-4" />
@@ -113,6 +117,11 @@ function Pagination({
 }
 
 export default function GalleryView() {
+  const isEn = useLocale() === "en";
+  const g = GALLERY_EN;
+  const imgTitle = (src: string, fallback: string) =>
+    isEn ? g.titles[src] ?? fallback : fallback;
+
   const [tab, setTab] = useState<Tab>("images");
   const [imgPage, setImgPage] = useState(1);
   const [vidPage, setVidPage] = useState(1);
@@ -191,7 +200,7 @@ export default function GalleryView() {
               }`}
             >
               <ImagesIcon className="h-4 w-4" />
-              ছবি
+              {isEn ? g.tabPhotos : "ছবি"}
             </button>
             <button
               type="button"
@@ -203,7 +212,7 @@ export default function GalleryView() {
               }`}
             >
               <Video className="h-4 w-4" />
-              ভিডিও
+              {isEn ? g.tabVideos : "ভিডিও"}
             </button>
           </div>
         </div>
@@ -217,13 +226,17 @@ export default function GalleryView() {
                   key={img.src}
                   type="button"
                   onClick={() =>
-                    setLightbox({ type: "image", src: img.src, title: img.title })
+                    setLightbox({
+                      type: "image",
+                      src: img.src,
+                      title: imgTitle(img.src, img.title),
+                    })
                   }
                   className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-bg-soft shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/50"
                 >
                   <Image
                     src={img.src}
-                    alt={img.title}
+                    alt={imgTitle(img.src, img.title)}
                     fill
                     sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 50vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -231,7 +244,7 @@ export default function GalleryView() {
                   <div className="absolute inset-0 bg-gradient-to-t from-fg/80 via-fg/10 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-3 text-left">
                     <span className="text-xs sm:text-sm font-semibold text-white drop-shadow line-clamp-2">
-                      {img.title}
+                      {imgTitle(img.src, img.title)}
                     </span>
                   </div>
                 </button>
@@ -254,7 +267,7 @@ export default function GalleryView() {
             {vidLoading && (
               <div className="flex flex-col items-center justify-center py-24 text-fg-muted">
                 <Loader2 className="h-8 w-8 animate-spin text-brand-blue" />
-                <p className="mt-4 text-sm">ভিডিও লোড হচ্ছে…</p>
+                <p className="mt-4 text-sm">{isEn ? g.loadingVideos : "ভিডিও লোড হচ্ছে…"}</p>
               </div>
             )}
 
@@ -262,9 +275,13 @@ export default function GalleryView() {
               <div className="flex flex-col items-center justify-center py-24 text-center">
                 <AlertCircle className="h-8 w-8 text-fg-faint" />
                 <p className="mt-4 text-sm text-fg-muted max-w-sm">
-                  {vidError
-                    ? "এই মুহূর্তে ভিডিও লোড করা যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।"
-                    : "শীঘ্রই নতুন ভিডিও যুক্ত হবে — আমাদের YouTube চ্যানেল ঘুরে আসুন।"}
+                  {isEn
+                    ? vidError
+                      ? g.videoErr
+                      : g.videoEmpty
+                    : vidError
+                      ? "এই মুহূর্তে ভিডিও লোড করা যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।"
+                      : "শীঘ্রই নতুন ভিডিও যুক্ত হবে — আমাদের YouTube চ্যানেল ঘুরে আসুন।"}
                 </p>
                 <a
                   href={YOUTUBE.channelUrl}
@@ -273,7 +290,7 @@ export default function GalleryView() {
                   className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-red px-5 py-2.5 text-sm font-semibold text-white shadow-md hover:scale-[1.02] transition-transform"
                 >
                   <Video className="h-4 w-4" />
-                  চ্যানেল দেখুন
+                  {isEn ? g.viewChannel : "চ্যানেল দেখুন"}
                 </a>
               </div>
             )}
@@ -357,7 +374,7 @@ export default function GalleryView() {
               <button
                 type="button"
                 onClick={() => setLightbox(null)}
-                aria-label="বন্ধ করুন"
+                aria-label={isEn ? g.close : "বন্ধ করুন"}
                 className="absolute -top-12 right-0 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-fg shadow-lg hover:scale-110 hover:bg-brand-red hover:text-white transition-all"
               >
                 <X className="h-5 w-5" />

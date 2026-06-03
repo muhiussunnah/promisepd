@@ -12,6 +12,8 @@ import {
   PARTNER_PERIOD,
   bnNumber,
 } from "@/lib/partner";
+import { PARTNER_EN } from "@/lib/pages.en";
+import { useLocale } from "./LocaleProvider";
 
 const ACCENT_BG: Record<string, string> = {
   red: "bg-brand-red",
@@ -26,6 +28,11 @@ const ACCENT_TINT: Record<string, string> = {
 };
 
 export default function PartnerRules() {
+  const isEn = useLocale() === "en";
+  const u = PARTNER_EN.ui;
+  const periodStart = isEn ? PARTNER_EN.periodStart : PARTNER_PERIOD.startBn;
+  const num = (n: number) => (isEn ? String(n) : bnNumber(n));
+
   return (
     <section className="relative py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -39,15 +46,19 @@ export default function PartnerRules() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              মার্কেটিং নিয়মাবলী
+              {isEn ? u.rulesEyebrow : "মার্কেটিং নিয়মাবলী"}
             </span>
           </div>
           <h2 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.15]">
-            ২০২৬-এর <span className="text-grad">কমিশন স্ট্রাকচার</span>
+            {isEn ? u.rulesH1A : "২০২৬-এর"}{" "}
+            <span className="text-grad">
+              {isEn ? u.rulesH1Grad : "কমিশন স্ট্রাকচার"}
+            </span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed">
-            {PARTNER_PERIOD.startBn} থেকে কার্যকর — পূর্বের সব নীতিমালা বাতিল।
-            স্বচ্ছ, সরাসরি, কোনো লুকানো শর্ত নেই।
+            {isEn
+              ? u.rulesSub.replace("{start}", periodStart)
+              : `${periodStart} থেকে কার্যকর — পূর্বের সব নীতিমালা বাতিল। স্বচ্ছ, সরাসরি, কোনো লুকানো শর্ত নেই।`}
           </p>
         </motion.div>
 
@@ -76,23 +87,23 @@ export default function PartnerRules() {
                       ACCENT_BG[c.accent]
                     } ${c.accent === "ash" ? "!text-fg" : ""}`}
                   >
-                    {c.unit}
+                    {isEn ? PARTNER_EN.commissions[c.id]?.unit ?? c.unit : c.unit}
                   </span>
                   {c.points > 0 && (
                     <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-fg-muted">
                       <BadgeCheck className="h-3.5 w-3.5 text-brand-blue" />
-                      {bnNumber(c.points)} পয়েন্ট
+                      {num(c.points)} {isEn ? (c.points > 1 ? u.pointsWord : u.pointWord) : "পয়েন্ট"}
                     </span>
                   )}
                 </div>
                 <h3 className="mt-4 text-lg font-bold text-fg leading-tight">
-                  {c.nameBn}
+                  {isEn ? c.nameEn : c.nameBn}
                 </h3>
                 <div className="mt-2 text-2xl sm:text-3xl font-bold text-grad-rb">
-                  ৳ {bnNumber(c.commission)}
+                  ৳ {num(c.commission)}
                 </div>
                 <p className="mt-2 text-sm text-fg-muted leading-relaxed">
-                  {c.description}
+                  {isEn ? PARTNER_EN.commissions[c.id]?.description ?? c.description : c.description}
                 </p>
               </div>
             </motion.div>
@@ -106,11 +117,13 @@ export default function PartnerRules() {
               <FileText className="h-5 w-5" />
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-fg">
-              অতিরিক্ত নিয়মাবলী
+              {isEn ? u.additionalRules : "অতিরিক্ত নিয়মাবলী"}
             </h3>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            {PARTNER_RULES.map((rule, i) => (
+            {PARTNER_RULES.map((rule, i) => {
+              const r = isEn ? { ...rule, ...PARTNER_EN.rules[i] } : rule;
+              return (
               <motion.div
                 key={rule.title}
                 initial={{ opacity: 0, y: 24 }}
@@ -120,16 +133,17 @@ export default function PartnerRules() {
                 className="card p-6"
               >
                 <span className="inline-flex items-center rounded-full bg-bg-soft border border-border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-fg-muted">
-                  {rule.tag}
+                  {r.tag}
                 </span>
                 <h4 className="mt-3 text-base sm:text-lg font-bold text-fg leading-tight">
-                  {rule.title}
+                  {r.title}
                 </h4>
                 <p className="mt-2 text-sm text-fg-muted leading-relaxed">
-                  {rule.body}
+                  {r.body}
                 </p>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

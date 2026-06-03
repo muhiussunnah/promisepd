@@ -26,43 +26,55 @@ import {
   bnNumber,
   type PartnerRoleKey,
 } from "@/lib/partner";
+import { LEADERBOARD_EN, PARTNER_EN } from "@/lib/pages.en";
+import { useLocale } from "./LocaleProvider";
 
 type Period = "30d" | "year" | "last-year" | "lifetime";
 
 type Role = "all" | PartnerRoleKey;
 
-const PERIODS: { key: Period; label: string }[] = [
-  { key: "30d", label: "শেষ ৩০ দিন" },
-  { key: "year", label: "এই বছর" },
-  { key: "last-year", label: "গত বছর" },
-  { key: "lifetime", label: "সর্বকালীন" },
-];
-
-// Role options for the dropdown.  Built from the single source of
-// truth in src/lib/partner.ts so the per-role partner counts (the
-// badges) stay in sync with the program data.  "সকল ভূমিকা" leads
-// with the computed grand total.
-const ROLE_OPTIONS: {
-  key: Role;
-  label: string;
-  sub: string;
-  count: number;
-}[] = [
-  {
-    key: "all",
-    label: "সকল ভূমিকা",
-    sub: "সব পার্টনার",
-    count: PARTNER_TOTAL_COUNT,
-  },
-  ...PARTNER_ROLES.map((r) => ({
-    key: r.key,
-    label: r.bn,
-    sub: r.sub,
-    count: r.count,
-  })),
-];
+const PERIOD_KEYS: Period[] = ["30d", "year", "last-year", "lifetime"];
+const PERIODS_BN: Record<Period, string> = {
+  "30d": "শেষ ৩০ দিন",
+  year: "এই বছর",
+  "last-year": "গত বছর",
+  lifetime: "সর্বকালীন",
+};
 
 export default function LeaderboardControls() {
+  const isEn = useLocale() === "en";
+  const L = LEADERBOARD_EN;
+  const num = (n: number) => (isEn ? String(n) : bnNumber(n));
+
+  // Time-period options — Bengali inline / English from the overlay.
+  const PERIODS: { key: Period; label: string }[] = PERIOD_KEYS.map(
+    (key, i) => ({ key, label: isEn ? L.periods[i] : PERIODS_BN[key] }),
+  );
+
+  // Role options — built from the single source of truth in
+  // src/lib/partner.ts so the per-role partner counts (the badges) stay
+  // in sync with the program data. English labels/subs overlay from
+  // PARTNER_EN.roles when the locale is "en".
+  const ROLE_OPTIONS: {
+    key: Role;
+    label: string;
+    sub: string;
+    count: number;
+  }[] = [
+    {
+      key: "all",
+      label: isEn ? L.allRoles : "সকল ভূমিকা",
+      sub: isEn ? L.allRolesSub : "সব পার্টনার",
+      count: PARTNER_TOTAL_COUNT,
+    },
+    ...PARTNER_ROLES.map((r) => ({
+      key: r.key,
+      label: isEn ? PARTNER_EN.roles[r.key]?.label ?? r.bn : r.bn,
+      sub: isEn ? PARTNER_EN.roles[r.key]?.sub ?? r.sub : r.sub,
+      count: r.count,
+    })),
+  ];
+
   const [query, setQuery] = useState("");
   const [role, setRole] = useState<Role>("all");
   const [period, setPeriod] = useState<Period>("year");
@@ -70,10 +82,10 @@ export default function LeaderboardControls() {
   const [periodOpen, setPeriodOpen] = useState(false);
 
   const currentRole = ROLE_OPTIONS.find((r) => r.key === role);
-  const currentRoleLabel = currentRole?.label ?? "সকল ভূমিকা";
+  const currentRoleLabel = currentRole?.label ?? (isEn ? L.allRoles : "সকল ভূমিকা");
   const currentRoleCount = currentRole?.count ?? PARTNER_TOTAL_COUNT;
   const currentPeriodLabel =
-    PERIODS.find((p) => p.key === period)?.label ?? "এই বছর";
+    PERIODS.find((p) => p.key === period)?.label ?? (isEn ? L.periods[1] : "এই বছর");
 
   return (
     <motion.div
@@ -90,9 +102,9 @@ export default function LeaderboardControls() {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="ইউজারনেম, ইমেইল, মোবাইল বা ID দিয়ে নিজের অবস্থান খুঁজুন…"
+          placeholder={isEn ? L.searchPh : "ইউজারনেম, ইমেইল, মোবাইল বা ID দিয়ে নিজের অবস্থান খুঁজুন…"}
           className="w-full bg-transparent py-3 text-sm text-fg placeholder:text-fg-faint outline-none"
-          aria-label="লিডারবোর্ডে খুঁজুন"
+          aria-label={isEn ? L.searchAria : "লিডারবোর্ডে খুঁজুন"}
         />
         {query && (
           <button
@@ -100,7 +112,7 @@ export default function LeaderboardControls() {
             onClick={() => setQuery("")}
             className="text-[11px] font-bold uppercase tracking-wider text-fg-muted hover:text-brand-blue transition-colors"
           >
-            ক্লিয়ার
+            {isEn ? L.clear : "ক্লিয়ার"}
           </button>
         )}
       </div>
@@ -124,7 +136,7 @@ export default function LeaderboardControls() {
             {/* Live count for the selected role, right on the trigger
                 so it's visible without opening the menu. */}
             <span className="inline-flex items-center justify-center min-w-[1.4rem] rounded-full bg-brand-blue/10 px-1.5 py-0.5 text-[11px] font-bold text-brand-blue">
-              {bnNumber(currentRoleCount)}
+              {num(currentRoleCount)}
             </span>
           </span>
           <ChevronDown
@@ -189,7 +201,7 @@ export default function LeaderboardControls() {
                           : "bg-brand-blue/10 text-brand-blue"
                       }`}
                     >
-                      {bnNumber(r.count)}
+                      {num(r.count)}
                     </span>
                   </button>
                 ))}

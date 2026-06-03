@@ -11,8 +11,22 @@ import Link from "next/link";
 import AnimatedBlobs from "./AnimatedBlobs";
 import PropertyBackdrop from "./PropertyBackdrop";
 import { PARTNER_HEADLINE, PARTNER_PERIOD } from "@/lib/partner";
+import { PARTNER_EN } from "@/lib/pages.en";
+import { useLocale } from "./LocaleProvider";
 
 export default function PartnerHero() {
+  const isEn = useLocale() === "en";
+  const u = PARTNER_EN.ui;
+  const lp = (href: string) => (isEn ? `/en${href}` : href);
+  const periodStart = isEn ? PARTNER_EN.periodStart : PARTNER_PERIOD.startBn;
+  const periodEnd = isEn ? PARTNER_EN.periodEnd : PARTNER_PERIOD.endBn;
+  const target = isEn
+    ? String(PARTNER_HEADLINE.referralsTarget)
+    : new Intl.NumberFormat("bn-BD").format(PARTNER_HEADLINE.referralsTarget);
+  const cashMin = isEn ? PARTNER_EN.headline.cashMin : PARTNER_HEADLINE.cashMinBn;
+  const umrahValue = isEn ? PARTNER_EN.headline.umrahValue : PARTNER_HEADLINE.umrahValueBn;
+  const totalValue = isEn ? PARTNER_EN.headline.totalValue : PARTNER_HEADLINE.totalValueBn;
+
   return (
     <section className="relative isolate flex min-h-[88svh] items-center overflow-hidden pt-28 pb-16">
       {/* Fuzala Complex street view — the partner program funnels
@@ -40,27 +54,48 @@ export default function PartnerHero() {
             <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
               <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-                পার্টনার প্রোগ্রাম · {PARTNER_PERIOD.startBn}
+                {isEn ? u.heroEyebrow : "পার্টনার প্রোগ্রাম"} · {periodStart}
               </span>
             </div>
 
             <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08]">
-              নিজের আয়ের <span className="text-grad">লক্ষ্য</span> নিজেই ঠিক
-              করুন।
+              {isEn ? (
+                <>
+                  {u.heroH1A} <span className="text-grad">{u.heroH1Grad}</span>{" "}
+                  {u.heroH1B}
+                </>
+              ) : (
+                <>
+                  নিজের আয়ের <span className="text-grad">লক্ষ্য</span> নিজেই ঠিক
+                  করুন।
+                </>
+              )}
             </h1>
 
             <p className="mt-5 text-lg sm:text-xl text-fg-soft leading-relaxed font-medium">
-              মানুষের কাছে{" "}
-              <span className="font-bold text-brand-red">প্রমিস সিটি</span>{" "}
-              পৌঁছে দিন — কারণ প্রমিস সিটি মানেই{" "}
-              <span className="font-bold text-brand-blue">
-                আপনার স্বপ্ন যেখানে বাস্তব।
-              </span>
+              {isEn ? (
+                <>
+                  {u.heroLeadA}{" "}
+                  <span className="font-bold text-brand-red">{u.heroLeadBrand}</span>{" "}
+                  {u.heroLeadMid}{" "}
+                  <span className="font-bold text-brand-blue">{u.heroLeadBlue}</span>
+                </>
+              ) : (
+                <>
+                  মানুষের কাছে{" "}
+                  <span className="font-bold text-brand-red">প্রমিস সিটি</span>{" "}
+                  পৌঁছে দিন — কারণ প্রমিস সিটি মানেই{" "}
+                  <span className="font-bold text-brand-blue">
+                    আপনার স্বপ্ন যেখানে বাস্তব।
+                  </span>
+                </>
+              )}
             </p>
 
             <p className="mt-3 text-base text-fg-muted leading-relaxed max-w-2xl">
-              ক্যালকুলেটরে আয়ের লক্ষ্য সেট করুন, প্ল্যান বানান — কোন
-              প্রকল্প থেকে কত সেলস করলে সেই লক্ষ্যে পৌঁছাবেন, লাইভ দেখুন।
+              {isEn
+                ? u.heroSub
+                : "ক্যালকুলেটরে আয়ের লক্ষ্য সেট করুন, প্ল্যান বানান — কোন প্রকল্প থেকে কত সেলস করলে সেই লক্ষ্যে পৌঁছাবেন, লাইভ দেখুন।"}
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -69,29 +104,29 @@ export default function PartnerHero() {
                 className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
               >
                 <Calculator className="h-4 w-4" />
-                ক্যালকুলেটর খুলুন
+                {isEn ? u.openCalc : "ক্যালকুলেটর খুলুন"}
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/#contact"
+                href={lp("/#contact")}
                 className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-7 py-3.5 text-base font-semibold text-fg hover:border-brand-blue/40 transition-all"
               >
-                পার্টনার হতে যোগাযোগ
+                {isEn ? u.contactBtn : "পার্টনার হতে যোগাযোগ"}
               </Link>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-fg-muted">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white border border-border px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />
-                রিয়েল এস্টেট কমিশন
+                {isEn ? u.chip1 : "রিয়েল এস্টেট কমিশন"}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white border border-border px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-blue" />
-                টিম বিল্ডিং বোনাস
+                {isEn ? u.chip2 : "টিম বিল্ডিং বোনাস"}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white border border-border px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-ash-dark" />
-                হজ্জ · উমরাহ কমিশন
+                {isEn ? u.chip3 : "হজ্জ · উমরাহ কমিশন"}
               </span>
             </div>
           </motion.div>
@@ -137,23 +172,30 @@ export default function PartnerHero() {
                     pure white, echoes the photo's sandstone palette. */}
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-[#fff7e6] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-red shadow-md ring-1 ring-amber-200/50">
                   <Sparkles className="h-3 w-3" />
-                  সিগনেচার অফার
+                  {isEn ? u.offerPill : "সিগনেচার অফার"}
                 </span>
 
                 <h2 className="mt-5 text-3xl sm:text-4xl font-bold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
-                  মাত্র{" "}
-                  <span className="text-[#FFD27A]">
-                    {new Intl.NumberFormat("bn-BD").format(
-                      PARTNER_HEADLINE.referralsTarget,
-                    )}{" "}
-                    জন
-                  </span>{" "}
-                  রেফার করে
+                  {isEn ? (
+                    <>
+                      {u.hookH2A}{" "}
+                      <span className="text-[#FFD27A]">
+                        {target} {u.hookH2People}
+                      </span>{" "}
+                      {u.hookH2B}
+                    </>
+                  ) : (
+                    <>
+                      মাত্র{" "}
+                      <span className="text-[#FFD27A]">{target} জন</span>{" "}
+                      রেফার করে
+                    </>
+                  )}
                 </h2>
                 <div className="mt-1 text-2xl sm:text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
-                  নিশ্চিত{" "}
+                  {isEn ? u.hookSubPlain : "নিশ্চিত"}{" "}
                   <span className="underline decoration-[#FFD27A] decoration-2 underline-offset-4">
-                    ফ্রি উমরাহ
+                    {isEn ? u.hookSubAccent : "ফ্রি উমরাহ"}
                   </span>
                 </div>
 
@@ -163,10 +205,10 @@ export default function PartnerHero() {
                       <Wallet className="h-4 w-4" />
                     </div>
                     <div className="text-[10px] uppercase tracking-wider text-white/80">
-                      ন্যূনতম ক্যাশ
+                      {isEn ? u.minCash : "ন্যূনতম ক্যাশ"}
                     </div>
                     <div className="mt-0.5 text-lg font-bold text-white">
-                      ৳ {PARTNER_HEADLINE.cashMinBn}
+                      ৳ {cashMin}
                     </div>
                   </div>
                   <div className="rounded-xl bg-white/12 border border-white/25 backdrop-blur-md px-3 py-3 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
@@ -174,27 +216,29 @@ export default function PartnerHero() {
                       <Trophy className="h-4 w-4" />
                     </div>
                     <div className="text-[10px] uppercase tracking-wider text-white/80">
-                      উমরাহ ভ্যালু
+                      {isEn ? u.umrahValue : "উমরাহ ভ্যালু"}
                     </div>
                     <div className="mt-0.5 text-lg font-bold text-white">
-                      ৳ {PARTNER_HEADLINE.umrahValueBn}
+                      ৳ {umrahValue}
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-4 rounded-xl bg-white px-4 py-3 flex items-baseline justify-between shadow-lg">
                   <span className="text-xs font-semibold uppercase tracking-wider text-fg-muted">
-                    মোট পুরস্কার
+                    {isEn ? u.totalReward : "মোট পুরস্কার"}
                   </span>
                   <span className="text-2xl font-bold text-grad-rb">
-                    ~ ৳ {PARTNER_HEADLINE.totalValueBn}
+                    ~ ৳ {totalValue}
                   </span>
                 </div>
 
                 <p className="mt-4 text-[11px] leading-relaxed text-white/85">
-                  * বছরের সর্বোচ্চ ২৫ পয়েন্টে ফ্রি উমরাহ, ২০ পয়েন্টে ফ্রি
-                  বিদেশ ট্যুর। {PARTNER_PERIOD.startBn} – {PARTNER_PERIOD.endBn}{" "}
-                  পর্যন্ত।
+                  {isEn
+                    ? u.heroFootnote
+                        .replace("{start}", periodStart)
+                        .replace("{end}", periodEnd)
+                    : `* বছরের সর্বোচ্চ ২৫ পয়েন্টে ফ্রি উমরাহ, ২০ পয়েন্টে ফ্রি বিদেশ ট্যুর। ${periodStart} – ${periodEnd} পর্যন্ত।`}
                 </p>
               </div>
             </div>

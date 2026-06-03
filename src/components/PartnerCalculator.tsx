@@ -22,6 +22,8 @@ import {
   PARTNER_COMMISSIONS,
   bnNumber,
 } from "@/lib/partner";
+import { PARTNER_EN } from "@/lib/pages.en";
+import { useLocale } from "./LocaleProvider";
 
 const ACCENT_BG: Record<string, string> = {
   red: "bg-brand-red",
@@ -47,6 +49,14 @@ const GOAL_STEP = 5_000;
 const GOAL_DEFAULT = 1_50_000;
 
 export default function PartnerCalculator() {
+  const isEn = useLocale() === "en";
+  const u = PARTNER_EN.ui;
+  const num = (n: number) => (isEn ? String(n) : bnNumber(n));
+  const unitOf = (c: { id: string; unit: string }) =>
+    isEn ? PARTNER_EN.commissions[c.id]?.unit ?? c.unit : c.unit;
+  const ptWord = (n: number) =>
+    isEn ? (n > 1 ? u.pointsWord : u.pointWord) : "পয়েন্ট";
+
   const [goal, setGoal] = useState<number>(GOAL_DEFAULT);
   const [counts, setCounts] = useState<Record<string, number>>(() =>
     Object.fromEntries(PARTNER_COMMISSIONS.map((c) => [c.id, 0])),
@@ -112,15 +122,18 @@ export default function PartnerCalculator() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-blue animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              আয়ের ক্যালকুলেটর
+              {isEn ? u.calcEyebrow : "আয়ের ক্যালকুলেটর"}
             </span>
           </div>
           <h2 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.15]">
-            আপনার <span className="text-grad">লক্ষ্য</span> নিজেই ঠিক করুন
+            {isEn ? u.calcH1A : "আপনার"}{" "}
+            <span className="text-grad">{isEn ? u.calcH1Grad : "লক্ষ্য"}</span>{" "}
+            {isEn ? u.calcH1B : "নিজেই ঠিক করুন"}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed">
-            স্লাইডার টেনে আয়ের লক্ষ্য সেট করুন, তারপর দেখুন কোন প্রকল্প থেকে
-            কতটা সেলস করলে লক্ষ্যে পৌঁছাবেন।
+            {isEn
+              ? u.calcSub
+              : "স্লাইডার টেনে আয়ের লক্ষ্য সেট করুন, তারপর দেখুন কোন প্রকল্প থেকে কতটা সেলস করলে লক্ষ্যে পৌঁছাবেন।"}
           </p>
         </motion.div>
 
@@ -144,7 +157,7 @@ export default function PartnerCalculator() {
                     Step 1
                   </div>
                   <h3 className="text-lg font-bold text-fg">
-                    আপনার আয়ের লক্ষ্য
+                    {isEn ? u.goalLabel : "আপনার আয়ের লক্ষ্য"}
                   </h3>
                 </div>
               </div>
@@ -162,14 +175,13 @@ export default function PartnerCalculator() {
                     if (Number.isFinite(v)) setGoal(Math.max(0, v));
                   }}
                   className="w-full bg-transparent text-3xl sm:text-4xl font-bold text-grad-rb outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  aria-label="আয়ের লক্ষ্য"
+                  aria-label={isEn ? u.goalAria : "আয়ের লক্ষ্য"}
                 />
               </div>
               <div className="mt-1 text-sm text-fg-muted">
-                <span className="font-semibold">৳ {bnNumber(goal)}</span>
+                <span className="font-semibold">৳ {num(goal)}</span>
                 <span className="text-fg-faint">
-                  {" "}
-                  · মাসিক / নির্দিষ্ট সময়সীমার মধ্যে
+                  {isEn ? u.goalPeriod : " · মাসিক / নির্দিষ্ট সময়সীমার মধ্যে"}
                 </span>
               </div>
 
@@ -181,11 +193,11 @@ export default function PartnerCalculator() {
                 value={Math.min(GOAL_MAX, Math.max(GOAL_MIN, goal))}
                 onChange={(e) => setGoal(Number(e.target.value))}
                 className="mt-5 w-full accent-brand-red cursor-pointer"
-                aria-label="আয়ের লক্ষ্য স্লাইডার"
+                aria-label={isEn ? u.goalSliderAria : "আয়ের লক্ষ্য স্লাইডার"}
               />
               <div className="mt-1 flex items-center justify-between text-[11px] text-fg-faint">
-                <span>৳ {bnNumber(GOAL_MIN)}</span>
-                <span>৳ {bnNumber(GOAL_MAX)}</span>
+                <span>৳ {num(GOAL_MIN)}</span>
+                <span>৳ {num(GOAL_MAX)}</span>
               </div>
             </motion.div>
 
@@ -207,7 +219,7 @@ export default function PartnerCalculator() {
                       Step 2
                     </div>
                     <h3 className="text-lg font-bold text-fg">
-                      আপনার সেলস প্ল্যান
+                      {isEn ? u.planLabel : "আপনার সেলস প্ল্যান"}
                     </h3>
                   </div>
                 </div>
@@ -216,7 +228,7 @@ export default function PartnerCalculator() {
                   onClick={reset}
                   className="text-xs font-semibold uppercase tracking-wider text-fg-muted hover:text-brand-red transition-colors"
                 >
-                  রিসেট
+                  {isEn ? u.reset : "রিসেট"}
                 </button>
               </div>
 
@@ -233,11 +245,11 @@ export default function PartnerCalculator() {
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
                           <div className="text-sm font-bold text-fg leading-tight">
-                            {c.nameBn}
+                            {isEn ? c.nameEn : c.nameBn}
                           </div>
                           <div className="mt-0.5 text-[11px] text-fg-faint">
-                            ৳ {bnNumber(c.commission)} · {c.unit}
-                            {c.points > 0 ? ` · ${bnNumber(c.points)} পয়েন্ট` : ""}
+                            ৳ {num(c.commission)} · {unitOf(c)}
+                            {c.points > 0 ? ` · ${num(c.points)} ${ptWord(c.points)}` : ""}
                           </div>
                         </div>
                         <span
@@ -255,7 +267,7 @@ export default function PartnerCalculator() {
                             onClick={() => dec(c.id)}
                             className="h-9 w-9 inline-flex items-center justify-center text-fg-muted hover:text-brand-red disabled:opacity-40 disabled:hover:text-fg-muted transition-colors"
                             disabled={n === 0}
-                            aria-label={`${c.nameBn} কমান`}
+                            aria-label={isEn ? `${u.decrease} ${c.nameEn}` : `${c.nameBn} কমান`}
                           >
                             <Minus className="h-4 w-4" />
                           </button>
@@ -268,13 +280,13 @@ export default function PartnerCalculator() {
                               setCount(c.id, Number(e.target.value) || 0)
                             }
                             className="w-12 bg-transparent text-center text-sm font-bold text-fg outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                            aria-label={`${c.nameBn} সংখ্যা`}
+                            aria-label={isEn ? `${c.nameEn} ${u.count}` : `${c.nameBn} সংখ্যা`}
                           />
                           <button
                             type="button"
                             onClick={() => inc(c.id)}
                             className="h-9 w-9 inline-flex items-center justify-center text-fg-muted hover:text-brand-red transition-colors"
-                            aria-label={`${c.nameBn} বাড়ান`}
+                            aria-label={isEn ? `${u.increase} ${c.nameEn}` : `${c.nameBn} বাড়ান`}
                           >
                             <Plus className="h-4 w-4" />
                           </button>
@@ -285,9 +297,9 @@ export default function PartnerCalculator() {
                           className={`text-[11px] font-semibold uppercase tracking-wider ${
                             ACCENT_TEXT[c.accent]
                           } hover:underline`}
-                          title="শুধু এই প্রকল্প দিয়ে লক্ষ্য পূরণ করুন"
+                          title={isEn ? u.fillSoloTitle : "শুধু এই প্রকল্প দিয়ে লক্ষ্য পূরণ করুন"}
                         >
-                          এই প্রকল্পেই পূরণ →
+                          {isEn ? u.fillSolo : "এই প্রকল্পেই পূরণ →"}
                         </button>
                       </div>
 
@@ -301,12 +313,12 @@ export default function PartnerCalculator() {
                           }`}
                         >
                           <span className="font-bold text-fg">
-                            ৳ {bnNumber(rowIncome)}
+                            ৳ {num(rowIncome)}
                           </span>
                           {rowPoints > 0 && (
                             <span className="text-fg-muted">
                               {" "}
-                              · {bnNumber(rowPoints)} পয়েন্ট
+                              · {num(rowPoints)} {ptWord(rowPoints)}
                             </span>
                           )}
                         </motion.div>
@@ -335,28 +347,30 @@ export default function PartnerCalculator() {
                   <div className="text-[11px] uppercase tracking-[0.2em] text-fg-faint">
                     Step 3
                   </div>
-                  <h3 className="text-lg font-bold text-fg">আপনার অর্জন</h3>
+                  <h3 className="text-lg font-bold text-fg">
+                    {isEn ? u.achievement : "আপনার অর্জন"}
+                  </h3>
                 </div>
               </div>
 
               <div className="mt-6">
                 <div className="text-[11px] uppercase tracking-[0.2em] text-fg-faint">
-                  মোট আয়
+                  {isEn ? u.totalIncome : "মোট আয়"}
                 </div>
                 <div className="mt-1 text-3xl sm:text-4xl font-bold text-grad-rb">
-                  ৳ {bnNumber(totalIncome)}
+                  ৳ {num(totalIncome)}
                 </div>
                 <div className="mt-2 text-sm">
                   {goalHit ? (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-red-tint px-3 py-1 text-xs font-bold text-brand-red">
                       <Trophy className="h-3.5 w-3.5" />
-                      লক্ষ্য পূর্ণ — মাশাআল্লাহ!
+                      {isEn ? u.goalHit : "লক্ষ্য পূর্ণ — মাশাআল্লাহ!"}
                     </span>
                   ) : (
                     <span className="text-fg-muted">
-                      লক্ষ্য থেকে বাকি{" "}
+                      {isEn ? u.goalGapPrefix : "লক্ষ্য থেকে বাকি"}{" "}
                       <span className="font-bold text-fg">
-                        ৳ {bnNumber(gap)}
+                        ৳ {num(gap)}
                       </span>
                     </span>
                   )}
@@ -366,20 +380,18 @@ export default function PartnerCalculator() {
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <div className="rounded-xl bg-bg-soft p-3">
                   <div className="text-[10px] uppercase tracking-wider text-fg-faint">
-                    মোট পয়েন্ট
+                    {isEn ? u.totalPoints : "মোট পয়েন্ট"}
                   </div>
                   <div className="mt-1 text-xl font-bold text-fg">
-                    {bnNumber(totalPoints)}
+                    {num(totalPoints)}
                   </div>
                 </div>
                 <div className="rounded-xl bg-bg-soft p-3">
                   <div className="text-[10px] uppercase tracking-wider text-fg-faint">
-                    মোট সেলস
+                    {isEn ? u.totalSales : "মোট সেলস"}
                   </div>
                   <div className="mt-1 text-xl font-bold text-fg">
-                    {bnNumber(
-                      Object.values(counts).reduce((a, b) => a + b, 0),
-                    )}
+                    {num(Object.values(counts).reduce((a, b) => a + b, 0))}
                   </div>
                 </div>
               </div>
@@ -396,11 +408,11 @@ export default function PartnerCalculator() {
                     <div key={award.titleEn}>
                       <div className="flex items-baseline justify-between">
                         <div className="text-sm font-bold text-fg">
-                          {award.titleBn}
+                          {isEn ? PARTNER_EN.awards[award.threshold]?.title ?? award.titleEn : award.titleBn}
                         </div>
                         <div className="text-[11px] text-fg-muted">
-                          {bnNumber(Math.min(totalPoints, award.threshold))} /{" "}
-                          {bnNumber(award.threshold)} পয়েন্ট
+                          {num(Math.min(totalPoints, award.threshold))} /{" "}
+                          {num(award.threshold)} {isEn ? u.pointsWord : "পয়েন্ট"}
                         </div>
                       </div>
                       <div className="mt-1.5 h-2 rounded-full bg-bg-soft-2 overflow-hidden">
@@ -418,7 +430,7 @@ export default function PartnerCalculator() {
                       </div>
                       {won && (
                         <div className="mt-1 text-[11px] font-bold text-brand-red">
-                          ✓ অর্জন হয়েছে — আলহামদুলিল্লাহ
+                          {isEn ? u.achievedNote : "✓ অর্জন হয়েছে — আলহামদুলিল্লাহ"}
                         </div>
                       )}
                     </div>
@@ -427,9 +439,9 @@ export default function PartnerCalculator() {
               </div>
 
               <p className="mt-5 text-[11px] leading-relaxed text-fg-faint">
-                * কমিশন পেতে অবশ্যই ক্লায়েন্টের জমা টাকার ১০% হারে কমিশন
-                হতে হবে। গণনা ইনডিকেটিভ — চূড়ান্ত হিসাব মার্কেটিং অফিসের
-                সাথে।
+                {isEn
+                  ? u.calcFootnote
+                  : "* কমিশন পেতে অবশ্যই ক্লায়েন্টের জমা টাকার ১০% হারে কমিশন হতে হবে। গণনা ইনডিকেটিভ — চূড়ান্ত হিসাব মার্কেটিং অফিসের সাথে।"}
               </p>
             </div>
           </motion.aside>

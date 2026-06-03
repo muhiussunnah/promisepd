@@ -9,6 +9,7 @@ export const SITE = {
     "ঢাকায় আবাসিক, বাণিজ্যিক ও বিনিয়োগযোগ্য সম্পত্তির জন্য আপনার বিশ্বস্ত অংশীদার।",
   phone: "+8801910065136",
   phoneDisplay: "+৮৮০ ১৯১০-০৬৫১৩৬",
+  phoneDisplayEn: "+880 1910-065136",
   whatsapp: "8801910065136",
   email: "promisegroup2023@gmail.com",
   address:

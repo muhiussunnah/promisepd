@@ -18,6 +18,8 @@ import {
   PARTNER_PERIOD,
   bnNumber,
 } from "@/lib/partner";
+import { PARTNER_EN } from "@/lib/pages.en";
+import { useLocale } from "./LocaleProvider";
 
 const AWARD_ICONS = { red: Sparkles, blue: Plane } as const;
 
@@ -36,6 +38,15 @@ const ANCHOR_GRADIENT: Record<"red" | "blue", string> = {
 };
 
 export default function PartnerPoints() {
+  const isEn = useLocale() === "en";
+  const u = PARTNER_EN.ui;
+  const periodStart = isEn ? PARTNER_EN.periodStart : PARTNER_PERIOD.startBn;
+  const periodEnd = isEn ? PARTNER_EN.periodEnd : PARTNER_PERIOD.endBn;
+  const num = (n: number) => (isEn ? String(n) : bnNumber(n));
+  const points = isEn
+    ? POINT_RULES.map((p, i) => ({ ...p, ...PARTNER_EN.points[i] }))
+    : POINT_RULES;
+
   return (
     <section className="relative py-20 sm:py-28 bg-bg-soft">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -49,17 +60,19 @@ export default function PartnerPoints() {
           <div className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-blue animate-pulse" />
             <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-              পয়েন্ট সিস্টেম
+              {isEn ? u.pointsEyebrow : "পয়েন্ট সিস্টেম"}
             </span>
           </div>
           <h2 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.15]">
-            পয়েন্ট জমান —{" "}
-            <span className="text-grad">পুরস্কার আনুন।</span>
+            {isEn ? u.pointsH1A : "পয়েন্ট জমান —"}{" "}
+            <span className="text-grad">
+              {isEn ? u.pointsH1Grad : "পুরস্কার আনুন।"}
+            </span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-fg-muted leading-relaxed">
-            {PARTNER_PERIOD.startBn} – {PARTNER_PERIOD.endBn} পর্যন্ত পয়েন্ট
-            অর্জন করুন। নির্দিষ্ট থ্রেশহোল্ডে পৌঁছালে কোম্পানির খরচে ফ্রি
-            পুরস্কার।
+            {isEn
+              ? u.pointsSub.replace("{start}", periodStart).replace("{end}", periodEnd)
+              : `${periodStart} – ${periodEnd} পর্যন্ত পয়েন্ট অর্জন করুন। নির্দিষ্ট থ্রেশহোল্ডে পৌঁছালে কোম্পানির খরচে ফ্রি পুরস্কার।`}
           </p>
         </motion.div>
 
@@ -105,19 +118,21 @@ export default function PartnerPoints() {
                     </div>
                     <div className="text-right">
                       <div className="text-[11px] uppercase tracking-[0.2em] text-white/85">
-                        লক্ষ্য
+                        {isEn ? u.target : "লক্ষ্য"}
                       </div>
                       <div className="text-3xl font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
-                        {bnNumber(award.threshold)}{" "}
-                        <span className="text-base font-semibold">পয়েন্ট</span>
+                        {num(award.threshold)}{" "}
+                        <span className="text-base font-semibold">
+                          {isEn ? u.pointsWord : "পয়েন্ট"}
+                        </span>
                       </div>
                     </div>
                   </div>
                   <h3 className="mt-6 text-2xl sm:text-3xl font-bold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
-                    {award.titleBn}
+                    {isEn ? PARTNER_EN.awards[award.threshold]?.title ?? award.titleEn : award.titleBn}
                   </h3>
                   <p className="mt-2 text-sm text-white/90 leading-relaxed">
-                    {award.description}
+                    {isEn ? PARTNER_EN.awards[award.threshold]?.description ?? award.description : award.description}
                   </p>
                 </div>
               </motion.div>
@@ -138,12 +153,12 @@ export default function PartnerPoints() {
               <Star className="h-5 w-5" />
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-fg">
-              পয়েন্ট কীভাবে অর্জন করবেন
+              {isEn ? u.howToEarn : "পয়েন্ট কীভাবে অর্জন করবেন"}
             </h3>
           </div>
 
           <ul className="divide-y divide-border">
-            {POINT_RULES.map((p) => (
+            {points.map((p) => (
               <li
                 key={p.item}
                 className="flex items-start justify-between gap-4 py-3.5"

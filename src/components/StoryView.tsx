@@ -24,6 +24,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SITE } from "@/lib/site";
+import { STORY_EN } from "@/lib/pages.en";
+import { useLocale } from "./LocaleProvider";
 
 type Milestone = {
   year: string;
@@ -114,6 +116,16 @@ const reveal = {
 };
 
 export default function StoryView() {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const s = STORY_EN;
+  // Overlay English text onto the Bengali milestones/identity, preserving
+  // each icon, order and structure.
+  const milestones = isEn
+    ? MILESTONES.map((m, i) => ({ ...m, ...s.milestones[i] }))
+    : MILESTONES;
+  const identity = isEn ? s.identity : IDENTITY;
+
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
@@ -135,22 +147,33 @@ export default function StoryView() {
               <span className="inline-flex items-center gap-2 rounded-full bg-white border border-border px-4 py-1.5 text-xs shadow-sm">
                 <Sparkles className="h-3.5 w-3.5 text-brand-blue" />
                 <span className="font-semibold uppercase tracking-[0.18em] text-fg-muted">
-                  পেছনের গল্প · The Story Behind
+                  {isEn ? s.heroEyebrow : "পেছনের গল্প · The Story Behind"}
                 </span>
               </span>
 
               <h1 className="mt-6 text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.12] tracking-tight">
-                যাঁর স্বপ্নে আজ{" "}
-                <span className="text-grad">হাজারো পরিবারের ঠিকানা</span>
+                {isEn ? s.heroTitlePlain : "যাঁর স্বপ্নে আজ"}{" "}
+                <span className="text-grad">
+                  {isEn ? s.heroTitleAccent : "হাজারো পরিবারের ঠিকানা"}
+                </span>
               </h1>
 
               <p className="mt-5 text-base sm:text-lg text-fg-muted leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                ভাড়ার ঘরে স্বপ্ন দেখা হাজারো মানুষের কষ্টের সঞ্চয় যাঁর হাতে
-                আমানত — তিনি আমাদের প্রিয়{" "}
-                <span className="font-bold text-fg">
-                  হাফেজ মাওলানা মুফতি কামরুল হাসান
-                </span>
-                ।
+                {isEn ? (
+                  <>
+                    {s.heroLead}{" "}
+                    <span className="font-bold text-fg">{s.ceoFullName}</span>.
+                  </>
+                ) : (
+                  <>
+                    ভাড়ার ঘরে স্বপ্ন দেখা হাজারো মানুষের কষ্টের সঞ্চয় যাঁর হাতে
+                    আমানত — তিনি আমাদের প্রিয়{" "}
+                    <span className="font-bold text-fg">
+                      হাফেজ মাওলানা মুফতি কামরুল হাসান
+                    </span>
+                    ।
+                  </>
+                )}
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
@@ -158,14 +181,14 @@ export default function StoryView() {
                   href="#journey"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-blue px-6 py-3.5 text-sm sm:text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
                 >
-                  জীবনের গল্প পড়ুন
+                  {isEn ? s.journeyReadBtn : "জীবনের গল্প পড়ুন"}
                   <ArrowRight className="h-4 w-4" />
                 </a>
                 <Link
-                  href="/partner"
+                  href={isEn ? "/en/partner" : "/partner"}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-border px-6 py-3.5 text-sm sm:text-base font-semibold text-fg hover:border-brand-blue/40 hover:shadow-lg transition-all"
                 >
-                  প্রমিস পরিবারে যোগ দিন
+                  {isEn ? s.joinBtn : "প্রমিস পরিবারে যোগ দিন"}
                 </Link>
               </div>
             </motion.div>
@@ -184,7 +207,7 @@ export default function StoryView() {
                   <div className="relative aspect-[4/5]">
                     <Image
                       src="/ceo-v2.webp"
-                      alt="হাফেজ মাওলানা মুফতি কামরুল হাসান"
+                      alt={isEn ? s.ceoFullName : "হাফেজ মাওলানা মুফতি কামরুল হাসান"}
                       fill
                       priority
                       sizes="(min-width:1024px) 352px, 100vw"
@@ -193,10 +216,12 @@ export default function StoryView() {
                     <div className="absolute inset-0 bg-gradient-to-t from-fg/70 via-transparent to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                       <div className="text-xl font-bold drop-shadow">
-                        কামরুল হাসান
+                        {isEn ? s.ceoName : "কামরুল হাসান"}
                       </div>
                       <div className="text-sm text-white/85">
-                        প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক · প্রমিস গ্রুপ
+                        {isEn
+                          ? s.ceoRole
+                          : "প্রতিষ্ঠাতা ও ব্যবস্থাপনা পরিচালক · প্রমিস গ্রুপ"}
                       </div>
                     </div>
                   </div>
@@ -211,18 +236,30 @@ export default function StoryView() {
       <section className="relative py-14 sm:py-20 bg-bg-soft">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <motion.div {...reveal} className="space-y-5 text-base sm:text-lg text-fg-soft leading-relaxed">
-            <p>
-              কে এই মানুষ — যাঁর সাফল্যের জন্য দেশ-বিদেশের হাজারো মানুষ মন থেকে
-              দু&apos;আ করেন, যেন তিনি তাঁর স্বপ্ন পূরণ করতে পারেন? কারণ তাঁর
-              স্বপ্ন পূরণ হলেই যে পূরণ হয় হাজারো পরিবারের স্বপ্ন।
-            </p>
-            <p>
-              কেউ প্রবাসের কষ্টার্জিত আয়, কেউ সারা জীবনের সঞ্চয়, কেউ বা শখের
-              গহনা বিক্রির টাকা — এক টুকরো নিজের ঠিকানার আশায় তাঁর হাতে আমানত
-              রেখেছেন। সমাজের নানা শ্রেণি-পেশা ও নানা প্রান্তের এই মানুষগুলোর
-              আস্থার নাম তিনি — আমাদের সবার প্রিয়{" "}
-              <span className="font-bold text-fg">কামরুল হাসান</span>।
-            </p>
+            {isEn ? (
+              <>
+                <p>{s.leadPara1}</p>
+                <p>
+                  {s.leadPara2A}{" "}
+                  <span className="font-bold text-fg">{s.ceoName}</span>.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  কে এই মানুষ — যাঁর সাফল্যের জন্য দেশ-বিদেশের হাজারো মানুষ মন থেকে
+                  দু&apos;আ করেন, যেন তিনি তাঁর স্বপ্ন পূরণ করতে পারেন? কারণ তাঁর
+                  স্বপ্ন পূরণ হলেই যে পূরণ হয় হাজারো পরিবারের স্বপ্ন।
+                </p>
+                <p>
+                  কেউ প্রবাসের কষ্টার্জিত আয়, কেউ সারা জীবনের সঞ্চয়, কেউ বা শখের
+                  গহনা বিক্রির টাকা — এক টুকরো নিজের ঠিকানার আশায় তাঁর হাতে আমানত
+                  রেখেছেন। সমাজের নানা শ্রেণি-পেশা ও নানা প্রান্তের এই মানুষগুলোর
+                  আস্থার নাম তিনি — আমাদের সবার প্রিয়{" "}
+                  <span className="font-bold text-fg">কামরুল হাসান</span>।
+                </p>
+              </>
+            )}
           </motion.div>
 
           {/* Identity card */}
@@ -235,11 +272,14 @@ export default function StoryView() {
                 <MapPin className="h-5 w-5" />
               </span>
               <h2 className="text-lg sm:text-xl font-bold">
-                পরিচিতি <span className="text-grad">এক নজরে</span>
+                {isEn ? s.identityHeadPlain : "পরিচিতি"}{" "}
+                <span className="text-grad">
+                  {isEn ? s.identityHeadAccent : "এক নজরে"}
+                </span>
               </h2>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {IDENTITY.map((row) => (
+              {identity.map((row) => (
                 <div
                   key={row.label}
                   className="rounded-xl bg-bg-soft border border-border px-4 py-3"
@@ -262,15 +302,18 @@ export default function StoryView() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-brand-red">
-              দুই দশকের পথচলা
+              {isEn ? s.journeyEyebrow : "দুই দশকের পথচলা"}
             </span>
             <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.12]">
-              মাইলফলকে গাঁথা{" "}
-              <span className="text-grad">একটি স্বপ্নযাত্রা</span>
+              {isEn ? s.journeyHeadPlain : "মাইলফলকে গাঁথা"}{" "}
+              <span className="text-grad">
+                {isEn ? s.journeyHeadAccent : "একটি স্বপ্নযাত্রা"}
+              </span>
             </h2>
             <p className="mt-4 text-base text-fg-muted max-w-2xl mx-auto leading-relaxed">
-              একটি গ্রামের সাধারণ ছেলে থেকে হাজারো পরিবারের আস্থার নাম — প্রতিটি
-              ধাপে পরিশ্রম, সততা আর আল্লাহর রহমত।
+              {isEn
+                ? s.journeySub
+                : "একটি গ্রামের সাধারণ ছেলে থেকে হাজারো পরিবারের আস্থার নাম — প্রতিটি ধাপে পরিশ্রম, সততা আর আল্লাহর রহমত।"}
             </p>
           </div>
 
@@ -282,7 +325,7 @@ export default function StoryView() {
             />
 
             <div className="space-y-7 lg:space-y-0">
-              {MILESTONES.map((m, i) => {
+              {milestones.map((m, i) => {
                 const Icon = m.icon;
                 const isLeft = i % 2 === 0;
                 return (
@@ -348,13 +391,23 @@ export default function StoryView() {
           <motion.div {...reveal}>
             <Quote className="mx-auto h-10 w-10 text-white/40" />
             <p className="mt-6 text-2xl sm:text-3xl lg:text-[2.5rem] font-bold leading-[1.3]">
-              তিনি হেরে গেলে হেরে যাবে হাজারো-লাখো মানুষের স্বপ্ন — আর তিনি জিতে
-              গেলে জিতে যাবে অসংখ্য মানুষের{" "}
-              <span className="text-brand-ash">ক্ষুদ্র সঞ্চয়</span>।
+              {isEn ? (
+                <>
+                  {s.quotePlain}{" "}
+                  <span className="text-brand-ash">{s.quoteAccent}</span>.
+                </>
+              ) : (
+                <>
+                  তিনি হেরে গেলে হেরে যাবে হাজারো-লাখো মানুষের স্বপ্ন — আর তিনি জিতে
+                  গেলে জিতে যাবে অসংখ্য মানুষের{" "}
+                  <span className="text-brand-ash">ক্ষুদ্র সঞ্চয়</span>।
+                </>
+              )}
             </p>
             <p className="mt-8 text-base sm:text-lg text-white/85 leading-relaxed max-w-2xl mx-auto">
-              তাই আসুন — আপনি, আমি, আমরা সবাই মিলে প্রমিসকে সামনে এগিয়ে নিই।
-              তাহলে জিতে যাব আমরা সবাই।
+              {isEn
+                ? s.quoteSub
+                : "তাই আসুন — আপনি, আমি, আমরা সবাই মিলে প্রমিসকে সামনে এগিয়ে নিই। তাহলে জিতে যাব আমরা সবাই।"}
             </p>
           </motion.div>
         </div>
@@ -368,16 +421,16 @@ export default function StoryView() {
               <Heart className="h-7 w-7 text-brand-red" />
             </span>
             <h2 className="mt-6 text-2xl sm:text-3xl font-bold leading-snug">
-              আমাদের <span className="text-grad">দু&apos;আ</span>
+              {isEn ? s.duaHeadPlain : "আমাদের"}{" "}
+              <span className="text-grad">{isEn ? s.duaHeadAccent : "দু'আ"}</span>
             </h2>
             <p className="mt-5 text-base sm:text-lg text-fg-soft leading-relaxed">
-              দয়াময় রব যেন তাঁকে সমস্ত হিংসা-হাসাদ ও বিপদ-আপদ থেকে মুক্ত রেখে
-              তাঁর রহমতের চাদরে সদা আবৃত রাখেন। আল্লাহ তাআলা আমাদের সবাইকে
-              প্রমিসের সাথে এগিয়ে যাওয়ার ও স্বপ্ন পূরণের তাওফিক দান করুন —
-              আমীন।
+              {isEn
+                ? s.duaBody
+                : "দয়াময় রব যেন তাঁকে সমস্ত হিংসা-হাসাদ ও বিপদ-আপদ থেকে মুক্ত রেখে তাঁর রহমতের চাদরে সদা আবৃত রাখেন। আল্লাহ তাআলা আমাদের সবাইকে প্রমিসের সাথে এগিয়ে যাওয়ার ও স্বপ্ন পূরণের তাওফিক দান করুন — আমীন।"}
             </p>
             <p className="mt-6 text-lg sm:text-xl font-bold text-grad-rb">
-              কারণ প্রমিস মানেই — স্বপ্ন যেখানে বাস্তব।
+              {isEn ? s.duaTagline : "কারণ প্রমিস মানেই — স্বপ্ন যেখানে বাস্তব।"}
             </p>
           </motion.div>
 
@@ -387,19 +440,20 @@ export default function StoryView() {
               <div className="flex items-center justify-center gap-2 text-brand-blue mb-2">
                 <CalendarDays className="h-5 w-5" />
                 <span className="text-sm font-bold uppercase tracking-wider">
-                  আপনার পথচলা শুরু হোক আজই
+                  {isEn ? s.ctaEyebrow : "আপনার পথচলা শুরু হোক আজই"}
                 </span>
               </div>
               <p className="text-base text-fg-muted leading-relaxed">
-                স্বপ্নের ঠিকানা হোক, কিংবা প্রমিস পরিবারের অংশীদার — আমরা
-                আপনার পাশে আছি।
+                {isEn
+                  ? s.ctaBody
+                  : "স্বপ্নের ঠিকানা হোক, কিংবা প্রমিস পরিবারের অংশীদার — আমরা আপনার পাশে আছি।"}
               </p>
               <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link
-                  href="/contact"
+                  href={isEn ? "/en/contact" : "/contact"}
                   className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-7 py-3.5 text-base font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
                 >
-                  যোগাযোগ করুন
+                  {isEn ? s.ctaContact : "যোগাযোগ করুন"}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <a
@@ -407,7 +461,7 @@ export default function StoryView() {
                   className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-7 py-3.5 text-base font-semibold text-fg hover:border-brand-blue/40 hover:shadow-lg transition-all"
                 >
                   <Phone className="h-4 w-4 text-brand-blue" />
-                  {SITE.phoneDisplay}
+                  {isEn ? SITE.phoneDisplayEn : SITE.phoneDisplay}
                 </a>
               </div>
             </div>

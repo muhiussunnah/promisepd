@@ -9,6 +9,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Phone, Mail } from "lucide-react";
 import { type TeamMember } from "@/lib/team";
+import { TEAM_EN } from "@/lib/pages.en";
+import { useLocale } from "./LocaleProvider";
 
 const ACCENT_BG_HEX: Record<TeamMember["accent"], string> = {
   red: "#e11924",
@@ -23,6 +25,9 @@ export default function TeamMemberCard({
   member: TeamMember;
   index?: number;
 }) {
+  const isEn = useLocale() === "en";
+  const displayName = isEn ? member.nameEn : member.name;
+  const bio = isEn ? TEAM_EN.bios[member.slug] ?? member.bio : member.bio;
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
@@ -41,7 +46,7 @@ export default function TeamMemberCard({
 
         <Image
           src={member.photo}
-          alt={member.name}
+          alt={displayName}
           fill
           quality={92}
           sizes="(min-width:1024px) 380px, (min-width:640px) 50vw, 100vw"
@@ -58,19 +63,21 @@ export default function TeamMemberCard({
 
       {/* Body */}
       <div className="p-6 flex-1 flex flex-col">
-        <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint">
-          {member.nameEn}
-        </div>
+        {!isEn && (
+          <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint">
+            {member.nameEn}
+          </div>
+        )}
         <h3 className="mt-1 text-xl font-bold text-fg leading-tight group-hover:text-brand-blue transition-colors">
-          {member.name}
+          {displayName}
         </h3>
         <div className="mt-1 text-sm font-semibold text-brand-blue">
           {member.role}
         </div>
 
-        {member.bio && (
+        {bio && (
           <p className="mt-3 text-sm text-fg-muted leading-relaxed flex-1">
-            {member.bio}
+            {bio}
           </p>
         )}
 
