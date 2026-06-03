@@ -36,7 +36,32 @@ import {
   NAV_META_EN,
   HOME_BRAND_CYCLES_EN,
 } from "@/lib/site.en";
+import { FORMS_EN } from "@/lib/pages.en";
 import LangSwitcher from "./LangSwitcher";
+
+/** English overlay for a dropdown item (division / project / form) by the
+ *  parent nav-section id + the item slug. Falls back to the Bengali label
+ *  when no overlay exists. */
+function dropdownEn(
+  sectionId: string,
+  slug: string,
+  bnLabel: string,
+  bnTagline: string,
+): { label: string; tagline: string } {
+  if (sectionId === "divisions") {
+    const e = DIVISION_EN[slug];
+    return { label: e?.name ?? bnLabel, tagline: e?.tagline ?? bnTagline };
+  }
+  if (sectionId === "projects") {
+    const e = PROJECT_EN[slug];
+    return { label: e?.name ?? bnLabel, tagline: e?.location ?? bnTagline };
+  }
+  if (sectionId === "forms") {
+    const e = FORMS_EN.names[slug];
+    return { label: e?.name ?? bnLabel, tagline: e?.description ?? bnTagline };
+  }
+  return { label: bnLabel, tagline: bnTagline };
+}
 
 const DIV_ICONS: Record<string, LucideIcon> = {
   Building2,
@@ -330,6 +355,9 @@ export default function Navbar() {
                                   const Icon = DIV_ICONS[d.icon ?? ""] ?? Building2;
                                   const logo = DIVISION_LOGO[d.slug];
                                   const cover = d.image;
+                                  const { label: dLabel, tagline: dTag } = isEn
+                                    ? dropdownEn(item.id, d.slug, d.label, d.tagline)
+                                    : { label: d.label, tagline: d.tagline };
                                   return (
                                     <Link
                                       key={d.slug}
@@ -342,7 +370,7 @@ export default function Navbar() {
                                         <div className="shrink-0 h-11 w-14 rounded-lg overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
                                           <Image
                                             src={cover}
-                                            alt={d.label}
+                                            alt={dLabel}
                                             width={56}
                                             height={44}
                                             className="h-full w-full object-cover"
@@ -355,7 +383,7 @@ export default function Navbar() {
                                         <div className="shrink-0 inline-flex h-11 w-12 items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
                                           <Image
                                             src={logo}
-                                            alt={d.label}
+                                            alt={dLabel}
                                             width={48}
                                             height={44}
                                             className="h-full w-full object-contain"
@@ -376,10 +404,10 @@ export default function Navbar() {
                                       )}
                                       <div className="min-w-0">
                                         <div className="text-sm font-bold text-fg leading-tight">
-                                          {d.label}
+                                          {dLabel}
                                         </div>
                                         <div className="mt-0.5 text-xs text-fg-muted leading-snug">
-                                          {d.tagline}
+                                          {dTag}
                                         </div>
                                       </div>
                                     </Link>
@@ -540,6 +568,9 @@ export default function Navbar() {
                                   const Icon = DIV_ICONS[d.icon ?? ""] ?? Building2;
                                   const logo = DIVISION_LOGO[d.slug];
                                   const cover = d.image;
+                                  const { label: dLabel, tagline: dTag } = isEn
+                                    ? dropdownEn(item.id, d.slug, d.label, d.tagline)
+                                    : { label: d.label, tagline: d.tagline };
                                   return (
                                     <Link
                                       key={d.slug}
@@ -551,7 +582,7 @@ export default function Navbar() {
                                         <div className="shrink-0 h-9 w-12 rounded-md overflow-hidden shadow-sm">
                                           <Image
                                             src={cover}
-                                            alt={d.label}
+                                            alt={dLabel}
                                             width={48}
                                             height={36}
                                             className="h-full w-full object-cover"
@@ -561,7 +592,7 @@ export default function Navbar() {
                                         <div className="shrink-0 inline-flex h-9 w-10 items-center justify-center overflow-hidden">
                                           <Image
                                             src={logo}
-                                            alt={d.label}
+                                            alt={dLabel}
                                             width={40}
                                             height={36}
                                             className="h-full w-full object-contain"
@@ -582,10 +613,10 @@ export default function Navbar() {
                                       )}
                                       <div className="min-w-0">
                                         <div className="text-sm font-semibold text-fg leading-tight">
-                                          {d.label}
+                                          {dLabel}
                                         </div>
                                         <div className="mt-0.5 text-[11px] text-fg-muted leading-snug">
-                                          {d.tagline}
+                                          {dTag}
                                         </div>
                                       </div>
                                     </Link>
