@@ -716,6 +716,7 @@ export const PROJECTS: Project[] = [
     unitMap: {
       floors: [
         { label: "ছাদ", units: [{ id: "R1", status: "available" }, { id: "R2", status: "available" }] },
+        { label: "৯ম তলা", units: [{ id: "9A", status: "available", size: "১২০০" }, { id: "9B", status: "available", size: "১২০০" }, { id: "9C", status: "available", size: "১২০০" }] },
         { label: "৮ম তলা", units: [{ id: "8A", status: "available", size: "১২০০" }, { id: "8B", status: "sold", size: "১২০০" }, { id: "8C", status: "sold", size: "১২০০" }] },
         { label: "৭ম তলা", units: [{ id: "7A", status: "sold", size: "১২০০" }, { id: "7B", status: "sold", size: "১২০০" }, { id: "7C", status: "sold", size: "১২০০" }] },
         { label: "৬ষ্ঠ তলা", units: [{ id: "6A", status: "sold", size: "১২০০" }, { id: "6B", status: "sold", size: "১২০০" }, { id: "6C", status: "sold", size: "১২০০" }] },
