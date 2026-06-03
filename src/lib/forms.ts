@@ -415,8 +415,52 @@ export const FORMS: FormDef[] = [
     description: "প্রমিস গ্রুপের মার্কেটিং ডিরেক্টর হিসেবে যোগদানের আবেদন ফরম।",
     accent: "ash",
     pages: ["/forms/marketing-director-p1.webp", "/forms/marketing-director-p2.webp"],
-    ready: false,
-    fields: [],
+    ready: true,
+    fields: [
+      // ── Applicant (job application) ────────────────────────────
+      { key: "name", label: "নাম", type: "text", group: "আবেদনকারীর তথ্য", required: true, pos: { page: 1, top: 22.6, left: 11.5, width: 40, size: S } },
+      { key: "profession", label: "পেশা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 22.6, left: 61, width: 16, size: S } },
+      { key: "blood", label: "রক্তের গ্রুপ", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 22.6, left: 87, width: 11, size: S } },
+      { key: "father", label: "পিতা/স্বামী", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 25.9, left: 16.5, width: 35, size: S } },
+      { key: "mother", label: "মাতা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 25.9, left: 59, width: 37, size: S } },
+      { key: "present_addr", label: "বর্তমান ঠিকানা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 29.2, left: 18, width: 78, size: S } },
+      { key: "permanent_addr", label: "স্থায়ী ঠিকানা", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 32.4, left: 15, width: 81, size: S } },
+      { key: "dob", label: "জন্ম তারিখ (DDMMYYYY)", type: "text", group: "আবেদনকারীর তথ্য", placeholder: "১৫০৩১৯৯০", pos: { page: 1, top: 38.0, left: 16, width: 14, size: S, boxes: { mode: "date", cells: [20.14, 23.7, 28.77], cy: 38.0, size: 1.7 } } },
+      { key: "nid", label: "NID/পাসপোর্ট নং", type: "text", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 38.0, left: 47, width: 45, size: 1.5, boxes: { firstX: 49.06, pitch: 3.43, count: 13, cy: 38.0, size: 1.5 } } },
+      { key: "mobile", label: "মোবাইল নং", type: "tel", group: "আবেদনকারীর তথ্য", required: true, pos: { page: 1, top: 41.0, left: 17, width: 35, size: 1.5, boxes: { firstX: 19.1, pitch: 3.11, count: 11, cy: 41.0, size: 1.6 } } },
+      { key: "email", label: "ই-মেইল", type: "email", group: "আবেদনকারীর তথ্য", pos: { page: 1, top: 41.4, left: 60, width: 36, size: 2.0 } },
+
+      // ── Attestor (সত্যায়নকারী) ─────────────────────────────────
+      { key: "v_name", label: "সত্যায়নকারীর নাম", type: "text", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 49.8, left: 11, width: 42, size: S } },
+      { key: "v_profession", label: "সত্যায়নকারীর পেশা", type: "text", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 53.2, left: 13, width: 18, size: S } },
+      { key: "v_blood", label: "সত্যায়নকারীর রক্তের গ্রুপ", type: "text", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 53.2, left: 40, width: 12, size: S } },
+      { key: "v_dob", label: "সত্যায়নকারীর জন্ম তারিখ (DDMMYYYY)", type: "text", group: "সত্যায়নকারীর তথ্য", placeholder: "১০০৫২০০০", pos: { page: 1, top: 52.0, left: 61, width: 14, size: S, boxes: { mode: "date", cells: [62, 66, 71], cy: 52.0, size: 1.4 } } },
+      { key: "v_father", label: "সত্যায়নকারীর পিতা/স্বামী", type: "text", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 56.6, left: 13, width: 32, size: S } },
+      { key: "v_mother", label: "সত্যায়নকারীর মাতা", type: "text", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 56.6, left: 53, width: 24, size: S } },
+      { key: "v_present_addr", label: "সত্যায়নকারীর বর্তমান ঠিকানা", type: "text", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 60.1, left: 18, width: 58, size: S } },
+      { key: "v_permanent_addr", label: "সত্যায়নকারীর স্থায়ী ঠিকানা", type: "text", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 63.5, left: 15, width: 61, size: S } },
+      { key: "v_mobile", label: "সত্যায়নকারীর মোবাইল নং", type: "tel", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 65.0, left: 22, width: 50, size: 1.5, boxes: { firstX: 22, pitch: 3.5, count: 11, cy: 65.0, size: 1.6 } } },
+      { key: "v_nid", label: "সত্যায়নকারীর NID/পাসপোর্ট নং", type: "text", group: "সত্যায়নকারীর তথ্য", pos: { page: 1, top: 68.0, left: 22, width: 50, size: 1.5, boxes: { firstX: 22, pitch: 3.5, count: 13, cy: 68.0, size: 1.5 } } },
+
+      // ── Official (appointment) ─────────────────────────────────
+      { key: "ref", label: "রেফারেন্স", type: "text", group: "অফিসিয়াল তথ্য", pos: { page: 1, top: 80.5, left: 13, width: 34, size: S } },
+      { key: "appoint_method", label: "নিয়োগ পদ্ধতি", type: "text", group: "অফিসিয়াল তথ্য", pos: { page: 1, top: 84.3, left: 22, width: 30, size: S } },
+      { key: "department", label: "ডিপার্টমেন্ট", type: "text", group: "অফিসিয়াল তথ্য", pos: { page: 1, top: 84.3, left: 62, width: 30, size: S } },
+      { key: "designation", label: "পদবী", type: "text", group: "অফিসিয়াল তথ্য", pos: { page: 1, top: 88.1, left: 13, width: 30, size: S } },
+      { key: "appoint_date", label: "নিয়োগের তারিখ", type: "text", group: "অফিসিয়াল তথ্য", pos: { page: 1, top: 88.1, left: 60, width: 30, size: S } },
+    ],
+    photos: [
+      { key: "applicant", label: "আবেদনকারীর ছবি", note: "৪০০×৪০০ px · পাসপোর্ট সাইজ রঙিন · সর্বোচ্চ ৫ MB", page: 1, left: 84.5, top: 4.0, width: 13.5, height: 9.5 },
+      { key: "attestor", label: "সত্যায়নকারীর ছবি", note: "৪০০×৪০০ px · পাসপোর্ট সাইজ রঙিন · সর্বোচ্চ ৫ MB", page: 1, left: 81.5, top: 46.5, width: 16.5, height: 12.5 },
+    ],
+    signatures: [
+      { id: "applicant_sig", source: "applicantName", page: 1, left: 73, top: 70.0, width: 24, size: 2.4, align: "center", cursive: true },
+      { id: "applicant_date", source: "today", page: 1, left: 73, top: 72.0, width: 24, size: 1.3, align: "center" },
+    ],
+    documents: [
+      { key: "applicant_nid", label: "আবেদনকারীর NID / পাসপোর্ট" },
+      { key: "attestor_nid", label: "সত্যায়নকারীর NID / পাসপোর্ট" },
+    ],
   },
 ];
 
