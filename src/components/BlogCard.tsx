@@ -14,6 +14,9 @@ import {
   bnNumber,
   type BlogPost,
 } from "@/lib/blog";
+import { BLOG_EN, CATEGORY_EN, formatDateEn } from "@/lib/blog.en";
+import { DICT, localizedPath } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 const ACCENT_TAG: Record<string, string> = {
   red: "bg-brand-red text-white",
@@ -28,7 +31,17 @@ export default function BlogCard({
   post: BlogPost;
   index?: number;
 }) {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const t = DICT[locale].blog;
   const cat = CATEGORY_META[post.category];
+  const en = isEn ? BLOG_EN[post.slug] : null;
+  const title = en?.title ?? post.title;
+  const excerpt = en?.excerpt ?? post.excerpt;
+  const catLabel = isEn ? CATEGORY_EN[post.category] ?? cat.bn : cat.bn;
+  const authorName = isEn ? BLOG_AUTHOR.nameEn : BLOG_AUTHOR.name;
+  const num = (n: number) => (isEn ? String(n) : bnNumber(n));
+  const dateText = isEn ? formatDateEn(post.iso) : post.date;
   const cover = BLOG_COVER[post.slug];
 
   return (
@@ -40,13 +53,13 @@ export default function BlogCard({
       whileHover={{ y: -6 }}
       className="card group overflow-hidden flex flex-col"
     >
-      <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
+      <Link href={localizedPath(`/blog/${post.slug}`, locale)} className="flex flex-col h-full">
         {/* Real cover photo */}
         <div className="relative h-44 overflow-hidden bg-bg-soft">
           {cover && (
             <Image
               src={cover}
-              alt={post.title}
+              alt={title}
               fill
               sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -62,7 +75,7 @@ export default function BlogCard({
                 ACCENT_TAG[cat.accent]
               } shadow-md`}
             >
-              {cat.bn}
+              {catLabel}
             </span>
           </div>
 
@@ -70,7 +83,7 @@ export default function BlogCard({
           <div className="absolute top-3 right-3 z-10">
             <span className="inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold text-fg shadow-md">
               <Clock className="h-3 w-3" />
-              {bnNumber(post.readingMinutes)} মিনিট
+              {num(post.readingMinutes)} {t.readMins}
             </span>
           </div>
         </div>
@@ -78,10 +91,10 @@ export default function BlogCard({
         {/* Card body */}
         <div className="p-5 flex-1 flex flex-col">
           <h3 className="text-lg font-bold text-fg leading-tight line-clamp-2 group-hover:text-brand-red transition-colors">
-            {post.title}
+            {title}
           </h3>
           <p className="mt-2 text-sm text-fg-muted leading-relaxed line-clamp-3 flex-1">
-            {post.excerpt}
+            {excerpt}
           </p>
 
           {/* Footer — author + meta */}
@@ -89,21 +102,21 @@ export default function BlogCard({
             <div className="flex items-center gap-2 min-w-0">
               <Image
                 src={BLOG_AUTHOR.avatarUrl}
-                alt={BLOG_AUTHOR.name}
+                alt={authorName}
                 width={28}
                 height={28}
                 className="h-7 w-7 rounded-full shrink-0 object-cover"
               />
               <span className="text-xs font-semibold text-fg truncate">
-                {BLOG_AUTHOR.name}
+                {authorName}
               </span>
             </div>
             <div className="flex items-center gap-3 text-[11px] text-fg-muted shrink-0">
               <span className="inline-flex items-center gap-1">
                 <Eye className="h-3 w-3" />
-                {bnNumber(post.views)}
+                {num(post.views)}
               </span>
-              <time dateTime={post.iso}>{post.date}</time>
+              <time dateTime={post.iso}>{dateText}</time>
             </div>
           </div>
         </div>

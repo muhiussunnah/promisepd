@@ -16,6 +16,9 @@ import {
   bnNumber,
   type BlogPost,
 } from "@/lib/blog";
+import { BLOG_EN, CATEGORY_EN, formatDateEn } from "@/lib/blog.en";
+import { DICT, localizedPath } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 const ACCENT_TAG: Record<string, string> = {
   red: "bg-brand-red text-white",
@@ -24,7 +27,18 @@ const ACCENT_TAG: Record<string, string> = {
 };
 
 export default function BlogFeatured({ post }: { post: BlogPost }) {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const t = DICT[locale].blog;
   const cat = CATEGORY_META[post.category];
+  const en = isEn ? BLOG_EN[post.slug] : null;
+  const title = en?.title ?? post.title;
+  const excerpt = en?.excerpt ?? post.excerpt;
+  const catLabel = isEn ? CATEGORY_EN[post.category] ?? cat.bn : cat.bn;
+  const authorName = isEn ? BLOG_AUTHOR.nameEn : BLOG_AUTHOR.name;
+  const authorRole = isEn ? "MD & CEO, Promise Group" : BLOG_AUTHOR.role;
+  const num = (n: number) => (isEn ? String(n) : bnNumber(n));
+  const dateText = isEn ? formatDateEn(post.iso) : post.date;
   const cover = BLOG_COVER[post.slug];
 
   return (
@@ -36,7 +50,7 @@ export default function BlogFeatured({ post }: { post: BlogPost }) {
       className="card overflow-hidden group"
     >
       <Link
-        href={`/blog/${post.slug}`}
+        href={localizedPath(`/blog/${post.slug}`, locale)}
         className="grid lg:grid-cols-5 h-full"
       >
         {/* Visual — left 2/5 on desktop, real cover photo */}
@@ -44,7 +58,7 @@ export default function BlogFeatured({ post }: { post: BlogPost }) {
           {cover && (
             <Image
               src={cover}
-              alt={post.title}
+              alt={title}
               fill
               sizes="(min-width:1024px) 40vw, 100vw"
               priority
@@ -57,7 +71,7 @@ export default function BlogFeatured({ post }: { post: BlogPost }) {
           <div className="absolute top-4 left-4 z-10">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-red shadow-md">
               <Sparkles className="h-3.5 w-3.5" />
-              ফিচার্ড পোস্ট
+              {isEn ? "Featured post" : "ফিচার্ড পোস্ট"}
             </span>
           </div>
 
@@ -67,7 +81,7 @@ export default function BlogFeatured({ post }: { post: BlogPost }) {
                 ACCENT_TAG[cat.accent]
               } shadow-md border border-white/30`}
             >
-              {cat.bn}
+              {catLabel}
             </span>
           </div>
         </div>
@@ -77,49 +91,49 @@ export default function BlogFeatured({ post }: { post: BlogPost }) {
           <div className="flex flex-wrap items-center gap-2 text-[11px] text-fg-muted">
             <span className="inline-flex items-center gap-1 rounded-full bg-bg-soft px-2.5 py-1 font-semibold">
               <Clock className="h-3 w-3" />
-              {bnNumber(post.readingMinutes)} মিনিট পড়া
+              {num(post.readingMinutes)} {t.readMinsLong}
             </span>
             <span className="inline-flex items-center gap-1 rounded-full bg-bg-soft px-2.5 py-1 font-semibold">
               <Eye className="h-3 w-3" />
-              {bnNumber(post.views)} ভিউ
+              {num(post.views)} {t.views}
             </span>
             <time
               dateTime={post.iso}
               className="inline-flex items-center gap-1 rounded-full bg-bg-soft px-2.5 py-1 font-semibold"
             >
               <Calendar className="h-3 w-3" />
-              {post.date}
+              {dateText}
             </time>
           </div>
 
           <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-fg leading-tight group-hover:text-brand-red transition-colors">
-            {post.title}
+            {title}
           </h2>
 
           <p className="mt-3 text-base text-fg-muted leading-relaxed line-clamp-3 sm:line-clamp-4">
-            {post.excerpt}
+            {excerpt}
           </p>
 
           <div className="mt-auto pt-6 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
               <Image
                 src={BLOG_AUTHOR.avatarUrl}
-                alt={BLOG_AUTHOR.name}
+                alt={authorName}
                 width={40}
                 height={40}
                 className="h-10 w-10 rounded-full shrink-0 object-cover"
               />
               <div className="min-w-0">
                 <div className="text-sm font-bold text-fg truncate">
-                  {BLOG_AUTHOR.name}
+                  {authorName}
                 </div>
                 <div className="text-[11px] text-fg-faint truncate">
-                  {BLOG_AUTHOR.role}
+                  {authorRole}
                 </div>
               </div>
             </div>
             <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-grad-rb group-hover:gap-3 transition-all whitespace-nowrap">
-              পড়ুন
+              {isEn ? "Read" : "পড়ুন"}
               <ArrowRight className="h-4 w-4" />
             </span>
           </div>

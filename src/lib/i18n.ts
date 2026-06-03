@@ -111,6 +111,42 @@ type Dict = {
     subscribed: string;
     perks: string[];
   };
+  blog: {
+    journal: string;
+    headA: string;
+    headB: string;
+    sub: string;
+    searchPh: string;
+    searchAria: string;
+    clear: string;
+    allProjects: string;
+    allCategories: string;
+    posts: string;
+    projectLabel: string;
+    categoryLabel: string;
+    forQuery: string;
+    reset: string;
+    prev: string;
+    next: string;
+    readMins: string;
+    readMinsLong: string;
+    views: string;
+    emptyTitle: string;
+    emptySub: string;
+    emptyReset: string;
+    minRead: string;
+    relatedTitle: string;
+    backToBlog: string;
+    by: string;
+    backToList: string;
+    authorLabel: string;
+    authorBio: string;
+    ctaHead: string;
+    ctaSub: string;
+    sendMsg: string;
+    prevPost: string;
+    nextPost: string;
+  };
   projDetail: {
     allProjects: string;
     fromPrice: string;
@@ -309,6 +345,44 @@ export const DICT: Record<Locale, Dict> = {
       subscribing: "পাঠানো হচ্ছে...",
       subscribed: "সাবস্ক্রাইব হয়েছে",
       perks: ["নতুন প্রকল্প", "কিস্তি অফার", "প্রি-লঞ্চ সুবিধা"],
+    },
+    blog: {
+      journal: "প্রমিস জার্নাল",
+      headA: "রিয়েল এস্টেট",
+      headB: "জ্ঞান, আপনার ভাষায়।",
+      sub: "প্রকল্প পরিচিতি, মার্কেটিং নোটিশ, বুকিং নিয়মাবলী এবং ফ্ল্যাট-জমি কেনার বিস্তারিত গাইড — সবকিছু এক জায়গায়।",
+      searchPh: "শিরোনাম বা বিষয় দিয়ে খুঁজুন…",
+      searchAria: "ব্লগ খুঁজুন",
+      clear: "ক্লিয়ার",
+      allProjects: "সকল প্রকল্প",
+      allCategories: "সকল ক্যাটাগরি",
+      posts: "টি পোস্ট",
+      projectLabel: "প্রকল্প",
+      categoryLabel: "ক্যাটাগরি",
+      forQuery: "এর জন্য",
+      reset: "ফিল্টার রিসেট",
+      prev: "পূর্ববর্তী",
+      next: "পরবর্তী",
+      readMins: "মিনিট",
+      readMinsLong: "মিনিট পড়া",
+      views: "ভিউ",
+      emptyTitle: "কোনো পোস্ট পাওয়া যায়নি",
+      emptySub: "ভিন্ন ক্যাটাগরি বা অন্য কীওয়ার্ড দিয়ে আবার চেষ্টা করুন।",
+      emptyReset: "ফিল্টার রিসেট করুন",
+      minRead: "মিনিট পড়া",
+      relatedTitle: "সম্পর্কিত পোস্ট",
+      backToBlog: "সব পোস্ট",
+      by: "লিখেছেন",
+      backToList: "সব পোস্টে ফিরুন",
+      authorLabel: "লেখক",
+      authorBio:
+        "প্রমিস গ্রুপের প্রতিষ্ঠাতা ও প্রধান পরিচালক — ১৫+ বছরের অভিজ্ঞতায় ঢাকার রিয়েল এস্টেট ইন্ডাস্ট্রিতে স্বচ্ছতা ও বিশ্বাসের নতুন মান গড়ে তুলেছেন।",
+      ctaHead: "আরও জানতে চান?",
+      ctaSub:
+        "এই পোস্টের বিষয়ে প্রশ্ন থাকলে অথবা ব্যক্তিগত পরামর্শ চাইলে সরাসরি যোগাযোগ করুন।",
+      sendMsg: "বার্তা পাঠান",
+      prevPost: "পূর্ববর্তী পোস্ট",
+      nextPost: "পরবর্তী পোস্ট",
     },
     projDetail: {
       allProjects: "সব প্রকল্প",
@@ -522,6 +596,44 @@ export const DICT: Record<Locale, Dict> = {
       subscribing: "Sending...",
       subscribed: "Subscribed",
       perks: ["New projects", "Instalment offers", "Pre-launch perks"],
+    },
+    blog: {
+      journal: "Promise Journal",
+      headA: "Real-estate",
+      headB: "knowledge, your way.",
+      sub: "Project guides, marketing notices, booking rules and complete flat & land buying resources — everything in one place.",
+      searchPh: "Search by title or topic…",
+      searchAria: "Search the blog",
+      clear: "Clear",
+      allProjects: "All projects",
+      allCategories: "All categories",
+      posts: "posts",
+      projectLabel: "project",
+      categoryLabel: "category",
+      forQuery: "for",
+      reset: "Reset filters",
+      prev: "Previous",
+      next: "Next",
+      readMins: "min",
+      readMinsLong: "min read",
+      views: "views",
+      emptyTitle: "No posts found",
+      emptySub: "Try a different category or another keyword.",
+      emptyReset: "Reset filters",
+      minRead: "min read",
+      relatedTitle: "Related posts",
+      backToBlog: "All posts",
+      by: "By",
+      backToList: "Back to all posts",
+      authorLabel: "Author",
+      authorBio:
+        "Founder & Managing Director of Promise Group — with 15+ years of experience, he has set a new standard of transparency and trust in Dhaka's real-estate industry.",
+      ctaHead: "Want to know more?",
+      ctaSub:
+        "Have a question about this post, or want personal advice? Get in touch directly.",
+      sendMsg: "Send a message",
+      prevPost: "Previous post",
+      nextPost: "Next post",
     },
     projDetail: {
       allProjects: "All projects",

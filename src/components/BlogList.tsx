@@ -34,6 +34,9 @@ import {
   type BlogCategoryKey,
   type BlogProjectKey,
 } from "@/lib/blog";
+import { BLOG_EN, CATEGORY_EN, BLOG_PROJECT_EN } from "@/lib/blog.en";
+import { DICT } from "@/lib/i18n";
+import { useLocale } from "./LocaleProvider";
 
 const PAGE_SIZE = 9;
 const PAGINATION_WINDOW = 5;
@@ -42,6 +45,15 @@ type CategoryFilter = "all" | BlogCategoryKey;
 type ProjectFilter = "all" | BlogProjectKey;
 
 export default function BlogList() {
+  const locale = useLocale();
+  const isEn = locale === "en";
+  const t = DICT[locale].blog;
+  const num = (n: number) => (isEn ? String(n) : bnNumber(n));
+  const catName = (key: BlogCategoryKey) =>
+    isEn ? CATEGORY_EN[key] ?? CATEGORY_META[key].bn : CATEGORY_META[key].bn;
+  const projName = (key: BlogProjectKey, bn: string) =>
+    isEn ? BLOG_PROJECT_EN[key] ?? bn : bn;
+
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [project, setProject] = useState<ProjectFilter>("all");
@@ -77,13 +89,19 @@ export default function BlogList() {
       if (category !== "all" && p.category !== category) return false;
       if (project !== "all" && p.project !== project) return false;
       if (!q) return true;
+      const en = isEn ? BLOG_EN[p.slug] : null;
+      const title = (en?.title ?? p.title).toLowerCase();
+      const excerpt = (en?.excerpt ?? p.excerpt).toLowerCase();
+      const catLabel = (
+        isEn ? CATEGORY_EN[p.category] ?? "" : CATEGORY_META[p.category].bn
+      ).toLowerCase();
       return (
-        p.title.toLowerCase().includes(q) ||
-        p.excerpt.toLowerCase().includes(q) ||
-        CATEGORY_META[p.category].bn.includes(q)
+        title.includes(q) ||
+        excerpt.includes(q) ||
+        catLabel.includes(q)
       );
     });
-  }, [allSorted, featuredPost, category, project, query]);
+  }, [allSorted, featuredPost, category, project, query, isEn]);
 
   // The featured slot only appears when:
   //  - we're on page 1
@@ -130,13 +148,12 @@ export default function BlogList() {
     setPage(1);
   };
 
-  const currentProjectLabel = useMemo(
-    () =>
-      project === "all"
-        ? "সকল প্রকল্প"
-        : BLOG_PROJECTS.find((p) => p.key === project)?.bn ?? "সকল প্রকল্প",
-    [project],
-  );
+  const currentProjectLabel = useMemo(() => {
+    if (project === "all") return t.allProjects;
+    const found = BLOG_PROJECTS.find((p) => p.key === project);
+    if (!found) return t.allProjects;
+    return projName(found.key, found.bn);
+  }, [project, t, isEn]);
 
   const projectPostCount = useMemo(
     () => BLOG_POSTS.filter((p) => p.category === "projects").length,
@@ -160,9 +177,9 @@ export default function BlogList() {
               type="search"
               value={query}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="শিরোনাম বা বিষয় দিয়ে খুঁজুন…"
+              placeholder={t.searchPh}
               className="w-full bg-transparent py-3 text-sm text-fg placeholder:text-fg-faint outline-none"
-              aria-label="ব্লগ খুঁজুন"
+              aria-label={t.searchAria}
             />
             {query && (
               <button
@@ -170,7 +187,7 @@ export default function BlogList() {
                 onClick={() => onSearchChange("")}
                 className="text-[11px] font-bold uppercase tracking-wider text-fg-muted hover:text-brand-red transition-colors"
               >
-                ক্লিয়ার
+                {t.clear}
               </button>
             )}
           </div>
@@ -216,8 +233,9 @@ export default function BlogList() {
                     role="listbox"
                   >
                     <FilterOption
-                      label="সকল প্রকল্প"
+                      label={t.allProjects}
                       count={projectPostCount}
+                      isEn={isEn}
                       active={project === "all"}
                       onClick={() => onProjectChange("all")}
                     />
@@ -228,8 +246,9 @@ export default function BlogList() {
                       return (
                         <FilterOption
                           key={p.key}
-                          label={p.bn}
+                          label={projName(p.key, p.bn)}
                           count={count}
+                          isEn={isEn}
                           active={project === p.key}
                           onClick={() => onProjectChange(p.key)}
                           accent="blue"
@@ -256,9 +275,7 @@ export default function BlogList() {
             >
               <span className="inline-flex items-center gap-2">
                 <Filter className="h-4 w-4 text-fg-muted" />
-                {category === "all"
-                  ? "সকল ক্যাটাগরি"
-                  : CATEGORY_META[category].bn}
+                {category === "all" ? t.allCategories : catName(category)}
               </span>
               <ChevronDown
                 className={`h-4 w-4 transition-transform ${
@@ -287,8 +304,9 @@ export default function BlogList() {
                     role="listbox"
                   >
                     <FilterOption
-                      label="সকল ক্যাটাগরি"
+                      label={t.allCategories}
                       count={BLOG_POSTS.length}
+                      isEn={isEn}
                       active={category === "all"}
                       onClick={() => onCategoryChange("all")}
                     />
@@ -300,8 +318,9 @@ export default function BlogList() {
                       return (
                         <FilterOption
                           key={key}
-                          label={meta.bn}
+                          label={catName(key)}
                           count={count}
+                          isEn={isEn}
                           active={category === key}
                           onClick={() => onCategoryChange(key)}
                           accent={meta.accent}
@@ -319,13 +338,13 @@ export default function BlogList() {
         <div className="mt-6 flex items-center justify-between gap-3 flex-wrap">
           <p className="text-sm text-fg-muted">
             <span className="font-bold text-fg">
-              {bnNumber(totalCount)}
+              {num(totalCount)}
             </span>{" "}
-            টি পোস্ট
+            {t.posts}
             {project !== "all" && (
               <>
                 {" "}
-                · প্রকল্প{" "}
+                · {t.projectLabel}{" "}
                 <span className="font-bold text-fg">
                   {currentProjectLabel}
                 </span>
@@ -334,9 +353,9 @@ export default function BlogList() {
             {category !== "all" && (
               <>
                 {" "}
-                · ক্যাটাগরি{" "}
+                · {t.categoryLabel}{" "}
                 <span className="font-bold text-fg">
-                  {CATEGORY_META[category].bn}
+                  {catName(category)}
                 </span>
               </>
             )}
@@ -345,7 +364,7 @@ export default function BlogList() {
                 {" "}
                 · &ldquo;
                 <span className="font-bold text-fg">{query.trim()}</span>
-                &rdquo; এর জন্য
+                &rdquo; {t.forQuery}
               </>
             )}
           </p>
@@ -355,7 +374,7 @@ export default function BlogList() {
               onClick={reset}
               className="text-xs font-bold uppercase tracking-wider text-brand-red hover:underline"
             >
-              ফিল্টার রিসেট
+              {t.reset}
             </button>
           )}
         </div>
@@ -375,7 +394,12 @@ export default function BlogList() {
             ))}
           </div>
         ) : (
-          <EmptyState onReset={reset} />
+          <EmptyState
+            onReset={reset}
+            title={t.emptyTitle}
+            sub={t.emptySub}
+            cta={t.emptyReset}
+          />
         )}
 
         {/* Pagination */}
@@ -383,6 +407,9 @@ export default function BlogList() {
           <Pagination
             page={safePage}
             totalPages={totalPages}
+            isEn={isEn}
+            prevLabel={t.prev}
+            nextLabel={t.next}
             onPage={(p) => {
               setPage(p);
               // Smooth-scroll back up so user sees the new page
@@ -400,12 +427,14 @@ export default function BlogList() {
 function FilterOption({
   label,
   count,
+  isEn,
   active,
   onClick,
   accent,
 }: {
   label: string;
   count: number;
+  isEn: boolean;
   active: boolean;
   onClick: () => void;
   accent?: "red" | "blue" | "ash";
@@ -439,7 +468,7 @@ function FilterOption({
         {label}
       </span>
       <span className="text-[11px] font-bold text-fg-faint">
-        {bnNumber(count)}
+        {isEn ? String(count) : bnNumber(count)}
       </span>
     </button>
   );
@@ -448,10 +477,16 @@ function FilterOption({
 function Pagination({
   page,
   totalPages,
+  isEn,
+  prevLabel,
+  nextLabel,
   onPage,
 }: {
   page: number;
   totalPages: number;
+  isEn: boolean;
+  prevLabel: string;
+  nextLabel: string;
   onPage: (p: number) => void;
 }) {
   // Sliding window of up to PAGINATION_WINDOW page numbers around current.
@@ -464,17 +499,17 @@ function Pagination({
   return (
     <nav
       className="mt-12 flex items-center justify-center gap-2 flex-wrap"
-      aria-label="পৃষ্ঠা নেভিগেশন"
+      aria-label={isEn ? "Page navigation" : "পৃষ্ঠা নেভিগেশন"}
     >
       <button
         type="button"
         onClick={() => page > 1 && onPage(page - 1)}
         disabled={page === 1}
         className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-fg hover:border-brand-blue/40 disabled:opacity-40 disabled:hover:border-border transition-colors"
-        aria-label="পূর্ববর্তী পৃষ্ঠা"
+        aria-label={isEn ? "Previous page" : "পূর্ববর্তী পৃষ্ঠা"}
       >
         <ChevronLeft className="h-4 w-4" />
-        পূর্ববর্তী
+        {prevLabel}
       </button>
 
       {pages.map((p) => (
@@ -489,7 +524,7 @@ function Pagination({
               : "border border-border bg-white text-fg hover:border-brand-blue/40"
           }`}
         >
-          {bnNumber(p)}
+          {isEn ? String(p) : bnNumber(p)}
         </button>
       ))}
 
@@ -498,16 +533,26 @@ function Pagination({
         onClick={() => page < totalPages && onPage(page + 1)}
         disabled={page === totalPages}
         className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-fg hover:border-brand-blue/40 disabled:opacity-40 disabled:hover:border-border transition-colors"
-        aria-label="পরবর্তী পৃষ্ঠা"
+        aria-label={isEn ? "Next page" : "পরবর্তী পৃষ্ঠা"}
       >
-        পরবর্তী
+        {nextLabel}
         <ChevronRight className="h-4 w-4" />
       </button>
     </nav>
   );
 }
 
-function EmptyState({ onReset }: { onReset: () => void }) {
+function EmptyState({
+  onReset,
+  title,
+  sub,
+  cta,
+}: {
+  onReset: () => void;
+  title: string;
+  sub: string;
+  cta: string;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -517,18 +562,14 @@ function EmptyState({ onReset }: { onReset: () => void }) {
       <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-ash-tint text-fg-muted">
         <Inbox className="h-7 w-7" />
       </div>
-      <h3 className="mt-5 text-xl font-bold text-fg">
-        কোনো পোস্ট পাওয়া যায়নি
-      </h3>
-      <p className="mt-2 text-sm text-fg-muted max-w-md mx-auto">
-        ভিন্ন ক্যাটাগরি বা অন্য কীওয়ার্ড দিয়ে আবার চেষ্টা করুন।
-      </p>
+      <h3 className="mt-5 text-xl font-bold text-fg">{title}</h3>
+      <p className="mt-2 text-sm text-fg-muted max-w-md mx-auto">{sub}</p>
       <button
         type="button"
         onClick={onReset}
         className="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-blue px-5 py-2.5 text-sm font-bold text-white shadow-md hover:bg-brand-blue-dark transition-colors"
       >
-        ফিল্টার রিসেট করুন
+        {cta}
       </button>
     </motion.div>
   );

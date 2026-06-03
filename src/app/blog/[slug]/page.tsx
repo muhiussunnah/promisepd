@@ -1,25 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Eye,
-  Clock,
-  Calendar,
-  Phone,
-  Mail,
-} from "lucide-react";
 import JsonLd from "@/components/JsonLd";
-import BlogCard from "@/components/BlogCard";
-import { SITE } from "@/lib/site";
+import BlogArticle from "@/components/BlogArticle";
 import {
   BLOG_AUTHOR,
-  BLOG_COVER,
   BLOG_POSTS,
   CATEGORY_META,
-  bnNumber,
   getPostBySlug,
   getRelatedPosts,
 } from "@/lib/blog";
@@ -28,12 +14,6 @@ import { getSiteUrl, absoluteUrl } from "@/lib/site-url";
 
 const SITE_URL = getSiteUrl();
 const OG_IMAGE = absoluteUrl("/og-image.jpg");
-
-const ACCENT_TAG: Record<string, string> = {
-  red: "bg-brand-red text-white",
-  blue: "bg-brand-blue text-white",
-  ash: "bg-brand-ash text-fg",
-};
 
 /** Only the 12 known slugs prerender — every other URL 404s. */
 export const dynamicParams = false;
@@ -90,7 +70,6 @@ export default async function BlogPostPage(
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
-  const cover = BLOG_COVER[post.slug];
   const cat = CATEGORY_META[post.category];
   const related = getRelatedPosts(post.slug, 3);
 
@@ -136,225 +115,13 @@ export default async function BlogPostPage(
       <JsonLd data={breadcrumb} />
       <JsonLd data={articleSchema} />
 
-      {/* Article header / hero */}
-      <section className="relative pt-28 pb-12 sm:pt-32 sm:pb-16">
-        <div className="absolute inset-0 -z-10 mesh-bg-soft" />
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-fg-muted hover:text-brand-red transition-colors"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            সব পোস্টে ফিরুন
-          </Link>
-
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            <span
-              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider ${
-                ACCENT_TAG[cat.accent]
-              } shadow-sm`}
-            >
-              {cat.bn}
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-bg-soft px-3 py-1.5 text-[11px] font-semibold text-fg-muted">
-              <Clock className="h-3 w-3" />
-              {bnNumber(post.readingMinutes)} মিনিট পড়া
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-bg-soft px-3 py-1.5 text-[11px] font-semibold text-fg-muted">
-              <Eye className="h-3 w-3" />
-              {bnNumber(post.views)} ভিউ
-            </span>
-            <time
-              dateTime={post.iso}
-              className="inline-flex items-center gap-1 rounded-full bg-bg-soft px-3 py-1.5 text-[11px] font-semibold text-fg-muted"
-            >
-              <Calendar className="h-3 w-3" />
-              {post.date}
-            </time>
-          </div>
-
-          <h1 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.12] text-fg">
-            {post.title}
-          </h1>
-
-          <div className="mt-6 flex items-center gap-3">
-            <Image
-              src={BLOG_AUTHOR.avatarUrl}
-              alt={BLOG_AUTHOR.name}
-              width={44}
-              height={44}
-              className="h-11 w-11 rounded-full shrink-0 object-cover"
-            />
-            <div className="min-w-0">
-              <div className="text-sm font-bold text-fg">
-                {BLOG_AUTHOR.name}
-              </div>
-              <div className="text-[11px] text-fg-muted">
-                {BLOG_AUTHOR.role}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Article visual — real cover photo */}
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden shadow-xl h-56 sm:h-72 lg:h-80 bg-bg-soft">
-          {cover && (
-            <Image
-              src={cover}
-              alt={post.title}
-              fill
-              priority
-              sizes="(min-width:1024px) 896px, 100vw"
-              className="object-cover"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-fg/25 to-transparent" />
-        </div>
-      </div>
-
-      {/* Article body */}
-      <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <p className="text-lg sm:text-xl text-fg-soft leading-relaxed font-medium first-letter:text-5xl first-letter:font-bold first-letter:text-brand-red first-letter:float-left first-letter:mr-2 first-letter:leading-none">
-          {post.intro}
-        </p>
-
-        <div className="mt-10 space-y-10">
-          {post.sections.map((section, i) => (
-            <section key={i}>
-              <h2 className="text-2xl sm:text-3xl font-bold text-fg leading-tight">
-                {section.heading}
-              </h2>
-              <div className="mt-4 space-y-4">
-                {section.body.map((p, j) => (
-                  <p
-                    key={j}
-                    className="text-base sm:text-lg text-fg-soft leading-relaxed"
-                  >
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
-
-        {post.closing && (
-          <div className="mt-12 rounded-2xl border-l-4 border-brand-red bg-bg-soft px-6 py-5">
-            <p className="text-base sm:text-lg text-fg-soft leading-relaxed italic">
-              {post.closing}
-            </p>
-          </div>
-        )}
-
-        {/* Author card */}
-        <div className="mt-12 card p-6 flex items-start gap-4">
-          <Image
-            src={BLOG_AUTHOR.avatarUrl}
-            alt={BLOG_AUTHOR.name}
-            width={64}
-            height={64}
-            className="h-16 w-16 rounded-2xl shrink-0 object-cover"
-          />
-          <div className="min-w-0">
-            <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint">
-              লেখক
-            </div>
-            <div className="mt-1 text-lg font-bold text-fg">
-              {BLOG_AUTHOR.name}
-            </div>
-            <p className="mt-1 text-sm text-fg-muted leading-relaxed">
-              {BLOG_AUTHOR.role}। প্রমিস গ্রুপের প্রতিষ্ঠাতা ও প্রধান
-              পরিচালক — ১৫+ বছরের অভিজ্ঞতায় ঢাকার রিয়েল এস্টেট
-              ইন্ডাস্ট্রিতে স্বচ্ছতা ও বিশ্বাসের নতুন মান গড়ে তুলেছেন।
-            </p>
-          </div>
-        </div>
-      </article>
-
-      {/* CTA */}
-      <section className="relative pb-12">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="grad-border p-7 sm:p-10 text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold leading-tight">
-              আরও জানতে চান?
-            </h2>
-            <p className="mt-3 text-base text-fg-muted max-w-2xl mx-auto">
-              এই পোস্টের বিষয়ে প্রশ্ন থাকলে অথবা ব্যক্তিগত পরামর্শ চাইলে
-              সরাসরি যোগাযোগ করুন।
-            </p>
-            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href={`tel:${SITE.phone}`}
-                className="inline-flex items-center gap-2 rounded-2xl bg-brand-blue px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
-              >
-                <Phone className="h-4 w-4" />
-                {SITE.phoneDisplay}
-              </a>
-              <Link
-                href="/#contact"
-                className="inline-flex items-center gap-2 rounded-2xl bg-white border border-border px-6 py-3 text-sm font-semibold text-fg hover:border-brand-blue/40 hover:shadow-lg transition-all"
-              >
-                <Mail className="h-4 w-4 text-brand-red" />
-                বার্তা পাঠান
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Related posts */}
-      {related.length > 0 && (
-        <section className="relative pb-12">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-fg leading-tight">
-              সম্পর্কিত পোস্ট
-            </h2>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((p, i) => (
-                <BlogCard key={p.slug} post={p} index={i} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Prev / next */}
-      <section className="relative pb-20 sm:pb-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Link
-              href={`/blog/${prev.slug}`}
-              className="card group p-5 flex items-center gap-4 hover:scale-[1.01] transition-transform"
-            >
-              <ArrowLeft className="h-5 w-5 text-fg-muted group-hover:text-brand-red transition-colors shrink-0" />
-              <div className="min-w-0 flex-1">
-                <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint">
-                  পূর্ববর্তী পোস্ট
-                </div>
-                <div className="text-sm font-bold text-fg truncate">
-                  {prev.title}
-                </div>
-              </div>
-            </Link>
-            <Link
-              href={`/blog/${next.slug}`}
-              className="card group p-5 flex items-center gap-4 sm:text-right hover:scale-[1.01] transition-transform"
-            >
-              <div className="min-w-0 flex-1 sm:order-1">
-                <div className="text-[10px] uppercase tracking-[0.2em] text-fg-faint">
-                  পরবর্তী পোস্ট
-                </div>
-                <div className="text-sm font-bold text-fg truncate">
-                  {next.title}
-                </div>
-              </div>
-              <ArrowRight className="h-5 w-5 text-fg-muted group-hover:text-brand-red transition-colors sm:order-2 shrink-0" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <BlogArticle
+        post={post}
+        related={related}
+        prev={prev}
+        next={next}
+        locale="bn"
+      />
     </>
   );
 }
