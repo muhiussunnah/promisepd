@@ -7,7 +7,10 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "PromisePD",
     description:
       "ঢাকার বিশ্বস্ত আবাসন অংশীদার। ৫টি বিভাগে এক ছাদের নিচে — রিয়েল এস্টেট, নির্মাণ, সঞ্চয়, হজ্জ ও ৩ডি ডিজাইন।",
-    start_url: "/?source=pwa",
+    // Installed PWA opens straight to the login page (the app entry point
+    // for members). `id` stays "/?source=pwa" so existing installs update
+    // in place rather than registering as a new app.
+    start_url: "/login?source=pwa",
     display: "standalone",
     display_override: ["standalone", "minimal-ui"],
     orientation: "any",
