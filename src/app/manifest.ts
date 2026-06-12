@@ -41,8 +41,11 @@ export default function manifest(): MetadataRoute.Manifest {
         label: "PromisePD — Dhaka's trusted real-estate partner",
       },
       {
+        // Square so it fills Chrome's (roughly square) mobile install-dialog
+        // cell — a tall portrait letterboxes left with a dead gap on the
+        // right. Card art is centred on a branded panel inside the image.
         src: "/screenshot-mobile-v2.png",
-        sizes: "720x1280",
+        sizes: "1280x1280",
         type: "image/png",
         form_factor: "narrow",
         label: "PromisePD — five business divisions",
