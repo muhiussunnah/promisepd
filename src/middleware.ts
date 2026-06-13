@@ -45,10 +45,13 @@ export async function middleware(request: NextRequest) {
   const bare = isEn ? path.replace(/^\/en/, "") || "/" : path;
 
   const isAccount = bare === "/account" || bare.startsWith("/account/");
+  const isAdmin = path === "/admin" || path.startsWith("/admin/");
   const isAuthPage = bare === "/login" || bare === "/signup";
 
-  // Guests can't see the member area.
-  if (isAccount && !user) {
+  // Guests can't see the member area or the admin dashboard.  (Admin
+  // also enforces the role itself in its layout — this just blocks
+  // logged-out visitors early.)
+  if ((isAccount || isAdmin) && !user) {
     const to = request.nextUrl.clone();
     to.pathname = isEn ? "/en/login" : "/login";
     to.search = "";

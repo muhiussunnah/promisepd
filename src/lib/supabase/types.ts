@@ -54,6 +54,7 @@ export type Database = {
           mobile: string;
           username: string | null;
           email: string | null;
+          role: string;
           created_at: string;
         };
         Insert: {
@@ -62,6 +63,7 @@ export type Database = {
           mobile: string;
           username?: string | null;
           email?: string | null;
+          role?: string;
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;

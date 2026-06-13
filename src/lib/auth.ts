@@ -10,12 +10,22 @@
 
 import { createClient } from "@/lib/supabase/server";
 
+export type Role = "member" | "staff" | "manager" | "admin";
+
+/** Roles allowed to open the /admin dashboard at all. */
+export const STAFF_ROLES: Role[] = ["staff", "manager", "admin"];
+
+export const isStaff = (role: Role) => STAFF_ROLES.includes(role);
+export const isManager = (role: Role) => role === "manager" || role === "admin";
+export const isAdmin = (role: Role) => role === "admin";
+
 export type Member = {
   id: string;
   name: string;
   mobile: string;
   username: string | null;
   email: string | null;
+  role: Role;
   createdAt: string | null;
 };
 
@@ -31,11 +41,12 @@ export async function getCurrentUser(): Promise<Member | null> {
 
     const { data: profile } = await supabase
       .from("profiles")
-      .select("name, mobile, username, email, created_at")
+      .select("name, mobile, username, email, role, created_at")
       .eq("id", user.id)
       .maybeSingle();
 
     const meta = (user.user_metadata ?? {}) as Record<string, string | null>;
+    const role = (profile?.role ?? "member") as Role;
 
     return {
       id: user.id,
@@ -43,6 +54,7 @@ export async function getCurrentUser(): Promise<Member | null> {
       mobile: profile?.mobile || meta.mobile || "",
       username: profile?.username ?? meta.username ?? null,
       email: profile?.email ?? meta.email ?? null,
+      role,
       createdAt: profile?.created_at ?? user.created_at ?? null,
     };
   } catch {

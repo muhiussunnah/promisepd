@@ -8,6 +8,7 @@ import WhatsAppFAB from "@/components/WhatsAppFAB";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import RegisterSW from "@/components/RegisterSW";
 import SkipLink from "@/components/SkipLink";
+import SiteChrome from "@/components/SiteChrome";
 import JsonLd from "@/components/JsonLd";
 import {
   organizationSchema,
@@ -138,14 +139,18 @@ export default function RootLayout({
       <body className="min-h-screen bg-bg text-fg antialiased selection:bg-brand-blue selection:text-white">
         {/* Skip link for keyboard / screen-reader users — only visible on focus. */}
         <SkipLink />
-        <Navbar />
+        <SiteChrome>
+          <Navbar />
+        </SiteChrome>
         <main id="main" className="relative">
           {children}
         </main>
-        <Footer />
-        <ScrollToTop />
-        <WhatsAppFAB />
-        <PWAInstallPrompt />
+        <SiteChrome>
+          <Footer />
+          <ScrollToTop />
+          <WhatsAppFAB />
+          <PWAInstallPrompt />
+        </SiteChrome>
         <RegisterSW />
       </body>
     </html>
