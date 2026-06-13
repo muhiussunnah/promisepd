@@ -55,6 +55,7 @@ export type Database = {
           username: string | null;
           email: string | null;
           role: string;
+          avatar_url: string | null;
           created_at: string;
         };
         Insert: {
@@ -64,9 +65,244 @@ export type Database = {
           username?: string | null;
           email?: string | null;
           role?: string;
+          avatar_url?: string | null;
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;
+        Relationships: [];
+      };
+      audit_logs: {
+        Row: {
+          id: string;
+          actor_id: string | null;
+          actor_name: string | null;
+          action: string;
+          entity: string;
+          entity_id: string | null;
+          detail: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          actor_id?: string | null;
+          actor_name?: string | null;
+          action: string;
+          entity: string;
+          entity_id?: string | null;
+          detail?: string | null;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["audit_logs"]["Insert"]>;
+        Relationships: [];
+      };
+      attendance: {
+        Row: {
+          id: string;
+          member_id: string;
+          date: string;
+          check_in: string | null;
+          check_out: string | null;
+          status: string;
+          note: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          member_id: string;
+          date: string;
+          check_in?: string | null;
+          check_out?: string | null;
+          status?: string;
+          note?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["attendance"]["Insert"]>;
+        Relationships: [];
+      };
+      finance_accounts: {
+        Row: {
+          id: string;
+          name: string;
+          type: string;
+          account_number: string | null;
+          opening_balance: number;
+          note: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          type?: string;
+          account_number?: string | null;
+          opening_balance?: number;
+          note?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["finance_accounts"]["Insert"]>;
+        Relationships: [];
+      };
+      transactions: {
+        Row: {
+          id: string;
+          type: string;
+          amount: number;
+          category: string;
+          account_id: string | null;
+          project_slug: string | null;
+          txn_date: string;
+          description: string | null;
+          party: string | null;
+          method: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          type: string;
+          amount: number;
+          category: string;
+          account_id?: string | null;
+          project_slug?: string | null;
+          txn_date?: string;
+          description?: string | null;
+          party?: string | null;
+          method?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["transactions"]["Insert"]>;
+        Relationships: [];
+      };
+      client_followups: {
+        Row: {
+          id: string;
+          client_name: string;
+          mobile: string | null;
+          email: string | null;
+          interest: string | null;
+          source: string | null;
+          status: string;
+          assigned_to: string | null;
+          next_followup: string | null;
+          note: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          client_name: string;
+          mobile?: string | null;
+          email?: string | null;
+          interest?: string | null;
+          source?: string | null;
+          status?: string;
+          assigned_to?: string | null;
+          next_followup?: string | null;
+          note?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["client_followups"]["Insert"]>;
+        Relationships: [];
+      };
+      daily_reports: {
+        Row: {
+          id: string;
+          member_id: string;
+          report_date: string;
+          body: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          member_id: string;
+          report_date?: string;
+          body: string;
+          created_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["daily_reports"]["Insert"]>;
+        Relationships: [];
+      };
+      blog_posts: {
+        Row: {
+          id: string;
+          slug: string;
+          title: string;
+          excerpt: string | null;
+          cover_url: string | null;
+          body: string;
+          title_en: string | null;
+          excerpt_en: string | null;
+          body_en: string | null;
+          tags: string[] | null;
+          published: boolean;
+          published_at: string | null;
+          author_name: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          title: string;
+          excerpt?: string | null;
+          cover_url?: string | null;
+          body: string;
+          title_en?: string | null;
+          excerpt_en?: string | null;
+          body_en?: string | null;
+          tags?: string[] | null;
+          published?: boolean;
+          published_at?: string | null;
+          author_name?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["blog_posts"]["Insert"]>;
+        Relationships: [];
+      };
+      project_overrides: {
+        Row: {
+          slug: string;
+          status: string | null;
+          buildings: Record<string, unknown> | null;
+          unit_map: Record<string, unknown> | null;
+          share_map: Record<string, unknown> | null;
+          facts: Record<string, unknown> | null;
+          updated_at: string;
+        };
+        Insert: {
+          slug: string;
+          status?: string | null;
+          buildings?: Record<string, unknown> | null;
+          unit_map?: Record<string, unknown> | null;
+          share_map?: Record<string, unknown> | null;
+          facts?: Record<string, unknown> | null;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["project_overrides"]["Insert"]>;
+        Relationships: [];
+      };
+      org_settings: {
+        Row: {
+          key: string;
+          value: Record<string, unknown>;
+          updated_at: string;
+        };
+        Insert: {
+          key: string;
+          value: Record<string, unknown>;
+          updated_at?: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["org_settings"]["Insert"]>;
         Relationships: [];
       };
     };
