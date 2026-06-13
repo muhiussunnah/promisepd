@@ -246,6 +246,18 @@ export type Database = {
           published: boolean;
           published_at: string | null;
           author_name: string | null;
+          meta_title: string | null;
+          meta_description: string | null;
+          layout: string;
+          author_role: string | null;
+          category: string | null;
+          access_type: string;
+          region: string | null;
+          custom_css: string | null;
+          custom_schema: string | null;
+          status: string;
+          scheduled_at: string | null;
+          views: number;
           created_at: string;
           updated_at: string;
         };
@@ -263,10 +275,28 @@ export type Database = {
           published?: boolean;
           published_at?: string | null;
           author_name?: string | null;
+          meta_title?: string | null;
+          meta_description?: string | null;
+          layout?: string;
+          author_role?: string | null;
+          category?: string | null;
+          access_type?: string;
+          region?: string | null;
+          custom_css?: string | null;
+          custom_schema?: string | null;
+          status?: string;
+          scheduled_at?: string | null;
+          views?: number;
           created_at?: string;
           updated_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["blog_posts"]["Insert"]>;
+        Relationships: [];
+      };
+      blog_categories: {
+        Row: { id: string; name: string; slug: string; created_at: string };
+        Insert: { id?: string; name: string; slug: string; created_at?: string };
+        Update: Partial<Database["public"]["Tables"]["blog_categories"]["Insert"]>;
         Relationships: [];
       };
       project_overrides: {
