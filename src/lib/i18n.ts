@@ -50,6 +50,7 @@ type Dict = {
   // common buttons + chrome
   login: string;
   signup: string;
+  accountNav: string;
   call: string;
   menu: string;
   openMenu: string;
@@ -243,6 +244,27 @@ type Dict = {
     pwHide: string;
     pwShow: string;
   };
+  account: {
+    title: string;
+    greeting: string;
+    subtitle: string;
+    profileHead: string;
+    nameLabel: string;
+    mobileLabel: string;
+    usernameLabel: string;
+    emailLabel: string;
+    notSet: string;
+    memberSince: string;
+    quickHead: string;
+    forms: string;
+    formsSub: string;
+    contact: string;
+    contactSub: string;
+    projects: string;
+    projectsSub: string;
+    logout: string;
+    loggingOut: string;
+  };
 };
 
 export const DICT: Record<Locale, Dict> = {
@@ -262,6 +284,7 @@ export const DICT: Record<Locale, Dict> = {
     },
     login: "লগইন",
     signup: "সাইন আপ",
+    accountNav: "অ্যাকাউন্ট",
     call: "কল করুন",
     menu: "মেনু",
     openMenu: "মেনু খুলুন",
@@ -500,6 +523,27 @@ export const DICT: Record<Locale, Dict> = {
       pwHide: "পাসওয়ার্ড লুকান",
       pwShow: "পাসওয়ার্ড দেখান",
     },
+    account: {
+      title: "আমার অ্যাকাউন্ট",
+      greeting: "স্বাগতম",
+      subtitle: "আপনার প্রমিস সিটি অ্যাকাউন্ট ড্যাশবোর্ড।",
+      profileHead: "আপনার তথ্য",
+      nameLabel: "নাম",
+      mobileLabel: "মোবাইল",
+      usernameLabel: "ইউজারনেম",
+      emailLabel: "ইমেইল",
+      notSet: "দেওয়া হয়নি",
+      memberSince: "সদস্য হয়েছেন",
+      quickHead: "দ্রুত লিঙ্ক",
+      forms: "অফিসিয়াল ফরম",
+      formsSub: "আবেদন ফরম পূরণ ও জমা দিন",
+      contact: "যোগাযোগ",
+      contactSub: "আমাদের সাথে কথা বলুন",
+      projects: "প্রকল্প",
+      projectsSub: "চলমান প্রকল্প দেখুন",
+      logout: "লগআউট",
+      loggingOut: "লগআউট হচ্ছে...",
+    },
   },
   en: {
     nav: {
@@ -517,6 +561,7 @@ export const DICT: Record<Locale, Dict> = {
     },
     login: "Login",
     signup: "Sign Up",
+    accountNav: "Account",
     call: "Call Now",
     menu: "Menu",
     openMenu: "Open menu",
@@ -754,6 +799,27 @@ export const DICT: Record<Locale, Dict> = {
       loginLink: "Log in →",
       pwHide: "Hide password",
       pwShow: "Show password",
+    },
+    account: {
+      title: "My account",
+      greeting: "Welcome",
+      subtitle: "Your Promise City account dashboard.",
+      profileHead: "Your details",
+      nameLabel: "Name",
+      mobileLabel: "Mobile",
+      usernameLabel: "Username",
+      emailLabel: "Email",
+      notSet: "Not set",
+      memberSince: "Member since",
+      quickHead: "Quick links",
+      forms: "Official forms",
+      formsSub: "Fill in and submit application forms",
+      contact: "Contact",
+      contactSub: "Talk to our team",
+      projects: "Projects",
+      projectsSub: "Browse ongoing projects",
+      logout: "Log out",
+      loggingOut: "Logging out...",
     },
   },
 };

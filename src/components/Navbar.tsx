@@ -14,7 +14,6 @@ import {
   Landmark,
   Plane,
   Palette,
-  LogIn,
   type LucideIcon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,6 +37,7 @@ import {
 } from "@/lib/site.en";
 import { FORMS_EN } from "@/lib/pages.en";
 import LangSwitcher from "./LangSwitcher";
+import AuthNavButton from "./AuthNavButton";
 
 /** English overlay for a dropdown item (division / project / form) by the
  *  parent nav-section id + the item slug. Falls back to the Bengali label
@@ -463,16 +463,17 @@ export default function Navbar() {
               {/* EN / BN language switcher — two separate versions. */}
               <LangSwitcher />
 
-              {/* Login — primary header action (replaced the Call CTA).
-                  Hidden on the smallest screens; mobile users get the
-                  Login row inside the slide-out menu instead. */}
-              <Link
-                href={lp("/login")}
-                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand-blue px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-brand)] hover:bg-brand-blue-dark hover:scale-[1.02] transition-all"
-              >
-                <LogIn className="h-4 w-4" />
-                <span>{t.login}</span>
-              </Link>
+              {/* Login / Account — primary header action (replaced the
+                  Call CTA).  Shows "Account" once signed in.  Hidden on
+                  the smallest screens; mobile users get the row inside
+                  the slide-out menu instead. */}
+              <AuthNavButton
+                variant="desktop"
+                loginHref={lp("/login")}
+                accountHref={lp("/account")}
+                loginLabel={t.login}
+                accountLabel={t.accountNav}
+              />
               <button
                 onClick={() => setOpen(true)}
                 className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-border hover:border-brand-blue/50 transition-colors"
@@ -681,14 +682,14 @@ export default function Navbar() {
               {/* Auth row — small screens don't show the desktop Login
                   chip, so we surface Login + Sign Up inside the menu. */}
               <div className="mt-6 grid grid-cols-2 gap-2">
-                <Link
-                  href={lp("/login")}
-                  onClick={() => setOpen(false)}
-                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-white border border-border px-4 py-3 text-sm font-semibold text-fg hover:border-brand-blue/50 transition-colors"
-                >
-                  <LogIn className="h-4 w-4" />
-                  {t.login}
-                </Link>
+                <AuthNavButton
+                  variant="mobile"
+                  loginHref={lp("/login")}
+                  accountHref={lp("/account")}
+                  loginLabel={t.login}
+                  accountLabel={t.accountNav}
+                  onSelect={() => setOpen(false)}
+                />
                 <Link
                   href={lp("/signup")}
                   onClick={() => setOpen(false)}

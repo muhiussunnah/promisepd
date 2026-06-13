@@ -17,6 +17,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   AtSign,
@@ -46,6 +47,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
   const locale = useLocale();
   const a = DICT[locale].auth;
   const lp = (href: string) => localizedPath(href, locale);
+  const router = useRouter();
   const [identifier, setIdentifier] = useState("");
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -80,11 +82,27 @@ export default function AuthForm({ mode }: { mode: Mode }) {
         } satisfies SignupPayload);
       }
       setStatus(res);
-      if (res.ok && mode === "signup") {
-        setName("");
-        setMobile("");
-        setEmailOrUsername("");
+      if (res.ok) {
         setPassword("");
+        if (mode === "signup") {
+          setName("");
+          setMobile("");
+          setEmailOrUsername("");
+        }
+        // Honour a same-origin ?next= (set by the auth middleware), else
+        // land on the member dashboard.  Reject absolute / protocol-
+        // relative targets to avoid open redirects.
+        const params =
+          typeof window !== "undefined"
+            ? new URLSearchParams(window.location.search)
+            : null;
+        const next = params?.get("next");
+        const dest =
+          next && next.startsWith("/") && !next.startsWith("//")
+            ? next
+            : lp("/account");
+        router.push(dest);
+        router.refresh();
       }
     });
   }
