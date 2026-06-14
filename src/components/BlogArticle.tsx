@@ -7,7 +7,6 @@
  *  and chronology.  A sticky sidebar (author card + popular + recent)
  *  flanks the article on desktop. */
 
-import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -48,6 +47,11 @@ const RICH_BODY =
   "[&_p]:my-4 [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:my-1 " +
   "[&_a]:text-brand-blue [&_a]:underline [&_a:hover]:text-brand-blue-dark " +
   "[&_img]:rounded-2xl [&_img]:my-6 [&_img]:w-full [&_img]:shadow-md " +
+  // Author-resized images: <figure> carries the width (% of the column) and
+  // centres itself; the inner <img> fills it; an optional <figcaption> sits
+  // beneath, centred and muted.  (See ResizableImage / src/lib/embed.ts.)
+  "[&_figure.img-figure]:mx-auto [&_figure.img-figure]:my-6 [&_figure.img-figure_img]:my-0 " +
+  "[&_figcaption]:mt-2 [&_figcaption]:text-center [&_figcaption]:text-sm [&_figcaption]:italic [&_figcaption]:text-fg-muted " +
   "[&_blockquote]:border-l-4 [&_blockquote]:border-brand-red [&_blockquote]:bg-bg-soft [&_blockquote]:px-6 [&_blockquote]:py-4 [&_blockquote]:my-6 [&_blockquote]:rounded-r-2xl [&_blockquote]:italic " +
   "[&_pre]:bg-bg-soft [&_pre]:rounded-xl [&_pre]:p-4 [&_pre]:my-5 [&_pre]:overflow-x-auto [&_pre]:text-sm " +
   "[&_hr]:my-8 [&_hr]:border-border " +
@@ -55,9 +59,13 @@ const RICH_BODY =
   // Embedded YouTube player — responsive 16:9 (see src/lib/embed.ts).
   "[&_.video-embed]:relative [&_.video-embed]:my-6 [&_.video-embed]:aspect-video [&_.video-embed]:w-full [&_.video-embed]:overflow-hidden [&_.video-embed]:rounded-2xl [&_.video-embed]:bg-black [&_.video-embed]:shadow-md " +
   "[&_.video-embed_iframe]:absolute [&_.video-embed_iframe]:inset-0 [&_.video-embed_iframe]:h-full [&_.video-embed_iframe]:w-full [&_.video-embed_iframe]:border-0 " +
-  // Facebook video — the SDK auto-sizes to the real aspect inside a
-  // centred, capped-width wrapper (landscape or portrait reel both work).
-  "[&_.fb-embed]:my-6 [&_.fb-embed]:mx-auto [&_.fb-embed]:flex [&_.fb-embed]:justify-center [&_.fb-embed]:max-w-[500px] [&_.fb-embed]:overflow-hidden [&_.fb-embed]:rounded-2xl";
+  // Facebook video — a self-contained iframe (plugins/video.php) inside a
+  // centred, aspect-ratio box.  Landscape clips get a 16:9 box capped at
+  // 500px; Reels get a 9:16 box capped at 320px (see src/lib/embed.ts).
+  "[&_.fb-embed]:relative [&_.fb-embed]:my-6 [&_.fb-embed]:mx-auto [&_.fb-embed]:w-full [&_.fb-embed]:overflow-hidden [&_.fb-embed]:rounded-2xl [&_.fb-embed]:bg-black [&_.fb-embed]:shadow-md " +
+  "[&_.fb-land]:max-w-[500px] [&_.fb-land]:aspect-video " +
+  "[&_.fb-reel]:max-w-[320px] [&_.fb-reel]:aspect-[9/16] " +
+  "[&_.fb-embed_iframe]:absolute [&_.fb-embed_iframe]:inset-0 [&_.fb-embed_iframe]:h-full [&_.fb-embed_iframe]:w-full [&_.fb-embed_iframe]:border-0";
 
 export default function BlogArticle({
   post,
@@ -99,31 +107,6 @@ export default function BlogArticle({
 
   const prevTitle = isEn ? BLOG_EN[prev.slug]?.title ?? prev.title : prev.title;
   const nextTitle = isEn ? BLOG_EN[next.slug]?.title ?? next.title : next.title;
-
-  // Load the Facebook SDK only when the article actually embeds a FB video,
-  // then (re-)parse the XFBML so the player sizes to the real aspect ratio.
-  useEffect(() => {
-    if (!bodyHtml || !bodyHtml.includes("fb-video")) return;
-    const fb = (window as unknown as { FB?: { XFBML: { parse: () => void } } }).FB;
-    if (fb) {
-      fb.XFBML.parse();
-      return;
-    }
-    if (!document.getElementById("fb-root")) {
-      const root = document.createElement("div");
-      root.id = "fb-root";
-      document.body.prepend(root);
-    }
-    if (!document.getElementById("facebook-jssdk")) {
-      const s = document.createElement("script");
-      s.id = "facebook-jssdk";
-      s.async = true;
-      s.defer = true;
-      s.crossOrigin = "anonymous";
-      s.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0";
-      document.body.appendChild(s);
-    }
-  }, [bodyHtml]);
 
   return (
     <>

@@ -35,13 +35,24 @@ function youtubeEmbed(id: string): string {
 }
 
 function facebookEmbed(url: string): string {
-  // XFBML .fb-video: the Facebook SDK measures the real video and sizes
-  // the embed to its TRUE aspect — so a landscape video stays landscape
-  // and a portrait reel stays portrait (data-width="auto" fills the
-  // capped-width wrapper).  BlogArticle loads the SDK + parses on mount.
+  // Self-contained iframe via Facebook's video plugin endpoint.  Unlike the
+  // XFBML `.fb-video` JS-SDK widget (which silently renders nothing for
+  // Reels and depends on the SDK loading + parsing in time), the
+  // plugins/video.php iframe renders server-side and handles both standard
+  // videos AND reels — with a built-in "watch on Facebook" fallback if a
+  // clip can't be embedded.  We can't measure the true aspect without the
+  // SDK, so we infer it from the URL: a /reel/ is portrait (9:16), anything
+  // else is landscape (16:9).  The wrapper class drives the CSS aspect box.
+  const portrait = /\/reels?\//i.test(url); // /reel/ or /reels/ → vertical
+  const cls = portrait ? "fb-embed fb-reel" : "fb-embed fb-land";
+  const src =
+    `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}` +
+    `&show_text=false&width=500`;
   return (
-    `<div class="fb-embed">` +
-    `<div class="fb-video" data-href="${url}" data-show-text="false" data-width="auto" data-allowfullscreen="true" data-lazy="true"></div>` +
+    `<div class="${cls}">` +
+    `<iframe src="${src}" title="Facebook video" scrolling="no" frameborder="0" ` +
+    `allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" ` +
+    `allowfullscreen loading="lazy"></iframe>` +
     `</div>`
   );
 }

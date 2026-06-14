@@ -53,37 +53,58 @@ const NOT_CONFIGURED: AuthResult = {
   error: "অ্যাকাউন্ট সার্ভিস এখন সচল নেই। একটু পরে চেষ্টা করুন বা সরাসরি যোগাযোগ করুন।",
 };
 
-/** Accepts: "01912345678" · "+8801912345678" · "8801912345678".
- *  Returns: canonical "8801912345678" or null if invalid. */
+/** Accepts every shape a Bangladeshi mobile is typed in:
+ *    "01912345678" · "1912345678" · "+8801912345678" · "8801912345678"
+ *    "00880 1912-345678" … (spaces, dashes, +, leading 00 all tolerated).
+ *  Returns: canonical "8801912345678" or null if it isn't a BD mobile. */
 function normalizeBdMobile(raw: string): string | null {
-  const digits = (raw || "").replace(/\D/g, "");
+  let digits = (raw || "").replace(/\D/g, "");
   if (!digits) return null;
-  if (digits.length === 11 && digits.startsWith("01")) return `880${digits.slice(1)}`;
+  if (digits.startsWith("00")) digits = digits.slice(2); // intl 00 prefix
   if (digits.length === 13 && digits.startsWith("8801")) return digits;
+  if (digits.length === 11 && digits.startsWith("01")) return `880${digits.slice(1)}`;
+  if (digits.length === 10 && digits.startsWith("1")) return `8801${digits.slice(1)}`;
   return null;
 }
 
-/** Resolve a login identifier to the canonical mobile that backs the
- *  synthetic auth email.  Mobile resolves directly; username / email
- *  are looked up in profiles via the service role (RLS-exempt). */
-async function resolveMobile(identifier: string): Promise<string | null> {
+/** Build the ordered list of Supabase auth emails to try for a login
+ *  identifier.  A member can be reached several ways:
+ *    • mobile (any format)  → synthetic email of the canonical mobile
+ *    • username / id        → synthetic email of the profile's mobile
+ *    • email                → the address itself (real-email accounts)
+ *                             AND the synthetic email of whatever profile
+ *                             lists it as a contact address
+ *  Trying each in turn (same password) means the owner gets in no matter
+ *  which identifier — or which of their accounts — they sign in with. */
+async function candidateEmails(identifier: string): Promise<string[]> {
   const id = identifier.trim();
+  const out: string[] = [];
 
-  const direct = normalizeBdMobile(id);
-  if (direct) return direct;
+  const mobile = normalizeBdMobile(id);
+  if (mobile) out.push(syntheticEmail(mobile));
 
   const admin = createAdminClient();
-  if (!admin) return null;
+  if (admin) {
+    if (EMAIL_RE.test(id)) {
+      out.push(id.toLowerCase()); // a real-email auth account
+      const { data } = await admin
+        .from("profiles")
+        .select("mobile")
+        .ilike("email", id)
+        .maybeSingle();
+      if (data?.mobile) out.push(syntheticEmail(data.mobile));
+    } else if (!mobile) {
+      // Treat anything else (username, member id, code) as a username.
+      const { data } = await admin
+        .from("profiles")
+        .select("mobile")
+        .eq("username", id.toLowerCase())
+        .maybeSingle();
+      if (data?.mobile) out.push(syntheticEmail(data.mobile));
+    }
+  }
 
-  const column = EMAIL_RE.test(id) ? "email" : "username";
-  const value = column === "username" ? id.toLowerCase() : id;
-  const { data } = await admin
-    .from("profiles")
-    .select("mobile")
-    .eq(column, value)
-    .maybeSingle();
-
-  return data?.mobile ?? null;
+  return [...new Set(out)]; // de-dupe, keep order
 }
 
 // ── Actions ───────────────────────────────────────────────────────
@@ -95,23 +116,24 @@ export async function login(payload: LoginPayload): Promise<AuthResult> {
     return { ok: false, error: `পাসওয়ার্ড কমপক্ষে ${MIN_PASSWORD} অক্ষরের।` };
   }
 
-  const mobile = await resolveMobile(id);
-  if (!mobile) {
+  const candidates = await candidateEmails(id);
+  if (candidates.length === 0) {
     return { ok: false, error: "এই তথ্য দিয়ে কোনো অ্যাকাউন্ট পাওয়া যায়নি। সাইন আপ করুন।" };
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({
-    email: syntheticEmail(mobile),
-    password: payload.password,
-  });
-
-  if (error) {
-    console.error("[auth/login]", error.message);
-    return { ok: false, error: "ভুল মোবাইল/ইউজারনেম বা পাসওয়ার্ড।" };
+  let lastError: string | undefined;
+  for (const email of candidates) {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password: payload.password,
+    });
+    if (!error) return { ok: true, message: "সফলভাবে লগইন হয়েছে।" };
+    lastError = error.message;
   }
 
-  return { ok: true, message: "সফলভাবে লগইন হয়েছে।" };
+  console.error("[auth/login]", lastError);
+  return { ok: false, error: "ভুল মোবাইল/ইউজারনেম/ইমেইল বা পাসওয়ার্ড।" };
 }
 
 export async function signup(payload: SignupPayload): Promise<AuthResult> {

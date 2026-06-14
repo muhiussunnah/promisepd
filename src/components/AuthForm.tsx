@@ -134,8 +134,8 @@ export default function AuthForm({ mode }: { mode: Mode }) {
           icon={Phone}
           value={identifier}
           onChange={setIdentifier}
-          placeholder="01XXXXXXXXX"
-          inputMode="tel"
+          placeholder="01XXXXXXXXX / username / email"
+          inputMode="text"
           autoComplete="username"
         />
       ) : (
