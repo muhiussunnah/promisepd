@@ -72,7 +72,7 @@ export default function RichEditor({
   const insertImageUrl = useCallback(async () => {
     if (!editor) return;
     const url = await promptDialog({ title: "Insert image", message: "Image URL", placeholder: "https://…" });
-    if (url) editor.chain().focus().setImage({ src: url }).run();
+    if (url) editor.chain().focus().setResizableImage({ src: url }).run();
   }, [editor]);
 
   const setLink = useCallback(async () => {
@@ -93,7 +93,7 @@ export default function RichEditor({
         fd.append("image", file);
         fd.append("folder", "blog");
         const res = await uploadImage(fd);
-        if (res.ok) editor.chain().focus().setImage({ src: res.url }).run();
+        if (res.ok) editor.chain().focus().setResizableImage({ src: res.url }).run();
         else toast(res.error, "error");
       } finally {
         setUploading(false);
