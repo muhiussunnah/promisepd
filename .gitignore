@@ -51,3 +51,4 @@ next-env.d.ts
 
 # Convex generated (recreated by `npx convex dev`)
 convex/_generated/
+.vercel
