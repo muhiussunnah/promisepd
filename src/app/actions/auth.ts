@@ -19,6 +19,7 @@
  *  We normalise leading 0 / +880 / 880 so users can type whichever form
  *  they're used to. */
 
+import bcrypt from "bcryptjs";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -107,6 +108,57 @@ async function candidateEmails(identifier: string): Promise<string[]> {
   return [...new Set(out)]; // de-dupe, keep order
 }
 
+/** Legacy password migration.  For each candidate synthetic email, find the
+ *  profile (by the mobile encoded in the address), read its auth user's
+ *  user_metadata.legacy_pw (the old bcrypt hash), and if the typed password
+ *  verifies, set it as the real Supabase password and clear the legacy hash.
+ *  Returns true once a sign-in succeeds. */
+async function tryLegacyLogin(
+  candidates: string[],
+  password: string,
+  supabase: Awaited<ReturnType<typeof createClient>>,
+): Promise<boolean> {
+  const admin = createAdminClient();
+  if (!admin) return false;
+  const suffix = `@${AUTH_EMAIL_DOMAIN}`;
+
+  for (const email of candidates) {
+    if (!email.endsWith(suffix)) continue;
+    const mobile = email.slice(0, -suffix.length);
+    const { data: prof } = await admin
+      .from("profiles")
+      .select("id")
+      .eq("mobile", mobile)
+      .maybeSingle();
+    if (!prof?.id) continue;
+
+    const { data: got } = await admin.auth.admin.getUserById(prof.id as string);
+    const meta = (got?.user?.user_metadata ?? {}) as Record<string, unknown>;
+    const legacy = typeof meta.legacy_pw === "string" ? meta.legacy_pw : null;
+    if (!legacy) continue;
+
+    let valid = false;
+    try {
+      valid = bcrypt.compareSync(password, legacy);
+    } catch {
+      valid = false;
+    }
+    if (!valid) continue;
+
+    const { error: upErr } = await admin.auth.admin.updateUserById(prof.id as string, {
+      password,
+      user_metadata: { ...meta, legacy_pw: null },
+    });
+    if (upErr) {
+      console.error("[auth/login] legacy migrate", upErr.message);
+      continue;
+    }
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (!error) return true;
+  }
+  return false;
+}
+
 // ── Actions ───────────────────────────────────────────────────────
 
 export async function login(payload: LoginPayload): Promise<AuthResult> {
@@ -131,6 +183,15 @@ export async function login(payload: LoginPayload): Promise<AuthResult> {
     if (!error) return { ok: true, message: "সফলভাবে লগইন হয়েছে।" };
     lastError = error.message;
   }
+
+  // Legacy fallback — accounts ported from the old admin.promisepd.com carry
+  // their original bcrypt password hash in user_metadata.legacy_pw.  On the
+  // first successful match we verify against it, then migrate the password
+  // into Supabase Auth (and clear the legacy hash) so every later login uses
+  // the normal flow above.  Runs ONLY after the normal sign-in failed, so it
+  // never affects accounts that were created natively.
+  const legacyOk = await tryLegacyLogin(candidates, payload.password, supabase);
+  if (legacyOk) return { ok: true, message: "সফলভাবে লগইন হয়েছে।" };
 
   console.error("[auth/login]", lastError);
   return { ok: false, error: "ভুল মোবাইল/ইউজারনেম/ইমেইল বা পাসওয়ার্ড।" };
